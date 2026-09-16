@@ -1,7 +1,7 @@
 # Millennium Dawn: United Kingdom Rework
 
-Submod for [Millennium Dawn](https://github.com/MillenniumDawn/Millennium-Dawn) that reworks the
-United Kingdom (ENG): focus tree, decisions, ideas, events, scripted effects and their localisation.
+Submod for [Millennium Dawn](https://github.com/MillenniumDawn/Millennium-Dawn) that expands the
+United Kingdom (ENG) focus tree.
 
 ## How it works
 
