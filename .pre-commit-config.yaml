@@ -1,0 +1,43 @@
+# Pre-commit configuration for the Millennium Dawn United Kingdom rework submod.
+# See https://pre-commit.com for more information
+#
+# !! DO NOT RUN `pre-commit run --all-files` !!
+# The auto-fixer hooks (trailing-whitespace, end-of-file-fixer,
+# mixed-line-ending, fix-byte-order-marker) would rewrite every matching file
+# and bury real changes in whitespace noise. Always scope runs to specific files:
+#   pre-commit run --files path/to/file1 path/to/file2
+# The normal `git commit` flow already runs hooks against just the staged files.
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      # Asset directories (gfx/, interface/) use significant tab/whitespace
+      # alignment that the fixers must not rewrite.
+      - id: trailing-whitespace
+        exclude: '\.mod$|^(gfx|interface)/'
+      - id: end-of-file-fixer
+        exclude: '\.mod$|^(gfx|interface)/'
+      - id: mixed-line-ending
+        args: [--fix=lf]
+        exclude: '\.mod$|^(gfx|interface)/'
+      - id: check-yaml
+        files: 'localisation/english/.*\.yml$'
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ["--maxkb=100000"]
+      - id: check-case-conflict
+      # English localisation keeps its BOM; every other text file drops it.
+      - id: fix-byte-order-marker
+        exclude: 'localisation/.*\.yml$|^(gfx|interface)/'
+      - id: check-ast
+        files: '\.py$'
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: v3.8.3
+    hooks:
+      - id: prettier
+        name: Format Markdown files
+        files: '\.md$'
+        args: [--prose-wrap=preserve, --print-width=120]
+        additional_dependencies:
+          - prettier@3.8.3

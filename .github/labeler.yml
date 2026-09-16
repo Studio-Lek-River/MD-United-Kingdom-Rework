@@ -1,0 +1,48 @@
+# Auto-label PRs based on changed file paths
+# Used by .github/workflows/pr-housekeeping.yml
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file: '*.md'
+
+focus-trees:
+  - changed-files:
+      - any-glob-to-any-file: 'common/national_focus/**'
+
+events:
+  - changed-files:
+      - any-glob-to-any-file: 'events/**'
+
+decisions:
+  - changed-files:
+      - any-glob-to-any-file: 'common/decisions/**'
+
+ideas:
+  - changed-files:
+      - any-glob-to-any-file: 'common/ideas/**'
+
+localization:
+  - changed-files:
+      - any-glob-to-any-file: 'localisation/**'
+
+graphics:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'gfx/**'
+          - 'interface/**'
+
+ai:
+  - changed-files:
+      - any-glob-to-any-file: 'common/ai_*/**'
+
+user-interface:
+  - changed-files:
+      - any-glob-to-any-file: 'interface/*.gui'
+
+tools:
+  - changed-files:
+      - any-glob-to-any-file: 'tools/**'
+
+github-actions:
+  - changed-files:
+      - any-glob-to-any-file: '.github/**'
