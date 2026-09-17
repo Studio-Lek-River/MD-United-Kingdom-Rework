@@ -91,3 +91,39 @@ ENG_arm_outcome_settled = {
 		has_idea = ENG_arm_licensing_island
 	}
 }
+
+ENG_uq_home_nations_done = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_home_nations_done_TT
+		OR = {
+			has_country_flag = ENG_scottish_integrated
+			NOT = { any_state = { is_core_of = SCO } }
+		}
+		OR = {
+			has_country_flag = ENG_welsh_integrated
+			NOT = { any_state = { is_core_of = WAS } }
+		}
+		OR = {
+			has_country_flag = ENG_north_irish_integrated
+			NOT = { any_state = { is_core_of = NIR } }
+		}
+	}
+}
+
+ENG_uq_ireland_done = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_ireland_done_TT
+		check_variable = { ENG_integration_stage@IRE > 2 }
+	}
+}
+
+ENG_uq_realms_done = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_realms_done_TT
+		any_country = {
+			count = 3
+			is_in_array = { array = global.commonwealth_member value = THIS }
+			ROOT = { check_variable = { ENG_integration_stage@PREV > 1 } }
+		}
+	}
+}

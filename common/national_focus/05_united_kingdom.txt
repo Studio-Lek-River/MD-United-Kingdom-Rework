@@ -23098,6 +23098,98 @@ focus_tree = {
 		ai_will_do = { base = 1 }
 	}
 
+	# The Union Question
+
+	focus = {
+		id = ENG_the_union_question
+		icon = invest_in_britain
+
+		x = 150
+		y = 0
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_stability > 0.6
+			has_war = no
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_not_overthrown_TT
+				NOT = { has_country_flag = ENG_overthrown }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_union_question"
+			set_country_flag = ENG_union_question_opened
+			hidden_effect = {
+				news_event = {
+					id = United_Kingdom_News.5
+					hours = 6
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_a_family_of_nations
+		icon = invest_in_britain
+
+		x = -2
+		y = 1
+		relative_position_id = ENG_the_union_question
+
+		prerequisite = { focus = ENG_the_union_question }
+
+		mutually_exclusive = { focus = ENG_the_crown_imperial }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			is_commonwealth_member = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_family_of_nations"
+			unlock_decision_category_tooltip = ENG_a_family_of_nations_decisions
+			set_country_flag = ENG_uq_western
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_crown_imperial
+		icon = Generic_Crown_Box
+
+		x = 2
+		y = 1
+		relative_position_id = ENG_the_union_question
+
+		prerequisite = { focus = ENG_the_union_question }
+
+		mutually_exclusive = { focus = ENG_a_family_of_nations }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			has_completed_focus = ENG_royal_prerogative_activation
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crown_imperial"
+			unlock_decision_category_tooltip = ENG_the_crown_imperial_decisions
+			add_stability = -0.10
+			add_named_threat = { threat = 1 name = ENG_crown_imperial_threat }
+			set_country_flag = ENG_uq_nationalist
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
 	# Junta Tree
 
 	# focus = {
