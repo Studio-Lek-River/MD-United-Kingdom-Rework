@@ -4449,6 +4449,135 @@ ENG_a_more_united_kingdom_decisions = {
 	}
 }
 
+ENG_union_strain_decisions = {
+	ENG_expand_the_civil_service = {
+		icon = GFX_decision_generic_civil_support
+
+		cost = 150
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.004
+				less_than = { value = treasury }
+			}
+			has_political_power > 149.999
+		}
+		custom_cost_text = ENG_cost_medium_expenditure_pp150
+		ai_hint_pp_cost = 150
+		days_remove = 180
+		days_re_enable = 730
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_expand_the_civil_service"
+			hidden_effect = { add_political_power = -150 }
+			medium_expenditure = yes
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_expand_the_civil_service"
+			set_temp_variable = { ENG_union_strain_change = -10 }
+			ENG_change_union_strain = yes
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				check_variable = { ENG_union_strain > 50 }
+			}
+		}
+	}
+
+	ENG_regional_assemblies_act = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = { has_country_flag = ENG_uq_western }
+
+		cost = 100
+		days_remove = 180
+		days_re_enable = 730
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_regional_assemblies_act"
+			set_temp_variable = { ENG_nationalists_change = 5 }
+			ENG_change_scottish_nationalists = yes
+			ENG_change_north_irish_nationalists = yes
+			ENG_change_wales_nationalists = yes
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_regional_assemblies_act"
+			set_temp_variable = { ENG_union_strain_change = -15 }
+			ENG_change_union_strain = yes
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				check_variable = { ENG_union_strain > 50 }
+			}
+		}
+	}
+
+	ENG_crown_commissioners = {
+		icon = GFX_decision_generic_police_action
+
+		visible = { has_country_flag = ENG_uq_nationalist }
+
+		cost = 100
+		days_remove = 180
+		days_re_enable = 730
+
+		modifier = { resistance_target = 0.05 }
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_crown_commissioners"
+			set_temp_variable = { ENG_union_strain_change = -15 }
+			ENG_change_union_strain = yes
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				check_variable = { ENG_union_strain > 50 }
+			}
+		}
+	}
+
+	ENG_union_investment_programme = {
+		icon = GFX_decision_generic_construction
+
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.01
+				less_than = { value = treasury }
+			}
+		}
+		custom_cost_text = ENG_cost_gdp_1_percent
+		days_re_enable = 365
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_union_investment_programme"
+			set_temp_variable = { ENG_union_strain_change = -5 }
+			ENG_change_union_strain = yes
+			newline = yes
+			set_temp_variable = { treasury_change = { value = gdp_total multiply = -0.01 } }
+			modify_treasury_effect = yes
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				check_variable = { ENG_union_strain > 50 }
+			}
+		}
+	}
+}
+
 ENG_fractured_kingdom_united_state_decisions = {
 	ENG_grant_land_in_isle_of_man = {
 		days_remove = 80

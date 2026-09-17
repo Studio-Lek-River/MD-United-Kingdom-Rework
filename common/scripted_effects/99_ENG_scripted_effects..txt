@@ -459,6 +459,58 @@ ENG_apply_integrated_baseline = {
 	}
 }
 
+# Parameters:
+# - ENG_union_strain_change: signed amount. ROOT must be ENG.
+ENG_change_union_strain = {
+	custom_effect_tooltip = ENG_union_strain_change_tt
+	hidden_effect = {
+		set_variable = { ROOT.ENG_union_strain = { value = ROOT.ENG_union_strain add = ENG_union_strain_change clamp = { min = 0 max = 100 } } }
+		ROOT = { ENG_update_union_strain_modifier = yes }
+	}
+}
+
+# Penalties scale linearly to the issue's caps at 100 strain; Westminster overreach only bites on the Western path
+ENG_update_union_strain_modifier = {
+	set_variable = { ENG_union_strain_stability_weekly = { value = ENG_union_strain multiply = -0.00002 } }
+	set_variable = { ENG_union_strain_political_power_factor = { value = ENG_union_strain multiply = -0.003 } }
+	set_variable = { ENG_union_strain_consumer_goods_factor = { value = ENG_union_strain multiply = 0.001 } }
+	set_variable = { ENG_union_strain_bureaucracy_cost = { value = ENG_union_strain multiply = 0.002 } }
+	if = {
+		limit = { has_country_flag = ENG_uq_western }
+		set_variable = { ENG_union_strain_democratic_drift = { value = ENG_union_strain multiply = -0.001 } }
+	}
+	else = {
+		set_variable = { ENG_union_strain_democratic_drift = 0 }
+	}
+}
+
+# Call in the target's scope with ROOT = ENG.
+# Parameters:
+# - ENG_union_strain_stage: 1 occupation (+5), 2 subject (+3), 3 constituent (half of 4), 4 integrated (8 + 1 per 2M population)
+ENG_add_union_strain_for_target = {
+	set_temp_variable = { ENG_union_strain_target_pop_k = 0 }
+	every_state = {
+		limit = { is_core_of = PREV }
+		add_to_temp_variable = { ENG_union_strain_target_pop_k = state_population_k }
+	}
+	if = {
+		limit = { check_variable = { ENG_union_strain_stage = 4 } }
+		set_temp_variable = { ENG_union_strain_change = { value = ENG_union_strain_target_pop_k divide = 2000 add = 8 round = yes } }
+	}
+	else_if = {
+		limit = { check_variable = { ENG_union_strain_stage = 3 } }
+		set_temp_variable = { ENG_union_strain_change = { value = ENG_union_strain_target_pop_k divide = 2000 add = 8 multiply = 0.5 round = yes } }
+	}
+	else_if = {
+		limit = { check_variable = { ENG_union_strain_stage = 2 } }
+		set_temp_variable = { ENG_union_strain_change = 3 }
+	}
+	else = {
+		set_temp_variable = { ENG_union_strain_change = 5 }
+	}
+	ENG_change_union_strain = yes
+}
+
 ENG_settle_northern_ireland_question = {
 	if = {
 		limit = { has_idea = ENG_good_friday_agreement }

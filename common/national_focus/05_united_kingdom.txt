@@ -23121,6 +23121,8 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_union_question"
 			set_country_flag = ENG_union_question_opened
+			add_dynamic_modifier = { modifier = ENG_union_strain_dm }
+			custom_effect_tooltip = { localization_key = adds_dynamic_modifier_tt MODIFIER = ENG_union_strain_dm }
 			hidden_effect = {
 				news_event = {
 					id = United_Kingdom_News.5
@@ -23154,6 +23156,7 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_family_of_nations"
 			unlock_decision_category_tooltip = ENG_a_family_of_nations_decisions
+			unlock_decision_category_tooltip = ENG_union_strain_decisions
 			set_country_flag = ENG_uq_western
 		}
 
@@ -23182,6 +23185,7 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crown_imperial"
 			unlock_decision_category_tooltip = ENG_the_crown_imperial_decisions
+			unlock_decision_category_tooltip = ENG_union_strain_decisions
 			add_stability = -0.10
 			add_named_threat = { threat = 1 name = ENG_crown_imperial_threat }
 			set_country_flag = ENG_uq_nationalist

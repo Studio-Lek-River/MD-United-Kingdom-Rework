@@ -289,6 +289,34 @@ on_actions = {
 					change_influence_percentage = yes
 				}
 			}
+
+			# Union Strain: the cost of empire eases only at peace, and slower while a stage transition runs
+			if = {
+				limit = {
+					check_variable = { ENG_union_strain > 0 }
+					has_war = no
+				}
+				if = {
+					limit = { ENG_uq_integration_mission_active = yes }
+					set_temp_variable = { ENG_union_strain_change = -0.5 }
+				}
+				else = {
+					set_temp_variable = { ENG_union_strain_change = -1 }
+				}
+				ENG_change_union_strain = yes
+			}
+
+			# Westminster overreach unsettles the home nations that are still devolved
+			if = {
+				limit = {
+					NOT = { has_country_flag = ENG_devolution_purged }
+					check_variable = { ENG_union_strain > 9 }
+				}
+				set_temp_variable = { ENG_agitation_change = { value = ENG_union_strain divide = 10 subtract = 0.5 round = yes multiply = 0.2 } }
+				ENG_change_scottish_agitation = yes
+				ENG_change_north_irish_agitation = yes
+				ENG_change_wales_agitation = yes
+			}
 		}
 	}
 

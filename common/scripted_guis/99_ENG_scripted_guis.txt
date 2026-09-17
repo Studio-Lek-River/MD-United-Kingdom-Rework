@@ -224,4 +224,9 @@ scripted_gui = {
 			ENG_check_political_visible = { has_country_flag = ENG_established_political_heg }
 		}
 	}
+
+	ENG_union_strain_ui = {
+		window_name = "ENG_union_strain_ui_window"
+		context_type = decision_category
+	}
 }

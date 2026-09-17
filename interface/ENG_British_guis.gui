@@ -408,4 +408,31 @@ containerWindowType = {
 			Orientation = "UPPER_LEFT"
 		}
 	}
+
+	containerWindowType = {
+		name = "ENG_union_strain_ui_window"
+		size = { width = 420 height = 60 }
+		position = { x = 0 y = 40 }
+		instantTextBoxType = {
+			name = "ENG_union_strain_label"
+			text = "ENG_union_strain_ui_label"
+			position = { x = 100 y = 15 }
+			font = "hoi_18mbs"
+			format = center
+			maxwidth = 200
+			maxheight = 20
+			text_color_code = Y
+			pdx_tooltip = ENG_union_strain_ui_TT
+		}
+		instantTextBoxType = {
+			name = "ENG_union_strain_VAR"
+			text = "ENG_union_strain_ui_VAR"
+			position = { x = 300 y = 15 }
+			font = "hoi_18mbs"
+			format = center
+			maxwidth = 80
+			maxheight = 20
+			pdx_tooltip = ENG_union_strain_ui_TT
+		}
+	}
 }

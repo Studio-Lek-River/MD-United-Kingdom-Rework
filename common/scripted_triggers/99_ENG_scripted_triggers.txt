@@ -127,3 +127,15 @@ ENG_uq_realms_done = {
 		}
 	}
 }
+
+ENG_uq_strain_allows_transition = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_strain_allows_transition_TT
+		check_variable = { ENG_union_strain < 61 }
+	}
+}
+
+# #7 fills this with its stage-transition missions; until then nothing halves the decay
+ENG_uq_integration_mission_active = {
+	always = no
+}
