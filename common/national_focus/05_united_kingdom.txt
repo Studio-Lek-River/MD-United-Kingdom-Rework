@@ -23124,6 +23124,10 @@ focus_tree = {
 			set_country_flag = ENG_union_question_opened
 			add_dynamic_modifier = { modifier = ENG_union_strain_dm }
 			custom_effect_tooltip = { localization_key = adds_dynamic_modifier_tt MODIFIER = ENG_union_strain_dm }
+			set_variable = { ENG_commonwealth_cohesion = 50 }
+			set_variable = { ENG_cw_member_count = global.commonwealth_member^num }
+			set_country_flag = { flag = ENG_cw_hogm_cooldown days = 730 }
+			custom_effect_tooltip = ENG_cw_cohesion_start_TT
 			hidden_effect = {
 				news_event = {
 					id = United_Kingdom_News.5
@@ -23158,6 +23162,7 @@ focus_tree = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_family_of_nations"
 			unlock_decision_category_tooltip = ENG_a_family_of_nations_decisions
 			unlock_decision_category_tooltip = ENG_union_question_decisions
+			unlock_decision_category_tooltip = ENG_commonwealth_secretariat_decisions
 			set_country_flag = ENG_uq_western
 		}
 

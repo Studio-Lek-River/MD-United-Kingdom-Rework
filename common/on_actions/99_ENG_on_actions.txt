@@ -312,6 +312,21 @@ on_actions = {
 				ENG_change_wales_agitation = yes
 			}
 
+			# Commonwealth: cohesion drifts while the Union Question is open; a Heads of Government Meeting every two years
+			if = {
+				limit = {
+					has_country_flag = ENG_union_question_opened
+					is_commonwealth_member = yes
+				}
+				ENG_cw_update_member_totals = yes
+				ENG_cw_update_cohesion = yes
+				if = {
+					limit = { NOT = { has_country_flag = ENG_cw_hogm_cooldown } }
+					set_country_flag = { flag = ENG_cw_hogm_cooldown days = 730 }
+					country_event = { id = ENG_uq.60 days = 1 }
+				}
+			}
+
 			# Every ladder target: consent drifts on both paths, coercion only on the Nationalist path
 			for_each_scope_loop = {
 				array = ENG_integration_targets

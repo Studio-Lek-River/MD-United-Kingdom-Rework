@@ -224,3 +224,44 @@ ENG_uq_occupation_active = {
 		}
 	}
 }
+
+# Shares the monarch at the 2000 start and is still in the Commonwealth. Leaving drops it; #16 adds republics.
+ENG_is_crown_realm = {
+	OR = {
+		original_tag = CAN
+		original_tag = AST
+		original_tag = NZL
+		original_tag = JAM
+		original_tag = BAH
+		original_tag = BAR
+		original_tag = BLZ
+		original_tag = ANT
+		original_tag = GRA
+		original_tag = STL
+		original_tag = STV
+		original_tag = STK
+		original_tag = PAP
+		original_tag = SOL
+		original_tag = TUL
+	}
+	is_in_array = { array = global.commonwealth_member value = THIS }
+}
+
+# ROOT = ENG. A programme counts while its idea is held; the Defence Pact while ENG still leads it.
+ENG_cw_defence_pact_active = {
+	has_idea = ENG_cw_defence_pact
+	is_faction_leader = yes
+}
+
+# ROOT = ENG
+ENG_cw_hogm_censure = {
+	OR = {
+		check_variable = { ENG_commonwealth_cohesion < 40 }
+		check_variable = { ENG_imperial_tension > 40 }
+	}
+}
+
+ENG_cw_hogm_communique = {
+	check_variable = { ENG_commonwealth_cohesion > 60 }
+	check_variable = { ENG_imperial_tension < 20 }
+}

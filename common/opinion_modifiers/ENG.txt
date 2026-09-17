@@ -58,4 +58,12 @@ opinion_modifiers = {
 		value = -30
 		months = 24
 	}
+	ENG_cw_development_fund_opinion = {
+		value = 10
+		months = 12
+	}
+	ENG_cw_censure_opinion = {
+		value = -10
+		months = 24
+	}
 }

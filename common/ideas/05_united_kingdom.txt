@@ -1279,6 +1279,30 @@ ideas = {
 				war_support_weekly = -0.001
 			}
 		}
+
+		ENG_cw_trade_area = {
+			picture = trade
+			allowed_civil_war = { always = yes }
+			modifier = {
+				trade_opinion_factor = 0.05
+			}
+		}
+
+		ENG_cw_development_fund = {
+			picture = commonwealth_member
+			allowed_civil_war = { always = yes }
+			modifier = {
+				custom_modifier_tooltip = ENG_cw_development_fund_consent_tt
+			}
+		}
+
+		ENG_cw_defence_pact = {
+			picture = faction_british_commonwealth
+			allowed_civil_war = { always = yes }
+			modifier = {
+				join_faction_tension = -0.10
+			}
+		}
 	}
 
 	# HIDDEN IDEAS

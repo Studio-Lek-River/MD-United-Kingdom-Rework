@@ -4844,6 +4844,113 @@ ENG_a_family_of_nations_decisions = {
 	}
 }
 
+ENG_commonwealth_secretariat_decisions = {
+	ENG_cw_fund_trade_area = {
+		icon = GFX_decision_export_button
+
+		cost = 75
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.002
+				less_than = { value = treasury }
+			}
+			has_political_power > 74.999
+		}
+		custom_cost_text = ENG_cost_small_expenditure_pp75
+		ai_hint_pp_cost = 75
+		days_re_enable = 365
+
+		available = { NOT = { has_idea = ENG_cw_trade_area } }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cw_fund_trade_area"
+			hidden_effect = { add_political_power = -75 }
+			small_expenditure = yes
+			add_timed_idea = { idea = ENG_cw_trade_area days = 365 }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_cw_fund_development_fund = {
+		icon = GFX_decision_generic_construction
+
+		cost = 75
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.004
+				less_than = { value = treasury }
+			}
+			has_political_power > 74.999
+		}
+		custom_cost_text = cost_medium_expenditure_pp75
+		ai_hint_pp_cost = 75
+		days_re_enable = 365
+
+		available = { NOT = { has_idea = ENG_cw_development_fund } }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cw_fund_development_fund"
+			hidden_effect = { add_political_power = -75 }
+			medium_expenditure = yes
+			add_timed_idea = { idea = ENG_cw_development_fund days = 365 }
+			custom_effect_tooltip = ENG_cw_development_fund_opinion_TT
+			hidden_effect = {
+				every_country = {
+					limit = {
+						NOT = { tag = ROOT }
+						is_in_array = { array = global.commonwealth_member value = THIS }
+					}
+					add_opinion_modifier = { target = ROOT modifier = ENG_cw_development_fund_opinion }
+				}
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_cw_host_commonwealth_games = {
+		icon = GFX_decision_cuba_sports_button
+
+		cost = 25
+		days_re_enable = 1460
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cw_host_commonwealth_games"
+			set_temp_variable = { ENG_cw_cohesion_change = 5 }
+			ENG_change_commonwealth_cohesion = yes
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_cw_commonwealth_defence_pact = {
+		icon = GFX_decision_faction
+
+		cost = 150
+		fire_only_once = yes
+
+		available = {
+			is_in_faction = no
+			custom_trigger_tooltip = {
+				tooltip = ENG_cw_cohesion_60_TT
+				check_variable = { ENG_commonwealth_cohesion > 60 }
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cw_commonwealth_defence_pact"
+			custom_effect_tooltip = ENG_cw_defence_pact_faction_TT
+			add_ideas = ENG_cw_defence_pact
+			create_faction_from_template = faction_template_commonwealth_defence_pact
+		}
+
+		ai_will_do = { base = 0 }
+	}
+}
+
 ENG_union_question_decisions = {
 	ENG_expand_the_civil_service = {
 		icon = GFX_decision_generic_civil_support

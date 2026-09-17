@@ -41,6 +41,7 @@ ENG_PATHS = [
 # Submod-only files with no MD counterpart. Owned like ENG_PATHS, never synced.
 ENG_SUBMOD_ONLY_PATHS = [
     "common/autonomous_states/99_ENG_autonomies.txt",
+    "common/factions/templates/99_ENG_commonwealth.txt",
 ]
 
 

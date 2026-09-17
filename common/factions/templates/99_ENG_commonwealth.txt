@@ -1,0 +1,16 @@
+faction_template_commonwealth_defence_pact = {
+	name = ENG_commonwealth_defence_pact
+	icon = GFX_faction_logo_generic
+	manifest = faction_manifest_strength_in_unity
+	can_leader_join_other_factions = no
+	visible = { always = no }
+
+	default_rules = {
+		joining_rule_commonwealth_nation_only
+		call_to_war_rule_always
+		war_declaration_rule_faction_leader_only
+		war_declaration_generated_tension_25
+		war_declaration_threat_25
+		faction_peace_rule_puppeting_focus
+	}
+}

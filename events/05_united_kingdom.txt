@@ -7964,3 +7964,70 @@ country_event = {
 	minor_flavor = yes
 	option = { name = ENG_uq.51.a }
 }
+
+# Commonwealth Heads of Government Meeting, every two years while the Union Question is open
+country_event = {
+	id = ENG_uq.60
+	title = {
+		text = ENG_uq.60.t_censure
+		trigger = { ENG_cw_hogm_censure = yes }
+	}
+	title = {
+		text = ENG_uq.60.t_communique
+		trigger = { ENG_cw_hogm_communique = yes }
+	}
+	title = {
+		text = ENG_uq.60.t
+		trigger = {
+			ENG_cw_hogm_censure = no
+			ENG_cw_hogm_communique = no
+		}
+	}
+	desc = {
+		text = ENG_uq.60.d_censure
+		trigger = { ENG_cw_hogm_censure = yes }
+	}
+	desc = {
+		text = ENG_uq.60.d_communique
+		trigger = { ENG_cw_hogm_communique = yes }
+	}
+	desc = {
+		text = ENG_uq.60.d
+		trigger = {
+			ENG_cw_hogm_censure = no
+			ENG_cw_hogm_communique = no
+		}
+	}
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.60.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.60.a executed"
+		if = {
+			limit = { ENG_cw_hogm_censure = yes }
+			set_temp_variable = { ENG_cw_cohesion_change = -5 }
+			ENG_change_commonwealth_cohesion = yes
+			custom_effect_tooltip = ENG_cw_censure_opinion_TT
+			hidden_effect = {
+				every_country = {
+					limit = {
+						NOT = { tag = ROOT }
+						is_in_array = { array = global.commonwealth_member value = THIS }
+					}
+					add_opinion_modifier = { target = ROOT modifier = ENG_cw_censure_opinion }
+				}
+			}
+		}
+		else_if = {
+			limit = { ENG_cw_hogm_communique = yes }
+			set_temp_variable = { ENG_cw_cohesion_change = 2 }
+			ENG_change_commonwealth_cohesion = yes
+			for_each_scope_loop = {
+				array = ENG_integration_targets
+				set_temp_variable = { ENG_uq_consent_change = 3 }
+				ENG_uq_change_consent = yes
+			}
+		}
+	}
+}
