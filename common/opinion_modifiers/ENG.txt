@@ -50,4 +50,8 @@ opinion_modifiers = {
 	ENG_monarch_outreach = {
 		value = 15
 	}
+	ENG_uq_royal_tour_opinion = {
+		value = 10
+		months = 24
+	}
 }

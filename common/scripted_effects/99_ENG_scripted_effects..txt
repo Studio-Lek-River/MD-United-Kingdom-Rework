@@ -562,6 +562,7 @@ ENG_uq_enter_stage_3 = {
 # Stage 3 -> 4. Call from a targeted ladder decision with FROM = target.
 ENG_uq_enter_stage_4 = {
 	set_variable = { ENG_integration_stage@FROM = 4 }
+	clr_country_flag = ENG_uq_accepted@FROM
 	FROM = {
 		set_temp_variable = { ENG_union_strain_stage = 4 }
 		ENG_add_union_strain_for_target = yes
@@ -598,6 +599,109 @@ ENG_uq_fail_transition = {
 		}
 		subtract_from_variable = { ENG_consent@FROM = 20 }
 		clamp_variable = { var = ENG_consent@FROM min = 0 }
+	}
+}
+
+# Parameters:
+# - ENG_uq_consent_change: signed amount. Call in the target's scope. Without medium ENG influence consent cannot climb past 40.
+ENG_uq_change_consent = {
+	custom_effect_tooltip = ENG_uq_consent_change_tt
+	hidden_effect = {
+		set_temp_variable = { ENG_uq_consent_cap = 100 }
+		if = {
+			limit = { ENG_uq_medium_influence = no }
+			set_temp_variable = { ENG_uq_consent_cap = ENG.ENG_consent@THIS }
+			clamp_temp_variable = { var = ENG_uq_consent_cap min = 40 max = 100 }
+		}
+		ENG = {
+			add_to_variable = { ENG_consent@PREV = ENG_uq_consent_change }
+			clamp_variable = { var = ENG_consent@PREV min = 0 max = ENG_uq_consent_cap }
+		}
+	}
+}
+
+# Monthly consent step for one Western-path target. Call in the target's scope.
+ENG_uq_update_consent = {
+	set_temp_variable = { ENG_uq_consent_change = 0 }
+	if = {
+		limit = { ENG_uq_high_influence = yes }
+		add_to_temp_variable = { ENG_uq_consent_change = 1 }
+	}
+	else_if = {
+		limit = { ENG_uq_medium_influence = yes }
+		add_to_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	if = {
+		limit = { has_country_flag = trade_agreement@ENG }
+		add_to_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	if = {
+		limit = { has_opinion = { target = ENG value > 70 } }
+		add_to_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	else_if = {
+		limit = { has_opinion = { target = ENG value < 30 } }
+		add_to_temp_variable = { ENG_uq_consent_change = -0.5 }
+	}
+	if = {
+		limit = {
+			OR = {
+				western_conservatism_are_in_power = yes
+				nationalist_monarchists_are_in_power = yes
+			}
+		}
+		add_to_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	else_if = {
+		limit = {
+			OR = {
+				has_government = nationalist
+				has_government = communism
+			}
+		}
+		add_to_temp_variable = { ENG_uq_consent_change = -0.5 }
+	}
+	if = {
+		limit = { has_idea = ENG_uq_trade_preference_idea }
+		add_to_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	if = {
+		limit = { has_idea = ENG_uq_sovereignty_movement }
+		add_to_temp_variable = { ENG_uq_consent_change = -0.5 }
+	}
+	if = {
+		limit = {
+			ENG = {
+				OR = {
+					has_added_tension_amount > 5
+					has_war = yes
+				}
+			}
+		}
+		add_to_temp_variable = { ENG_uq_consent_change = -1 }
+	}
+	if = {
+		limit = { ENG = { check_variable = { ENG_union_strain > 40 } } }
+		add_to_temp_variable = { ENG_uq_consent_change = -0.5 }
+	}
+	if = {
+		limit = {
+			has_idea = ENG_uq_sovereignty_movement
+			check_variable = { ENG_uq_consent_change > 0 }
+		}
+		multiply_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	ENG = { set_variable = { ENG_consent_delta@PREV = ENG_uq_consent_change } }
+	ENG_uq_change_consent = yes
+	if = {
+		limit = {
+			ENG = {
+				check_variable = { ENG_consent@PREV > 50 }
+				NOT = { has_country_flag = ENG_uq_sovereignty_done@PREV }
+			}
+		}
+		ENG = { set_country_flag = ENG_uq_sovereignty_done@PREV }
+		country_event = { id = ENG_uq.10 days = 1 }
 	}
 }
 

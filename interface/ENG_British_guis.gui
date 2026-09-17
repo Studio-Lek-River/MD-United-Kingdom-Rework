@@ -533,6 +533,7 @@ containerWindowType = {
 			maxwidth = 80
 			maxheight = 20
 			fixedsize = yes
+			pdx_tooltip = ENG_uq_ladder_meter_TT
 		}
 		instantTextBoxType = {
 			name = "ENG_uq_ladder_entry_next"

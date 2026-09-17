@@ -1226,6 +1226,23 @@ ideas = {
 			}
 			research_bonus = { CAT_computing_tech = 0.04 }
 		}
+
+		ENG_uq_sovereignty_movement = {
+			picture = nationalism
+			allowed_civil_war = { always = yes }
+			modifier = {
+				stability_factor = -0.05
+				political_power_factor = -0.05
+			}
+		}
+
+		ENG_uq_trade_preference_idea = {
+			picture = trade
+			allowed_civil_war = { always = yes }
+			modifier = {
+				trade_opinion_factor = 0.15
+			}
+		}
 	}
 
 	# HIDDEN IDEAS

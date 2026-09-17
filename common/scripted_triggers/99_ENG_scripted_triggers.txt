@@ -162,3 +162,32 @@ ENG_uq_can_transition = {
 		NOT = { has_country_flag = ENG_uq_lock@FROM }
 	}
 }
+
+# Target scope. Mirrors influence_higher_50 without depending on ROOT.
+ENG_uq_high_influence = {
+	if = {
+		limit = { has_dlc = "La Resistance" }
+		ENG = { network_strength = { target = PREV value > 50 } }
+	}
+	else = {
+		check_variable = { influence_array^0 = ENG }
+		check_variable = { influence_array_val^0 > 49.999 }
+	}
+}
+
+# Target scope. Mirrors influence_higher_30 without depending on ROOT.
+ENG_uq_medium_influence = {
+	if = {
+		limit = { has_dlc = "La Resistance" }
+		ENG = { network_strength = { target = PREV value > 30 } }
+	}
+	else = {
+		any_of = {
+			array = influence_array
+			value = v
+			index = i
+			var:v = { tag = ENG }
+			check_variable = { influence_array_val^i > 29.999 }
+		}
+	}
+}

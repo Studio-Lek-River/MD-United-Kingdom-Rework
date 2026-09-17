@@ -4449,6 +4449,176 @@ ENG_a_more_united_kingdom_decisions = {
 	}
 }
 
+ENG_a_family_of_nations_decisions = {
+	ENG_uq_royal_tour = {
+		icon = GFX_decision_generic_political_discourse
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_western }
+
+		cost = 75
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.002
+				less_than = { value = treasury }
+			}
+			has_political_power > 74.999
+		}
+		custom_cost_text = ENG_cost_small_expenditure_pp75
+		ai_hint_pp_cost = 75
+		days_re_enable = 365
+
+		fixed_random_seed = no
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_royal_tour"
+			hidden_effect = { add_political_power = -75 }
+			small_expenditure = yes
+			random_list = {
+				80 = {
+					FROM = {
+						set_temp_variable = { ENG_uq_consent_change = 5 }
+						ENG_uq_change_consent = yes
+						add_opinion_modifier = { target = ROOT modifier = ENG_uq_royal_tour_opinion }
+					}
+				}
+				20 = {
+					custom_effect_tooltip = ENG_uq_press_scandal_TT
+					FROM = {
+						set_temp_variable = { ENG_uq_consent_change = -5 }
+						ENG_uq_change_consent = yes
+					}
+				}
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_development_grant = {
+		icon = GFX_decision_generic_construction
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_western }
+
+		cost = 75
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.004
+				less_than = { value = treasury }
+			}
+			has_political_power > 74.999
+		}
+		custom_cost_text = ENG_cost_medium_expenditure_pp75
+		ai_hint_pp_cost = 75
+		days_re_enable = 365
+
+		fixed_random_seed = no
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_development_grant"
+			hidden_effect = { add_political_power = -75 }
+			medium_expenditure = yes
+			random_list = {
+				80 = {
+					FROM = {
+						set_temp_variable = { ENG_uq_consent_change = 5 }
+						ENG_uq_change_consent = yes
+					}
+				}
+				20 = {
+					custom_effect_tooltip = ENG_uq_press_scandal_TT
+					FROM = {
+						set_temp_variable = { ENG_uq_consent_change = -5 }
+						ENG_uq_change_consent = yes
+					}
+				}
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_trade_preference = {
+		icon = GFX_decision_export_button
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_western }
+
+		cost = 75
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.002
+				less_than = { value = treasury }
+			}
+			has_political_power > 74.999
+		}
+		custom_cost_text = ENG_cost_small_expenditure_pp75
+		ai_hint_pp_cost = 75
+		days_re_enable = 365
+
+		fixed_random_seed = no
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_trade_preference"
+			hidden_effect = { add_political_power = -75 }
+			small_expenditure = yes
+			random_list = {
+				80 = {
+					FROM = {
+						add_timed_idea = { idea = ENG_uq_trade_preference_idea days = 730 }
+					}
+				}
+				20 = {
+					custom_effect_tooltip = ENG_uq_press_scandal_TT
+					FROM = {
+						set_temp_variable = { ENG_uq_consent_change = -5 }
+						ENG_uq_change_consent = yes
+					}
+				}
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_cultural_diplomacy = {
+		icon = GFX_decision_generic_civil_support
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_western }
+
+		cost = 25
+		days_re_enable = 365
+
+		fixed_random_seed = no
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_cultural_diplomacy"
+			random_list = {
+				80 = {
+					FROM = {
+						set_temp_variable = { ENG_uq_consent_change = 3 }
+						ENG_uq_change_consent = yes
+					}
+				}
+				20 = {
+					custom_effect_tooltip = ENG_uq_press_scandal_TT
+					FROM = {
+						set_temp_variable = { ENG_uq_consent_change = -5 }
+						ENG_uq_change_consent = yes
+					}
+				}
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+}
+
 ENG_union_strain_decisions = {
 	ENG_expand_the_civil_service = {
 		icon = GFX_decision_generic_civil_support
@@ -4612,6 +4782,8 @@ ENG_integration_ladder_decisions = {
 			}
 		}
 
+		cancel_trigger = { has_country_flag = ENG_uq_lock@FROM }
+
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_offer_association"
 			ENG_uq_enter_stage_2 = yes
@@ -4705,6 +4877,8 @@ ENG_integration_ladder_decisions = {
 				has_country_flag = ENG_uq_referendum_won@FROM
 			}
 		}
+
+		cancel_trigger = { has_country_flag = ENG_uq_lock@FROM }
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_constituent_status"
@@ -4821,9 +4995,15 @@ ENG_integration_ladder_decisions = {
 				tooltip = ENG_uq_consent_85_TT
 				check_variable = { ENG_consent@FROM > 85 }
 			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_target_accepted_TT
+				has_country_flag = ENG_uq_accepted@FROM
+			}
 			ENG_uq_strain_allows_transition = yes
 			has_stability > 0.6
 		}
+
+		cancel_trigger = { has_country_flag = ENG_uq_lock@FROM }
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_integration_act"
@@ -4908,6 +5088,114 @@ ENG_integration_ladder_decisions = {
 				check_variable = { ENG_union_strain > 40 }
 			}
 		}
+	}
+
+	ENG_uq_table_association_offer = {
+		icon = GFX_decision_generic_political_discourse
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 1 }
+			NOT = { has_country_flag = ENG_uq_accepted@FROM }
+		}
+
+		cost = 50
+		days_re_enable = 180
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_consent_60_TT
+				check_variable = { ENG_consent@FROM > 60 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_not_locked_TT
+				NOT = { has_country_flag = ENG_uq_lock@FROM }
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_table_association_offer"
+			FROM = { country_event = { id = ENG_uq.20 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_target_accepted_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { ENG_uq_fail_transition = yes }
+		}
+
+		ai_will_do = { base = 10 }
+	}
+
+	ENG_uq_call_referendum = {
+		icon = GFX_decision_generic_political_discourse
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 2 }
+			NOT = { has_country_flag = ENG_uq_referendum_won@FROM }
+		}
+
+		cost = 100
+		days_re_enable = 365
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_consent_75_TT
+				check_variable = { ENG_consent@FROM > 75 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_not_locked_TT
+				NOT = { has_country_flag = ENG_uq_lock@FROM }
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_call_referendum"
+			FROM = { country_event = { id = ENG_uq.23 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_referendum_scheduled_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { ENG_uq_fail_transition = yes }
+		}
+
+		ai_will_do = { base = 10 }
+	}
+
+	ENG_uq_table_integration_act = {
+		icon = GFX_decision_generic_political_discourse
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 3 }
+			NOT = { has_country_flag = ENG_uq_accepted@FROM }
+		}
+
+		cost = 100
+		days_re_enable = 180
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_consent_85_TT
+				check_variable = { ENG_consent@FROM > 85 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_not_locked_TT
+				NOT = { has_country_flag = ENG_uq_lock@FROM }
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_table_integration_act"
+			FROM = { country_event = { id = ENG_uq.30 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_target_accepted_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { ENG_uq_fail_transition = yes }
+		}
+
+		ai_will_do = { base = 10 }
 	}
 }
 

@@ -317,6 +317,15 @@ on_actions = {
 				ENG_change_north_irish_agitation = yes
 				ENG_change_wales_agitation = yes
 			}
+
+			# Consent: every Western-path target drifts with influence, trade, opinion and politics
+			if = {
+				limit = { has_country_flag = ENG_uq_western }
+				for_each_scope_loop = {
+					array = ENG_integration_targets
+					ENG_uq_update_consent = yes
+				}
+			}
 		}
 	}
 
