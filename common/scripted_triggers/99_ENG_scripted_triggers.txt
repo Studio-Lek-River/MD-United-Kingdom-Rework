@@ -224,3 +224,44 @@ ENG_uq_occupation_active = {
 		}
 	}
 }
+
+# ENG scope. A coercion step or an occupation is under way, so Imperial Tension does not decay.
+ENG_uq_coercion_active = {
+	OR = {
+		has_idea = ENG_uq_embargo
+		has_idea = ENG_uq_occupation_burden
+		any_of_scopes = {
+			array = ENG_integration_targets
+			check_variable = { ROOT.ENG_coercion@THIS = 4 }
+		}
+	}
+}
+
+# ENG scope. Ireland is being pulled into the Union beyond alignment, which the EU treats as a breach.
+ENG_uq_ireland_targeted = {
+	OR = {
+		check_variable = { ENG_integration_stage@IRE > 1 }
+		check_variable = { ENG_coercion@IRE > 0 }
+	}
+}
+
+# Country scope. The Commonwealth realms that keep the British monarch as head of state.
+ENG_uq_is_crown_realm = {
+	OR = {
+		original_tag = CAN
+		original_tag = AST
+		original_tag = NZL
+		original_tag = JAM
+		original_tag = BAH
+		original_tag = BAR
+		original_tag = BLZ
+		original_tag = ANT
+		original_tag = GRA
+		original_tag = STK
+		original_tag = STL
+		original_tag = STV
+		original_tag = PAP
+		original_tag = SOL
+		original_tag = TUL
+	}
+}

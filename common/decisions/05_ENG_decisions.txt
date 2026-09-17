@@ -4611,6 +4611,7 @@ ENG_the_crown_imperial_decisions = {
 			add_named_threat = { threat = 5 name = ENG_uq_enforce_threat }
 			set_temp_variable = { ENG_imperial_tension_change = 5 }
 			ENG_change_imperial_tension = yes
+			FROM = { ENG_uq_patron_opinion_hit = yes }
 			add_opinion_modifier = { target = FROM modifier = imminent_danger_to_national_security }
 			every_state = {
 				limit = { is_core_of = FROM }

@@ -1279,6 +1279,27 @@ ideas = {
 				war_support_weekly = -0.001
 			}
 		}
+
+		ENG_uq_eu_trade_penalty = {
+			picture = trade
+			allowed_civil_war = { always = yes }
+			cancel = { has_idea = EU_member }
+			modifier = {
+				trade_opinion_factor = -0.15
+				consumer_goods_factor = 0.02
+			}
+		}
+
+		ENG_uq_nato_strain = {
+			picture = NATO_member
+			allowed_civil_war = { always = yes }
+			cancel = { NOT = { has_idea = NATO_member } }
+			modifier = {
+				political_power_factor = -0.05
+				war_support_factor = -0.05
+				faction_trade_opinion_factor = -0.15
+			}
+		}
 	}
 
 	# HIDDEN IDEAS

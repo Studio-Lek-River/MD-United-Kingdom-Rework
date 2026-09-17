@@ -586,6 +586,14 @@ ENG_uq_enter_stage_4 = {
 		}
 		add_core_of = ROOT
 	}
+	if = {
+		limit = { has_country_flag = ENG_uq_western }
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+	}
+	else = {
+		set_temp_variable = { ENG_imperial_tension_change = 10 }
+	}
+	ENG_change_imperial_tension = yes
 	remove_from_array = { ENG_integration_targets = FROM }
 	annex_country = {
 		target = FROM
@@ -743,7 +751,7 @@ ENG_uq_set_accept_weight = {
 }
 
 # Parameters:
-# - ENG_imperial_tension_change: signed amount. ROOT must be ENG. Decay and reaction bands are #10.
+# - ENG_imperial_tension_change: signed amount. ROOT must be ENG. Decay and the reaction bands run in ENG_uq_update_imperial_tension.
 ENG_change_imperial_tension = {
 	custom_effect_tooltip = ENG_imperial_tension_change_tt
 	hidden_effect = {
@@ -888,6 +896,318 @@ ENG_uq_roll_insurgency = {
 		ENG_uq_quiet_weight = {
 			log = "[GetDateText]: [Root.GetName]: quiet month in [This.GetName]"
 		}
+	}
+}
+
+# Monthly Imperial Tension step. ROOT = ENG. Decays 1 a month with no coercion or occupation running (100 to 0 in about 8 years).
+# Each band fires once on the way up and re-arms once tension drops back below it.
+ENG_uq_update_imperial_tension = {
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 0 }
+			NOT = { ENG_uq_coercion_active = yes }
+		}
+		set_temp_variable = { ENG_imperial_tension_change = -1 }
+		ENG_change_imperial_tension = yes
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 19 }
+			NOT = { has_country_flag = ENG_uq_tension_band_20 }
+		}
+		set_country_flag = ENG_uq_tension_band_20
+		ENG_uq_tension_band_20 = yes
+	}
+	else_if = {
+		limit = {
+			check_variable = { ENG_imperial_tension < 20 }
+			has_country_flag = ENG_uq_tension_band_20
+		}
+		clr_country_flag = ENG_uq_tension_band_20
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 39 }
+			NOT = { has_country_flag = ENG_uq_tension_band_40 }
+		}
+		set_country_flag = ENG_uq_tension_band_40
+		ENG_uq_tension_band_40 = yes
+	}
+	else_if = {
+		limit = {
+			check_variable = { ENG_imperial_tension < 40 }
+			has_country_flag = ENG_uq_tension_band_40
+		}
+		clr_country_flag = ENG_uq_tension_band_40
+		if = {
+			limit = { has_idea = ENG_uq_eu_trade_penalty }
+			remove_ideas = ENG_uq_eu_trade_penalty
+		}
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 59 }
+			NOT = { has_country_flag = ENG_uq_tension_band_60 }
+		}
+		set_country_flag = ENG_uq_tension_band_60
+		ENG_uq_tension_band_60 = yes
+	}
+	else_if = {
+		limit = {
+			check_variable = { ENG_imperial_tension < 60 }
+			has_country_flag = ENG_uq_tension_band_60
+		}
+		clr_country_flag = ENG_uq_tension_band_60
+		if = {
+			limit = { has_idea = ENG_uq_nato_strain }
+			remove_ideas = ENG_uq_nato_strain
+		}
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 79 }
+			NOT = { has_country_flag = ENG_uq_tension_band_80 }
+		}
+		set_country_flag = ENG_uq_tension_band_80
+		ENG_uq_tension_band_80 = yes
+	}
+	else_if = {
+		limit = {
+			check_variable = { ENG_imperial_tension < 80 }
+			has_country_flag = ENG_uq_tension_band_80
+		}
+		clr_country_flag = ENG_uq_tension_band_80
+	}
+	if = {
+		limit = { has_country_flag = ENG_uq_tension_band_60 }
+		ENG_uq_patron_reactions = yes
+	}
+	if = {
+		limit = { has_country_flag = ENG_uq_tension_band_80 }
+		ENG_uq_sponsored_resistance = yes
+	}
+	if = {
+		limit = { has_country_flag = ENG_uq_tension_band_40 }
+		ENG_uq_commonwealth_exodus = yes
+	}
+}
+
+# Band 20: the Western capitals and the Commonwealth turn cold.
+ENG_uq_tension_band_20 = {
+	every_other_country = {
+		limit = {
+			OR = {
+				tag = USA
+				tag = FRA
+				tag = GER
+				is_in_array = { array = global.commonwealth_member value = THIS }
+			}
+		}
+		add_opinion_modifier = { target = ROOT modifier = ENG_uq_imperial_tension_opinion }
+	}
+	news_event = { id = United_Kingdom_News.6 hours = 6 }
+}
+
+# Band 40: the EU closes ranks and Washington reviews the special relationship.
+ENG_uq_tension_band_40 = {
+	if = {
+		limit = { NOT = { has_idea = EU_member } }
+		add_ideas = ENG_uq_eu_trade_penalty
+		country_event = { id = ENG_uq.60 days = 1 }
+	}
+	else_if = {
+		limit = { ENG_uq_ireland_targeted = yes }
+		leaving_EU = yes
+		country_event = { id = ENG_uq.61 days = 1 }
+	}
+	every_country = {
+		limit = {
+			OR = {
+				tag = USA
+				tag = CAN
+				tag = AST
+				tag = NZL
+			}
+		}
+		set_temp_variable = { percent_change = -10 }
+		set_temp_variable = { tag_index = ENG }
+		change_influence_percentage = yes
+	}
+	USA = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_special_relationship_opinion } }
+	country_event = { id = ENG_uq.62 days = 2 }
+}
+
+# Band 60: enough generated threat to enter the UN sanctions pool (the AI proposes above 10); NATO strains when a democracy is being coerced.
+ENG_uq_tension_band_60 = {
+	add_named_threat = { threat = 10 name = ENG_uq_imperial_tension_threat }
+	if = {
+		limit = {
+			has_idea = NATO_member
+			any_of_scopes = {
+				array = ENG_integration_targets
+				has_government = democratic
+				check_variable = { ROOT.ENG_coercion@THIS > 1 }
+			}
+		}
+		add_ideas = ENG_uq_nato_strain
+	}
+	country_event = { id = ENG_uq.63 days = 1 }
+}
+
+# Band 80: a rival great power starts arming the resistance in every occupied territory. Russia first, then China, then Washington if both are Britain's partners.
+ENG_uq_tension_band_80 = {
+	if = {
+		limit = {
+			SOV = {
+				exists = yes
+				NOT = { is_in_faction_with = ROOT }
+			}
+		}
+		set_variable = { ENG_uq_resistance_sponsor = SOV }
+	}
+	else_if = {
+		limit = {
+			CHI = {
+				exists = yes
+				NOT = { is_in_faction_with = ROOT }
+			}
+		}
+		set_variable = { ENG_uq_resistance_sponsor = CHI }
+	}
+	else = {
+		set_variable = { ENG_uq_resistance_sponsor = USA }
+	}
+	country_event = { id = ENG_uq.64 days = 1 }
+	var:ENG_uq_resistance_sponsor = { country_event = { id = ENG_uq.65 days = 1 } }
+}
+
+# Monthly while band 80 holds: sponsored resistance grows in every state Britain occupies.
+ENG_uq_sponsored_resistance = {
+	for_each_scope_loop = {
+		array = ENG_integration_targets
+		if = {
+			limit = { ENG_uq_occupation_active = yes }
+			every_state = {
+				limit = {
+					is_core_of = PREV
+					is_controlled_by = ROOT
+				}
+				add_resistance = 3
+			}
+		}
+	}
+}
+
+# Call in the target's scope with ROOT = ENG. The great power that regards the target as its own concern, or nothing.
+ENG_uq_set_patron = {
+	set_temp_variable = { ENG_uq_patron = 0 }
+	if = {
+		limit = {
+			capital_scope = {
+				OR = {
+					is_on_continent = north_america
+					is_on_continent = south_america
+					is_on_continent = australia
+				}
+			}
+		}
+		set_temp_variable = { ENG_uq_patron = USA }
+	}
+	else_if = {
+		limit = { capital_scope = { is_on_continent = asia } }
+		set_temp_variable = { ENG_uq_patron = CHI }
+	}
+	else_if = {
+		limit = { capital_scope = { is_on_continent = africa } }
+		set_temp_variable = { ENG_uq_patron = FRA }
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_uq_patron > 0 }
+			OR = {
+				var:ENG_uq_patron = { exists = no }
+				var:ENG_uq_patron = { is_subject_of = ROOT }
+				var:ENG_uq_patron = { has_war_with = PREV }
+			}
+		}
+		set_temp_variable = { ENG_uq_patron = 0 }
+	}
+}
+
+# Call in the target's scope with ROOT = ENG when the ultimatum is enforced. The patron's opinion of Britain drops.
+ENG_uq_patron_opinion_hit = {
+	ENG_uq_set_patron = yes
+	if = {
+		limit = { check_variable = { ENG_uq_patron > 0 } }
+		var:ENG_uq_patron = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_patron_opinion } }
+	}
+}
+
+# Monthly while band 60 holds. ROOT = ENG. Each target at war with Britain or under occupation draws one reaction from its patron.
+ENG_uq_patron_reactions = {
+	for_each_scope_loop = {
+		array = ENG_integration_targets
+		if = {
+			limit = {
+				check_variable = { ROOT.ENG_coercion@THIS > 3 }
+				ROOT = { NOT = { has_country_flag = ENG_uq_patron_reacted@PREV } }
+			}
+			ENG_uq_set_patron = yes
+			if = {
+				limit = { check_variable = { ENG_uq_patron > 0 } }
+				ROOT = {
+					set_country_flag = ENG_uq_patron_reacted@PREV
+					set_variable = { ENG_uq_event_target = PREV }
+					set_variable = { ENG_uq_patron_var = ENG_uq_patron }
+					country_event = { id = ENG_uq.66 days = 1 }
+				}
+			}
+		}
+	}
+}
+
+# Monthly while band 40 holds. ROOT = ENG. Every member outside the Union rolls to leave; the chance climbs with tension and doubles past 80.
+ENG_uq_commonwealth_exodus = {
+	set_temp_variable = { ENG_uq_leave_chance = { value = ENG_imperial_tension subtract = 40 multiply = 0.1 } }
+	if = {
+		limit = { has_country_flag = ENG_uq_tension_band_80 }
+		multiply_temp_variable = { ENG_uq_leave_chance = 2 }
+	}
+	every_other_country = {
+		limit = {
+			is_in_array = { array = global.commonwealth_member value = THIS }
+			NOT = { is_subject_of = ROOT }
+		}
+		random = {
+			chance = ENG_uq_leave_chance
+			ENG_uq_commonwealth_leave = yes
+		}
+	}
+}
+
+# Call in the leaver's scope with ROOT = ENG. Mirrors MD's denounce decision; a realm that leaves also becomes a republic.
+ENG_uq_commonwealth_leave = {
+	remove_dynamic_modifier = { modifier = Commonwealth_member_modifier }
+	remove_from_array = { global.commonwealth_member = THIS }
+	ROOT = { add_opinion_modifier = { target = PREV modifier = left_alliance } }
+	if = {
+		limit = { ENG_uq_is_crown_realm = yes }
+		set_country_flag = ENG_uq_republic
+		if = {
+			limit = { has_idea = ENG_crown_realm_status }
+			remove_ideas = ENG_crown_realm_status
+		}
+	}
+	ROOT = {
+		set_variable = { ENG_uq_event_target = PREV }
+		news_event = { id = United_Kingdom_News.7 hours = 6 }
+	}
+	every_other_country = {
+		limit = {
+			is_in_array = { array = global.commonwealth_member value = THIS }
+			NOT = { tag = ROOT }
+		}
+		country_event = CMW_Leaving.1
 	}
 }
 

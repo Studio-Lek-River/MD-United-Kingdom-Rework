@@ -694,6 +694,42 @@ news_event = {
 
 	option = { name = United_Kingdom_News.5.a }
 }
+
+news_event = {
+	id = United_Kingdom_News.6
+	title = United_Kingdom_News.6.t
+	desc = United_Kingdom_News.6.d
+	picture = GFX_UN_emergency_meeting
+	is_triggered_only = yes
+	major = yes
+
+	option = {
+		name = United_Kingdom_News.6.a
+		trigger = { original_tag = ENG }
+	}
+
+	option = {
+		name = United_Kingdom_News.6.b
+		trigger = { NOT = { original_tag = ENG } }
+	}
+}
+
+news_event = {
+	id = United_Kingdom_News.7
+	title = United_Kingdom_News.7.t
+	desc = {
+		text = United_Kingdom_News.7.d
+		trigger = { var:ENG_uq_event_target = { NOT = { has_country_flag = ENG_uq_republic } } }
+	}
+	desc = {
+		text = United_Kingdom_News.7.d2
+		trigger = { var:ENG_uq_event_target = { has_country_flag = ENG_uq_republic } }
+	}
+	picture = GFX_news_leave_commonwealth
+	is_triggered_only = yes
+
+	option = { name = United_Kingdom_News.7.a }
+}
 ########################## Political #########################
 
 ########################## Economy #########################
@@ -7963,4 +7999,137 @@ country_event = {
 
 	minor_flavor = yes
 	option = { name = ENG_uq.51.a }
+}
+
+# Imperial Tension bands
+country_event = {
+	id = ENG_uq.60
+	title = ENG_uq.60.t
+	desc = ENG_uq.60.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.60.a
+		effect_tooltip = { add_ideas = ENG_uq_eu_trade_penalty }
+	}
+}
+
+country_event = {
+	id = ENG_uq.61
+	title = ENG_uq.61.t
+	desc = ENG_uq.61.d
+	picture = GFX_country_brexit_referendum
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.61.a
+		effect_tooltip = { remove_ideas = EU_member }
+	}
+}
+
+country_event = {
+	id = ENG_uq.62
+	title = ENG_uq.62.t
+	desc = ENG_uq.62.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.62.a
+		custom_effect_tooltip = ENG_uq_special_relationship_TT
+	}
+}
+
+country_event = {
+	id = ENG_uq.63
+	title = ENG_uq.63.t
+	desc = {
+		text = ENG_uq.63.d
+		trigger = { NOT = { has_idea = ENG_uq_nato_strain } }
+	}
+	desc = {
+		text = ENG_uq.63.d2
+		trigger = { has_idea = ENG_uq_nato_strain }
+	}
+	picture = GFX_raid_international_sanctions
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.63.a
+		custom_effect_tooltip = ENG_uq_sanctions_exposure_TT
+		effect_tooltip = {
+			if = {
+				limit = { has_idea = ENG_uq_nato_strain }
+				add_ideas = ENG_uq_nato_strain
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ENG_uq.64
+	title = ENG_uq.64.t
+	desc = ENG_uq.64.d
+	picture = GFX_generic_soldiers
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.64.a
+		custom_effect_tooltip = ENG_uq_sponsored_resistance_TT
+	}
+}
+
+country_event = {
+	id = ENG_uq.65
+	title = ENG_uq.65.t
+	desc = ENG_uq.65.d
+	picture = GFX_generic_soldiers
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.65.a }
+}
+
+# Patron reaction to a coerced client
+country_event = {
+	id = ENG_uq.66
+	title = ENG_uq.66.t
+	desc = ENG_uq.66.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.66.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.66.a executed"
+		random_list = {
+			60 = {
+				custom_effect_tooltip = ENG_uq_patron_protest_TT
+				var:ENG_uq_patron_var = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_patron_opinion } }
+			}
+			30 = {
+				custom_effect_tooltip = ENG_uq_patron_sanctions_TT
+				var:ENG_uq_patron_var = {
+					add_opinion_modifier = { target = ROOT modifier = ENG_uq_patron_opinion }
+					if = {
+						limit = { has_dlc = "By Blood Alone" }
+						send_embargo = ROOT
+					}
+				}
+			}
+			10 = {
+				custom_effect_tooltip = ENG_uq_patron_claim_TT
+				set_temp_variable = { ENG_uq_claim_target = ENG_uq_event_target }
+				var:ENG_uq_patron_var = {
+					every_state = {
+						limit = {
+							is_core_of = var:ENG_uq_claim_target
+							is_controlled_by = ROOT
+						}
+						add_claim_by = PREV
+					}
+				}
+			}
+		}
+	}
 }

@@ -333,6 +333,10 @@ on_actions = {
 				}
 				remove_ideas = ENG_uq_occupation_burden
 			}
+			if = {
+				limit = { has_country_flag = ENG_union_question_opened }
+				ENG_uq_update_imperial_tension = yes
+			}
 		}
 	}
 
