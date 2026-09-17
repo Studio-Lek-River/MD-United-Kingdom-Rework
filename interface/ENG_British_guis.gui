@@ -410,13 +410,13 @@ containerWindowType = {
 	}
 
 	containerWindowType = {
-		name = "ENG_union_strain_ui_window"
-		size = { width = 420 height = 60 }
+		name = "ENG_uq_ladder_ui_window"
+		size = { width = 420 height = 260 }
 		position = { x = 0 y = 40 }
 		instantTextBoxType = {
 			name = "ENG_union_strain_label"
 			text = "ENG_union_strain_ui_label"
-			position = { x = 100 y = 15 }
+			position = { x = 100 y = 10 }
 			font = "hoi_18mbs"
 			format = center
 			maxwidth = 200
@@ -427,23 +427,17 @@ containerWindowType = {
 		instantTextBoxType = {
 			name = "ENG_union_strain_VAR"
 			text = "ENG_union_strain_ui_VAR"
-			position = { x = 300 y = 15 }
+			position = { x = 300 y = 10 }
 			font = "hoi_18mbs"
 			format = center
 			maxwidth = 80
 			maxheight = 20
 			pdx_tooltip = ENG_union_strain_ui_TT
 		}
-	}
-
-	containerWindowType = {
-		name = "ENG_uq_ladder_ui_window"
-		size = { width = 420 height = 230 }
-		position = { x = 0 y = 40 }
 		instantTextBoxType = {
 			name = "ENG_uq_ladder_label"
 			text = "ENG_uq_ladder_ui_label"
-			position = { x = 100 y = 10 }
+			position = { x = 100 y = 40 }
 			font = "hoi_18mbs"
 			format = center
 			maxwidth = 220
@@ -454,7 +448,7 @@ containerWindowType = {
 		instantTextBoxType = {
 			name = "ENG_uq_ladder_col_target"
 			text = "ENG_uq_ladder_col_target"
-			position = { x = 10 y = 38 }
+			position = { x = 10 y = 68 }
 			font = "hoi_16mbs"
 			format = left
 			maxwidth = 140
@@ -464,7 +458,7 @@ containerWindowType = {
 		instantTextBoxType = {
 			name = "ENG_uq_ladder_col_stage"
 			text = "ENG_uq_ladder_col_stage"
-			position = { x = 150 y = 38 }
+			position = { x = 150 y = 68 }
 			font = "hoi_16mbs"
 			format = center
 			maxwidth = 90
@@ -474,7 +468,7 @@ containerWindowType = {
 		instantTextBoxType = {
 			name = "ENG_uq_ladder_col_meter"
 			text = "ENG_uq_ladder_col_meter"
-			position = { x = 240 y = 38 }
+			position = { x = 240 y = 68 }
 			font = "hoi_16mbs"
 			format = center
 			maxwidth = 80
@@ -484,7 +478,7 @@ containerWindowType = {
 		instantTextBoxType = {
 			name = "ENG_uq_ladder_col_next"
 			text = "ENG_uq_ladder_col_next"
-			position = { x = 320 y = 38 }
+			position = { x = 320 y = 68 }
 			font = "hoi_16mbs"
 			format = center
 			maxwidth = 95
@@ -493,7 +487,7 @@ containerWindowType = {
 		}
 		gridboxType = {
 			name = "ENG_uq_ladder_grid"
-			position = { x = 0 y = 60 }
+			position = { x = 0 y = 90 }
 			size = { width = 420 height = 170 }
 			slotsize = { width = 420 height = 22 }
 			format = "UPPER_LEFT"

@@ -488,25 +488,22 @@ ENG_update_union_strain_modifier = {
 # Parameters:
 # - ENG_union_strain_stage: 1 occupation (+5), 2 subject (+3), 3 constituent (half of 4), 4 integrated (8 + 1 per 2M population)
 ENG_add_union_strain_for_target = {
-	set_temp_variable = { ENG_union_strain_target_pop_k = 0 }
-	every_state = {
-		limit = { is_core_of = PREV }
-		add_to_temp_variable = { ENG_union_strain_target_pop_k = state_population_k }
-	}
 	if = {
-		limit = { check_variable = { ENG_union_strain_stage = 4 } }
-		set_temp_variable = { ENG_union_strain_change = { value = ENG_union_strain_target_pop_k divide = 2000 add = 8 round = yes } }
-	}
-	else_if = {
-		limit = { check_variable = { ENG_union_strain_stage = 3 } }
-		set_temp_variable = { ENG_union_strain_change = { value = ENG_union_strain_target_pop_k divide = 2000 add = 8 multiply = 0.5 round = yes } }
-	}
-	else_if = {
-		limit = { check_variable = { ENG_union_strain_stage = 2 } }
-		set_temp_variable = { ENG_union_strain_change = 3 }
+		limit = { check_variable = { ENG_union_strain_stage < 3 } }
+		set_temp_variable = { ENG_union_strain_change = { value = 8 subtract = ENG_union_strain_stage } }
 	}
 	else = {
-		set_temp_variable = { ENG_union_strain_change = 5 }
+		set_temp_variable = { ENG_union_strain_change = 0 }
+		every_state = {
+			limit = { is_core_of = PREV }
+			add_to_temp_variable = { ENG_union_strain_change = state_population_k }
+		}
+		set_temp_variable = { ENG_union_strain_change = { value = ENG_union_strain_change divide = 2000 add = 8 } }
+		if = {
+			limit = { check_variable = { ENG_union_strain_stage = 3 } }
+			multiply_temp_variable = { ENG_union_strain_change = 0.5 }
+		}
+		round_temp_variable = ENG_union_strain_change
 	}
 	ENG_change_union_strain = yes
 }
@@ -522,10 +519,9 @@ ENG_uq_align_target = {
 	}
 }
 
-# Stage 1 -> 2. Call from a targeted ladder decision with FROM = target.
+# Stage 1 -> 2. Call with ROOT = ENG and FROM = target (ladder decision or acceptance event).
 ENG_uq_enter_stage_2 = {
 	set_variable = { ENG_integration_stage@FROM = 2 }
-	clr_country_flag = ENG_uq_accepted@FROM
 	if = {
 		limit = { has_country_flag = ENG_uq_western }
 		set_autonomy = {
@@ -548,20 +544,20 @@ ENG_uq_enter_stage_2 = {
 	}
 }
 
-# Stage 2 -> 3. Call from a targeted ladder decision with FROM = target. The stage is set first because the autonomy level's allowed reads it.
+# Stage 2 -> 3. Call with ROOT = ENG and FROM = target. A non-existing target is an annexed Nationalist occupation and is released first.
+# The stage is set first because the constituent level's allowed reads it; that level also refuses an overlord that purged devolution.
 ENG_uq_enter_stage_3 = {
 	set_variable = { ENG_integration_stage@FROM = 3 }
-	clr_country_flag = ENG_uq_referendum_won@FROM
 	if = {
-		limit = { FROM = { exists = yes } }
-		set_autonomy = {
+		limit = { FROM = { exists = no } }
+		release_autonomy = {
 			target = FROM
-			autonomy_state = autonomy_constituent_country_very_low_devolution
+			autonomy_state = autonomy_crown_protectorate
 		}
 	}
-	else = {
-		FROM = { ENG_uq_end_occupation = yes }
-		release_autonomy = {
+	if = {
+		limit = { NOT = { has_country_flag = ENG_devolution_purged } }
+		set_autonomy = {
 			target = FROM
 			autonomy_state = autonomy_constituent_country_very_low_devolution
 		}
@@ -572,10 +568,9 @@ ENG_uq_enter_stage_3 = {
 	}
 }
 
-# Stage 3 -> 4. Call from a targeted ladder decision with FROM = target.
+# Stage 3 -> 4. Call with ROOT = ENG and FROM = target.
 ENG_uq_enter_stage_4 = {
 	set_variable = { ENG_integration_stage@FROM = 4 }
-	clr_country_flag = ENG_uq_accepted@FROM
 	FROM = {
 		set_temp_variable = { ENG_union_strain_stage = 4 }
 		ENG_add_union_strain_for_target = yes
@@ -592,14 +587,13 @@ ENG_uq_enter_stage_4 = {
 		add_core_of = ROOT
 	}
 	remove_from_array = { ENG_integration_targets = FROM }
-	add_to_array = { ENG_integrated_targets = FROM }
 	annex_country = {
 		target = FROM
 		transfer_troops = yes
 	}
 }
 
-# Mission timeout, cancel or lost referendum. Call from a targeted ladder decision with FROM = target.
+# Declined offer, refused or lost referendum. Call with ROOT = ENG and FROM = target.
 ENG_uq_fail_transition = {
 	custom_effect_tooltip = ENG_uq_fail_transition_TT
 	hidden_effect = {
@@ -610,8 +604,10 @@ ENG_uq_fail_transition = {
 		else = {
 			set_country_flag = { flag = ENG_uq_lock@FROM days = 1095 }
 		}
-		subtract_from_variable = { ENG_consent@FROM = 20 }
-		clamp_variable = { var = ENG_consent@FROM min = 0 }
+	}
+	FROM = {
+		set_temp_variable = { ENG_uq_consent_change = -20 }
+		ENG_uq_change_consent = yes
 	}
 }
 
@@ -633,7 +629,7 @@ ENG_uq_change_consent = {
 	}
 }
 
-# Monthly consent step for one Western-path target. Call in the target's scope.
+# Monthly consent step for one ladder target. Call in the target's scope with ROOT = ENG; the Nationalist path ticks at half rate.
 ENG_uq_update_consent = {
 	set_temp_variable = { ENG_uq_consent_change = 0 }
 	if = {
@@ -722,12 +718,66 @@ ENG_uq_update_consent = {
 	}
 }
 
+# AI weight for accepting a ladder offer or referendum request. Call in the target's scope with FROM = ENG.
+ENG_uq_set_accept_weight = {
+	set_variable = { ENG_uq_accept_weight = { value = FROM.ENG_consent@THIS subtract = 50 multiply = 2 } }
+	if = {
+		limit = { is_in_faction_with = FROM }
+		add_to_variable = { ENG_uq_accept_weight = 20 }
+	}
+	if = {
+		limit = { has_war = yes }
+		subtract_from_variable = { ENG_uq_accept_weight = 30 }
+	}
+	if = {
+		limit = {
+			has_government = nationalist
+			nationalist_monarchists_are_in_power = no
+		}
+		subtract_from_variable = { ENG_uq_accept_weight = 50 }
+	}
+	if = {
+		limit = { has_opinion = { target = FROM value > 80 } }
+		add_to_variable = { ENG_uq_accept_weight = 15 }
+	}
+}
+
 # Parameters:
 # - ENG_imperial_tension_change: signed amount. ROOT must be ENG. Decay and reaction bands are #10.
 ENG_change_imperial_tension = {
 	custom_effect_tooltip = ENG_imperial_tension_change_tt
 	hidden_effect = {
 		set_variable = { ROOT.ENG_imperial_tension = { value = ROOT.ENG_imperial_tension add = ENG_imperial_tension_change clamp = { min = 0 max = 100 } } }
+	}
+}
+
+# Monthly coercion step for one Nationalist-path target. Call in the target's scope with ROOT = ENG.
+# Unused claims lapse, a won war becomes an occupation, each occupied month costs tension and rolls an insurgency.
+ENG_uq_update_coercion = {
+	if = {
+		limit = {
+			check_variable = { ROOT.ENG_coercion@THIS = 4 }
+			NOT = { has_war_with = ROOT }
+		}
+		if = {
+			limit = { ENG_uq_all_cores_held = yes }
+			ENG_uq_begin_occupation = yes
+		}
+		else_if = {
+			limit = { ROOT = { NOT = { has_country_flag = ENG_uq_claims@PREV } } }
+			ENG_uq_expire_claims = yes
+		}
+	}
+	if = {
+		limit = { check_variable = { ROOT.ENG_coercion@THIS = 5 } }
+		ROOT = {
+			set_temp_variable = { ENG_imperial_tension_change = 1 }
+			ENG_change_imperial_tension = yes
+		}
+	}
+	if = {
+		limit = { ENG_uq_occupation_active = yes }
+		ENG_uq_roll_insurgency = yes
 	}
 }
 
@@ -738,6 +788,8 @@ ENG_uq_begin_occupation = {
 		clr_country_flag = ENG_uq_claims@PREV
 		set_variable = { ENG_uq_event_target = PREV }
 	}
+	set_temp_variable = { ENG_union_strain_stage = 1 }
+	ENG_add_union_strain_for_target = yes
 	if = {
 		limit = { has_idea = ENG_uq_loyalist_movement }
 		remove_ideas = ENG_uq_loyalist_movement
@@ -770,7 +822,7 @@ ENG_uq_begin_occupation = {
 	}
 }
 
-# Call in the target's scope with ROOT = ENG. Pacification success or a stage 3 release ends the occupation regime on its states.
+# Call in the target's scope with ROOT = ENG. Pacification success ends the occupation regime on its states.
 ENG_uq_end_occupation = {
 	every_state = {
 		limit = {

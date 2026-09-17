@@ -129,27 +129,12 @@ ENG_uq_realms_done = {
 	}
 }
 
-ENG_uq_strain_allows_transition = {
+# FROM = the ladder target
+ENG_uq_can_transition = {
 	custom_trigger_tooltip = {
 		tooltip = ENG_uq_strain_allows_transition_TT
 		check_variable = { ENG_union_strain < 61 }
 	}
-}
-
-ENG_uq_integration_mission_active = {
-	OR = {
-		has_active_mission = ENG_uq_offer_association
-		has_active_mission = ENG_uq_impose_protectorate
-		has_active_mission = ENG_uq_constituent_status
-		has_active_mission = ENG_uq_constituent_status_crown
-		has_active_mission = ENG_uq_integration_act
-		has_active_mission = ENG_uq_integration_act_crown
-	}
-}
-
-# FROM = the ladder target
-ENG_uq_can_transition = {
-	ENG_uq_strain_allows_transition = yes
 	custom_trigger_tooltip = {
 		tooltip = ENG_uq_not_at_war_TT
 		OR = {
@@ -163,7 +148,7 @@ ENG_uq_can_transition = {
 	}
 }
 
-# Target scope. Mirrors influence_higher_50 without depending on ROOT.
+# Target scope with ROOT = ENG. influence_higher_50 plus the La Resistance network branch the foreign-ops focuses use.
 ENG_uq_high_influence = {
 	if = {
 		limit = { has_dlc = "La Resistance" }
@@ -175,7 +160,7 @@ ENG_uq_high_influence = {
 	}
 }
 
-# Target scope. Mirrors influence_higher_30 without depending on ROOT.
+# Target scope with ROOT = ENG. influence_higher_30 plus the La Resistance network branch the foreign-ops focuses use.
 ENG_uq_medium_influence = {
 	if = {
 		limit = { has_dlc = "La Resistance" }
@@ -208,6 +193,22 @@ ENG_uq_states_pacified = {
 			OR = {
 				compliance < 70
 				resistance > 20
+			}
+		}
+	}
+}
+
+# Target scope with ROOT = ENG. Every state it holds a core on is under British rule.
+ENG_uq_all_cores_held = {
+	any_state = { is_core_of = PREV }
+	NOT = {
+		any_state = {
+			is_core_of = PREV
+			NOT = {
+				OR = {
+					is_controlled_by = ROOT
+					controller = { is_subject_of = ROOT }
+				}
 			}
 		}
 	}

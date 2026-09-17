@@ -225,11 +225,6 @@ scripted_gui = {
 		}
 	}
 
-	ENG_union_strain_ui = {
-		window_name = "ENG_union_strain_ui_window"
-		context_type = decision_category
-	}
-
 	ENG_uq_ladder_ui = {
 		window_name = "ENG_uq_ladder_ui_window"
 		context_type = decision_category

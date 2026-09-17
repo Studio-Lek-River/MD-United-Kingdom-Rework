@@ -7601,13 +7601,29 @@ country_event = {
 	option = { name = ENG_uq.11.a }
 }
 
-# Association Offer
+# Association Offer (stage 1) or Integration Act (stage 3)
 country_event = {
 	id = ENG_uq.20
-	title = ENG_uq.20.t
-	desc = ENG_uq.20.d
+	title = {
+		text = ENG_uq.20.t
+		trigger = { FROM = { check_variable = { ENG_integration_stage@ROOT = 1 } } }
+	}
+	title = {
+		text = ENG_uq.30.t
+		trigger = { FROM = { check_variable = { ENG_integration_stage@ROOT = 3 } } }
+	}
+	desc = {
+		text = ENG_uq.20.d
+		trigger = { FROM = { check_variable = { ENG_integration_stage@ROOT = 1 } } }
+	}
+	desc = {
+		text = ENG_uq.30.d
+		trigger = { FROM = { check_variable = { ENG_integration_stage@ROOT = 3 } } }
+	}
 	picture = GFX_treaty
 	is_triggered_only = yes
+
+	immediate = { ENG_uq_set_accept_weight = yes }
 
 	option = {
 		name = ENG_uq.20.a
@@ -7619,29 +7635,7 @@ country_event = {
 		}
 		ai_chance = {
 			base = 0
-			modifier = {
-				set_temp_variable = { ENG_uq_accept_weight = FROM.ENG_consent@ROOT }
-				subtract_from_temp_variable = { ENG_uq_accept_weight = 50 }
-				multiply_temp_variable = { ENG_uq_accept_weight = 2 }
-				add = ENG_uq_accept_weight
-			}
-			modifier = {
-				add = 20
-				is_in_faction_with = FROM
-			}
-			modifier = {
-				add = -30
-				has_war = yes
-			}
-			modifier = {
-				add = -50
-				has_government = nationalist
-				nationalist_monarchists_are_in_power = no
-			}
-			modifier = {
-				add = 15
-				has_opinion = { target = FROM value > 80 }
-			}
+			modifier = { add = ENG_uq_accept_weight }
 		}
 	}
 
@@ -7660,22 +7654,41 @@ country_event = {
 country_event = {
 	id = ENG_uq.21
 	title = ENG_uq.21.t
-	desc = ENG_uq.21.d
+	desc = {
+		text = ENG_uq.21.d
+		trigger = { check_variable = { ENG_integration_stage@FROM = 1 } }
+	}
+	desc = {
+		text = ENG_uq.21.d2
+		trigger = { check_variable = { ENG_integration_stage@FROM = 3 } }
+	}
 	picture = GFX_treaty
 	is_triggered_only = yes
 
 	option = {
 		name = ENG_uq.21.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.21.a executed"
-		set_country_flag = ENG_uq_accepted@FROM
-		custom_effect_tooltip = ENG_uq_target_accepted_TT
+		if = {
+			limit = { check_variable = { ENG_integration_stage@FROM = 1 } }
+			ENG_uq_enter_stage_2 = yes
+		}
+		else = {
+			ENG_uq_enter_stage_4 = yes
+		}
 	}
 }
 
 country_event = {
 	id = ENG_uq.22
 	title = ENG_uq.22.t
-	desc = ENG_uq.22.d
+	desc = {
+		text = ENG_uq.22.d
+		trigger = { check_variable = { ENG_integration_stage@FROM = 1 } }
+	}
+	desc = {
+		text = ENG_uq.22.d2
+		trigger = { check_variable = { ENG_integration_stage@FROM = 3 } }
+	}
 	picture = GFX_treaty_rejected
 	is_triggered_only = yes
 
@@ -7694,6 +7707,8 @@ country_event = {
 	picture = GFX_election_day
 	is_triggered_only = yes
 
+	immediate = { ENG_uq_set_accept_weight = yes }
+
 	option = {
 		name = ENG_uq.23.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.23.a executed"
@@ -7701,29 +7716,7 @@ country_event = {
 		country_event = { id = ENG_uq.25 days = 60 }
 		ai_chance = {
 			base = 0
-			modifier = {
-				set_temp_variable = { ENG_uq_accept_weight = FROM.ENG_consent@ROOT }
-				subtract_from_temp_variable = { ENG_uq_accept_weight = 50 }
-				multiply_temp_variable = { ENG_uq_accept_weight = 2 }
-				add = ENG_uq_accept_weight
-			}
-			modifier = {
-				add = 20
-				is_in_faction_with = FROM
-			}
-			modifier = {
-				add = -30
-				has_war = yes
-			}
-			modifier = {
-				add = -50
-				has_government = nationalist
-				nationalist_monarchists_are_in_power = no
-			}
-			modifier = {
-				add = 15
-				has_opinion = { target = FROM value > 80 }
-			}
+			modifier = { add = ENG_uq_accept_weight }
 		}
 	}
 
@@ -7801,8 +7794,7 @@ country_event = {
 	option = {
 		name = ENG_uq.27.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.27.a executed"
-		set_country_flag = ENG_uq_referendum_won@FROM
-		custom_effect_tooltip = ENG_uq_referendum_won_TT
+		ENG_uq_enter_stage_3 = yes
 	}
 }
 
@@ -7828,62 +7820,6 @@ country_event = {
 		name = ENG_uq.29.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.29.a executed"
 		ENG_uq_fail_transition = yes
-	}
-}
-
-# Integration Act
-country_event = {
-	id = ENG_uq.30
-	title = ENG_uq.30.t
-	desc = ENG_uq.30.d
-	picture = GFX_treaty
-	is_triggered_only = yes
-
-	option = {
-		name = ENG_uq.30.a
-		log = "[GetDateText]: [This.GetName]: ENG_uq.30.a executed"
-		custom_effect_tooltip = TT_IF_WE_ACCEPT
-		custom_effect_tooltip = ENG_uq_we_accept_TT
-		hidden_effect = {
-			ENG = { country_event = { id = ENG_uq.21 days = 1 } }
-		}
-		ai_chance = {
-			base = 0
-			modifier = {
-				set_temp_variable = { ENG_uq_accept_weight = FROM.ENG_consent@ROOT }
-				subtract_from_temp_variable = { ENG_uq_accept_weight = 50 }
-				multiply_temp_variable = { ENG_uq_accept_weight = 2 }
-				add = ENG_uq_accept_weight
-			}
-			modifier = {
-				add = 20
-				is_in_faction_with = FROM
-			}
-			modifier = {
-				add = -30
-				has_war = yes
-			}
-			modifier = {
-				add = -50
-				has_government = nationalist
-				nationalist_monarchists_are_in_power = no
-			}
-			modifier = {
-				add = 15
-				has_opinion = { target = FROM value > 80 }
-			}
-		}
-	}
-
-	option = {
-		name = ENG_uq.30.b
-		log = "[GetDateText]: [This.GetName]: ENG_uq.30.b executed"
-		custom_effect_tooltip = TT_IF_WE_DECLINE
-		custom_effect_tooltip = ENG_uq_we_decline_TT
-		hidden_effect = {
-			ENG = { country_event = { id = ENG_uq.22 days = 1 } }
-		}
-		ai_chance = { base = 40 }
 	}
 }
 

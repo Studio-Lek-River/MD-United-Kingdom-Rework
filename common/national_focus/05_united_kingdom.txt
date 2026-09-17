@@ -23157,7 +23157,7 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_family_of_nations"
 			unlock_decision_category_tooltip = ENG_a_family_of_nations_decisions
-			unlock_decision_category_tooltip = ENG_union_strain_decisions
+			unlock_decision_category_tooltip = ENG_union_question_decisions
 			set_country_flag = ENG_uq_western
 		}
 
@@ -23186,7 +23186,7 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crown_imperial"
 			unlock_decision_category_tooltip = ENG_the_crown_imperial_decisions
-			unlock_decision_category_tooltip = ENG_union_strain_decisions
+			unlock_decision_category_tooltip = ENG_union_question_decisions
 			add_stability = -0.10
 			add_named_threat = { threat = 1 name = ENG_crown_imperial_threat }
 			set_country_flag = ENG_uq_nationalist

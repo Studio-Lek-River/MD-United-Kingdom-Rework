@@ -290,19 +290,13 @@ on_actions = {
 				}
 			}
 
-			# Union Strain: the cost of empire eases only at peace, and slower while a stage transition runs
+			# Union Strain eases only at peace
 			if = {
 				limit = {
 					check_variable = { ENG_union_strain > 0 }
 					has_war = no
 				}
-				if = {
-					limit = { ENG_uq_integration_mission_active = yes }
-					set_temp_variable = { ENG_union_strain_change = -0.5 }
-				}
-				else = {
-					set_temp_variable = { ENG_union_strain_change = -1 }
-				}
+				set_temp_variable = { ENG_union_strain_change = -1 }
 				ENG_change_union_strain = yes
 			}
 
@@ -310,84 +304,34 @@ on_actions = {
 			if = {
 				limit = {
 					NOT = { has_country_flag = ENG_devolution_purged }
-					check_variable = { ENG_union_strain > 9 }
+					check_variable = { ENG_union_strain > 0 }
 				}
-				set_temp_variable = { ENG_agitation_change = { value = ENG_union_strain divide = 10 subtract = 0.5 round = yes multiply = 0.2 } }
+				set_temp_variable = { ENG_agitation_change = { value = ENG_union_strain multiply = 0.02 } }
 				ENG_change_scottish_agitation = yes
 				ENG_change_north_irish_agitation = yes
 				ENG_change_wales_agitation = yes
 			}
 
-			# Consent: every Western-path target drifts with influence, trade, opinion and politics; the Nationalist path only ticks at half rate
-			if = {
-				limit = {
-					OR = {
-						has_country_flag = ENG_uq_western
-						has_country_flag = ENG_uq_nationalist
-					}
-				}
-				for_each_scope_loop = {
-					array = ENG_integration_targets
-					ENG_uq_update_consent = yes
+			# Every ladder target: consent drifts on both paths, coercion only on the Nationalist path
+			for_each_scope_loop = {
+				array = ENG_integration_targets
+				ENG_uq_update_consent = yes
+				if = {
+					limit = { ROOT = { has_country_flag = ENG_uq_nationalist } }
+					ENG_uq_update_coercion = yes
 				}
 			}
-
-			# Coercion: unused claims lapse, won wars become occupations, occupied months cost tension and roll insurgencies
 			if = {
-				limit = { has_country_flag = ENG_uq_nationalist }
-				for_each_scope_loop = {
-					array = ENG_integration_targets
-					if = {
-						limit = {
-							check_variable = { ROOT.ENG_coercion@THIS = 4 }
-							NOT = { has_war_with = ROOT }
+				limit = {
+					has_idea = ENG_uq_occupation_burden
+					NOT = {
+						any_of_scopes = {
+							array = ENG_integration_targets
+							ENG_uq_occupation_active = yes
 						}
-						if = {
-							limit = {
-								any_state = { is_core_of = PREV }
-								NOT = {
-									any_state = {
-										is_core_of = PREV
-										NOT = {
-											OR = {
-												is_controlled_by = ROOT
-												controller = { is_subject_of = ROOT }
-											}
-										}
-									}
-								}
-							}
-							ENG_uq_begin_occupation = yes
-						}
-						else_if = {
-							limit = { ROOT = { NOT = { has_country_flag = ENG_uq_claims@PREV } } }
-							ENG_uq_expire_claims = yes
-						}
-					}
-					if = {
-						limit = { check_variable = { ROOT.ENG_coercion@THIS = 5 } }
-						ROOT = {
-							set_temp_variable = { ENG_imperial_tension_change = 1 }
-							ENG_change_imperial_tension = yes
-						}
-					}
-					if = {
-						limit = { ENG_uq_occupation_active = yes }
-						ENG_uq_roll_insurgency = yes
 					}
 				}
-				if = {
-					limit = {
-						has_idea = ENG_uq_occupation_burden
-						NOT = {
-							any_of_scopes = {
-								array = ENG_integration_targets
-								ENG_uq_occupation_active = yes
-							}
-						}
-					}
-					remove_ideas = ENG_uq_occupation_burden
-				}
+				remove_ideas = ENG_uq_occupation_burden
 			}
 		}
 	}
