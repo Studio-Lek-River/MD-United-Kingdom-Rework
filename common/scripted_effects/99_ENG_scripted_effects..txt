@@ -587,6 +587,17 @@ ENG_uq_enter_stage_4 = {
 		add_core_of = ROOT
 	}
 	remove_from_array = { ENG_integration_targets = FROM }
+	if = {
+		limit = { FROM = { NOT = { OR = { original_tag = SCO original_tag = WAS original_tag = NIR } } } }
+		if = {
+			limit = { has_country_flag = ENG_uq_western }
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+		}
+		else = {
+			set_temp_variable = { ENG_imperial_tension_change = 10 }
+		}
+		ENG_change_imperial_tension = yes
+	}
 	annex_country = {
 		target = FROM
 		transfer_troops = yes
@@ -758,11 +769,106 @@ ENG_uq_set_accept_weight = {
 }
 
 # Parameters:
-# - ENG_imperial_tension_change: signed amount. ROOT must be ENG. Decay and reaction bands are #10.
+# - ENG_imperial_tension_change: signed amount. ROOT must be ENG. Decay, reaction bands and exodus: ENG_uq_update_imperial_tension.
 ENG_change_imperial_tension = {
 	custom_effect_tooltip = ENG_imperial_tension_change_tt
 	hidden_effect = {
 		set_variable = { ROOT.ENG_imperial_tension = { value = ROOT.ENG_imperial_tension add = ENG_imperial_tension_change clamp = { min = 0 max = 100 } } }
+	}
+}
+
+# Monthly tension step. ROOT = ENG. Bands fire once each on the way up and re-arm once tension drops below them.
+ENG_uq_update_imperial_tension = {
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 0 }
+			ENG_uq_coercion_active = no
+		}
+		set_temp_variable = { ENG_imperial_tension_change = -1 }
+		ENG_change_imperial_tension = yes
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 19.999 }
+			check_variable = { ENG_uq_tension_band < 20 }
+		}
+		set_variable = { ENG_uq_tension_band = 20 }
+		country_event = { id = ENG_uq.61 days = 1 }
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 39.999 }
+			check_variable = { ENG_uq_tension_band < 40 }
+		}
+		set_variable = { ENG_uq_tension_band = 40 }
+		country_event = { id = ENG_uq.62 days = 1 }
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 59.999 }
+			check_variable = { ENG_uq_tension_band < 60 }
+		}
+		set_variable = { ENG_uq_tension_band = 60 }
+		country_event = { id = ENG_uq.63 days = 1 }
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 79.999 }
+			check_variable = { ENG_uq_tension_band < 80 }
+		}
+		set_variable = { ENG_uq_tension_band = 80 }
+		country_event = { id = ENG_uq.64 days = 1 }
+	}
+	if = {
+		limit = { check_variable = { ENG_imperial_tension < ENG_uq_tension_band } }
+		if = {
+			limit = { check_variable = { ENG_imperial_tension < 20 } }
+			set_variable = { ENG_uq_tension_band = 0 }
+		}
+		else_if = {
+			limit = { check_variable = { ENG_imperial_tension < 40 } }
+			set_variable = { ENG_uq_tension_band = 20 }
+		}
+		else_if = {
+			limit = { check_variable = { ENG_imperial_tension < 60 } }
+			set_variable = { ENG_uq_tension_band = 40 }
+		}
+		else = {
+			set_variable = { ENG_uq_tension_band = 60 }
+		}
+	}
+	if = {
+		limit = { check_variable = { ENG_imperial_tension > 19.999 } }
+		ENG_uq_roll_exodus = yes
+	}
+}
+
+# One member a month may walk out. Chance grows with tension above 20 and cohesion below 50, doubled at the 80 band.
+ENG_uq_roll_exodus = {
+	set_temp_variable = { ENG_uq_exodus_chance = { value = ENG_imperial_tension subtract = 20 } }
+	add_to_temp_variable = { ENG_uq_exodus_chance = { value = 50 subtract = ENG_commonwealth_cohesion } }
+	if = {
+		limit = { check_variable = { ENG_imperial_tension > 79.999 } }
+		multiply_temp_variable = { ENG_uq_exodus_chance = 2 }
+	}
+	clamp_temp_variable = { var = ENG_uq_exodus_chance min = 0 max = 100 }
+	set_temp_variable = { ENG_uq_exodus_stay = { value = 100 subtract = ENG_uq_exodus_chance } }
+	random_list = {
+		ENG_uq_exodus_chance = {
+			random_scope_in_array = {
+				array = global.commonwealth_member
+				limit = {
+					NOT = { tag = ROOT }
+					exists = yes
+					NOT = { is_subject_of = ROOT }
+					NOT = { is_in_faction_with = ROOT }
+				}
+				country_event = { id = ENG_uq.71 days = 1 }
+			}
+		}
+		ENG_uq_exodus_stay = {
+			log = "[GetDateText]: [Root.GetName]: no Commonwealth exodus this month"
+		}
 	}
 }
 

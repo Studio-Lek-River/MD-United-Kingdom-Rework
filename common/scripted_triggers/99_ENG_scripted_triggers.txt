@@ -225,7 +225,7 @@ ENG_uq_occupation_active = {
 	}
 }
 
-# Shares the monarch at the 2000 start and is still in the Commonwealth. Leaving drops it; #16 adds republics.
+# Shares the monarch at the 2000 start, is still in the Commonwealth and has not declared a republic.
 ENG_is_crown_realm = {
 	OR = {
 		original_tag = CAN
@@ -245,6 +245,7 @@ ENG_is_crown_realm = {
 		original_tag = TUL
 	}
 	is_in_array = { array = global.commonwealth_member value = THIS }
+	NOT = { ENG = { has_country_flag = ENG_uq_republic@PREV } }
 }
 
 # ROOT = ENG. A programme counts while its idea is held; the Defence Pact while ENG still leads it.
@@ -264,4 +265,19 @@ ENG_cw_hogm_censure = {
 ENG_cw_hogm_communique = {
 	check_variable = { ENG_commonwealth_cohesion > 60 }
 	check_variable = { ENG_imperial_tension < 20 }
+}
+
+# ROOT = ENG. A live coercive act: embargo, standing claims, war with a target, or an occupation.
+ENG_uq_coercion_active = {
+	OR = {
+		has_idea = ENG_uq_embargo
+		any_of_scopes = {
+			array = ENG_integration_targets
+			OR = {
+				has_war_with = ROOT
+				ROOT = { has_country_flag = ENG_uq_claims@PREV }
+				ENG_uq_occupation_active = yes
+			}
+		}
+	}
 }

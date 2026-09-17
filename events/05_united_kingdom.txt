@@ -8031,3 +8031,194 @@ country_event = {
 		}
 	}
 }
+
+# Imperial Tension crosses 20: allies and the Commonwealth register their displeasure
+country_event = {
+	id = ENG_uq.61
+	title = ENG_uq.61.t
+	desc = ENG_uq.61.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.61.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.61.a executed"
+		custom_effect_tooltip = ENG_uq_band_20_opinion_TT
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = USA
+						original_tag = FRA
+						original_tag = GER
+						is_in_array = { array = global.commonwealth_member value = THIS }
+					}
+					NOT = { tag = ROOT }
+				}
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_tension_opinion }
+			}
+		}
+	}
+}
+
+# Imperial Tension crosses 40: Brussels and Washington react
+country_event = {
+	id = ENG_uq.62
+	title = ENG_uq.62.t
+	desc = ENG_uq.62.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.62.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.62.a executed"
+		if = {
+			limit = {
+				has_idea = EU_member
+				is_in_array = { array = ENG_integration_targets value = IRE }
+			}
+			leaving_EU = yes
+		}
+		else_if = {
+			limit = { NOT = { has_idea = EU_member } }
+			add_timed_idea = { idea = ENG_uq_eu_trade_penalty days = 730 }
+		}
+		custom_effect_tooltip = ENG_uq_band_40_usa_TT
+		hidden_effect = {
+			every_other_country = {
+				limit = { OR = { original_tag = CAN original_tag = AST original_tag = NZL } }
+				set_temp_variable = { percent_change = -10 }
+				set_temp_variable = { tag_index = ENG }
+				change_influence_percentage = yes
+			}
+		}
+	}
+}
+
+# Imperial Tension crosses 60: UN sanctions eligibility and NATO unease
+country_event = {
+	id = ENG_uq.63
+	title = ENG_uq.63.t
+	desc = ENG_uq.63.d
+	picture = GFX_raid_international_sanctions
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.63.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.63.a executed"
+		add_named_threat = { threat = 5 name = ENG_uq_tension_threat }
+		if = {
+			limit = {
+				has_idea = NATO_member
+				any_of_scopes = {
+					array = ENG_integration_targets
+					has_government = democratic
+				}
+			}
+			add_timed_idea = { idea = ENG_uq_nato_strain days = 730 }
+		}
+	}
+}
+
+# Imperial Tension crosses 80: foreign powers fund the resistance and the exodus gathers pace
+country_event = {
+	id = ENG_uq.64
+	title = ENG_uq.64.t
+	desc = ENG_uq.64.d
+	picture = GFX_generic_soldiers
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.64.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.64.a executed"
+		custom_effect_tooltip = ENG_uq_band_80_resistance_TT
+		hidden_effect = {
+			for_each_scope_loop = {
+				array = ENG_integration_targets
+				if = {
+					limit = { ENG_uq_occupation_active = yes }
+					every_state = {
+						limit = {
+							is_core_of = PREV
+							is_controlled_by = ROOT
+						}
+						add_resistance = 10
+					}
+				}
+			}
+		}
+	}
+}
+
+# A Commonwealth member leaves. Fired on ENG from the leaver's own exit event
+country_event = {
+	id = ENG_uq.70
+	title = {
+		text = ENG_uq.70.t_republic
+		trigger = { has_country_flag = ENG_uq_republic@FROM }
+	}
+	title = {
+		text = ENG_uq.70.t
+		trigger = { NOT = { has_country_flag = ENG_uq_republic@FROM } }
+	}
+	desc = {
+		text = ENG_uq.70.d_republic
+		trigger = { has_country_flag = ENG_uq_republic@FROM }
+	}
+	desc = {
+		text = ENG_uq.70.d
+		trigger = { NOT = { has_country_flag = ENG_uq_republic@FROM } }
+	}
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+	minor_flavor = yes
+
+	option = {
+		name = ENG_uq.70.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.70.a executed"
+	}
+}
+
+# The Commonwealth exodus roll picks this member to leave
+country_event = {
+	id = ENG_uq.71
+	title = ENG_uq.71.t
+	desc = {
+		text = ENG_uq.71.d_republic
+		trigger = { ENG = { has_country_flag = ENG_uq_republic@ROOT } }
+	}
+	desc = {
+		text = ENG_uq.71.d
+		trigger = { ENG = { NOT = { has_country_flag = ENG_uq_republic@ROOT } } }
+	}
+	picture = GFX_generic_factory
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = { ENG_is_crown_realm = yes }
+			ENG = { set_country_flag = ENG_uq_republic@PREV }
+		}
+		if = {
+			limit = { has_dynamic_modifier = { modifier = Commonwealth_member_modifier } }
+			remove_dynamic_modifier = { modifier = Commonwealth_member_modifier }
+		}
+		remove_from_array = { global.commonwealth_member = THIS }
+		ENG = {
+			add_opinion_modifier = { target = PREV modifier = left_alliance }
+			country_event = { id = ENG_uq.70 days = 1 }
+		}
+		for_each_scope_loop = {
+			array = global.commonwealth_member
+			if = {
+				limit = { NOT = { tag = ENG } }
+				country_event = CMW_Leaving.1
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.71.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.71.a executed"
+	}
+}

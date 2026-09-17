@@ -327,6 +327,12 @@ on_actions = {
 				}
 			}
 
+			# Imperial Tension: decays only while no coercion runs, fires each reaction band once on the way up, may push a member out
+			if = {
+				limit = { has_country_flag = ENG_union_question_opened }
+				ENG_uq_update_imperial_tension = yes
+			}
+
 			# Every ladder target: consent drifts on both paths, coercion only on the Nationalist path
 			for_each_scope_loop = {
 				array = ENG_integration_targets
