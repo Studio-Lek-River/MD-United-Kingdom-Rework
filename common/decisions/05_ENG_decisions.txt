@@ -4449,6 +4449,231 @@ ENG_a_more_united_kingdom_decisions = {
 	}
 }
 
+ENG_the_crown_imperial_decisions = {
+	ENG_uq_sponsor_loyalists = {
+		icon = GFX_decision_generic_political_rally
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 1 }
+			check_variable = { ENG_coercion@FROM = 0 }
+			FROM = {
+				exists = yes
+				NOT = { is_subject_of = ROOT }
+			}
+		}
+
+		cost = 100
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.002
+				less_than = { value = treasury }
+			}
+			has_political_power > 99.999
+		}
+		custom_cost_text = ENG_cost_small_expenditure_pp100
+		ai_hint_pp_cost = 100
+		days_remove = 180
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_medium_influence_TT
+				FROM = { ENG_uq_medium_influence = yes }
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_sponsor_loyalists"
+			hidden_effect = { add_political_power = -100 }
+			small_expenditure = yes
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_sponsor_loyalists"
+			FROM = { add_ideas = ENG_uq_loyalist_movement }
+			set_variable = { ENG_coercion@FROM = 1 }
+			custom_effect_tooltip = ENG_uq_coercion_1_TT
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_economic_pressure = {
+		icon = GFX_decision_export_button
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 1 }
+			check_variable = { ENG_coercion@FROM = 1 }
+			FROM = {
+				exists = yes
+				NOT = { is_subject_of = ROOT }
+			}
+		}
+
+		cost = 50
+		days_remove = 180
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_economic_pressure"
+			add_timed_idea = { idea = ENG_uq_embargo days = 180 }
+			FROM = {
+				add_timed_idea = { idea = ENG_uq_embargoed days = 180 }
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_economic_pressure_opinion }
+			}
+			if = {
+				limit = { has_dlc = "By Blood Alone" }
+				send_embargo = FROM
+			}
+			set_temp_variable = { ENG_imperial_tension_change = 3 }
+			ENG_change_imperial_tension = yes
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_economic_pressure"
+			if = {
+				limit = { has_dlc = "By Blood Alone" }
+				break_embargo = FROM
+			}
+			set_variable = { ENG_coercion@FROM = 2 }
+			custom_effect_tooltip = ENG_uq_coercion_2_TT
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_deliver_ultimatum = {
+		icon = GFX_decision_generic_nationalism
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+		target_trigger = {
+			check_variable = { ENG_coercion@FROM = 2 }
+			NOT = { has_country_flag = ENG_uq_ultimatum_rejected@FROM }
+			FROM = { exists = yes }
+		}
+
+		cost = 100
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strength_ratio_2_TT
+				strength_ratio = { tag = FROM ratio > 2 }
+			}
+			NOT = { has_war_with = FROM }
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_deliver_ultimatum"
+			set_variable = { ENG_coercion@FROM = 3 }
+			FROM = { country_event = { id = ENG_uq.40 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_ultimatum_accept_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_ultimatum_reject_TT }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_enforce_ultimatum = {
+		icon = GFX_decision_generic_police_action
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+		target_trigger = {
+			check_variable = { ENG_coercion@FROM = 3 }
+			has_country_flag = ENG_uq_ultimatum_rejected@FROM
+			FROM = { exists = yes }
+		}
+
+		war_with_target_on_complete = yes
+
+		cost = 100
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_cooldown_over_TT
+				NOT = { has_country_flag = ENG_uq_ultimatum_cooldown@FROM }
+			}
+			NOT = { has_war_with = FROM }
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_enforce_ultimatum"
+			set_variable = { ENG_coercion@FROM = 4 }
+			clr_country_flag = ENG_uq_ultimatum_rejected@FROM
+			add_named_threat = { threat = 5 name = ENG_uq_enforce_threat }
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+			add_opinion_modifier = { target = FROM modifier = imminent_danger_to_national_security }
+			every_state = {
+				limit = { is_core_of = FROM }
+				add_claim_by = ROOT
+			}
+			set_country_flag = { flag = ENG_uq_claims@FROM days = 730 }
+			custom_effect_tooltip = ENG_uq_claims_expire_TT
+			set_temp_variable = { wargoal_on = FROM }
+			add_threat_from_wargoal_effect = yes
+			if = {
+				limit = { FROM = { ENG_uq_annexation_target = yes } }
+				create_wargoal = {
+					type = take_claimed_state
+					target = FROM
+				}
+			}
+			else = {
+				create_wargoal = {
+					type = puppet_wargoal_focus
+					target = FROM
+				}
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_pacification = {
+		icon = GFX_decision_generic_civil_support
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+
+		is_good = yes
+		days_mission_timeout = 365
+		fire_only_once = no
+
+		activation = {
+			check_variable = { ENG_coercion@FROM = 5 }
+			ENG_uq_states_pacified = yes
+		}
+
+		available = { always = no }
+
+		cancel_trigger = { NOT = { ENG_uq_states_pacified = yes } }
+
+		cancel_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision cancel ENG_uq_pacification"
+			set_temp_variable = { ENG_union_strain_change = 1 }
+			ENG_change_union_strain = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_pacification"
+			set_variable = { ENG_coercion@FROM = 6 }
+			custom_effect_tooltip = ENG_uq_coercion_6_TT
+			FROM = { ENG_uq_end_occupation = yes }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+}
+
 ENG_a_family_of_nations_decisions = {
 	ENG_uq_royal_tour = {
 		icon = GFX_decision_generic_political_discourse
@@ -4917,33 +5142,12 @@ ENG_integration_ladder_decisions = {
 
 		available = {
 			custom_trigger_tooltip = {
-				tooltip = ENG_uq_states_compliant_70_TT
-				NOT = {
-					any_state = {
-						is_core_of = FROM
-						OR = {
-							compliance < 70
-							resistance > 20
-						}
-					}
-				}
+				tooltip = ENG_uq_target_pacified_TT
+				check_variable = { ENG_coercion@FROM > 5 }
 			}
 		}
 
-		cancel_trigger = {
-			any_state = {
-				is_core_of = FROM
-				OR = {
-					compliance < 70
-					resistance > 20
-				}
-			}
-		}
-
-		cancel_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision cancel ENG_uq_constituent_status_crown"
-			ENG_uq_fail_transition = yes
-		}
+		cancel_trigger = { has_country_flag = ENG_uq_lock@FROM }
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_constituent_status_crown"
@@ -5054,16 +5258,8 @@ ENG_integration_ladder_decisions = {
 
 		available = {
 			custom_trigger_tooltip = {
-				tooltip = ENG_uq_states_compliant_80_TT
-				NOT = {
-					any_state = {
-						is_core_of = FROM
-						OR = {
-							compliance < 80
-							resistance > 10
-						}
-					}
-				}
+				tooltip = ENG_uq_target_pacified_TT
+				check_variable = { ENG_coercion@FROM > 5 }
 			}
 			ENG_uq_strain_allows_transition = yes
 			has_stability > 0.6

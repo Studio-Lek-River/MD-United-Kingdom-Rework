@@ -1243,6 +1243,42 @@ ideas = {
 				trade_opinion_factor = 0.15
 			}
 		}
+
+		ENG_uq_loyalist_movement = {
+			picture = nationalism
+			allowed_civil_war = { always = yes }
+			modifier = {
+				nationalist_drift = 0.03
+				stability_factor = -0.03
+			}
+		}
+
+		ENG_uq_embargo = {
+			picture = trade
+			allowed_civil_war = { always = yes }
+			modifier = {
+				trade_opinion_factor = -0.10
+			}
+		}
+
+		ENG_uq_embargoed = {
+			picture = trade
+			allowed_civil_war = { always = yes }
+			modifier = {
+				trade_opinion_factor = -0.30
+				stability_factor = -0.05
+			}
+		}
+
+		ENG_uq_occupation_burden = {
+			picture = firearm_wall_sheep
+			allowed_civil_war = { always = yes }
+			modifier = {
+				required_garrison_factor = 0.25
+				political_power_factor = -0.05
+				war_support_weekly = -0.001
+			}
+		}
 	}
 
 	# HIDDEN IDEAS

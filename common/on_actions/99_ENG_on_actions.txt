@@ -318,12 +318,75 @@ on_actions = {
 				ENG_change_wales_agitation = yes
 			}
 
-			# Consent: every Western-path target drifts with influence, trade, opinion and politics
+			# Consent: every Western-path target drifts with influence, trade, opinion and politics; the Nationalist path only ticks at half rate
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = {
+					OR = {
+						has_country_flag = ENG_uq_western
+						has_country_flag = ENG_uq_nationalist
+					}
+				}
 				for_each_scope_loop = {
 					array = ENG_integration_targets
 					ENG_uq_update_consent = yes
+				}
+			}
+
+			# Coercion: unused claims lapse, won wars become occupations, occupied months cost tension and roll insurgencies
+			if = {
+				limit = { has_country_flag = ENG_uq_nationalist }
+				for_each_scope_loop = {
+					array = ENG_integration_targets
+					if = {
+						limit = {
+							check_variable = { ROOT.ENG_coercion@THIS = 4 }
+							NOT = { has_war_with = ROOT }
+						}
+						if = {
+							limit = {
+								any_state = { is_core_of = PREV }
+								NOT = {
+									any_state = {
+										is_core_of = PREV
+										NOT = {
+											OR = {
+												is_controlled_by = ROOT
+												controller = { is_subject_of = ROOT }
+											}
+										}
+									}
+								}
+							}
+							ENG_uq_begin_occupation = yes
+						}
+						else_if = {
+							limit = { ROOT = { NOT = { has_country_flag = ENG_uq_claims@PREV } } }
+							ENG_uq_expire_claims = yes
+						}
+					}
+					if = {
+						limit = { check_variable = { ROOT.ENG_coercion@THIS = 5 } }
+						ROOT = {
+							set_temp_variable = { ENG_imperial_tension_change = 1 }
+							ENG_change_imperial_tension = yes
+						}
+					}
+					if = {
+						limit = { ENG_uq_occupation_active = yes }
+						ENG_uq_roll_insurgency = yes
+					}
+				}
+				if = {
+					limit = {
+						has_idea = ENG_uq_occupation_burden
+						NOT = {
+							any_of_scopes = {
+								array = ENG_integration_targets
+								ENG_uq_occupation_active = yes
+							}
+						}
+					}
+					remove_ideas = ENG_uq_occupation_burden
 				}
 			}
 		}

@@ -54,4 +54,8 @@ opinion_modifiers = {
 		value = 10
 		months = 24
 	}
+	ENG_uq_economic_pressure_opinion = {
+		value = -30
+		months = 24
+	}
 }

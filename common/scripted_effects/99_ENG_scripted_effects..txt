@@ -534,9 +534,12 @@ ENG_uq_enter_stage_2 = {
 		}
 	}
 	else = {
-		set_autonomy = {
-			target = FROM
-			autonomy_state = autonomy_crown_protectorate
+		if = {
+			limit = { FROM = { exists = yes } }
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_crown_protectorate
+			}
 		}
 	}
 	FROM = {
@@ -549,9 +552,19 @@ ENG_uq_enter_stage_2 = {
 ENG_uq_enter_stage_3 = {
 	set_variable = { ENG_integration_stage@FROM = 3 }
 	clr_country_flag = ENG_uq_referendum_won@FROM
-	set_autonomy = {
-		target = FROM
-		autonomy_state = autonomy_constituent_country_very_low_devolution
+	if = {
+		limit = { FROM = { exists = yes } }
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_constituent_country_very_low_devolution
+		}
+	}
+	else = {
+		FROM = { ENG_uq_end_occupation = yes }
+		release_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_constituent_country_very_low_devolution
+		}
 	}
 	FROM = {
 		set_temp_variable = { ENG_union_strain_stage = 3 }
@@ -691,6 +704,10 @@ ENG_uq_update_consent = {
 		}
 		multiply_temp_variable = { ENG_uq_consent_change = 0.5 }
 	}
+	if = {
+		limit = { ENG = { has_country_flag = ENG_uq_nationalist } }
+		multiply_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
 	ENG = { set_variable = { ENG_consent_delta@PREV = ENG_uq_consent_change } }
 	ENG_uq_change_consent = yes
 	if = {
@@ -702,6 +719,123 @@ ENG_uq_update_consent = {
 		}
 		ENG = { set_country_flag = ENG_uq_sovereignty_done@PREV }
 		country_event = { id = ENG_uq.10 days = 1 }
+	}
+}
+
+# Parameters:
+# - ENG_imperial_tension_change: signed amount. ROOT must be ENG. Decay and reaction bands are #10.
+ENG_change_imperial_tension = {
+	custom_effect_tooltip = ENG_imperial_tension_change_tt
+	hidden_effect = {
+		set_variable = { ROOT.ENG_imperial_tension = { value = ROOT.ENG_imperial_tension add = ENG_imperial_tension_change clamp = { min = 0 max = 100 } } }
+	}
+}
+
+# Call in the target's scope with ROOT = ENG once the war is over and every core state is held. Lower pre-war consent means a harder occupation.
+ENG_uq_begin_occupation = {
+	ROOT = {
+		set_variable = { ENG_coercion@PREV = 5 }
+		clr_country_flag = ENG_uq_claims@PREV
+		set_variable = { ENG_uq_event_target = PREV }
+	}
+	if = {
+		limit = { has_idea = ENG_uq_loyalist_movement }
+		remove_ideas = ENG_uq_loyalist_movement
+	}
+	every_state = {
+		limit = { is_core_of = PREV }
+		remove_claim_by = ROOT
+		set_variable = { ENG_uq_occ_resistance_target = { value = 100 subtract = ROOT.ENG_consent@PREV multiply = 0.003 } }
+		set_variable = { ENG_uq_occ_compliance_growth = { value = ROOT.ENG_consent@PREV subtract = 100 multiply = 0.005 } }
+		add_dynamic_modifier = { modifier = ENG_uq_occupation_dm }
+	}
+	if = {
+		limit = {
+			exists = yes
+			is_subject_of = ROOT
+		}
+		ROOT = {
+			annex_country = {
+				target = PREV
+				transfer_troops = no
+			}
+		}
+	}
+	ROOT = {
+		if = {
+			limit = { NOT = { has_idea = ENG_uq_occupation_burden } }
+			add_ideas = ENG_uq_occupation_burden
+		}
+		country_event = { id = ENG_uq.44 days = 1 }
+	}
+}
+
+# Call in the target's scope with ROOT = ENG. Pacification success or a stage 3 release ends the occupation regime on its states.
+ENG_uq_end_occupation = {
+	every_state = {
+		limit = {
+			is_core_of = PREV
+			has_dynamic_modifier = { modifier = ENG_uq_occupation_dm }
+		}
+		remove_dynamic_modifier = { modifier = ENG_uq_occupation_dm }
+	}
+}
+
+# Call in the target's scope with ROOT = ENG. Unused claims lapse; the ultimatum can be enforced again after a fresh cooldown.
+ENG_uq_expire_claims = {
+	every_state = {
+		limit = { is_core_of = PREV }
+		remove_claim_by = ROOT
+	}
+	ROOT = {
+		set_variable = { ENG_coercion@PREV = 3 }
+		set_country_flag = ENG_uq_ultimatum_rejected@PREV
+		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@PREV days = 180 }
+		set_variable = { ENG_uq_event_target = PREV }
+		country_event = { id = ENG_uq.43 days = 1 }
+	}
+}
+
+# Monthly insurgency roll for one occupied target. Call in the target's scope with ROOT = ENG. Event chance equals the highest resistance among its states.
+ENG_uq_roll_insurgency = {
+	set_temp_variable = { ENG_uq_max_resistance = 0 }
+	every_state = {
+		limit = {
+			is_core_of = PREV
+			is_controlled_by = ROOT
+			check_variable = { resistance > ENG_uq_max_resistance }
+		}
+		set_temp_variable = { ENG_uq_max_resistance = resistance }
+		ROOT = { set_variable = { ENG_uq_event_state = PREV } }
+	}
+	set_temp_variable = { ENG_uq_bombing_weight = { value = ENG_uq_max_resistance multiply = 0.6 } }
+	set_temp_variable = { ENG_uq_defection_weight = { value = ENG_uq_max_resistance multiply = 0.4 } }
+	set_temp_variable = { ENG_uq_quiet_weight = { value = 100 subtract = ENG_uq_max_resistance } }
+	ROOT = { set_variable = { ENG_uq_event_target = PREV } }
+	random_list = {
+		ENG_uq_bombing_weight = {
+			ROOT = {
+				add_stability = -0.01
+				var:ENG_uq_event_state = {
+					damage_building = {
+						type = infrastructure
+						damage = 1
+					}
+				}
+				country_event = ENG_uq.50
+			}
+		}
+		ENG_uq_defection_weight = {
+			ROOT = {
+				add_manpower = -1500
+				add_war_support = -0.01
+				var:ENG_uq_event_state = { add_resistance = 5 }
+				country_event = ENG_uq.51
+			}
+		}
+		ENG_uq_quiet_weight = {
+			log = "[GetDateText]: [Root.GetName]: quiet month in [This.GetName]"
+		}
 	}
 }
 

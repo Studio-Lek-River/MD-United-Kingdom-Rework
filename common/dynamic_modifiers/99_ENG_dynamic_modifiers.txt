@@ -161,6 +161,13 @@ ENG_union_strain_dm = {
 	bureaucracy_cost_multiplier_modifier = ENG_union_strain_bureaucracy_cost
 }
 
+ENG_uq_occupation_dm = {
+	icon = GFX_idea_fire
+
+	resistance_target = ENG_uq_occ_resistance_target
+	compliance_growth = ENG_uq_occ_compliance_growth
+}
+
 ENG_invest_northern_ireland = {
 	icon = GFX_idea_economic_road_idea
 

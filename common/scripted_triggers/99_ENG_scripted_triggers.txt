@@ -191,3 +191,35 @@ ENG_uq_medium_influence = {
 		}
 	}
 }
+
+# Target scope. Ireland and single-state possessions are taken outright; realms and the old empire are puppeted.
+ENG_uq_annexation_target = {
+	OR = {
+		original_tag = IRE
+		num_of_controlled_states < 3
+	}
+}
+
+# FROM = the ladder target. True while every state it holds a core on is quiet under British rule.
+ENG_uq_states_pacified = {
+	NOT = {
+		any_state = {
+			is_core_of = FROM
+			OR = {
+				compliance < 70
+				resistance > 20
+			}
+		}
+	}
+}
+
+# Target scope with ROOT = ENG. Occupied, or pacified but not yet a protectorate.
+ENG_uq_occupation_active = {
+	OR = {
+		check_variable = { ROOT.ENG_coercion@THIS = 5 }
+		AND = {
+			check_variable = { ROOT.ENG_coercion@THIS = 6 }
+			check_variable = { ROOT.ENG_integration_stage@THIS < 2 }
+		}
+	}
+}
