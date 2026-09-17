@@ -38,6 +38,11 @@ ENG_PATHS = [
     "localisation/english/MD_focus_ENG_l_english.yml",
 ]
 
+# Submod-only files with no MD counterpart. Owned like ENG_PATHS, never synced.
+ENG_SUBMOD_ONLY_PATHS = [
+    "common/autonomous_states/99_ENG_autonomies.txt",
+]
+
 
 def git(*args, cwd=REPO, capture=False):
     result = subprocess.run(["git", *args], cwd=cwd, check=True, text=True, capture_output=capture)

@@ -435,4 +435,115 @@ containerWindowType = {
 			pdx_tooltip = ENG_union_strain_ui_TT
 		}
 	}
+
+	containerWindowType = {
+		name = "ENG_uq_ladder_ui_window"
+		size = { width = 420 height = 230 }
+		position = { x = 0 y = 40 }
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_label"
+			text = "ENG_uq_ladder_ui_label"
+			position = { x = 100 y = 10 }
+			font = "hoi_18mbs"
+			format = center
+			maxwidth = 220
+			maxheight = 20
+			text_color_code = Y
+			pdx_tooltip = ENG_uq_ladder_ui_TT
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_col_target"
+			text = "ENG_uq_ladder_col_target"
+			position = { x = 10 y = 38 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 140
+			maxheight = 20
+			text_color_code = Y
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_col_stage"
+			text = "ENG_uq_ladder_col_stage"
+			position = { x = 150 y = 38 }
+			font = "hoi_16mbs"
+			format = center
+			maxwidth = 90
+			maxheight = 20
+			text_color_code = Y
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_col_meter"
+			text = "ENG_uq_ladder_col_meter"
+			position = { x = 240 y = 38 }
+			font = "hoi_16mbs"
+			format = center
+			maxwidth = 80
+			maxheight = 20
+			text_color_code = Y
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_col_next"
+			text = "ENG_uq_ladder_col_next"
+			position = { x = 320 y = 38 }
+			font = "hoi_16mbs"
+			format = center
+			maxwidth = 95
+			maxheight = 20
+			text_color_code = Y
+		}
+		gridboxType = {
+			name = "ENG_uq_ladder_grid"
+			position = { x = 0 y = 60 }
+			size = { width = 420 height = 170 }
+			slotsize = { width = 420 height = 22 }
+			format = "UPPER_LEFT"
+			max_slots_horizontal = 1
+		}
+	}
+
+	containerWindowType = {
+		name = "ENG_uq_ladder_entry"
+		position = { x = 0 y = 0 }
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_entry_name"
+			text = "[THIS.GetNameWithFlag]"
+			position = { x = 10 y = 0 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 140
+			maxheight = 20
+			fixedsize = yes
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_entry_stage"
+			text = "[ENG_uq_target_stage]"
+			position = { x = 150 y = 0 }
+			font = "hoi_16mbs"
+			format = center
+			maxwidth = 90
+			maxheight = 20
+			fixedsize = yes
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_entry_meter"
+			text = "[ENG_uq_target_meter]"
+			position = { x = 240 y = 0 }
+			font = "hoi_16mbs"
+			format = center
+			maxwidth = 80
+			maxheight = 20
+			fixedsize = yes
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_entry_next"
+			text = "[ENG_uq_target_next]"
+			position = { x = 320 y = 0 }
+			font = "hoi_16mbs"
+			format = center
+			maxwidth = 95
+			maxheight = 20
+			fixedsize = yes
+			pdx_tooltip = ENG_uq_ladder_next_TT
+		}
+	}
 }

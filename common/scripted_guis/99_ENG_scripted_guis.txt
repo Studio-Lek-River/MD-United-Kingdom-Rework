@@ -229,4 +229,17 @@ scripted_gui = {
 		window_name = "ENG_union_strain_ui_window"
 		context_type = decision_category
 	}
+
+	ENG_uq_ladder_ui = {
+		window_name = "ENG_uq_ladder_ui_window"
+		context_type = decision_category
+
+		dynamic_lists = {
+			ENG_uq_ladder_grid = {
+				array = ENG_integration_targets
+				entry_container = "ENG_uq_ladder_entry"
+				change_scope = yes
+			}
+		}
+	}
 }

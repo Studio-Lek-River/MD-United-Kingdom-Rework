@@ -2327,3 +2327,112 @@ defined_text = {
 		localization_key = ENG_referendum_region_none
 	}
 }
+
+defined_text = {
+	name = ENG_uq_target_stage
+
+	text = {
+		trigger = {
+			check_variable = { ROOT.ENG_integration_stage@THIS = 1 }
+		}
+		localization_key = ENG_uq_stage_1_loc
+	}
+
+	text = {
+		trigger = {
+			check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
+		}
+		localization_key = ENG_uq_stage_2_loc
+	}
+
+	text = {
+		trigger = {
+			check_variable = { ROOT.ENG_integration_stage@THIS = 3 }
+		}
+		localization_key = ENG_uq_stage_3_loc
+	}
+
+	text = {
+		trigger = {
+			check_variable = { ROOT.ENG_integration_stage@THIS = 4 }
+		}
+		localization_key = ENG_uq_stage_4_loc
+	}
+}
+
+defined_text = {
+	name = ENG_uq_target_meter
+
+	text = {
+		trigger = {
+			ROOT = { has_country_flag = ENG_uq_western }
+		}
+		localization_key = ENG_uq_meter_consent_loc
+	}
+
+	text = {
+		trigger = {
+			ROOT = { NOT = { has_country_flag = ENG_uq_western } }
+		}
+		localization_key = ENG_uq_meter_coercion_loc
+	}
+}
+
+defined_text = {
+	name = ENG_uq_target_next
+
+	text = {
+		trigger = {
+			ROOT = { has_country_flag = ENG_uq_western }
+			check_variable = { ROOT.ENG_integration_stage@THIS = 1 }
+		}
+		localization_key = ENG_uq_next_w_1_loc
+	}
+
+	text = {
+		trigger = {
+			ROOT = { has_country_flag = ENG_uq_western }
+			check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
+		}
+		localization_key = ENG_uq_next_w_2_loc
+	}
+
+	text = {
+		trigger = {
+			ROOT = { has_country_flag = ENG_uq_western }
+			check_variable = { ROOT.ENG_integration_stage@THIS = 3 }
+		}
+		localization_key = ENG_uq_next_w_3_loc
+	}
+
+	text = {
+		trigger = {
+			ROOT = { NOT = { has_country_flag = ENG_uq_western } }
+			check_variable = { ROOT.ENG_integration_stage@THIS = 1 }
+		}
+		localization_key = ENG_uq_next_n_1_loc
+	}
+
+	text = {
+		trigger = {
+			ROOT = { NOT = { has_country_flag = ENG_uq_western } }
+			check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
+		}
+		localization_key = ENG_uq_next_n_2_loc
+	}
+
+	text = {
+		trigger = {
+			ROOT = { NOT = { has_country_flag = ENG_uq_western } }
+			check_variable = { ROOT.ENG_integration_stage@THIS = 3 }
+		}
+		localization_key = ENG_uq_next_n_3_loc
+	}
+
+	text = {
+		trigger = {
+			check_variable = { ROOT.ENG_integration_stage@THIS > 3 }
+		}
+		localization_key = ENG_uq_next_done_loc
+	}
+}

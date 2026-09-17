@@ -92,6 +92,23 @@ ENG_union_strain_decisions = {
 	}
 }
 
+ENG_integration_ladder_decisions = {
+	icon = GFX_decision_category_united_kingdom
+
+	allowed = { original_tag = ENG }
+
+	priority = 995
+	scripted_gui = ENG_uq_ladder_ui
+	visible_when_empty = yes
+
+	visible = {
+		OR = {
+			has_country_flag = ENG_uq_western
+			has_country_flag = ENG_uq_nationalist
+		}
+	}
+}
+
 ENG_asteroid_mining_decisions = {
 	icon = GFX_decision_category_generic_prospect_for_resources
 

@@ -4,6 +4,7 @@ ENG_constituent_state_check = {
 		original_tag = NIR
 		original_tag = SCO
 		original_tag = WAS
+		ENG = { check_variable = { ENG_integration_stage@PREV > 2 } }
 	}
 }
 
@@ -135,7 +136,29 @@ ENG_uq_strain_allows_transition = {
 	}
 }
 
-# #7 fills this with its stage-transition missions; until then nothing halves the decay
 ENG_uq_integration_mission_active = {
-	always = no
+	OR = {
+		has_active_mission = ENG_uq_offer_association
+		has_active_mission = ENG_uq_impose_protectorate
+		has_active_mission = ENG_uq_constituent_status
+		has_active_mission = ENG_uq_constituent_status_crown
+		has_active_mission = ENG_uq_integration_act
+		has_active_mission = ENG_uq_integration_act_crown
+	}
+}
+
+# FROM = the ladder target
+ENG_uq_can_transition = {
+	ENG_uq_strain_allows_transition = yes
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_not_at_war_TT
+		OR = {
+			has_war = no
+			has_country_flag = ENG_uq_nationalist
+		}
+	}
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_not_locked_TT
+		NOT = { has_country_flag = ENG_uq_lock@FROM }
+	}
 }

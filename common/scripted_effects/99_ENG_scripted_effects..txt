@@ -511,6 +511,96 @@ ENG_add_union_strain_for_target = {
 	ENG_change_union_strain = yes
 }
 
+# Stage 0 -> 1. Call in the target's scope with ROOT = ENG.
+ENG_uq_align_target = {
+	ROOT = {
+		if = {
+			limit = { NOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
+			add_to_array = { ENG_integration_targets = PREV }
+		}
+		set_variable = { ENG_integration_stage@PREV = 1 }
+	}
+}
+
+# Stage 1 -> 2. Call from a targeted ladder decision with FROM = target.
+ENG_uq_enter_stage_2 = {
+	set_variable = { ENG_integration_stage@FROM = 2 }
+	clr_country_flag = ENG_uq_accepted@FROM
+	if = {
+		limit = { has_country_flag = ENG_uq_western }
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_crown_dominion
+		}
+	}
+	else = {
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_crown_protectorate
+		}
+	}
+	FROM = {
+		set_temp_variable = { ENG_union_strain_stage = 2 }
+		ENG_add_union_strain_for_target = yes
+	}
+}
+
+# Stage 2 -> 3. Call from a targeted ladder decision with FROM = target. The stage is set first because the autonomy level's allowed reads it.
+ENG_uq_enter_stage_3 = {
+	set_variable = { ENG_integration_stage@FROM = 3 }
+	clr_country_flag = ENG_uq_referendum_won@FROM
+	set_autonomy = {
+		target = FROM
+		autonomy_state = autonomy_constituent_country_very_low_devolution
+	}
+	FROM = {
+		set_temp_variable = { ENG_union_strain_stage = 3 }
+		ENG_add_union_strain_for_target = yes
+	}
+}
+
+# Stage 3 -> 4. Call from a targeted ladder decision with FROM = target.
+ENG_uq_enter_stage_4 = {
+	set_variable = { ENG_integration_stage@FROM = 4 }
+	FROM = {
+		set_temp_variable = { ENG_union_strain_stage = 4 }
+		ENG_add_union_strain_for_target = yes
+		clear_united_nations_member_state = yes
+		every_unit_leader = { set_nationality = ROOT }
+	}
+	every_state = {
+		limit = {
+			OR = {
+				is_owned_by = FROM
+				is_core_of = FROM
+			}
+		}
+		add_core_of = ROOT
+	}
+	remove_from_array = { ENG_integration_targets = FROM }
+	add_to_array = { ENG_integrated_targets = FROM }
+	annex_country = {
+		target = FROM
+		transfer_troops = yes
+	}
+}
+
+# Mission timeout, cancel or lost referendum. Call from a targeted ladder decision with FROM = target.
+ENG_uq_fail_transition = {
+	custom_effect_tooltip = ENG_uq_fail_transition_TT
+	hidden_effect = {
+		if = {
+			limit = { has_country_flag = ENG_uq_western }
+			set_country_flag = { flag = ENG_uq_lock@FROM days = 1825 }
+		}
+		else = {
+			set_country_flag = { flag = ENG_uq_lock@FROM days = 1095 }
+		}
+		subtract_from_variable = { ENG_consent@FROM = 20 }
+		clamp_variable = { var = ENG_consent@FROM min = 0 }
+	}
+}
+
 ENG_settle_northern_ireland_question = {
 	if = {
 		limit = { has_idea = ENG_good_friday_agreement }

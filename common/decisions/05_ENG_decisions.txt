@@ -4578,6 +4578,339 @@ ENG_union_strain_decisions = {
 	}
 }
 
+ENG_integration_ladder_decisions = {
+	ENG_uq_offer_association = {
+		icon = GFX_decision_generic_political_discourse
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 1 }
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
+			}
+		}
+
+		activation = { ENG_uq_can_transition = yes }
+
+		selectable_mission = yes
+		is_good = no
+		days_mission_timeout = 365
+		cost = 100
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_consent_60_TT
+				check_variable = { ENG_consent@FROM > 60 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_target_accepted_TT
+				has_country_flag = ENG_uq_accepted@FROM
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_offer_association"
+			ENG_uq_enter_stage_2 = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_offer_association"
+			ENG_uq_fail_transition = yes
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				check_variable = { ENG_union_strain > 40 }
+			}
+		}
+	}
+
+	ENG_uq_impose_protectorate = {
+		icon = GFX_decision_generic_police_action
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 1 }
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
+			}
+		}
+
+		activation = { ENG_uq_can_transition = yes }
+
+		selectable_mission = yes
+		is_good = no
+		days_mission_timeout = 365
+		cost = 100
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_target_pacified_TT
+				check_variable = { ENG_coercion@FROM > 5 }
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_impose_protectorate"
+			ENG_uq_enter_stage_2 = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_impose_protectorate"
+			ENG_uq_fail_transition = yes
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				check_variable = { ENG_union_strain > 40 }
+			}
+		}
+	}
+
+	ENG_uq_constituent_status = {
+		icon = GFX_decision_generic_civil_support
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 2 }
+		}
+
+		activation = { ENG_uq_can_transition = yes }
+
+		selectable_mission = yes
+		is_good = no
+		days_mission_timeout = 540
+		cost = 150
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_consent_75_TT
+				check_variable = { ENG_consent@FROM > 75 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_referendum_won_TT
+				has_country_flag = ENG_uq_referendum_won@FROM
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_constituent_status"
+			ENG_uq_enter_stage_3 = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_constituent_status"
+			ENG_uq_fail_transition = yes
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				check_variable = { ENG_union_strain > 40 }
+			}
+		}
+	}
+
+	ENG_uq_constituent_status_crown = {
+		icon = GFX_decision_generic_civil_support
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 2 }
+		}
+
+		activation = { ENG_uq_can_transition = yes }
+
+		selectable_mission = yes
+		is_good = no
+		days_mission_timeout = 540
+		cost = 150
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_states_compliant_70_TT
+				NOT = {
+					any_state = {
+						is_core_of = FROM
+						OR = {
+							compliance < 70
+							resistance > 20
+						}
+					}
+				}
+			}
+		}
+
+		cancel_trigger = {
+			any_state = {
+				is_core_of = FROM
+				OR = {
+					compliance < 70
+					resistance > 20
+				}
+			}
+		}
+
+		cancel_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision cancel ENG_uq_constituent_status_crown"
+			ENG_uq_fail_transition = yes
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_constituent_status_crown"
+			ENG_uq_enter_stage_3 = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_constituent_status_crown"
+			ENG_uq_fail_transition = yes
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				check_variable = { ENG_union_strain > 40 }
+			}
+		}
+	}
+
+	ENG_uq_integration_act = {
+		icon = GFX_decision_generic_form_nation
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 3 }
+		}
+
+		activation = { ENG_uq_can_transition = yes }
+
+		selectable_mission = yes
+		is_good = no
+		days_mission_timeout = 540
+		cost = 300
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.006
+				less_than = { value = treasury }
+			}
+			has_political_power > 299.999
+		}
+		custom_cost_text = ENG_cost_large_expenditure_pp300
+		ai_hint_pp_cost = 300
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_consent_85_TT
+				check_variable = { ENG_consent@FROM > 85 }
+			}
+			ENG_uq_strain_allows_transition = yes
+			has_stability > 0.6
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_integration_act"
+			hidden_effect = { add_political_power = -300 }
+			large_expenditure = yes
+			ENG_uq_enter_stage_4 = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_integration_act"
+			ENG_uq_fail_transition = yes
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				check_variable = { ENG_union_strain > 40 }
+			}
+		}
+	}
+
+	ENG_uq_integration_act_crown = {
+		icon = GFX_decision_generic_form_nation
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 3 }
+		}
+
+		activation = { ENG_uq_can_transition = yes }
+
+		selectable_mission = yes
+		is_good = no
+		days_mission_timeout = 540
+		cost = 300
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.006
+				less_than = { value = treasury }
+			}
+			has_political_power > 299.999
+		}
+		custom_cost_text = ENG_cost_large_expenditure_pp300
+		ai_hint_pp_cost = 300
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_states_compliant_80_TT
+				NOT = {
+					any_state = {
+						is_core_of = FROM
+						OR = {
+							compliance < 80
+							resistance > 10
+						}
+					}
+				}
+			}
+			ENG_uq_strain_allows_transition = yes
+			has_stability > 0.6
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_integration_act_crown"
+			hidden_effect = { add_political_power = -300 }
+			large_expenditure = yes
+			ENG_uq_enter_stage_4 = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_integration_act_crown"
+			ENG_uq_fail_transition = yes
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				check_variable = { ENG_union_strain > 40 }
+			}
+		}
+	}
+}
+
 ENG_fractured_kingdom_united_state_decisions = {
 	ENG_grant_land_in_isle_of_man = {
 		days_remove = 80

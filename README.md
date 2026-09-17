@@ -7,7 +7,7 @@ United Kingdom (ENG) focus tree.
 
 Millennium Dawn keeps all ENG content in per-country files. This repo ships those same files at the
 same relative paths, and a mod loaded after Millennium Dawn replaces them 1:1. Nothing else in
-Millennium Dawn is touched. The full list of owned paths is `ENG_PATHS` in
+Millennium Dawn is touched. The full list of owned paths is `ENG_PATHS` and `ENG_SUBMOD_ONLY_PATHS` in
 [tools/sync_md_base.py](tools/sync_md_base.py).
 
 ## Install (development)

@@ -6,7 +6,7 @@ Millennium Dawn is a Hearts of Iron IV mod (2000-present). Game data lives in
 ## Submod Scope
 
 This repo is a submod of Millennium Dawn that reworks the United Kingdom (ENG). It owns only
-the paths listed in `ENG_PATHS` in `tools/sync_md_base.py`; a file at the same relative path
+the paths listed in `ENG_PATHS` and `ENG_SUBMOD_ONLY_PATHS` in `tools/sync_md_base.py`; a file at the same relative path
 overrides MD's copy. Everything else lives in MD, checked out at `D:/secondary-md`.
 
 - Edit on `main` or a branch off it. `md-base` holds pristine MD files; only
