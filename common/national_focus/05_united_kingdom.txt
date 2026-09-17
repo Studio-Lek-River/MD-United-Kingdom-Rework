@@ -23104,8 +23104,9 @@ focus_tree = {
 		id = ENG_the_union_question
 		icon = invest_in_britain
 
-		x = 150
-		y = 0
+		x = 0
+		y = 3
+		relative_position_id = ENG_the_sun_which_never_set
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
