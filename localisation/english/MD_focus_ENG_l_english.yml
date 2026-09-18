@@ -1595,10 +1595,6 @@
 
 # Decisions
 
- ENG_a_family_of_nations_decisions: "A Family of Nations"
- ENG_a_family_of_nations_decisions_desc: "The Western route to a restored Union. Consent is earned through the Commonwealth: influence, trade, opinion and treaties bring the home nations, Ireland and the realms closer to Westminster one stage at a time."
- ENG_the_crown_imperial_decisions: "The Crown Imperial"
- ENG_the_crown_imperial_decisions_desc: "The Nationalist route to a restored Union. The Crown's ministers apply pressure, ultimatums and, when all else fails, force to bring the home nations, Ireland and the realms back under Westminster."
  ENG_expand_the_civil_service: "Expand the Civil Service"
  ENG_expand_the_civil_service_desc: "Whitehall takes on the departments, courts and revenue offices that the new members of the Union need. It costs money and political capital and takes half a year to show results."
  ENG_regional_assemblies_act: "Regional Assemblies Act"
@@ -1618,7 +1614,9 @@
  ENG_cost_gdp_1_percent_blocked: "£treasury §R1.0%§! of GDP"
  ENG_cost_gdp_1_percent_tooltip: "This purchase will cost §H1.0%§! of your GDP"
  ENG_union_question_decisions: "The Union Question"
- ENG_union_question_decisions_desc: "Every target of the Union Question climbs the same ladder: §Yaligned§!, §Yassociated§! (a Crown subject), §Yconstituent§! (the same footing as Scotland or Wales) and §Yintegrated§! (cored and annexed). A declined offer or a lost referendum locks the target for §R5§! years on the Western path or §R3§! on the Nationalist path and costs §R20§! consent.\n\nEvery territory brought into the Union adds to Union Strain: lower stability, slower political power, more bureaucracy and dearer consumer goods. Above §R60§! no step can begin. Strain eases by §G1§! a month at peace and not at all in wartime; the relief measures buy it down faster."
+ ENG_union_question_decisions_desc: "On the Western route consent is earned through the Commonwealth: influence, trade, opinion and treaties. On the Nationalist route the Crown's ministers apply pressure, ultimatums and, when all else fails, force.
+
+Every target of the Union Question climbs the same ladder: §Yaligned§!, §Yassociated§! (a Crown subject), §Yconstituent§! (the same footing as Scotland or Wales) and §Yintegrated§! (cored and annexed). A declined offer or a lost referendum locks the target for §R5§! years on the Western path or §R3§! on the Nationalist path and costs §R20§! consent.\n\nEvery territory brought into the Union adds to Union Strain: lower stability, slower political power, more bureaucracy and dearer consumer goods. Above §R60§! no step can begin. Strain eases by §G1§! a month at peace and not at all in wartime; the relief measures buy it down faster."
  ENG_uq_constituent_status: "Constituent Status: [FROM.GetName]"
  ENG_uq_constituent_status_desc: "[FROM.GetName] moves from Crown subject to a constituent country of the Union, on the same footing as Scotland or Wales. The Western path needs high consent and a referendum won in [FROM.GetName]; the Nationalist path needs it pacified."
  ENG_uq_integration_act: "Integration Act: [FROM.GetName]"

@@ -30,28 +30,6 @@ ENG_devolved_matters = {
 	visible = { NOT = { has_country_flag = ENG_devolution_purged } }
 }
 
-ENG_a_family_of_nations_decisions = {
-	icon = GFX_decision_category_united_kingdom
-
-	allowed = { original_tag = ENG }
-
-	priority = 1000
-	visible_when_empty = yes
-
-	visible = { has_completed_focus = ENG_a_family_of_nations }
-}
-
-ENG_the_crown_imperial_decisions = {
-	icon = GFX_decision_category_united_kingdom
-
-	allowed = { original_tag = ENG }
-
-	priority = 1000
-	visible_when_empty = yes
-
-	visible = { has_completed_focus = ENG_the_crown_imperial }
-}
-
 ENG_union_question_decisions = {
 	icon = GFX_decision_category_united_kingdom
 
