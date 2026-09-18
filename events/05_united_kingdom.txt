@@ -7553,7 +7553,6 @@ country_event = {
 	option = {
 		name = ENG_uq.20.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.20.a executed"
-		custom_effect_tooltip = TT_IF_WE_ACCEPT
 		custom_effect_tooltip = ENG_uq_we_accept_TT
 		hidden_effect = {
 			ENG = { country_event = { id = ENG_uq.21 days = 1 } }
@@ -7567,7 +7566,6 @@ country_event = {
 	option = {
 		name = ENG_uq.20.b
 		log = "[GetDateText]: [This.GetName]: ENG_uq.20.b executed"
-		custom_effect_tooltip = TT_IF_WE_DECLINE
 		custom_effect_tooltip = ENG_uq_we_decline_TT
 		hidden_effect = {
 			ENG = { country_event = { id = ENG_uq.22 days = 1 } }
@@ -7663,7 +7661,6 @@ country_event = {
 	option = {
 		name = ENG_uq.23.b
 		log = "[GetDateText]: [This.GetName]: ENG_uq.23.b executed"
-		custom_effect_tooltip = TT_IF_WE_DECLINE
 		custom_effect_tooltip = ENG_uq_we_decline_TT
 		hidden_effect = {
 			ENG = { country_event = { id = ENG_uq.24 days = 1 } }
@@ -7976,7 +7973,20 @@ country_event = {
 	option = {
 		name = ENG_uq.62.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.62.a executed"
-		custom_effect_tooltip = ENG_uq_special_relationship_TT
+		every_country = {
+			limit = {
+				OR = {
+					tag = USA
+					tag = CAN
+					tag = AST
+					tag = NZL
+				}
+			}
+			set_temp_variable = { percent_change = -10 }
+			set_temp_variable = { tag_index = ENG }
+			change_influence_percentage = yes
+		}
+		USA = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_special_relationship_opinion } }
 	}
 }
 
@@ -8307,7 +8317,6 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_uq.80.a executed"
 		set_country_flag = { flag = ENG_scottish_rising_cooldown days = 1825 value = 1 }
 		clr_country_flag = ENG_scottish_pacified
-		custom_effect_tooltip = ENG_uq_rising_vents_TT
 		set_temp_variable = { ENG_agitation_change = -30 }
 		ENG_change_scottish_agitation = yes
 		every_owned_state = {
@@ -8343,7 +8352,6 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_uq.81.a executed"
 		set_country_flag = { flag = ENG_north_irish_rising_cooldown days = 1825 value = 1 }
 		clr_country_flag = ENG_north_irish_pacified
-		custom_effect_tooltip = ENG_uq_rising_vents_TT
 		set_temp_variable = { ENG_agitation_change = -30 }
 		ENG_change_north_irish_agitation = yes
 		17 = {
@@ -8379,7 +8387,6 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_uq.82.a executed"
 		set_country_flag = { flag = ENG_welsh_rising_cooldown days = 1825 value = 1 }
 		clr_country_flag = ENG_welsh_pacified
-		custom_effect_tooltip = ENG_uq_rising_vents_TT
 		set_temp_variable = { ENG_agitation_change = -30 }
 		ENG_change_wales_agitation = yes
 		every_owned_state = {
@@ -8444,7 +8451,6 @@ country_event = {
 	option = {
 		name = ENG_uq.90.b
 		log = "[GetDateText]: [This.GetName]: ENG_uq.90.b executed"
-		custom_effect_tooltip = TT_IF_WE_DECLINE
 		custom_effect_tooltip = ENG_uq_we_decline_TT
 		hidden_effect = {
 			ENG = { country_event = { id = ENG_uq.92 days = 1 } }
@@ -8655,7 +8661,6 @@ country_event = {
 	option = {
 		name = ENG_uq.101.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.101.a executed"
-		custom_effect_tooltip = ENG_uq_stage_2_TT
 		ENG_uq_enter_stage_2 = yes
 		hidden_effect = {
 			country_event = { id = ENG_uq.102 days = 7 }
@@ -8788,7 +8793,6 @@ country_event = {
 	option = {
 		name = ENG_uq.120.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.120.a executed"
-		custom_effect_tooltip = TT_IF_WE_ACCEPT
 		custom_effect_tooltip = ENG_uq_we_accept_TT
 		country_event = { id = ENG_uq.121 days = 30 }
 		ai_chance = {
@@ -8800,7 +8804,6 @@ country_event = {
 	option = {
 		name = ENG_uq.120.b
 		log = "[GetDateText]: [This.GetName]: ENG_uq.120.b executed"
-		custom_effect_tooltip = TT_IF_WE_DECLINE
 		custom_effect_tooltip = ENG_uq_we_decline_TT
 		hidden_effect = {
 			ENG = { country_event = { id = ENG_uq.22 days = 1 } }

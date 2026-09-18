@@ -23205,7 +23205,6 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_realms_beyond_the_seas"
 			custom_effect_tooltip = ENG_the_realms_beyond_the_seas_TT
-			set_country_flag = ENG_uq_caribbean_opened
 			set_temp_variable = { ENG_cmw_cohesion_change = 3 }
 			ENG_cmw_change_cohesion = yes
 			unlock_decision_tooltip = ENG_uq_caribbean_development_programme
@@ -23562,7 +23561,6 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_dominions_of_the_crown"
 			custom_effect_tooltip = ENG_dominions_of_the_crown_TT
-			set_country_flag = ENG_uq_caribbean_opened
 			set_temp_variable = { ENG_imperial_tension_change = 3 }
 			ENG_change_imperial_tension = yes
 			unlock_decision_tooltip = ENG_uq_sponsor_loyalists

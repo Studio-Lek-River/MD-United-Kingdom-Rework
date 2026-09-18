@@ -237,6 +237,13 @@ ENG_uq_ireland_done = {
 	}
 }
 
+ENG_uq_caribbean_opened = {
+	OR = {
+		has_completed_focus = ENG_the_realms_beyond_the_seas
+		has_completed_focus = ENG_dominions_of_the_crown
+	}
+}
+
 ENG_uq_realms_done = {
 	custom_trigger_tooltip = {
 		tooltip = ENG_uq_realms_done_TT

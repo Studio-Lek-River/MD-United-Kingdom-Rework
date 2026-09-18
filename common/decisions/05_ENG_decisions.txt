@@ -6032,7 +6032,7 @@ ENG_union_question_decisions = {
 	ENG_uq_caribbean_association = {
 		icon = GFX_decision_generic_political_discourse
 
-		visible = { has_country_flag = ENG_uq_caribbean_opened }
+		visible = { ENG_uq_caribbean_opened = yes }
 
 		cost = 100
 
@@ -6115,7 +6115,7 @@ ENG_union_question_decisions = {
 	ENG_uq_caribbean_constituent = {
 		icon = GFX_decision_generic_civil_support
 
-		visible = { has_country_flag = ENG_uq_caribbean_opened }
+		visible = { ENG_uq_caribbean_opened = yes }
 
 		cost = 150
 
@@ -6198,7 +6198,7 @@ ENG_union_question_decisions = {
 	ENG_uq_caribbean_integration_act = {
 		icon = GFX_decision_generic_form_nation
 
-		visible = { has_country_flag = ENG_uq_caribbean_opened }
+		visible = { ENG_uq_caribbean_opened = yes }
 
 		cost = 300
 		custom_cost_trigger = {
