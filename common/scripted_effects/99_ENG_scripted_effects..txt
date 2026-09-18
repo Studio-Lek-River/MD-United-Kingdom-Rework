@@ -545,6 +545,7 @@ ENG_uq_enter_stage_2 = {
 	ENG_uq_irish_lobby_reaction = yes
 	ENG_uq_realm_stage_reaction = yes
 	ENG_uq_possession_stage_reaction = yes
+	ENG_uq_ex_empire_stage_reaction = yes
 }
 
 # Stage 2 -> 3. Call with ROOT = ENG and FROM = target. A non-existing target is an annexed Nationalist occupation and is released first.
@@ -1008,6 +1009,292 @@ ENG_uq_possession_stage_reaction = {
 			NOT = { 812 = { is_core_of = ROOT } }
 		}
 		812 = { add_core_of = ROOT }
+	}
+}
+
+# Tier 4: wider empire. Regions are opened by focus; each target carries its region, its rival and a cost factor fixed when the region opens.
+
+# ENG scope. Temp in: ENG_uq_rival_candidate. Keeps the first candidate that exists, is independent and is not at war with Britain in ENG_uq_region_rival.
+ENG_uq_pick_rival = {
+	if = {
+		limit = {
+			check_variable = { ENG_uq_region_rival = 0 }
+			var:ENG_uq_rival_candidate = {
+				exists = yes
+				is_subject = no
+				NOT = { has_war_with = ROOT }
+			}
+		}
+		set_temp_variable = { ENG_uq_region_rival = ENG_uq_rival_candidate }
+	}
+}
+
+# Target scope with ROOT = ENG. Temps in: ENG_uq_region_id, ENG_uq_region_rival, ENG_uq_region_factor.
+ENG_uq_register_ex_empire = {
+	ENG_uq_align_target = yes
+	ROOT = {
+		set_variable = { ENG_uq_region@PREV = ENG_uq_region_id }
+		set_variable = { ENG_uq_rival@PREV = ENG_uq_region_rival }
+		set_variable = { ENG_uq_region_cost_factor@PREV = ENG_uq_region_factor }
+	}
+}
+
+# ENG scope. Opens West Africa: region 1. The fourth region opened costs roughly three times the first.
+ENG_uq_open_west_africa = {
+	set_temp_variable = { ENG_uq_region_id = 1 }
+	set_temp_variable = { ENG_uq_region_rival = 0 }
+	set_temp_variable = { ENG_uq_rival_candidate = FRA }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_rival_candidate = CHI }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_region_factor = { value = ENG_uq_active_regions multiply = 0.67 add = 1 } }
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = SIE
+				original_tag = GAM
+				original_tag = GAH
+				original_tag = NIG
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+		}
+		ENG_uq_register_ex_empire = yes
+	}
+	add_to_variable = { ENG_uq_active_regions = 1 }
+}
+
+# ENG scope. Opens East Africa: region 2. The fourth region opened costs roughly three times the first.
+ENG_uq_open_east_africa = {
+	set_temp_variable = { ENG_uq_region_id = 2 }
+	set_temp_variable = { ENG_uq_region_rival = 0 }
+	set_temp_variable = { ENG_uq_rival_candidate = CHI }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_region_factor = { value = ENG_uq_active_regions multiply = 0.67 add = 1 } }
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = KEN
+				original_tag = UGA
+				original_tag = TNZ
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+		}
+		ENG_uq_register_ex_empire = yes
+	}
+	add_to_variable = { ENG_uq_active_regions = 1 }
+}
+
+# ENG scope. Opens Southern Africa: region 3. The fourth region opened costs roughly three times the first.
+ENG_uq_open_southern_africa = {
+	set_temp_variable = { ENG_uq_region_id = 3 }
+	set_temp_variable = { ENG_uq_region_rival = 0 }
+	set_temp_variable = { ENG_uq_rival_candidate = SAF }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_rival_candidate = CHI }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_region_factor = { value = ENG_uq_active_regions multiply = 0.67 add = 1 } }
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = ZAM
+				original_tag = ZIM
+				original_tag = MLW
+				original_tag = BOT
+				original_tag = SWA
+				original_tag = LES
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+		}
+		ENG_uq_register_ex_empire = yes
+	}
+	add_to_variable = { ENG_uq_active_regions = 1 }
+}
+
+# ENG scope. Opens the Gulf: region 4. The fourth region opened costs roughly three times the first.
+ENG_uq_open_gulf = {
+	set_temp_variable = { ENG_uq_region_id = 4 }
+	set_temp_variable = { ENG_uq_region_rival = 0 }
+	set_temp_variable = { ENG_uq_rival_candidate = USA }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_rival_candidate = SAU }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_rival_candidate = PER }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_region_factor = { value = ENG_uq_active_regions multiply = 0.67 add = 1 } }
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = KUW
+				original_tag = QAT
+				original_tag = BHR
+				original_tag = UAE
+				original_tag = OMA
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+		}
+		ENG_uq_register_ex_empire = yes
+	}
+	add_to_variable = { ENG_uq_active_regions = 1 }
+}
+
+# ENG scope. Opens Asia: region 5. The fourth region opened costs roughly three times the first.
+ENG_uq_open_asia = {
+	set_temp_variable = { ENG_uq_region_id = 5 }
+	set_temp_variable = { ENG_uq_region_rival = 0 }
+	set_temp_variable = { ENG_uq_rival_candidate = CHI }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_rival_candidate = RAJ }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_region_factor = { value = ENG_uq_active_regions multiply = 0.67 add = 1 } }
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = MAY
+				original_tag = SIN
+				original_tag = BRU
+				original_tag = SRI
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+		}
+		ENG_uq_register_ex_empire = yes
+	}
+	add_to_variable = { ENG_uq_active_regions = 1 }
+}
+
+# ENG scope. Opens the Pacific: region 6. The fourth region opened costs roughly three times the first.
+ENG_uq_open_pacific = {
+	set_temp_variable = { ENG_uq_region_id = 6 }
+	set_temp_variable = { ENG_uq_region_rival = 0 }
+	set_temp_variable = { ENG_uq_rival_candidate = CHI }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_rival_candidate = AST }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_region_factor = { value = ENG_uq_active_regions multiply = 0.67 add = 1 } }
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = FIJ
+				original_tag = SOL
+				original_tag = VAN
+				original_tag = TON
+				original_tag = SAM
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+		}
+		ENG_uq_register_ex_empire = yes
+	}
+	add_to_variable = { ENG_uq_active_regions = 1 }
+}
+
+# The regional rival reacts to a wider-empire target becoming a subject. Call with ROOT = ENG and FROM = target inside ENG_uq_enter_stage_2.
+ENG_uq_ex_empire_stage_reaction = {
+	if = {
+		limit = {
+			FROM = { ENG_uq_is_ex_empire = yes }
+			check_variable = { ENG_uq_rival@FROM > 0 }
+		}
+		set_variable = { ENG_uq_event_target = FROM }
+		set_variable = { ENG_uq_patron_var = ENG_uq_rival@FROM }
+		if = {
+			limit = {
+				var:ENG_uq_patron_var = {
+					exists = yes
+					NOT = { has_war_with = ROOT }
+				}
+			}
+			var:ENG_uq_patron_var = { country_event = { id = ENG_uq.250 days = 2 } }
+		}
+	}
+}
+
+# ENG scope, monthly once a region is open. Writes each region's average consent and the current decision cost to every member, and counts subjects for the upkeep expense.
+ENG_uq_update_regions = {
+	resize_temp_array = { array = ENG_uq_rc_sum size = 7 }
+	resize_temp_array = { array = ENG_uq_rc_count size = 7 }
+	set_variable = { ENG_uq_protectorate_count = 0 }
+	set_temp_variable = { ENG_uq_strain_cost = { value = ENG_union_strain divide = 100 add = 1 } }
+	for_each_scope_loop = {
+		array = ENG_integration_targets
+		if = {
+			limit = { ENG_uq_is_ex_empire = yes }
+			set_temp_variable = { ENG_uq_r = ROOT.ENG_uq_region@THIS }
+			ROOT = {
+				add_to_temp_variable = { ENG_uq_rc_sum^ENG_uq_r = ENG_consent@PREV }
+				add_to_temp_variable = { ENG_uq_rc_count^ENG_uq_r = 1 }
+			}
+			if = {
+				limit = {
+					is_subject_of = ROOT
+					check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
+				}
+				ROOT = { add_to_variable = { ENG_uq_protectorate_count = 1 } }
+			}
+		}
+	}
+	for_each_scope_loop = {
+		array = ENG_integration_targets
+		if = {
+			limit = { ENG_uq_is_ex_empire = yes }
+			set_temp_variable = { ENG_uq_r = ROOT.ENG_uq_region@THIS }
+			ROOT = {
+				set_variable = { ENG_uq_region_consent@PREV = ENG_uq_rc_sum^ENG_uq_r }
+				if = {
+					limit = { check_variable = { ENG_uq_rc_count^ENG_uq_r > 0 } }
+					divide_variable = { ENG_uq_region_consent@PREV = ENG_uq_rc_count^ENG_uq_r }
+				}
+				set_variable = { ENG_uq_region_cost@PREV = gdp_total }
+				multiply_variable = { ENG_uq_region_cost@PREV = 0.002 }
+				multiply_variable = { ENG_uq_region_cost@PREV = ENG_uq_region_cost_factor@PREV }
+				multiply_variable = { ENG_uq_region_cost@PREV = ENG_uq_strain_cost }
+			}
+		}
+	}
+}
+
+# Target scope in the monthly ladder loop with ROOT = ENG. A wider-empire subject rolls for a rising while British stability is below 50%.
+ENG_uq_ex_empire_monthly = {
+	if = {
+		limit = {
+			ENG_uq_is_ex_empire = yes
+			exists = yes
+			is_subject_of = ROOT
+			check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
+			ROOT = {
+				has_stability < 0.5
+				NOT = { has_country_flag = ENG_uq_realm_crisis@PREV }
+			}
+		}
+		random_list = {
+			95 = {}
+			5 = {
+				ROOT = { set_country_flag = { flag = ENG_uq_realm_crisis@PREV days = 365 } }
+				ENG = { country_event = { id = ENG_uq.252 } }
+			}
+		}
 	}
 }
 

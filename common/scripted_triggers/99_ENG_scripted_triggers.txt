@@ -407,9 +407,15 @@ ENG_uq_is_caribbean_realm = {
 	}
 }
 
-# Target scope. Hong Kong is permanently capped short of full integration; Malta and Cyprus are capped until the Crown is restored there.
+# Target scope. A wider-empire target opened by a tier 4 region focus.
+ENG_uq_is_ex_empire = {
+	check_variable = { ROOT.ENG_uq_region@THIS > 0 }
+}
+
+# Target scope. Hong Kong and the wider empire are permanently capped short of full integration; Malta and Cyprus are capped until the Crown is restored there.
 ENG_uq_stage_capped = {
 	OR = {
+		ENG_uq_is_ex_empire = yes
 		original_tag = HKG
 		AND = {
 			OR = {
@@ -487,6 +493,19 @@ ENG_uq_canzuk_integrated = {
 		OR = {
 			check_variable = { ENG_integration_stage@NZL > 3 }
 			NOT = { country_exists = NZL }
+		}
+	}
+}
+
+# FROM = the ladder target. A guarantee by any third country blocks the Nationalist wargoal.
+ENG_uq_not_foreign_guaranteed = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_not_foreign_guaranteed_TT
+		NOT = {
+			any_country = {
+				NOT = { tag = ROOT }
+				has_guaranteed = FROM
+			}
 		}
 	}
 }

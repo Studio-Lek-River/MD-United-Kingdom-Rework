@@ -2383,6 +2383,14 @@ defined_text = {
 
 	text = {
 		trigger = {
+			check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
+			ENG_uq_stage_capped = yes
+		}
+		localization_key = ENG_uq_next_done_loc
+	}
+
+	text = {
+		trigger = {
 			ROOT = { has_country_flag = ENG_uq_western }
 			check_variable = { ROOT.ENG_integration_stage@THIS = 1 }
 		}

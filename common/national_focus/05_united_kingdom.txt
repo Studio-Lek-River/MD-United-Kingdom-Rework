@@ -25046,6 +25046,366 @@ focus_tree = {
 		ai_will_do = { base = 0 }
 	}
 
+	# Tier 4: wider empire (Western)
+
+	focus = {
+		id = ENG_commonwealth_development_partnership
+		icon = british_isles
+
+		x = 6
+		y = 13
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			ENG_uq_realms_done = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_commonwealth_development_partnership"
+			custom_effect_tooltip = ENG_commonwealth_development_partnership_TT
+			set_temp_variable = { ENG_cmw_cohesion_change = 3 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_development_programme
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_west_african_partnership
+		icon = british_isles
+
+		x = 1
+		y = 14
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_commonwealth_development_partnership }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_fund_running_TT
+				has_idea = ENG_cmw_development_fund_idea
+			}
+			OR = {
+				country_exists = SIE
+				country_exists = GAM
+				country_exists = GAH
+				country_exists = NIG
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = SIE }
+			NOT = { country_exists = GAM }
+			NOT = { country_exists = GAH }
+			NOT = { country_exists = NIG }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_west_african_partnership"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_west_africa = yes }
+			every_country = {
+				limit = {
+					ENG_uq_is_ex_empire = yes
+					ROOT = { check_variable = { ENG_uq_region@PREV = 1 } }
+				}
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_association
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_east_african_partnership
+		icon = british_isles
+
+		x = 3
+		y = 14
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_commonwealth_development_partnership }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_fund_running_TT
+				has_idea = ENG_cmw_development_fund_idea
+			}
+			OR = {
+				country_exists = KEN
+				country_exists = UGA
+				country_exists = TNZ
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = KEN }
+			NOT = { country_exists = UGA }
+			NOT = { country_exists = TNZ }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_east_african_partnership"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_east_africa = yes }
+			every_country = {
+				limit = {
+					ENG_uq_is_ex_empire = yes
+					ROOT = { check_variable = { ENG_uq_region@PREV = 2 } }
+				}
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_association
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_southern_african_partnership
+		icon = british_isles
+
+		x = 5
+		y = 14
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_commonwealth_development_partnership }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_fund_running_TT
+				has_idea = ENG_cmw_development_fund_idea
+			}
+			OR = {
+				country_exists = ZAM
+				country_exists = ZIM
+				country_exists = MLW
+				country_exists = BOT
+				country_exists = SWA
+				country_exists = LES
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = ZAM }
+			NOT = { country_exists = ZIM }
+			NOT = { country_exists = MLW }
+			NOT = { country_exists = BOT }
+			NOT = { country_exists = SWA }
+			NOT = { country_exists = LES }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_southern_african_partnership"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_southern_africa = yes }
+			every_country = {
+				limit = {
+					ENG_uq_is_ex_empire = yes
+					ROOT = { check_variable = { ENG_uq_region@PREV = 3 } }
+				}
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_association
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_gulf_partnership
+		icon = british_isles
+
+		x = 7
+		y = 14
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_commonwealth_development_partnership }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_fund_running_TT
+				has_idea = ENG_cmw_development_fund_idea
+			}
+			OR = {
+				country_exists = KUW
+				country_exists = QAT
+				country_exists = BHR
+				country_exists = UAE
+				country_exists = OMA
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = KUW }
+			NOT = { country_exists = QAT }
+			NOT = { country_exists = BHR }
+			NOT = { country_exists = UAE }
+			NOT = { country_exists = OMA }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_gulf_partnership"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_gulf = yes }
+			every_country = {
+				limit = {
+					ENG_uq_is_ex_empire = yes
+					ROOT = { check_variable = { ENG_uq_region@PREV = 4 } }
+				}
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_association
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_asian_partnership
+		icon = british_isles
+
+		x = 9
+		y = 14
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_commonwealth_development_partnership }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_fund_running_TT
+				has_idea = ENG_cmw_development_fund_idea
+			}
+			OR = {
+				country_exists = MAY
+				country_exists = SIN
+				country_exists = BRU
+				country_exists = SRI
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = MAY }
+			NOT = { country_exists = SIN }
+			NOT = { country_exists = BRU }
+			NOT = { country_exists = SRI }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_asian_partnership"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_asia = yes }
+			every_country = {
+				limit = {
+					ENG_uq_is_ex_empire = yes
+					ROOT = { check_variable = { ENG_uq_region@PREV = 5 } }
+				}
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_association
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_pacific_partnership
+		icon = british_isles
+
+		x = 11
+		y = 14
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_commonwealth_development_partnership }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_fund_running_TT
+				has_idea = ENG_cmw_development_fund_idea
+			}
+			OR = {
+				country_exists = FIJ
+				country_exists = SOL
+				country_exists = VAN
+				country_exists = TON
+				country_exists = SAM
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = FIJ }
+			NOT = { country_exists = SOL }
+			NOT = { country_exists = VAN }
+			NOT = { country_exists = TON }
+			NOT = { country_exists = SAM }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_pacific_partnership"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_pacific = yes }
+			every_country = {
+				limit = {
+					ENG_uq_is_ex_empire = yes
+					ROOT = { check_variable = { ENG_uq_region@PREV = 6 } }
+				}
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_association
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
 	# Tier 3b: lost possessions (Nationalist)
 
 	focus = {

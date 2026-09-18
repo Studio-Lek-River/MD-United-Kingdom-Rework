@@ -4722,6 +4722,7 @@ ENG_the_crown_imperial_decisions = {
 				tooltip = ENG_uq_cooldown_over_TT
 				NOT = { has_country_flag = ENG_uq_ultimatum_cooldown@FROM }
 			}
+			ENG_uq_not_foreign_guaranteed = yes
 			NOT = { has_war_with = FROM }
 		}
 
@@ -5379,6 +5380,75 @@ ENG_a_family_of_nations_decisions = {
 		ai_will_do = { base = 5 }
 	}
 
+	ENG_uq_regional_development_programme = {
+		icon = GFX_decision_generic_construction
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 1 }
+			FROM = { ENG_uq_is_ex_empire = yes }
+		}
+
+		cost = 75
+		custom_cost_trigger = {
+			check_expr = {
+				value = ENG_uq_region_cost@FROM
+				less_than = { value = treasury }
+			}
+			has_political_power > 74.999
+		}
+		custom_cost_text = ENG_uq_region_cost_pp75_TT
+		ai_hint_pp_cost = 75
+		days_re_enable = 180
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_fund_running_TT
+				has_idea = ENG_cmw_development_fund_idea
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_regional_development_programme for [FROM.GetName]"
+			hidden_effect = { add_political_power = -75 }
+			set_temp_variable = { treasury_change = ENG_uq_region_cost@FROM }
+			multiply_temp_variable = { treasury_change = -1 }
+			modify_treasury_effect = yes
+			random_list = {
+				80 = {
+					FROM = {
+						set_temp_variable = { ENG_uq_consent_change = 8 }
+						ENG_uq_change_consent = yes
+					}
+					every_country = {
+						limit = {
+							ENG_uq_is_ex_empire = yes
+							NOT = { tag = FROM }
+							ROOT = {
+								check_variable = { ENG_uq_region@PREV = ENG_uq_region@FROM }
+								check_variable = { ENG_integration_stage@PREV = 1 }
+							}
+						}
+						set_temp_variable = { ENG_uq_consent_change = 3 }
+						ENG_uq_change_consent = yes
+					}
+				}
+				20 = {
+					custom_effect_tooltip = ENG_uq_press_scandal_TT
+					FROM = {
+						set_temp_variable = { ENG_uq_consent_change = -5 }
+						ENG_uq_change_consent = yes
+					}
+				}
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
 	ENG_uq_renew_commonwealth_invitation = {
 		icon = GFX_decision_generic_political_discourse
 
@@ -5827,6 +5897,7 @@ ENG_union_question_decisions = {
 				}
 			}
 			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
+			NOT = { FROM = { ENG_uq_is_ex_empire = yes } }
 		}
 
 		cost = 100
@@ -6013,6 +6084,82 @@ ENG_union_question_decisions = {
 			}
 			else = {
 				ENG_uq_enter_stage_4 = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				check_variable = { ENG_union_strain > 40 }
+			}
+		}
+	}
+
+	ENG_uq_regional_association = {
+		icon = GFX_decision_generic_political_discourse
+
+		target_array = ENG_integration_targets
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 1 }
+			FROM = {
+				ENG_uq_is_ex_empire = yes
+				exists = yes
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
+			}
+		}
+
+		cost = 100
+		custom_cost_trigger = {
+			check_expr = {
+				value = ENG_uq_region_cost@FROM
+				less_than = { value = treasury }
+			}
+			has_political_power > 99.999
+		}
+		custom_cost_text = ENG_uq_region_cost_pp100_TT
+		ai_hint_pp_cost = 100
+
+		available = {
+			ENG_uq_can_transition = yes
+			if = {
+				limit = { has_country_flag = ENG_uq_western }
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_region_consent_50_TT
+					check_variable = { ENG_uq_region_consent@FROM > 50 }
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_fund_running_TT
+					has_idea = ENG_cmw_development_fund_idea
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_target_pacified_TT
+					check_variable = { ENG_coercion@FROM > 5 }
+				}
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_regional_association"
+			hidden_effect = { add_political_power = -100 }
+			set_temp_variable = { treasury_change = ENG_uq_region_cost@FROM }
+			multiply_temp_variable = { treasury_change = -1 }
+			modify_treasury_effect = yes
+			if = {
+				limit = { has_country_flag = ENG_uq_western }
+				FROM = { country_event = { id = ENG_uq.20 days = 1 } }
+				custom_effect_tooltip = TT_IF_THEY_ACCEPT
+				effect_tooltip = { custom_effect_tooltip = ENG_uq_stage_2_TT }
+				custom_effect_tooltip = TT_IF_THEY_REJECT
+				effect_tooltip = { ENG_uq_fail_transition = yes }
+			}
+			else = {
+				ENG_uq_enter_stage_2 = yes
 			}
 		}
 

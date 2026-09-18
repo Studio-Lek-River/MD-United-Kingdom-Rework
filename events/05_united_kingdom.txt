@@ -10159,6 +10159,168 @@ country_event = {
 	option = { name = ENG_uq.242.a }
 }
 
+########################## Wider empire #########################
+# Regional rival reacts to a new British subject in its sphere (rival, FROM = ENG). ENG.ENG_uq_event_target = the subject.
+country_event = {
+	id = ENG_uq.250
+	title = ENG_uq.250.t
+	desc = ENG_uq.250.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.250.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.250.a executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_patron_opinion }
+		ai_chance = { base = 50 }
+	}
+
+	option = {
+		name = ENG_uq.250.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.250.b executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_patron_opinion }
+		set_temp_variable = { ENG_uq_sponsor_target = FROM.ENG_uq_event_target }
+		var:ENG_uq_sponsor_target = {
+			set_temp_variable = { ENG_uq_consent_change = -15 }
+			ENG_uq_change_consent = yes
+			if = {
+				limit = { NOT = { has_idea = ENG_uq_sovereignty_movement } }
+				add_timed_idea = { idea = ENG_uq_sovereignty_movement days = 730 }
+			}
+		}
+		FROM = {
+			set_temp_variable = { ENG_imperial_tension_change = 3 }
+			ENG_change_imperial_tension = yes
+			country_event = { id = ENG_uq.251 days = 1 }
+		}
+		ai_chance = {
+			base = 30
+			modifier = {
+				add = 20
+				FROM = { has_country_flag = ENG_uq_nationalist }
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = FROM
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.250.c
+		trigger = { FROM = { check_variable = { ENG_imperial_tension > 60 } } }
+		log = "[GetDateText]: [This.GetName]: ENG_uq.250.c executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_patron_opinion }
+		set_temp_variable = { ENG_uq_sponsor_target = FROM.ENG_uq_event_target }
+		var:ENG_uq_sponsor_target = {
+			FROM = { set_temp_variable = { ENG_uq_region_tmp = ENG_uq_region@PREV } }
+		}
+		every_country = {
+			limit = {
+				is_subject = no
+				NOT = { tag = ROOT }
+				NOT = { has_war_with = ROOT }
+				FROM = {
+					check_variable = { ENG_uq_region@PREV = ENG_uq_region_tmp }
+					check_variable = { ENG_integration_stage@PREV < 2 }
+				}
+			}
+			PREV = { give_guarantee = PREV }
+		}
+		FROM = { country_event = { id = ENG_uq.253 days = 1 } }
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 40
+				FROM = { check_variable = { ENG_imperial_tension > 60 } }
+			}
+			modifier = {
+				factor = 0
+				has_war = yes
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = FROM
+			}
+		}
+	}
+}
+
+# Rival sponsors unrest in the new subject (ENG, FROM = rival)
+country_event = {
+	id = ENG_uq.251
+	title = ENG_uq.251.t
+	desc = ENG_uq.251.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.251.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.251.a executed"
+		custom_effect_tooltip = ENG_uq_rival_unrest_TT
+		ai_chance = { base = 100 }
+	}
+}
+
+# Rising in a wider-empire subject while British stability is low (ENG, FROM = subject)
+country_event = {
+	id = ENG_uq.252
+	title = ENG_uq.252.t
+	desc = ENG_uq.252.d
+	picture = GFX_generic_soldiers
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.252.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.252.a executed"
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_free
+		}
+		set_variable = { ENG_integration_stage@FROM = 0 }
+		remove_from_array = { ENG_integration_targets = FROM }
+		set_country_flag = { flag = ENG_uq_lock@FROM days = 1825 }
+		set_temp_variable = { ENG_union_strain_change = 5 }
+		ENG_change_union_strain = yes
+		ai_chance = { base = 40 }
+	}
+
+	option = {
+		name = ENG_uq.252.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.252.b executed"
+		add_stability = -0.05
+		set_temp_variable = { ENG_imperial_tension_change = 3 }
+		ENG_change_imperial_tension = yes
+		set_temp_variable = { treasury_change = { value = gdp_total multiply = -0.005 } }
+		modify_treasury_effect = yes
+		FROM = {
+			set_temp_variable = { ENG_uq_consent_change = -15 }
+			ENG_uq_change_consent = yes
+			if = {
+				limit = { NOT = { has_idea = ENG_uq_sovereignty_movement } }
+				add_timed_idea = { idea = ENG_uq_sovereignty_movement days = 1095 }
+			}
+		}
+		ai_chance = { base = 60 }
+	}
+}
+
+# Rival guarantees the rest of the region (ENG, FROM = rival)
+country_event = {
+	id = ENG_uq.253
+	title = ENG_uq.253.t
+	desc = ENG_uq.253.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.253.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.253.a executed"
+		custom_effect_tooltip = ENG_uq_rival_guarantee_TT
+		ai_chance = { base = 100 }
+	}
+}
+
 ########################## Commonwealth of Nations #########################
 # Commonwealth Games held
 news_event = {
