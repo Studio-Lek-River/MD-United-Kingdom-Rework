@@ -912,9 +912,7 @@
  ENG_resistance_against_westminster_desC: "Upon rejecting a proposal for a referendum, constituents of this state have put up staunch resistance in the form of civil disobedience and small instances of violence to show their discontent."
  ENG_political_modifier: "The Westminster System"
  ENG_union_strain_dm: "Union Strain"
- ENG_union_strain_dm_TT: "Union Strain: §Y[?ENG_union_strain|0]§!/§R100§!
-Above §R60§! no stage transition can begin. Each territory brought into the Union adds strain; it decays by 1 a month at peace.\n\nImperial Tension: §Y[?ENG_imperial_tension|0]§!/§R100§!
-Coercion and integration abroad raise it; it decays by 1 a month while no coercion step or occupation is running. The world reacts at §R20§!, §R40§!, §R60§! and §R80§!."
+ ENG_union_strain_dm_TT: "Union Strain: §Y[?ENG_union_strain|0]§!/§R100§!\nAbove §R60§! no stage transition can begin. Each territory brought into the Union adds strain; it decays by 1 a month at peace.\n\nImperial Tension: §Y[?ENG_imperial_tension|0]§!/§R100§!\nCoercion and integration abroad raise it; it decays by 1 a month while no coercion step or occupation is running. The world reacts at §R20§!, §R40§!, §R60§! and §R80§!."
  ENG_uq_occupation_dm: "Crown Occupation"
  ENG_uq_strike_dm: "Strikes"
  ENG_uq_irish_partisans_dm: "Irish Partisans"
@@ -1660,9 +1658,7 @@ Coercion and integration abroad raise it; it decays by 1 a month while no coerci
  ENG_cost_gdp_1_percent_blocked: "£treasury §R1.0%§! of GDP"
  ENG_cost_gdp_1_percent_tooltip: "This purchase will cost §H1.0%§! of your GDP"
  ENG_union_question_decisions: "The Union Question"
- ENG_union_question_decisions_desc: "Every target of the Union Question climbs the same ladder: §Yaligned§!, §Yassociated§! (a Crown subject), §Yconstituent§! (the same footing as Scotland or Wales) and §Yintegrated§! (cored and annexed). A declined offer or a lost referendum locks the target for §R5§! years on the Western path or §R3§! on the Nationalist path and costs §R20§! consent.
-
-Every territory brought into the Union adds to Union Strain: lower stability, slower political power, more bureaucracy and dearer consumer goods. Above §R60§! no step can begin. Strain eases by §G1§! a month at peace and not at all in wartime; the relief measures buy it down faster."
+ ENG_union_question_decisions_desc: "Every target of the Union Question climbs the same ladder: §Yaligned§!, §Yassociated§! (a Crown subject), §Yconstituent§! (the same footing as Scotland or Wales) and §Yintegrated§! (cored and annexed). A declined offer or a lost referendum locks the target for §R5§! years on the Western path or §R3§! on the Nationalist path and costs §R20§! consent.\n\nEvery territory brought into the Union adds to Union Strain: lower stability, slower political power, more bureaucracy and dearer consumer goods. Above §R60§! no step can begin. Strain eases by §G1§! a month at peace and not at all in wartime; the relief measures buy it down faster."
  ENG_uq_constituent_status: "Constituent Status: [FROM.GetName]"
  ENG_uq_constituent_status_desc: "[FROM.GetName] moves from Crown subject to a constituent country of the Union, on the same footing as Scotland or Wales. The Western path needs high consent and a referendum won in [FROM.GetName]; the Nationalist path needs it pacified."
  ENG_uq_integration_act: "Integration Act: [FROM.GetName]"
@@ -2360,14 +2356,9 @@ Every territory brought into the Union adds to Union Strain: lower stability, sl
  ENG_scotland_dependency_VAR: "§G[?ENG_scottish_dependency|0]/100§!"
  ENG_union_strain_ui_label: "Union Strain"
  ENG_union_strain_ui_VAR: "§R[?ENG_union_strain|0]/100§!"
- ENG_union_strain_ui_TT: "Union Strain: §Y[?ENG_union_strain|0]§!/§R100§!
-
-Stage transitions are blocked above §R60§!.
-Each point adds §R0.02§! agitation a month to each home nation that is still devolved.
-Decays by §G1§! a month at peace and not at all in wartime."
+ ENG_union_strain_ui_TT: "Union Strain: §Y[?ENG_union_strain|0]§!/§R100§!\n\nStage transitions are blocked above §R60§!.\nEach point adds §R0.02§! agitation a month to each home nation that is still devolved.\nDecays by §G1§! a month at peace and not at all in wartime."
  ENG_uq_ladder_ui_label: "Integration Ladder"
- ENG_uq_ladder_ui_TT: "Every target of the Union Question and how far it has climbed.
-Stages: §Yaligned§!, §Yassociated§!, §Yconstituent§!, §Yintegrated§!."
+ ENG_uq_ladder_ui_TT: "Every target of the Union Question and how far it has climbed.\nStages: §Yaligned§!, §Yassociated§!, §Yconstituent§!, §Yintegrated§!."
  ENG_uq_ladder_col_target: "Target"
  ENG_uq_ladder_col_stage: "Stage"
  ENG_uq_ladder_col_meter: "Meter"
