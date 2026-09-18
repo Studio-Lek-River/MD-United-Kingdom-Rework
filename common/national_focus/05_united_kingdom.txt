@@ -23386,6 +23386,278 @@ focus_tree = {
 		ai_will_do = { base = 0 }
 	}
 
+	focus = {
+		id = ENG_the_crowns_peace
+		icon = Generic_Crown_Box
+
+		x = 0
+		y = 1
+		relative_position_id = ENG_the_crown_imperial
+
+		prerequisite = { focus = ENG_the_crown_imperial }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crowns_peace"
+			custom_effect_tooltip = ENG_uq_assemblies_suspended_TT
+			set_country_flag = ENG_uq_assemblies_suspended
+			set_temp_variable = { ENG_agitation_change = 15 }
+			ENG_change_scottish_agitation = yes
+			ENG_change_north_irish_agitation = yes
+			ENG_change_wales_agitation = yes
+			set_temp_variable = { ENG_nationalists_change = 10 }
+			ENG_change_scottish_nationalists = yes
+			ENG_change_north_irish_nationalists = yes
+			ENG_change_wales_nationalists = yes
+			add_stability = -0.10
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+			hidden_effect = { update_eng_devolution_dirty_variable = yes }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_direct_rule_from_london
+		icon = Generic_Policeman
+
+		x = 0
+		y = 2
+		relative_position_id = ENG_the_crown_imperial
+
+		prerequisite = { focus = ENG_the_crowns_peace }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_direct_rule_from_london"
+			custom_effect_tooltip = ENG_direct_rule_TT
+			add_ideas = ENG_direct_rule_idea
+			hidden_effect = { ENG_uq_update_direct_rule = yes }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_ulster_settled_by_the_crown
+		icon = Ulster_Industry
+
+		x = 2
+		y = 2
+		relative_position_id = ENG_the_crown_imperial
+
+		prerequisite = { focus = ENG_the_crowns_peace }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_ulster_gfa_repealed_TT
+				NOT = { has_idea = ENG_good_friday_agreement }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_ulster_risk_resolved_TT
+				NOT = { has_active_mission = ENG_ulster_on_the_brink }
+				NOT = { country_exists = NIR }
+				NOT = { has_war_with = IRE }
+			}
+			ENG_holds_north_ireland = yes
+			NOT = { has_country_flag = ENG_north_irish_integrated }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_ulster_settled_by_the_crown"
+			custom_effect_tooltip = ENG_ulster_crown_settlement_TT
+			hidden_effect = {
+				if = {
+					limit = { has_idea = ENG_the_dissident_campaign }
+					remove_ideas = ENG_the_dissident_campaign
+				}
+				if = {
+					limit = { has_idea = ENG_the_dissident_campaign_hidden_idea }
+					remove_ideas = ENG_the_dissident_campaign_hidden_idea
+				}
+				17 = {
+					if = {
+						limit = { has_dynamic_modifier = { modifier = ENG_State_17_Paramilitary_Activity } }
+						remove_dynamic_modifier = { modifier = ENG_State_17_Paramilitary_Activity }
+					}
+				}
+			}
+			add_stability = -0.10
+			set_temp_variable = { ENG_agitation_change = -15 }
+			ENG_change_north_irish_agitation = yes
+			set_temp_variable = { ENG_nationalists_change = -10 }
+			ENG_change_north_irish_nationalists = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_unionist_ascendancy
+		icon = british_nationalism
+
+		x = -1
+		y = 3
+		relative_position_id = ENG_the_crown_imperial
+
+		prerequisite = { focus = ENG_direct_rule_from_london }
+
+		mutually_exclusive = { focus = ENG_the_kings_men }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_unionist_ascendancy"
+			custom_effect_tooltip = ENG_uq_loyalists_funded_TT
+			set_country_flag = ENG_uq_loyalists_funded
+			set_temp_variable = { ENG_nationalists_change = -10 }
+			ENG_change_scottish_nationalists = yes
+			ENG_change_north_irish_nationalists = yes
+			ENG_change_wales_nationalists = yes
+			set_temp_variable = { ENG_agitation_change = 10 }
+			ENG_change_scottish_agitation = yes
+			ENG_change_north_irish_agitation = yes
+			ENG_change_wales_agitation = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_kings_men
+		icon = Generic_British_Soldiers03
+
+		x = 1
+		y = 3
+		relative_position_id = ENG_the_crown_imperial
+
+		prerequisite = { focus = ENG_direct_rule_from_london }
+
+		mutually_exclusive = { focus = ENG_the_unionist_ascendancy }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_kings_men"
+			add_ideas = ENG_kings_men_idea
+			custom_effect_tooltip = ENG_kings_men_pacification_TT
+			hidden_effect = { set_variable = { ENG_pacification_pressure_cap = 35 } }
+			set_temp_variable = { ENG_union_strain_change = 10 }
+			ENG_change_union_strain = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_loyal_ulster_regiments
+		icon = British_Army_1
+
+		x = 3
+		y = 3
+		relative_position_id = ENG_the_crown_imperial
+
+		prerequisite = { focus = ENG_ulster_settled_by_the_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_north_irish_pacified_TT
+				OR = {
+					has_country_flag = ENG_north_irish_pacified
+					has_country_flag = ENG_north_irish_integrated
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_loyal_ulster_regiments"
+			add_ideas = ENG_loyal_ulster_regiments_idea
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_crown_union
+		icon = british_monarchy
+
+		x = 0
+		y = 4
+		relative_position_id = ENG_the_crown_imperial
+
+		prerequisite = {
+			focus = ENG_the_unionist_ascendancy
+			focus = ENG_the_kings_men
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			ENG_uq_home_nations_pacified = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_crown_union"
+			custom_effect_tooltip = ENG_crown_union_TT
+			hidden_effect = {
+				if = {
+					limit = { ENG_uq_scotland_suspended = yes }
+					set_variable = { ENG_referendum_target = 1 }
+					ENG_integrate_referendum_region = yes
+				}
+				if = {
+					limit = { ENG_uq_north_ireland_suspended = yes }
+					set_variable = { ENG_referendum_target = 2 }
+					ENG_integrate_referendum_region = yes
+				}
+				if = {
+					limit = { ENG_uq_wales_suspended = yes }
+					set_variable = { ENG_referendum_target = 3 }
+					ENG_integrate_referendum_region = yes
+				}
+				set_variable = { ENG_referendum_target = 0 }
+				clr_country_flag = ENG_uq_assemblies_suspended
+				clr_country_flag = ENG_uq_loyalists_funded
+				if = {
+					limit = { has_idea = ENG_direct_rule_idea }
+					remove_ideas = ENG_direct_rule_idea
+				}
+				update_eng_devolution_dirty_variable = yes
+			}
+			set_temp_variable = { ENG_union_strain_change = 30 }
+			ENG_change_union_strain = yes
+			add_ideas = ENG_crown_union_idea
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
 	# Junta Tree
 
 	# focus = {

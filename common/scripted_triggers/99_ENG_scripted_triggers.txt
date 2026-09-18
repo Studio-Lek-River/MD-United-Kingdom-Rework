@@ -100,6 +100,99 @@ ENG_two_home_nations_integrated = {
 	}
 }
 
+# Suspension: the region is still ours and still devolved
+ENG_uq_scotland_suspended = {
+	has_country_flag = ENG_uq_assemblies_suspended
+	NOT = { has_country_flag = ENG_scottish_integrated }
+	NOT = { country_exists = SCO }
+	ENG_holds_scotland = yes
+}
+
+ENG_uq_scotland_under_direct_rule = {
+	ENG_uq_scotland_suspended = yes
+	has_idea = ENG_direct_rule_idea
+	NOT = { has_country_flag = ENG_scottish_pacified }
+}
+
+ENG_uq_scotland_calm = {
+	check_variable = { var = ENG_scottish_pressure value = ENG_pacification_pressure_cap compare = less_than }
+	NOT = {
+		any_owned_state = {
+			is_core_of = SCO
+			has_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+			check_variable = { ENG_resistance_tier > 1 }
+		}
+	}
+}
+
+ENG_uq_north_ireland_suspended = {
+	has_country_flag = ENG_uq_assemblies_suspended
+	NOT = { has_country_flag = ENG_north_irish_integrated }
+	NOT = { country_exists = NIR }
+	ENG_holds_north_ireland = yes
+}
+
+ENG_uq_north_ireland_under_direct_rule = {
+	ENG_uq_north_ireland_suspended = yes
+	has_idea = ENG_direct_rule_idea
+	NOT = { has_country_flag = ENG_north_irish_pacified }
+}
+
+ENG_uq_north_ireland_calm = {
+	check_variable = { var = ENG_north_irish_pressure value = ENG_pacification_pressure_cap compare = less_than }
+	NOT = {
+		17 = {
+			has_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+			check_variable = { ENG_resistance_tier > 1 }
+		}
+	}
+}
+
+ENG_uq_wales_suspended = {
+	has_country_flag = ENG_uq_assemblies_suspended
+	NOT = { has_country_flag = ENG_welsh_integrated }
+	NOT = { country_exists = WAS }
+	ENG_holds_wales = yes
+}
+
+ENG_uq_wales_under_direct_rule = {
+	ENG_uq_wales_suspended = yes
+	has_idea = ENG_direct_rule_idea
+	NOT = { has_country_flag = ENG_welsh_pacified }
+}
+
+ENG_uq_wales_calm = {
+	check_variable = { var = ENG_wales_pressure value = ENG_pacification_pressure_cap compare = less_than }
+	NOT = {
+		any_owned_state = {
+			is_core_of = WAS
+			has_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+			check_variable = { ENG_resistance_tier > 1 }
+		}
+	}
+}
+
+ENG_uq_home_nations_pacified = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_home_nations_pacified_TT
+		OR = {
+			has_country_flag = ENG_scottish_pacified
+			has_country_flag = ENG_scottish_integrated
+			NOT = { any_state = { is_core_of = SCO } }
+		}
+		OR = {
+			has_country_flag = ENG_welsh_pacified
+			has_country_flag = ENG_welsh_integrated
+			NOT = { any_state = { is_core_of = WAS } }
+		}
+		OR = {
+			has_country_flag = ENG_north_irish_pacified
+			has_country_flag = ENG_north_irish_integrated
+			NOT = { any_state = { is_core_of = NIR } }
+		}
+	}
+}
+
 ENG_inner_circle_is_ascension_cd_over = {
 	NOT = {
 		has_country_flag = {

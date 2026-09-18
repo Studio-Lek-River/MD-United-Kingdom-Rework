@@ -34,11 +34,11 @@ ENG_overseas_territory = {
 
 ENG_resistance_against_westminster = {
 	icon = GFX_idea_fire
-	state_productivity_growth_modifier = -0.25
-	local_manpower = -0.20
-	local_supplies = -0.30
-	state_resources_factor = -0.50
-	attrition_for_controller = 0.10
+	state_productivity_growth_modifier = ENG_rw_productivity
+	local_manpower = ENG_rw_manpower
+	local_supplies = ENG_rw_supplies
+	state_resources_factor = ENG_rw_resources
+	attrition_for_controller = ENG_rw_attrition
 }
 
 ENG_economy_modifier = {
@@ -166,6 +166,13 @@ ENG_uq_occupation_dm = {
 
 	resistance_target = ENG_uq_occ_resistance_target
 	compliance_growth = ENG_uq_occ_compliance_growth
+}
+
+ENG_uq_strike_dm = {
+	icon = GFX_idea_fire
+
+	local_factory_sabotage = 0.25
+	state_productivity_growth_modifier = -0.10
 }
 
 ENG_invest_northern_ireland = {

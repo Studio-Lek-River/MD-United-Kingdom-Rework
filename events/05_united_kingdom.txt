@@ -2490,9 +2490,10 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: devolution.5.b executed"
 		set_country_flag = ENG_scottish_rejected
 		add_stability = -0.10
+		set_temp_variable = { ENG_resistance_tier_change = 2 }
 		every_owned_state = {
 			limit = { is_core_of = SCO }
-			add_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+			ENG_apply_resistance_against_westminster = yes
 		}
 		ai_chance = {
 			base = 20
@@ -2542,7 +2543,8 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: devolution.6.b executed"
 		set_country_flag = ENG_irish_rejected
 		add_stability = -0.10
-		17 = { add_dynamic_modifier = { modifier = ENG_resistance_against_westminster } }
+		set_temp_variable = { ENG_resistance_tier_change = 2 }
+		17 = { ENG_apply_resistance_against_westminster = yes }
 		ai_chance = {
 			base = 20
 			modifier = {
@@ -2591,9 +2593,10 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: devolution.7.b executed"
 		set_country_flag = ENG_welsh_rejected
 		add_stability = -0.10
+		set_temp_variable = { ENG_resistance_tier_change = 2 }
 		every_owned_state = {
 			limit = { is_core_of = WAS }
-			add_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+			ENG_apply_resistance_against_westminster = yes
 		}
 		ai_chance = {
 			base = 20
@@ -8184,6 +8187,312 @@ country_event = {
 			set_temp_variable = { ENG_uq_consent_change = -10 }
 			ENG_uq_change_consent = yes
 		}
+	}
+}
+
+# Strikes spread across Scotland while Holyrood is suspended
+country_event = {
+	id = ENG_uq.70
+	title = ENG_uq.70.t
+	desc = ENG_uq.70.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.70.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.70.a executed"
+		every_owned_state = {
+			limit = { is_core_of = SCO }
+			add_dynamic_modifier = { modifier = ENG_uq_strike_dm days = 60 }
+		}
+		set_temp_variable = { ENG_agitation_change = 2 }
+		ENG_change_scottish_agitation = yes
+	}
+}
+
+# Strikes spread across Northern Ireland while Stormont is suspended
+country_event = {
+	id = ENG_uq.71
+	title = ENG_uq.71.t
+	desc = ENG_uq.71.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.71.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.71.a executed"
+		17 = {
+			add_dynamic_modifier = { modifier = ENG_uq_strike_dm days = 60 }
+		}
+		set_temp_variable = { ENG_agitation_change = 2 }
+		ENG_change_north_irish_agitation = yes
+	}
+}
+
+# Strikes spread across Wales while the Senedd is suspended
+country_event = {
+	id = ENG_uq.72
+	title = ENG_uq.72.t
+	desc = ENG_uq.72.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.72.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.72.a executed"
+		every_owned_state = {
+			limit = { is_core_of = WAS }
+			add_dynamic_modifier = { modifier = ENG_uq_strike_dm days = 60 }
+		}
+		set_temp_variable = { ENG_agitation_change = 2 }
+		ENG_change_wales_agitation = yes
+	}
+}
+
+# The Scottish Declaration
+country_event = {
+	id = ENG_uq.73
+	title = ENG_uq.73.t
+	desc = ENG_uq.73.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = { flag = ENG_uq_declaration_cooldown days = 365 value = 1 }
+	}
+
+	option = {
+		name = ENG_uq.73.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.73.a executed"
+		add_stability = -0.10
+		set_temp_variable = { ENG_agitation_change = 10 }
+		ENG_change_scottish_agitation = yes
+		ai_chance = { base = 1 }
+	}
+
+	option = {
+		name = ENG_uq.73.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.73.b executed"
+		clr_country_flag = ENG_scottish_pacified
+		set_variable = { ENG_referendum_target = 1 }
+		ENG_release_referendum_region = yes
+		set_variable = { ENG_referendum_target = 0 }
+		ai_chance = { base = 0 }
+	}
+}
+
+# The Senedd in Exile
+country_event = {
+	id = ENG_uq.74
+	title = ENG_uq.74.t
+	desc = ENG_uq.74.d
+	picture = GFX_political_deal
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = ENG_uq_welsh_exile_assembly
+	}
+
+	option = {
+		name = ENG_uq.74.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.74.a executed"
+		set_temp_variable = { ENG_nationalists_change = 5 }
+		ENG_change_wales_nationalists = yes
+		country_event = { id = ENG_uq.75 days = 90 }
+		ai_chance = { base = 1 }
+	}
+
+	option = {
+		name = ENG_uq.74.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.74.b executed"
+		add_stability = -0.05
+		set_temp_variable = { ENG_agitation_change = 10 }
+		ENG_change_wales_agitation = yes
+		set_temp_variable = { ENG_nationalists_change = -5 }
+		ENG_change_wales_nationalists = yes
+		set_temp_variable = { ENG_imperial_tension_change = 2 }
+		ENG_change_imperial_tension = yes
+		ai_chance = { base = 1 }
+	}
+}
+
+# The Exiles Petition Strasbourg
+country_event = {
+	id = ENG_uq.75
+	title = ENG_uq.75.t
+	desc = ENG_uq.75.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.75.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.75.a executed"
+		set_temp_variable = { ENG_imperial_tension_change = 3 }
+		ENG_change_imperial_tension = yes
+		set_temp_variable = { ENG_nationalists_change = 3 }
+		ENG_change_wales_nationalists = yes
+	}
+}
+
+# Loyalist riots in Scotland
+country_event = {
+	id = ENG_uq.76
+	title = ENG_uq.76.t
+	desc = ENG_uq.76.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.76.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.76.a executed"
+		add_stability = -0.02
+		set_temp_variable = { ENG_nationalists_change = -3 }
+		ENG_change_scottish_nationalists = yes
+		set_temp_variable = { ENG_agitation_change = 5 }
+		ENG_change_scottish_agitation = yes
+	}
+}
+
+# Loyalist riots in Northern Ireland
+country_event = {
+	id = ENG_uq.77
+	title = ENG_uq.77.t
+	desc = ENG_uq.77.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.77.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.77.a executed"
+		add_stability = -0.02
+		set_temp_variable = { ENG_nationalists_change = -3 }
+		ENG_change_north_irish_nationalists = yes
+		set_temp_variable = { ENG_agitation_change = 5 }
+		ENG_change_north_irish_agitation = yes
+	}
+}
+
+# Loyalist riots in Wales
+country_event = {
+	id = ENG_uq.78
+	title = ENG_uq.78.t
+	desc = ENG_uq.78.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.78.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.78.a executed"
+		add_stability = -0.02
+		set_temp_variable = { ENG_nationalists_change = -3 }
+		ENG_change_wales_nationalists = yes
+		set_temp_variable = { ENG_agitation_change = 5 }
+		ENG_change_wales_agitation = yes
+	}
+}
+
+# Scotland Declares Independence
+country_event = {
+	id = ENG_uq.80
+	title = ENG_uq.80.t
+	desc = ENG_uq.80.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.80.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.80.a executed"
+		set_country_flag = { flag = ENG_scottish_rising_cooldown days = 1825 value = 1 }
+		clr_country_flag = ENG_scottish_pacified
+		custom_effect_tooltip = ENG_uq_rising_vents_TT
+		set_temp_variable = { ENG_agitation_change = -30 }
+		ENG_change_scottish_agitation = yes
+		every_owned_state = {
+			limit = { is_core_of = SCO }
+			ENG_remove_resistance_against_westminster = yes
+		}
+		release = SCO
+		SCO = {
+			add_ideas = ENG_war_of_independence
+			hidden_effect = { ingame_startup_nations_effect = yes }
+		}
+		declare_war_on = {
+			target = SCO
+			type = annex_everything
+		}
+		add_stability = -0.10
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# Northern Ireland Declares Independence
+country_event = {
+	id = ENG_uq.81
+	title = ENG_uq.81.t
+	desc = ENG_uq.81.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.81.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.81.a executed"
+		set_country_flag = { flag = ENG_north_irish_rising_cooldown days = 1825 value = 1 }
+		clr_country_flag = ENG_north_irish_pacified
+		custom_effect_tooltip = ENG_uq_rising_vents_TT
+		set_temp_variable = { ENG_agitation_change = -30 }
+		ENG_change_north_irish_agitation = yes
+		17 = {
+			ENG_remove_resistance_against_westminster = yes
+		}
+		release = NIR
+		NIR = {
+			add_ideas = ENG_war_of_independence
+			hidden_effect = { ingame_startup_nations_effect = yes }
+		}
+		declare_war_on = {
+			target = NIR
+			type = annex_everything
+		}
+		add_stability = -0.10
+		add_war_support = 0.05
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# Wales Declares Independence
+country_event = {
+	id = ENG_uq.82
+	title = ENG_uq.82.t
+	desc = ENG_uq.82.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.82.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.82.a executed"
+		set_country_flag = { flag = ENG_welsh_rising_cooldown days = 1825 value = 1 }
+		clr_country_flag = ENG_welsh_pacified
+		custom_effect_tooltip = ENG_uq_rising_vents_TT
+		set_temp_variable = { ENG_agitation_change = -30 }
+		ENG_change_wales_agitation = yes
+		every_owned_state = {
+			limit = { is_core_of = WAS }
+			ENG_remove_resistance_against_westminster = yes
+		}
+		release = WAS
+		WAS = {
+			add_ideas = ENG_war_of_independence
+			hidden_effect = { ingame_startup_nations_effect = yes }
+		}
+		declare_war_on = {
+			target = WAS
+			type = annex_everything
+		}
+		add_stability = -0.10
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
 	}
 }
 

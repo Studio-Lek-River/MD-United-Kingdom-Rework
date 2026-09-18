@@ -3560,6 +3560,7 @@ ENG_devolved_matters = {
 
 		activation = {
 			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { has_country_flag = ENG_uq_assemblies_suspended }
 			NOT = { has_country_flag = ENG_referendum_cooldown }
 			NOT = { has_country_flag = ENG_scottish_referendum_cooldown }
 			NOT = { has_country_flag = ENG_scottish_integrated }
@@ -3618,6 +3619,7 @@ ENG_devolved_matters = {
 
 		activation = {
 			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { has_country_flag = ENG_uq_assemblies_suspended }
 			NOT = { has_country_flag = ENG_referendum_cooldown }
 			NOT = { has_country_flag = ENG_north_irish_referendum_cooldown }
 			NOT = { has_country_flag = ENG_north_irish_integrated }
@@ -3676,6 +3678,7 @@ ENG_devolved_matters = {
 
 		activation = {
 			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { has_country_flag = ENG_uq_assemblies_suspended }
 			NOT = { has_country_flag = ENG_referendum_cooldown }
 			NOT = { has_country_flag = ENG_welsh_referendum_cooldown }
 			NOT = { has_country_flag = ENG_welsh_integrated }
@@ -3938,6 +3941,7 @@ ENG_devolved_matters = {
 
 		visible = {
 			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { has_country_flag = ENG_uq_assemblies_suspended }
 			has_country_flag = ENG_constitutional_convention
 			NOT = { has_country_flag = ENG_scottish_integrated }
 			NOT = { has_country_flag = ENG_settlement_cooldown }
@@ -4012,6 +4016,7 @@ ENG_devolved_matters = {
 
 		visible = {
 			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { has_country_flag = ENG_uq_assemblies_suspended }
 			has_country_flag = ENG_constitutional_convention
 			NOT = { has_country_flag = ENG_north_irish_integrated }
 			NOT = { has_country_flag = ENG_settlement_cooldown }
@@ -4093,6 +4098,7 @@ ENG_devolved_matters = {
 
 		visible = {
 			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { has_country_flag = ENG_uq_assemblies_suspended }
 			has_country_flag = ENG_constitutional_convention
 			NOT = { has_country_flag = ENG_welsh_integrated }
 			NOT = { has_country_flag = ENG_settlement_cooldown }
@@ -4724,6 +4730,127 @@ ENG_the_crown_imperial_decisions = {
 		}
 
 		ai_will_do = { base = 5 }
+	}
+
+	ENG_scottish_pacification = {
+		icon = GFX_decision_generic_civil_support
+
+		activation = {
+			ENG_uq_scotland_under_direct_rule = yes
+			ENG_uq_scotland_calm = yes
+		}
+
+		available = { always = no }
+
+		cancel_trigger = {
+			OR = {
+				NOT = { ENG_uq_scotland_under_direct_rule = yes }
+				NOT = { ENG_uq_scotland_calm = yes }
+			}
+		}
+
+		days_mission_timeout = 365
+		is_good = yes
+		selectable_mission = no
+
+		cancel_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision cancel ENG_scottish_pacification"
+			set_temp_variable = { ENG_union_strain_change = 2 }
+			ENG_change_union_strain = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_scottish_pacification"
+			set_country_flag = ENG_scottish_pacified
+			custom_effect_tooltip = ENG_scottish_pacified_TT
+			every_owned_state = {
+				limit = { is_core_of = SCO }
+				ENG_remove_resistance_against_westminster = yes
+			}
+			set_temp_variable = { ENG_agitation_change = -10 }
+			ENG_change_scottish_agitation = yes
+		}
+	}
+
+	ENG_north_irish_pacification = {
+		icon = GFX_decision_generic_civil_support
+
+		activation = {
+			ENG_uq_north_ireland_under_direct_rule = yes
+			ENG_uq_north_ireland_calm = yes
+		}
+
+		available = { always = no }
+
+		highlight_states = { highlight_state_targets = { state = 17 } }
+
+		cancel_trigger = {
+			OR = {
+				NOT = { ENG_uq_north_ireland_under_direct_rule = yes }
+				NOT = { ENG_uq_north_ireland_calm = yes }
+			}
+		}
+
+		days_mission_timeout = 365
+		is_good = yes
+		selectable_mission = no
+
+		cancel_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision cancel ENG_north_irish_pacification"
+			set_temp_variable = { ENG_union_strain_change = 2 }
+			ENG_change_union_strain = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_north_irish_pacification"
+			set_country_flag = ENG_north_irish_pacified
+			custom_effect_tooltip = ENG_north_irish_pacified_TT
+			17 = {
+				ENG_remove_resistance_against_westminster = yes
+			}
+			set_temp_variable = { ENG_agitation_change = -10 }
+			ENG_change_north_irish_agitation = yes
+		}
+	}
+
+	ENG_welsh_pacification = {
+		icon = GFX_decision_generic_civil_support
+
+		activation = {
+			ENG_uq_wales_under_direct_rule = yes
+			ENG_uq_wales_calm = yes
+		}
+
+		available = { always = no }
+
+		cancel_trigger = {
+			OR = {
+				NOT = { ENG_uq_wales_under_direct_rule = yes }
+				NOT = { ENG_uq_wales_calm = yes }
+			}
+		}
+
+		days_mission_timeout = 365
+		is_good = yes
+		selectable_mission = no
+
+		cancel_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision cancel ENG_welsh_pacification"
+			set_temp_variable = { ENG_union_strain_change = 2 }
+			ENG_change_union_strain = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_welsh_pacification"
+			set_country_flag = ENG_welsh_pacified
+			custom_effect_tooltip = ENG_welsh_pacified_TT
+			every_owned_state = {
+				limit = { is_core_of = WAS }
+				ENG_remove_resistance_against_westminster = yes
+			}
+			set_temp_variable = { ENG_agitation_change = -10 }
+			ENG_change_wales_agitation = yes
+		}
 	}
 }
 

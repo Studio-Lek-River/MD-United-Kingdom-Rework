@@ -67,6 +67,7 @@ on_actions = {
 			if = {
 				limit = {
 					NOT = {	has_country_flag = ENG_devolution_purged }
+					NOT = { has_country_flag = ENG_uq_assemblies_suspended }
 					check_variable = {
 						ENG_election_var > 0
 					}
@@ -77,6 +78,7 @@ on_actions = {
 			if = {
 				limit = {
 					NOT = {	has_country_flag = ENG_devolution_purged }
+					NOT = { has_country_flag = ENG_uq_assemblies_suspended }
 					check_variable = {
 						ENG_election_var = 0
 					}
@@ -101,6 +103,7 @@ on_actions = {
 			if = {
 				limit = {
 					NOT = {	has_country_flag = ENG_devolution_purged }
+					NOT = { has_country_flag = ENG_uq_assemblies_suspended }
 					NOT = { has_country_flag = ENG_devolution_event_cooldown }
 				}
 				if = {
@@ -320,6 +323,12 @@ on_actions = {
 				ENG_change_scottish_agitation = yes
 				ENG_change_north_irish_agitation = yes
 				ENG_change_wales_agitation = yes
+			}
+
+			# Suspended assemblies: direct-rule tiers, unrest and the independence failure state
+			if = {
+				limit = { has_country_flag = ENG_uq_assemblies_suspended }
+				ENG_uq_suspension_monthly = yes
 			}
 
 			# Every ladder target: consent drifts on both paths, coercion only on the Nationalist path

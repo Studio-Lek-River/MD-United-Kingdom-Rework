@@ -1310,6 +1310,43 @@ ideas = {
 			}
 		}
 
+		ENG_direct_rule_idea = {
+			picture = firearm_wall_sheep
+			allowed_civil_war = { always = yes }
+			modifier = {
+				required_garrison_factor = 0.20
+				political_power_factor = -0.05
+			}
+		}
+
+		ENG_kings_men_idea = {
+			picture = firearm_wall_sheep
+			allowed_civil_war = { always = yes }
+			modifier = {
+				required_garrison_factor = -0.15
+				war_support_factor = -0.05
+			}
+		}
+
+		ENG_crown_union_idea = {
+			picture = monarchy
+			allowed_civil_war = { always = yes }
+			modifier = {
+				war_support_factor = 0.05
+				democratic_drift = -0.03
+				stability_factor = -0.05
+			}
+		}
+
+		ENG_loyal_ulster_regiments_idea = {
+			picture = generic_manpower_bonus
+			allowed_civil_war = { always = yes }
+			modifier = {
+				conscription_factor = 0.03
+				army_morale_factor = 0.03
+			}
+		}
+
 		ENG_cmw_trade_area_idea = {
 			picture = trade
 			allowed_civil_war = { always = yes }

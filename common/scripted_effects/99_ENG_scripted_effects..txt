@@ -1666,6 +1666,193 @@ ENG_centralisation_backlash = {
 	}
 }
 
+# Direct rule. State scope; reads ENG_resistance_tier_change (1-3). Tier 2 is the old fixed penalty.
+ENG_apply_resistance_against_westminster = {
+	set_variable = { ENG_resistance_tier = ENG_resistance_tier_change }
+	if = {
+		limit = { check_variable = { ENG_resistance_tier = 1 } }
+		set_variable = { ENG_rw_productivity = -0.10 }
+		set_variable = { ENG_rw_manpower = -0.05 }
+		set_variable = { ENG_rw_supplies = -0.10 }
+		set_variable = { ENG_rw_resources = -0.15 }
+		set_variable = { ENG_rw_attrition = 0.03 }
+	}
+	else_if = {
+		limit = { check_variable = { ENG_resistance_tier = 2 } }
+		set_variable = { ENG_rw_productivity = -0.25 }
+		set_variable = { ENG_rw_manpower = -0.20 }
+		set_variable = { ENG_rw_supplies = -0.30 }
+		set_variable = { ENG_rw_resources = -0.50 }
+		set_variable = { ENG_rw_attrition = 0.10 }
+	}
+	else = {
+		set_variable = { ENG_rw_productivity = -0.40 }
+		set_variable = { ENG_rw_manpower = -0.35 }
+		set_variable = { ENG_rw_supplies = -0.50 }
+		set_variable = { ENG_rw_resources = -0.75 }
+		set_variable = { ENG_rw_attrition = 0.20 }
+	}
+	if = {
+		limit = { NOT = { has_dynamic_modifier = { modifier = ENG_resistance_against_westminster } } }
+		add_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+	}
+}
+
+ENG_remove_resistance_against_westminster = {
+	if = {
+		limit = { has_dynamic_modifier = { modifier = ENG_resistance_against_westminster } }
+		remove_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+	}
+	set_variable = { ENG_resistance_tier = 0 }
+}
+
+# Reads ENG_uq_region_pressure, sets ENG_resistance_tier_change
+ENG_uq_tier_from_pressure = {
+	if = {
+		limit = { check_variable = { ENG_uq_region_pressure < 25 } }
+		set_temp_variable = { ENG_resistance_tier_change = 1 }
+	}
+	else_if = {
+		limit = { check_variable = { ENG_uq_region_pressure < 50 } }
+		set_temp_variable = { ENG_resistance_tier_change = 2 }
+	}
+	else = {
+		set_temp_variable = { ENG_resistance_tier_change = 3 }
+	}
+}
+
+ENG_uq_update_direct_rule = {
+	if = {
+		limit = { ENG_uq_scotland_under_direct_rule = yes }
+		set_temp_variable = { ENG_uq_region_pressure = ENG_scottish_pressure }
+		ENG_uq_tier_from_pressure = yes
+		every_owned_state = {
+			limit = { is_core_of = SCO }
+			ENG_apply_resistance_against_westminster = yes
+		}
+	}
+	if = {
+		limit = { ENG_uq_north_ireland_under_direct_rule = yes }
+		set_temp_variable = { ENG_uq_region_pressure = ENG_north_irish_pressure }
+		ENG_uq_tier_from_pressure = yes
+		17 = {
+			ENG_apply_resistance_against_westminster = yes
+		}
+	}
+	if = {
+		limit = { ENG_uq_wales_under_direct_rule = yes }
+		set_temp_variable = { ENG_uq_region_pressure = ENG_wales_pressure }
+		ENG_uq_tier_from_pressure = yes
+		every_owned_state = {
+			limit = { is_core_of = WAS }
+			ENG_apply_resistance_against_westminster = yes
+		}
+	}
+}
+
+# Unrest while the assemblies are suspended, one roll per region per month
+ENG_uq_scottish_unrest = {
+	random_list = {
+		60 = { country_event = ENG_uq.70 }
+		20 = {
+			country_event = ENG_uq.76
+			modifier = { factor = 0 NOT = { has_country_flag = ENG_uq_loyalists_funded } }
+		}
+		20 = {
+			country_event = ENG_uq.73
+			modifier = {
+				factor = 0
+				OR = {
+					check_variable = { ENG_scottish_nationalists < 40 }
+					has_country_flag = ENG_uq_declaration_cooldown
+				}
+			}
+		}
+	}
+}
+
+ENG_uq_north_irish_unrest = {
+	random_list = {
+		60 = { country_event = ENG_uq.71 }
+		20 = {
+			country_event = ENG_uq.77
+			modifier = { factor = 0 NOT = { has_country_flag = ENG_uq_loyalists_funded } }
+		}
+	}
+}
+
+ENG_uq_welsh_unrest = {
+	random_list = {
+		60 = { country_event = ENG_uq.72 }
+		20 = {
+			country_event = ENG_uq.78
+			modifier = { factor = 0 NOT = { has_country_flag = ENG_uq_loyalists_funded } }
+		}
+		20 = {
+			country_event = ENG_uq.74
+			modifier = { factor = 0 has_country_flag = ENG_uq_welsh_exile_assembly }
+		}
+	}
+}
+
+ENG_uq_suspension_monthly = {
+	ENG_uq_update_direct_rule = yes
+	if = {
+		limit = { ENG_uq_scotland_suspended = yes }
+		if = {
+			limit = {
+				check_variable = { ENG_scottish_pressure > 80 }
+				NOT = { has_country_flag = ENG_scottish_rising_cooldown }
+			}
+			country_event = ENG_uq.80
+		}
+		else_if = {
+			limit = { check_variable = { ENG_scottish_agitation > 49 } }
+			random = { chance = 40 ENG_uq_scottish_unrest = yes }
+		}
+		else_if = {
+			limit = { check_variable = { ENG_scottish_agitation > 24 } }
+			random = { chance = 20 ENG_uq_scottish_unrest = yes }
+		}
+	}
+	if = {
+		limit = { ENG_uq_north_ireland_suspended = yes }
+		if = {
+			limit = {
+				check_variable = { ENG_north_irish_pressure > 80 }
+				NOT = { has_country_flag = ENG_north_irish_rising_cooldown }
+			}
+			country_event = ENG_uq.81
+		}
+		else_if = {
+			limit = { check_variable = { ENG_north_irish_agitation > 49 } }
+			random = { chance = 40 ENG_uq_north_irish_unrest = yes }
+		}
+		else_if = {
+			limit = { check_variable = { ENG_north_irish_agitation > 24 } }
+			random = { chance = 20 ENG_uq_north_irish_unrest = yes }
+		}
+	}
+	if = {
+		limit = { ENG_uq_wales_suspended = yes }
+		if = {
+			limit = {
+				check_variable = { ENG_wales_pressure > 80 }
+				NOT = { has_country_flag = ENG_welsh_rising_cooldown }
+			}
+			country_event = ENG_uq.82
+		}
+		else_if = {
+			limit = { check_variable = { ENG_wales_agitation > 49 } }
+			random = { chance = 40 ENG_uq_welsh_unrest = yes }
+		}
+		else_if = {
+			limit = { check_variable = { ENG_wales_agitation > 24 } }
+			random = { chance = 20 ENG_uq_welsh_unrest = yes }
+		}
+	}
+}
+
 ### Inner Circle
 
 ENG_inner_circle_set_ascension_cd = {
