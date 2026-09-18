@@ -345,10 +345,15 @@ on_actions = {
 			for_each_scope_loop = {
 				array = ENG_integration_targets
 				ENG_uq_update_consent = yes
+				ENG_uq_realm_monthly = yes
 				if = {
 					limit = { ROOT = { has_country_flag = ENG_uq_nationalist } }
 					ENG_uq_update_coercion = yes
 				}
+			}
+			if = {
+				limit = { has_country_flag = ENG_uq_caribbean_opened }
+				ENG_uq_update_caribbean_consent = yes
 			}
 			if = {
 				limit = {

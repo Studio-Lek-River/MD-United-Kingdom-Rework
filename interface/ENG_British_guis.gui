@@ -411,7 +411,7 @@ containerWindowType = {
 
 	containerWindowType = {
 		name = "ENG_uq_ladder_ui_window"
-		size = { width = 420 height = 260 }
+		size = { width = 420 height = 400 }
 		position = { x = 0 y = 40 }
 		instantTextBoxType = {
 			name = "ENG_union_strain_label"
@@ -509,7 +509,7 @@ containerWindowType = {
 		gridboxType = {
 			name = "ENG_uq_ladder_grid"
 			position = { x = 0 y = 90 }
-			size = { width = 420 height = 170 }
+			size = { width = 420 height = 308 }
 			slotsize = { width = 420 height = 22 }
 			format = "UPPER_LEFT"
 			max_slots_horizontal = 1

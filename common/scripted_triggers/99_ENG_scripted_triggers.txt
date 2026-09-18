@@ -392,6 +392,40 @@ ENG_uq_is_crown_realm = {
 	}
 }
 
+# Country scope. The Caribbean realms that share the Realms tier's group decisions.
+ENG_uq_is_caribbean_realm = {
+	OR = {
+		original_tag = JAM
+		original_tag = BAH
+		original_tag = BLZ
+		original_tag = ANT
+		original_tag = GRA
+		original_tag = BAR
+		original_tag = STK
+		original_tag = STL
+		original_tag = STV
+	}
+}
+
+# ENG scope. Canada, Australia and New Zealand have each reached full integration or ceased to exist as a separate realm.
+ENG_uq_canzuk_integrated = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_canzuk_integrated_TT
+		OR = {
+			check_variable = { ENG_integration_stage@CAN > 3 }
+			NOT = { country_exists = CAN }
+		}
+		OR = {
+			check_variable = { ENG_integration_stage@AST > 3 }
+			NOT = { country_exists = AST }
+		}
+		OR = {
+			check_variable = { ENG_integration_stage@NZL > 3 }
+			NOT = { country_exists = NZL }
+		}
+	}
+}
+
 # Commonwealth of Nations institution. Membership is the MD dynamic modifier; MD's is_commonwealth_member tests ROOT and is wrong inside loops.
 ENG_cmw_is_member = {
 	has_dynamic_modifier = { modifier = Commonwealth_member_modifier }

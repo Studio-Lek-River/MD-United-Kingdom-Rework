@@ -7752,6 +7752,21 @@ country_event = {
 			limit = { check_variable = { ENG_integration_stage@FROM = 1 } }
 			ENG_uq_enter_stage_2 = yes
 		}
+		else_if = {
+			limit = {
+				check_variable = { ENG_integration_stage@FROM = 3 }
+				FROM = {
+					OR = {
+						original_tag = CAN
+						original_tag = AST
+						original_tag = NZL
+					}
+				}
+			}
+			FROM = {
+				ENG = { country_event = { id = ENG_uq.124 days = 1 } }
+			}
+		}
 		else = {
 			ENG_uq_enter_stage_4 = yes
 		}
@@ -8894,6 +8909,515 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { name = ENG_uq.112.a }
+}
+
+# The Union Question: the Realms (Western path)
+
+# Parliament in [This.GetName] votes on association with the Crown (target)
+country_event = {
+	id = ENG_uq.120
+	title = ENG_uq.120.t
+	desc = ENG_uq.120.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	immediate = { ENG_uq_set_accept_weight = yes }
+
+	option = {
+		name = ENG_uq.120.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.120.a executed"
+		custom_effect_tooltip = TT_IF_WE_ACCEPT
+		custom_effect_tooltip = ENG_uq_we_accept_TT
+		country_event = { id = ENG_uq.121 days = 30 }
+		ai_chance = {
+			base = 20
+			modifier = { add = ENG_uq_accept_weight }
+		}
+	}
+
+	option = {
+		name = ENG_uq.120.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.120.b executed"
+		custom_effect_tooltip = TT_IF_WE_DECLINE
+		custom_effect_tooltip = ENG_uq_we_decline_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.22 days = 1 } }
+		}
+		ai_chance = { base = 30 }
+	}
+}
+
+# Vote result roll (target, hidden)
+country_event = {
+	id = ENG_uq.121
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		ENG = { set_variable = { PREV.ENG_uq_referendum_yes = ENG_consent@PREV } }
+		set_variable = { ENG_uq_referendum_no = 100 }
+		subtract_from_variable = { ENG_uq_referendum_no = ENG_uq_referendum_yes }
+		clamp_variable = { var = ENG_uq_referendum_yes min = 5 max = 95 }
+		clamp_variable = { var = ENG_uq_referendum_no min = 5 max = 95 }
+		random_list = {
+			ENG_uq_referendum_yes = {
+				country_event = ENG_uq.122
+				ENG = {
+					country_event = ENG_uq.21
+				}
+			}
+			ENG_uq_referendum_no = {
+				country_event = ENG_uq.123
+				ENG = {
+					country_event = ENG_uq.22
+				}
+			}
+		}
+	}
+}
+
+# The vote passes (target)
+country_event = {
+	id = ENG_uq.122
+	title = ENG_uq.122.t
+	desc = ENG_uq.122.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.122.a }
+}
+
+# The vote fails (target)
+country_event = {
+	id = ENG_uq.123
+	title = ENG_uq.123.t
+	desc = ENG_uq.123.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.123.a }
+}
+
+# Westminster votes on the Integration Act for a CANZUK dominion (ENG, FROM = realm)
+country_event = {
+	id = ENG_uq.124
+	title = ENG_uq.124.t
+	desc = ENG_uq.124.d
+	picture = GFX_political_deal
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.124.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.124.a executed"
+		random_list = {
+			100 = {
+				ENG_uq_enter_stage_4 = yes
+			}
+			0 = {
+				modifier = {
+					add = 50
+					has_stability < 0.6
+				}
+				ENG_uq_fail_transition = yes
+				add_stability = -0.03
+			}
+		}
+	}
+}
+
+# Stage advance dispatcher (ENG, FROM = target, hidden)
+country_event = {
+	id = ENG_uq.129
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = { check_variable = { ENG_integration_stage@FROM = 1 } }
+			ENG_uq_enter_stage_2 = yes
+		}
+		else_if = {
+			limit = { check_variable = { ENG_integration_stage@FROM = 2 } }
+			ENG_uq_enter_stage_3 = yes
+		}
+		else_if = {
+			limit = { check_variable = { ENG_integration_stage@FROM = 3 } }
+			ENG_uq_enter_stage_4 = yes
+		}
+	}
+}
+
+# Washington reacts: Canada becomes a Crown Dominion (USA)
+country_event = {
+	id = ENG_uq.130
+	title = ENG_uq.130.t
+	desc = ENG_uq.130.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.130.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.130.a executed"
+		add_opinion_modifier = { target = ENG modifier = ENG_uq_monroe_opinion }
+	}
+}
+
+# Washington reacts: Canada becomes a constituent country (USA)
+country_event = {
+	id = ENG_uq.131
+	title = ENG_uq.131.t
+	desc = ENG_uq.131.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.131.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.131.a executed"
+		add_opinion_modifier = { target = ENG modifier = ENG_uq_monroe_opinion }
+		ENG = { add_timed_idea = { idea = ENG_uq_us_trade_war days = 730 } }
+		ai_chance = { base = 40 }
+	}
+
+	option = {
+		name = ENG_uq.131.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.131.b executed"
+		add_opinion_modifier = { target = ENG modifier = ENG_uq_monroe_opinion }
+		if = {
+			limit = {
+				country_exists = CAN
+				NOT = { country_exists = QUE }
+			}
+			CAN = { set_country_flag = ENG_uq_quebec_sponsored }
+		}
+		ai_chance = { base = 30 }
+	}
+
+	option = {
+		name = ENG_uq.131.c
+		log = "[GetDateText]: [This.GetName]: ENG_uq.131.c executed"
+		add_opinion_modifier = { target = ENG modifier = ENG_uq_monroe_opinion }
+		ai_chance = { base = 30 }
+	}
+}
+
+# Washington reacts: Canada is integrated into the Union (USA)
+country_event = {
+	id = ENG_uq.132
+	title = ENG_uq.132.t
+	desc = ENG_uq.132.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.132.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.132.a executed"
+		add_opinion_modifier = { target = ENG modifier = ENG_uq_monroe_opinion }
+	}
+}
+
+# The Monroe Doctrine: a Caribbean realm becomes a Crown Dominion (USA)
+country_event = {
+	id = ENG_uq.133
+	title = ENG_uq.133.t
+	desc = ENG_uq.133.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.133.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.133.a executed"
+		add_opinion_modifier = { target = ENG modifier = ENG_uq_monroe_opinion }
+		ai_chance = { base = 70 }
+	}
+
+	option = {
+		name = ENG_uq.133.b
+		ai_chance = {
+			base = 30
+			modifier = {
+				add = 30
+				has_opinion = { target = ENG value > 50 }
+			}
+		}
+	}
+}
+
+# Canberra calls a referendum on the Crown (AST)
+country_event = {
+	id = ENG_uq.140
+	title = ENG_uq.140.t
+	desc = ENG_uq.140.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.140.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.140.a executed"
+		country_event = { id = ENG_uq.141 days = 90 }
+	}
+}
+
+# Referendum result roll (AST, hidden)
+country_event = {
+	id = ENG_uq.141
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		ENG = { set_variable = { PREV.ENG_uq_referendum_yes = ENG_consent@PREV } }
+		if = {
+			limit = { ENG = { has_completed_focus = ENG_a_shared_crown } }
+			add_to_variable = { ENG_uq_referendum_yes = 20 }
+		}
+		set_variable = { ENG_uq_referendum_no = 100 }
+		subtract_from_variable = { ENG_uq_referendum_no = ENG_uq_referendum_yes }
+		set_temp_variable = { ENG_uq_rep_bonus = ast_republic_support }
+		multiply_temp_variable = { ENG_uq_rep_bonus = 10 }
+		add_to_variable = { ENG_uq_referendum_no = ENG_uq_rep_bonus }
+		clamp_variable = { var = ENG_uq_referendum_yes min = 5 max = 95 }
+		clamp_variable = { var = ENG_uq_referendum_no min = 5 max = 95 }
+		random_list = {
+			ENG_uq_referendum_yes = {
+				country_event = ENG_uq.142
+				ENG = {
+					country_event = ENG_uq.143
+				}
+			}
+			ENG_uq_referendum_no = {
+				country_event = ENG_uq.144
+				ENG = {
+					country_event = ENG_uq.145
+				}
+			}
+		}
+	}
+}
+
+# The monarchy is retained (AST)
+country_event = {
+	id = ENG_uq.142
+	title = ENG_uq.142.t
+	desc = ENG_uq.142.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.142.a }
+}
+
+# Canberra votes to keep the Crown (ENG, FROM = AST)
+country_event = {
+	id = ENG_uq.143
+	title = ENG_uq.143.t
+	desc = ENG_uq.143.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.143.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.143.a executed"
+		FROM = {
+			set_temp_variable = { ENG_uq_consent_change = 5 }
+			ENG_uq_change_consent = yes
+		}
+	}
+}
+
+# Australia votes to become a republic (AST)
+country_event = {
+	id = ENG_uq.144
+	title = ENG_uq.144.t
+	desc = ENG_uq.144.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.144.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.144.a executed"
+		ENG_uq_realm_republic = yes
+	}
+}
+
+# Canberra becomes a republic (ENG, FROM = AST)
+country_event = {
+	id = ENG_uq.145
+	title = ENG_uq.145.t
+	desc = ENG_uq.145.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.145.a }
+}
+
+# A Quebec sovereignty movement forms (CAN)
+country_event = {
+	id = ENG_uq.150
+	title = ENG_uq.150.t
+	desc = ENG_uq.150.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.150.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.150.a executed"
+		country_event = { id = ENG_uq.151 days = 365 }
+	}
+}
+
+# Quebec sovereignty referendum roll (CAN, hidden)
+country_event = {
+	id = ENG_uq.151
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = {
+				NOT = { country_exists = QUE }
+				owns_state = 762
+			}
+			ENG = { set_variable = { PREV.ENG_uq_referendum_yes = ENG_consent@PREV } }
+			set_variable = { ENG_uq_quebec_leave = 100 }
+			subtract_from_variable = { ENG_uq_quebec_leave = ENG_uq_referendum_yes }
+			divide_variable = { ENG_uq_quebec_leave = 2 }
+			add_to_variable = { ENG_uq_quebec_leave = 30 }
+			if = {
+				limit = { has_country_flag = ENG_uq_quebec_sponsored }
+				multiply_variable = { ENG_uq_quebec_leave = 2 }
+			}
+			set_variable = { ENG_uq_quebec_stay = 100 }
+			clamp_variable = { var = ENG_uq_quebec_leave min = 5 max = 95 }
+			clamp_variable = { var = ENG_uq_quebec_stay min = 5 max = 95 }
+			random_list = {
+				ENG_uq_quebec_leave = {
+					country_event = ENG_uq.153
+				}
+				ENG_uq_quebec_stay = {
+					country_event = ENG_uq.152
+				}
+			}
+		}
+	}
+}
+
+# Quebec votes to stay (CAN)
+country_event = {
+	id = ENG_uq.152
+	title = ENG_uq.152.t
+	desc = ENG_uq.152.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.152.a }
+}
+
+# Quebec votes to leave (CAN)
+country_event = {
+	id = ENG_uq.153
+	title = ENG_uq.153.t
+	desc = ENG_uq.153.d
+	picture = GFX_broken_infrastructure
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.153.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.153.a executed"
+		release = QUE
+		set_temp_variable = { ENG_uq_consent_change = -30 }
+		ENG_uq_change_consent = yes
+		clr_country_flag = ENG_uq_quebec_sponsored
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.154 days = 1 } }
+		}
+	}
+}
+
+# Quebec leaves Canada (ENG, FROM = CAN)
+country_event = {
+	id = ENG_uq.154
+	title = ENG_uq.154.t
+	desc = ENG_uq.154.d
+	picture = GFX_broken_infrastructure
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.154.a }
+}
+
+# A hurricane strikes a Caribbean realm (ENG)
+country_event = {
+	id = ENG_uq.160
+	title = ENG_uq.160.t
+	desc = ENG_uq.160.d
+	picture = GFX_broken_infrastructure
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.160.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.160.a executed"
+		small_expenditure = yes
+	}
+}
+
+# The drug trade unsettles a Caribbean realm (ENG)
+country_event = {
+	id = ENG_uq.161
+	title = ENG_uq.161.t
+	desc = ENG_uq.161.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.161.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.161.a executed"
+		small_expenditure = yes
+		add_stability = -0.01
+	}
+}
+
+# An independence crisis grips a realm (ENG, FROM = realm)
+country_event = {
+	id = ENG_uq.170
+	title = ENG_uq.170.t
+	desc = ENG_uq.170.d
+	picture = GFX_generic_soldiers
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.170.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.170.a executed"
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_free
+		}
+		set_variable = { ENG_integration_stage@FROM = 0 }
+		remove_from_array = { ENG_integration_targets = FROM }
+		set_country_flag = { flag = ENG_uq_lock@FROM days = 1825 }
+		set_temp_variable = { ENG_union_strain_change = -5 }
+		ENG_change_union_strain = yes
+		ai_chance = { base = 30 }
+	}
+
+	option = {
+		name = ENG_uq.170.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.170.b executed"
+		add_stability = -0.05
+		set_temp_variable = { ENG_imperial_tension_change = 3 }
+		ENG_change_imperial_tension = yes
+		FROM = {
+			set_temp_variable = { ENG_uq_consent_change = -15 }
+			ENG_uq_change_consent = yes
+			if = {
+				limit = { NOT = { has_idea = ENG_uq_sovereignty_movement } }
+				add_timed_idea = { idea = ENG_uq_sovereignty_movement days = 1095 }
+			}
+		}
+		ai_chance = { base = 70 }
+	}
 }
 
 ########################## Commonwealth of Nations #########################

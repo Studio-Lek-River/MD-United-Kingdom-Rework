@@ -543,6 +543,7 @@ ENG_uq_enter_stage_2 = {
 		ENG_add_union_strain_for_target = yes
 	}
 	ENG_uq_irish_lobby_reaction = yes
+	ENG_uq_realm_stage_reaction = yes
 }
 
 # Stage 2 -> 3. Call with ROOT = ENG and FROM = target. A non-existing target is an annexed Nationalist occupation and is released first.
@@ -568,6 +569,7 @@ ENG_uq_enter_stage_3 = {
 		ENG_add_union_strain_for_target = yes
 	}
 	ENG_uq_irish_lobby_reaction = yes
+	ENG_uq_realm_stage_reaction = yes
 }
 
 # Stage 3 -> 4. Call with ROOT = ENG and FROM = target.
@@ -597,6 +599,7 @@ ENG_uq_enter_stage_4 = {
 	}
 	ENG_change_imperial_tension = yes
 	ENG_uq_irish_lobby_reaction = yes
+	ENG_uq_realm_stage_reaction = yes
 	remove_from_array = { ENG_integration_targets = FROM }
 	annex_country = {
 		target = FROM
@@ -769,6 +772,215 @@ ENG_uq_irish_lobby_reaction = {
 			random_list = {
 				70 = { country_event = { id = ENG_uq.104 days = 5 } }
 				30 = { country_event = { id = ENG_uq.105 days = 5 } }
+			}
+		}
+	}
+}
+
+# Bring one Commonwealth realm onto the ladder at the stage its existing status already implies. Call in the target's scope with ROOT = ENG.
+ENG_uq_align_realm = {
+	if = {
+		limit = { NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } } }
+		if = {
+			limit = { is_subject_of = ROOT }
+			ROOT = {
+				if = {
+					limit = { NOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
+					add_to_array = { ENG_integration_targets = PREV }
+				}
+				set_variable = { ENG_integration_stage@PREV = 3 }
+			}
+		}
+		else_if = {
+			limit = {
+				ENG_cmw_is_member = yes
+				NOT = { has_country_flag = ENG_uq_republic }
+			}
+			ENG_uq_align_target = yes
+		}
+	}
+}
+
+# Call in ENG's own scope. Brings Canada, Australia, New Zealand and the Caribbean realms onto the ladder at once.
+ENG_uq_align_realms = {
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = CAN
+				original_tag = AST
+				original_tag = NZL
+				ENG_uq_is_caribbean_realm = yes
+			}
+		}
+		ENG_uq_align_realm = yes
+	}
+	if = {
+		limit = {
+			NOT = { country_exists = CAN }
+			has_completed_focus = ENG_declare_the_commonwealth
+		}
+		set_variable = { ENG_integration_stage@CAN = 4 }
+	}
+	if = {
+		limit = {
+			NOT = { country_exists = AST }
+			has_completed_focus = ENG_declare_the_commonwealth
+		}
+		set_variable = { ENG_integration_stage@AST = 4 }
+	}
+	if = {
+		limit = {
+			NOT = { country_exists = NZL }
+			has_completed_focus = ENG_declare_the_commonwealth
+		}
+		set_variable = { ENG_integration_stage@NZL = 4 }
+	}
+}
+
+# ENG scope. Average consent across Caribbean realms still on the ladder, for the group decisions' consent gate.
+ENG_uq_update_caribbean_consent = {
+	set_temp_variable = { ENG_uq_caribbean_consent_sum = 0 }
+	set_temp_variable = { ENG_uq_caribbean_consent_count = 0 }
+	for_each_scope_loop = {
+		array = ENG_integration_targets
+		if = {
+			limit = {
+				ENG_uq_is_caribbean_realm = yes
+				check_variable = { ROOT.ENG_integration_stage@THIS < 4 }
+			}
+			ROOT = {
+				add_to_temp_variable = { ENG_uq_caribbean_consent_sum = ENG_consent@PREV }
+				add_to_temp_variable = { ENG_uq_caribbean_consent_count = 1 }
+			}
+		}
+	}
+	if = {
+		limit = { check_variable = { ENG_uq_caribbean_consent_count > 0 } }
+		set_variable = { ENG_uq_caribbean_consent = { value = ENG_uq_caribbean_consent_sum divide = ENG_uq_caribbean_consent_count } }
+	}
+	else = {
+		set_variable = { ENG_uq_caribbean_consent = 0 }
+	}
+}
+
+# Call in the target's scope; the caller's ROOT does not matter. A realm becomes a republic outside the Commonwealth-leave path (lost referendum, Governor-General dismissal).
+ENG_uq_realm_republic = {
+	custom_effect_tooltip = ENG_uq_realm_republic_TT
+	set_country_flag = ENG_uq_republic
+	if = {
+		limit = { has_idea = ENG_crown_realm_status }
+		remove_ideas = ENG_crown_realm_status
+	}
+	ENG = { set_country_flag = { flag = ENG_uq_lock@PREV days = 3650 } }
+	set_temp_variable = { ENG_uq_consent_change = -30 }
+	ENG_uq_change_consent = yes
+}
+
+# USA/Canada/Australia/Caribbean reactions to a realm's stage transition. Call with ROOT = ENG and FROM = target, right after ENG_uq_irish_lobby_reaction inside ENG_uq_enter_stage_2/3/4.
+ENG_uq_realm_stage_reaction = {
+	if = {
+		limit = {
+			FROM = { original_tag = CAN }
+			country_exists = USA
+			NOT = { has_war_with = USA }
+		}
+		if = {
+			limit = { check_variable = { ENG_integration_stage@FROM = 2 } }
+			USA = { country_event = { id = ENG_uq.130 days = 5 } }
+		}
+		else_if = {
+			limit = { check_variable = { ENG_integration_stage@FROM = 3 } }
+			USA = { country_event = { id = ENG_uq.131 days = 5 } }
+		}
+		else_if = {
+			limit = { check_variable = { ENG_integration_stage@FROM = 4 } }
+			USA = { country_event = { id = ENG_uq.132 days = 5 } }
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				original_tag = CAN
+				owns_state = 762
+				NOT = { has_country_flag = ENG_uq_quebec_pending }
+			}
+			NOT = { country_exists = QUE }
+			OR = {
+				check_variable = { ENG_integration_stage@FROM = 2 }
+				check_variable = { ENG_integration_stage@FROM = 3 }
+			}
+		}
+		FROM = {
+			set_country_flag = { flag = ENG_uq_quebec_pending days = 400 }
+			country_event = { id = ENG_uq.150 days = 10 }
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				original_tag = AST
+				exists = yes
+				NOT = { has_country_flag = ENG_uq_republic }
+			}
+			OR = {
+				check_variable = { ENG_integration_stage@FROM = 2 }
+				check_variable = { ENG_integration_stage@FROM = 3 }
+			}
+		}
+		FROM = { country_event = { id = ENG_uq.140 days = 10 } }
+	}
+	if = {
+		limit = {
+			FROM = { ENG_uq_is_caribbean_realm = yes }
+			check_variable = { ENG_integration_stage@FROM = 2 }
+			NOT = { has_country_flag = ENG_uq_monroe_reacted }
+		}
+		set_country_flag = ENG_uq_monroe_reacted
+		USA = { country_event = { id = ENG_uq.133 days = 5 } }
+	}
+}
+
+# Monthly step for one ladder target during the Realms tier. Call in the target's scope with ROOT = ENG.
+ENG_uq_realm_monthly = {
+	if = {
+		limit = {
+			ENG_uq_is_crown_realm = yes
+			exists = yes
+			OR = {
+				check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
+				check_variable = { ROOT.ENG_integration_stage@THIS = 3 }
+			}
+			OR = {
+				ROOT = { has_stability < 0.4 }
+				ROOT = { check_variable = { ENG_imperial_tension > 60 } }
+			}
+			NOT = { ROOT = { has_country_flag = ENG_uq_realm_crisis@PREV } }
+		}
+		random_list = {
+			90 = {}
+			10 = {
+				ROOT = { set_country_flag = { flag = ENG_uq_realm_crisis@PREV days = 365 } }
+				ENG = { country_event = { id = ENG_uq.170 } }
+			}
+		}
+	}
+	if = {
+		limit = {
+			ENG_uq_is_caribbean_realm = yes
+			exists = yes
+			OR = {
+				check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
+				check_variable = { ROOT.ENG_integration_stage@THIS = 3 }
+			}
+		}
+		ROOT = { set_variable = { ENG_uq_event_target = PREV } }
+		random_list = {
+			94 = {}
+			3 = {
+				ROOT = { country_event = { id = ENG_uq.160 days = 1 } }
+			}
+			3 = {
+				ROOT = { country_event = { id = ENG_uq.161 days = 1 } }
 			}
 		}
 	}

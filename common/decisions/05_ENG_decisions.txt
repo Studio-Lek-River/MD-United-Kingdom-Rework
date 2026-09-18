@@ -4893,6 +4893,7 @@ ENG_a_family_of_nations_decisions = {
 
 		target_array = ENG_integration_targets
 		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_trigger = { NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } } }
 
 		cost = 75
 		custom_cost_trigger = {
@@ -4939,6 +4940,7 @@ ENG_a_family_of_nations_decisions = {
 
 		target_array = ENG_integration_targets
 		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_trigger = { NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } } }
 
 		cost = 75
 		custom_cost_trigger = {
@@ -4984,6 +4986,7 @@ ENG_a_family_of_nations_decisions = {
 
 		target_array = ENG_integration_targets
 		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_trigger = { NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } } }
 
 		cost = 75
 		custom_cost_trigger = {
@@ -5028,6 +5031,7 @@ ENG_a_family_of_nations_decisions = {
 
 		target_array = ENG_integration_targets
 		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_trigger = { NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } } }
 
 		cost = 25
 		days_re_enable = 365
@@ -5046,6 +5050,99 @@ ENG_a_family_of_nations_decisions = {
 				20 = {
 					custom_effect_tooltip = ENG_uq_press_scandal_TT
 					FROM = {
+						set_temp_variable = { ENG_uq_consent_change = -5 }
+						ENG_uq_change_consent = yes
+					}
+				}
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_caribbean_development_programme = {
+		icon = GFX_decision_generic_construction
+
+		visible = { has_country_flag = ENG_uq_caribbean_opened }
+
+		cost = 75
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.004
+				less_than = { value = treasury }
+			}
+			has_political_power > 74.999
+		}
+		custom_cost_text = cost_medium_expenditure_pp75
+		ai_hint_pp_cost = 75
+		days_re_enable = 365
+
+		fixed_random_seed = no
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_caribbean_development_programme"
+			hidden_effect = { add_political_power = -75 }
+			medium_expenditure = yes
+			every_country = {
+				limit = {
+					ENG_uq_is_caribbean_realm = yes
+					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+				}
+				random_list = {
+					80 = {
+						set_temp_variable = { ENG_uq_consent_change = 5 }
+						ENG_uq_change_consent = yes
+					}
+					20 = {
+						custom_effect_tooltip = ENG_uq_press_scandal_TT
+						set_temp_variable = { ENG_uq_consent_change = -5 }
+						ENG_uq_change_consent = yes
+					}
+				}
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_royal_caribbean_tour = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = { has_country_flag = ENG_uq_caribbean_opened }
+
+		cost = 75
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.002
+				less_than = { value = treasury }
+			}
+			has_political_power > 74.999
+		}
+		custom_cost_text = ENG_cost_small_expenditure_pp75
+		ai_hint_pp_cost = 75
+		days_re_enable = 365
+
+		fixed_random_seed = no
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_royal_caribbean_tour"
+			hidden_effect = { add_political_power = -75 }
+			small_expenditure = yes
+			every_country = {
+				limit = {
+					ENG_uq_is_caribbean_realm = yes
+					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+				}
+				random_list = {
+					80 = {
+						set_temp_variable = { ENG_uq_consent_change = 5 }
+						ENG_uq_change_consent = yes
+						add_opinion_modifier = { target = ROOT modifier = ENG_uq_royal_tour_opinion }
+					}
+					20 = {
+						custom_effect_tooltip = ENG_uq_press_scandal_TT
 						set_temp_variable = { ENG_uq_consent_change = -5 }
 						ENG_uq_change_consent = yes
 					}
@@ -5383,6 +5480,7 @@ ENG_union_question_decisions = {
 					FROM = { original_tag = IRE }
 				}
 			}
+			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
 		}
 
 		cost = 100
@@ -5394,6 +5492,10 @@ ENG_union_question_decisions = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_consent_60_TT
 					check_variable = { ENG_consent@FROM > 60 }
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_not_republic_TT
+					FROM = { NOT = { has_country_flag = ENG_uq_republic } }
 				}
 			}
 			else = {
@@ -5417,11 +5519,21 @@ ENG_union_question_decisions = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_association"
 			if = {
 				limit = { has_country_flag = ENG_uq_western }
-				FROM = { country_event = { id = ENG_uq.20 days = 1 } }
-				custom_effect_tooltip = TT_IF_THEY_ACCEPT
-				effect_tooltip = { custom_effect_tooltip = ENG_uq_stage_2_TT }
-				custom_effect_tooltip = TT_IF_THEY_REJECT
-				effect_tooltip = { ENG_uq_fail_transition = yes }
+				if = {
+					limit = { FROM = { ENG_uq_is_crown_realm = yes } }
+					FROM = { country_event = { id = ENG_uq.120 days = 1 } }
+					custom_effect_tooltip = TT_IF_THEY_ACCEPT
+					effect_tooltip = { custom_effect_tooltip = ENG_uq_realm_vote_TT }
+					custom_effect_tooltip = TT_IF_THEY_REJECT
+					effect_tooltip = { ENG_uq_fail_transition = yes }
+				}
+				else = {
+					FROM = { country_event = { id = ENG_uq.20 days = 1 } }
+					custom_effect_tooltip = TT_IF_THEY_ACCEPT
+					effect_tooltip = { custom_effect_tooltip = ENG_uq_stage_2_TT }
+					custom_effect_tooltip = TT_IF_THEY_REJECT
+					effect_tooltip = { ENG_uq_fail_transition = yes }
+				}
 			}
 			else = {
 				ENG_uq_enter_stage_2 = yes
@@ -5443,6 +5555,7 @@ ENG_union_question_decisions = {
 		target_array = ENG_integration_targets
 		target_trigger = {
 			check_variable = { ENG_integration_stage@FROM = 2 }
+			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
 		}
 
 		cost = 150
@@ -5454,6 +5567,10 @@ ENG_union_question_decisions = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_consent_75_TT
 					check_variable = { ENG_consent@FROM > 75 }
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_not_republic_TT
+					FROM = { NOT = { has_country_flag = ENG_uq_republic } }
 				}
 			}
 			else = {
@@ -5494,6 +5611,7 @@ ENG_union_question_decisions = {
 		target_array = ENG_integration_targets
 		target_trigger = {
 			check_variable = { ENG_integration_stage@FROM = 3 }
+			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
 		}
 
 		cost = 300
@@ -5516,6 +5634,10 @@ ENG_union_question_decisions = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_consent_85_TT
 					check_variable = { ENG_consent@FROM > 85 }
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_not_republic_TT
+					FROM = { NOT = { has_country_flag = ENG_uq_republic } }
 				}
 			}
 			else = {
@@ -5540,6 +5662,259 @@ ENG_union_question_decisions = {
 			}
 			else = {
 				ENG_uq_enter_stage_4 = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				check_variable = { ENG_union_strain > 40 }
+			}
+		}
+	}
+
+	ENG_uq_caribbean_association = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = { has_country_flag = ENG_uq_caribbean_opened }
+
+		cost = 100
+
+		available = {
+			check_variable = { ENG_union_strain < 61 }
+			if = {
+				limit = { has_country_flag = ENG_uq_western }
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_caribbean_consent_60_TT
+					check_variable = { ENG_uq_caribbean_consent > 60 }
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_caribbean_member_ready_TT
+					any_country = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+						ROOT = {
+							check_variable = { ENG_integration_stage@PREV = 1 }
+							NOT = { has_country_flag = ENG_uq_lock@PREV }
+						}
+						NOT = { has_country_flag = ENG_uq_republic }
+					}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_caribbean_member_coerced_TT
+					any_country = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+						ROOT = { check_variable = { ENG_integration_stage@PREV = 1 } }
+						check_variable = { ROOT.ENG_coercion@THIS > 5 }
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_caribbean_association"
+			if = {
+				limit = { has_country_flag = ENG_uq_western }
+				every_country = {
+					limit = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+						ROOT = {
+							check_variable = { ENG_integration_stage@PREV = 1 }
+							NOT = { has_country_flag = ENG_uq_lock@PREV }
+						}
+						NOT = { has_country_flag = ENG_uq_republic }
+					}
+					country_event = { id = ENG_uq.120 days = 1 }
+				}
+			}
+			else = {
+				every_country = {
+					limit = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+						ROOT = { check_variable = { ENG_integration_stage@PREV = 1 } }
+						check_variable = { ROOT.ENG_coercion@THIS > 5 }
+					}
+					ENG = { country_event = { id = ENG_uq.129 days = 1 } }
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				check_variable = { ENG_union_strain > 40 }
+			}
+		}
+	}
+
+	ENG_uq_caribbean_constituent = {
+		icon = GFX_decision_generic_civil_support
+
+		visible = { has_country_flag = ENG_uq_caribbean_opened }
+
+		cost = 150
+
+		available = {
+			check_variable = { ENG_union_strain < 61 }
+			if = {
+				limit = { has_country_flag = ENG_uq_western }
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_caribbean_consent_75_TT
+					check_variable = { ENG_uq_caribbean_consent > 75 }
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_caribbean_member_ready_TT
+					any_country = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+						ROOT = {
+							check_variable = { ENG_integration_stage@PREV = 2 }
+							NOT = { has_country_flag = ENG_uq_lock@PREV }
+						}
+						NOT = { has_country_flag = ENG_uq_republic }
+					}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_caribbean_member_coerced_TT
+					any_country = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+						ROOT = { check_variable = { ENG_integration_stage@PREV = 2 } }
+						check_variable = { ROOT.ENG_coercion@THIS > 5 }
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_caribbean_constituent"
+			if = {
+				limit = { has_country_flag = ENG_uq_western }
+				every_country = {
+					limit = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+						ROOT = {
+							check_variable = { ENG_integration_stage@PREV = 2 }
+							NOT = { has_country_flag = ENG_uq_lock@PREV }
+						}
+						NOT = { has_country_flag = ENG_uq_republic }
+					}
+					country_event = { id = ENG_uq.23 days = 1 }
+				}
+			}
+			else = {
+				every_country = {
+					limit = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+						ROOT = { check_variable = { ENG_integration_stage@PREV = 2 } }
+						check_variable = { ROOT.ENG_coercion@THIS > 5 }
+					}
+					ENG = { country_event = { id = ENG_uq.129 days = 1 } }
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				check_variable = { ENG_union_strain > 40 }
+			}
+		}
+	}
+
+	ENG_uq_caribbean_integration_act = {
+		icon = GFX_decision_generic_form_nation
+
+		visible = { has_country_flag = ENG_uq_caribbean_opened }
+
+		cost = 300
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.006
+				less_than = { value = treasury }
+			}
+			has_political_power > 299.999
+		}
+		custom_cost_text = ENG_cost_large_expenditure_pp300
+		ai_hint_pp_cost = 300
+
+		available = {
+			check_variable = { ENG_union_strain < 61 }
+			has_stability > 0.6
+			if = {
+				limit = { has_country_flag = ENG_uq_western }
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_caribbean_consent_85_TT
+					check_variable = { ENG_uq_caribbean_consent > 85 }
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_caribbean_member_ready_TT
+					any_country = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+						ROOT = {
+							check_variable = { ENG_integration_stage@PREV = 3 }
+							NOT = { has_country_flag = ENG_uq_lock@PREV }
+						}
+						NOT = { has_country_flag = ENG_uq_republic }
+					}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_caribbean_member_coerced_TT
+					any_country = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+						ROOT = { check_variable = { ENG_integration_stage@PREV = 3 } }
+						check_variable = { ROOT.ENG_coercion@THIS > 5 }
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_caribbean_integration_act"
+			hidden_effect = { add_political_power = -300 }
+			large_expenditure = yes
+			if = {
+				limit = { has_country_flag = ENG_uq_western }
+				every_country = {
+					limit = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+						ROOT = {
+							check_variable = { ENG_integration_stage@PREV = 3 }
+							NOT = { has_country_flag = ENG_uq_lock@PREV }
+						}
+						NOT = { has_country_flag = ENG_uq_republic }
+					}
+					country_event = { id = ENG_uq.20 days = 1 }
+				}
+			}
+			else = {
+				every_country = {
+					limit = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+						ROOT = { check_variable = { ENG_integration_stage@PREV = 3 } }
+						check_variable = { ROOT.ENG_coercion@THIS > 5 }
+					}
+					ENG = { country_event = { id = ENG_uq.129 days = 1 } }
+				}
 			}
 		}
 

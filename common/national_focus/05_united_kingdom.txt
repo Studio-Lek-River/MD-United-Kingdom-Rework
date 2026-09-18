@@ -24110,6 +24110,341 @@ focus_tree = {
 		ai_will_do = { base = 0 }
 	}
 
+	focus = {
+		id = ENG_the_realms_beyond_the_seas
+		icon = align_to_commonwealth
+
+		x = -2
+		y = 12
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_home_rule_in_reverse }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			OR = {
+				ENG_uq_ireland_done = yes
+				NOT = { country_exists = IRE }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_realms_beyond_the_seas"
+			custom_effect_tooltip = ENG_the_realms_beyond_the_seas_TT
+			set_country_flag = ENG_uq_caribbean_opened
+			set_temp_variable = { ENG_cmw_cohesion_change = 3 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_caribbean_development_programme
+			hidden_effect = {
+				ENG_uq_align_realms = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_ottawa_accord
+		icon = align_to_canada
+
+		x = -5
+		y = 13
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = CAN
+			check_variable = { ENG_integration_stage@CAN > 0 }
+			CAN = { NOT = { has_country_flag = ENG_uq_republic } }
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = CAN }
+				check_variable = { ENG_integration_stage@CAN > 3 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_ottawa_accord"
+			custom_effect_tooltip = ENG_ottawa_accord_TT
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = CAN }
+			change_influence_percentage = yes
+			CAN = {
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+				set_temp_variable = { ENG_uq_consent_change = 10 }
+				ENG_uq_change_consent = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_canberra_accord
+		icon = align_to_australia
+
+		x = -3
+		y = 13
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = AST
+			check_variable = { ENG_integration_stage@AST > 0 }
+			AST = { NOT = { has_country_flag = ENG_uq_republic } }
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = AST }
+				check_variable = { ENG_integration_stage@AST > 3 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_canberra_accord"
+			custom_effect_tooltip = ENG_canberra_accord_TT
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = AST }
+			change_influence_percentage = yes
+			AST = {
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+				set_temp_variable = { ENG_uq_consent_change = 10 }
+				ENG_uq_change_consent = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_wellington_accord
+		icon = align_to_new_zealand
+
+		x = -1
+		y = 13
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = NZL
+			check_variable = { ENG_integration_stage@NZL > 0 }
+			NZL = { NOT = { has_country_flag = ENG_uq_republic } }
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = NZL }
+				check_variable = { ENG_integration_stage@NZL > 3 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_wellington_accord"
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = NZL }
+			change_influence_percentage = yes
+			NZL = {
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+				set_temp_variable = { ENG_uq_consent_change = 15 }
+				ENG_uq_change_consent = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_caribbean_partnership
+		icon = trade_with_britain
+
+		x = 1
+		y = 13
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ECONOMY }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_caribbean_realm_aligned_TT
+				any_country = {
+					ENG_uq_is_caribbean_realm = yes
+					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					check_variable = { ROOT.ENG_integration_stage@THIS > 0 }
+				}
+			}
+		}
+
+		bypass = {
+			NOT = {
+				any_country = {
+					ENG_uq_is_caribbean_realm = yes
+					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					check_variable = { ROOT.ENG_integration_stage@THIS > 0 }
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_caribbean_partnership"
+			custom_effect_tooltip = ENG_caribbean_partnership_TT
+			set_temp_variable = { ENG_cmw_cohesion_change = 2 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_caribbean_association
+			unlock_decision_tooltip = ENG_uq_caribbean_constituent
+			unlock_decision_tooltip = ENG_uq_caribbean_integration_act
+			unlock_decision_tooltip = ENG_uq_royal_caribbean_tour
+			hidden_effect = {
+				every_country = {
+					limit = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					}
+					set_temp_variable = { ENG_uq_consent_change = 8 }
+					ENG_uq_change_consent = yes
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_a_shared_crown
+		icon = british_monarchy
+
+		x = -3
+		y = 14
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = {
+			focus = ENG_ottawa_accord
+			focus = ENG_canberra_accord
+			focus = ENG_wellington_accord
+			focus = ENG_caribbean_partnership
+		}
+
+		mutually_exclusive = { focus = ENG_a_commonwealth_of_equals }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_shared_crown"
+			custom_effect_tooltip = ENG_a_shared_crown_TT
+			hidden_effect = {
+				every_country = {
+					limit = {
+						ENG_uq_is_crown_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					}
+					set_temp_variable = { ENG_uq_consent_change = 5 }
+					ENG_uq_change_consent = yes
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_a_commonwealth_of_equals
+		icon = united_anglosphere
+
+		x = -1
+		y = 14
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = {
+			focus = ENG_ottawa_accord
+			focus = ENG_canberra_accord
+			focus = ENG_wellington_accord
+			focus = ENG_caribbean_partnership
+		}
+
+		mutually_exclusive = { focus = ENG_a_shared_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ECONOMY }
+
+		available = {
+			has_government = democratic
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_commonwealth_of_equals"
+			custom_effect_tooltip = ENG_a_commonwealth_of_equals_TT
+			set_temp_variable = { ENG_cmw_cohesion_change = 10 }
+			ENG_cmw_change_cohesion = yes
+			hidden_effect = {
+				every_country = {
+					limit = {
+						ENG_uq_is_crown_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					}
+					add_timed_idea = { idea = ENG_uq_trade_preference_idea days = 730 }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_crown_realms_united
+		icon = united_anglosphere
+
+		x = -2
+		y = 15
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = {
+			focus = ENG_a_shared_crown
+			focus = ENG_a_commonwealth_of_equals
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			ENG_uq_canzuk_integrated = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crown_realms_united"
+			custom_effect_tooltip = ENG_the_crown_realms_united_TT
+			add_ideas = ENG_crown_realms_united_idea
+			set_temp_variable = { ENG_union_strain_change = -10 }
+			ENG_change_union_strain = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
 	# Junta Tree
 
 	# focus = {
