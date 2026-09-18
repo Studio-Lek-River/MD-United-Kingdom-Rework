@@ -1797,7 +1797,7 @@ ENG_uq_commonwealth_exodus = {
 ENG_uq_commonwealth_leave = {
 	if = { limit = { has_dynamic_modifier = { modifier = Commonwealth_member_modifier } } remove_dynamic_modifier = { modifier = Commonwealth_member_modifier } }
 	remove_from_array = { global.commonwealth_member = THIS }
-	set_country_flag = ENG_cmw_former_member
+	add_to_array = { global.ENG_cmw_former_members = THIS }
 	ROOT = {
 		add_opinion_modifier = { target = PREV modifier = left_alliance }
 		set_temp_variable = { ENG_cmw_cohesion_change = -2 }
@@ -1868,29 +1868,6 @@ ENG_cmw_update_cohesion = {
 	}
 	set_variable = { global.ENG_cmw_cohesion_delta = ENG_cmw_cohesion_change }
 	ENG_cmw_change_cohesion = yes
-}
-
-# Monthly, ROOT = ENG. Top 3 members by GDP; index aligned with global.commonwealth_member.
-ENG_cmw_update_leading_members = {
-	clear_array = global.ENG_cmw_leading_members
-	clear_array = ENG_cmw_rank_gdp
-	for_each_scope_loop = {
-		array = global.commonwealth_member
-		add_to_array = { var = ROOT.ENG_cmw_rank_gdp value = gdp_total }
-	}
-	for_loop_effect = {
-		end = 3
-		find_highest_in_array = {
-			array = ENG_cmw_rank_gdp
-			value = ENG_cmw_rank_max
-			index = ENG_cmw_rank_i
-		}
-		if = {
-			limit = { check_variable = { ENG_cmw_rank_max > 0 } }
-			add_to_array = { global.ENG_cmw_leading_members = global.commonwealth_member^ENG_cmw_rank_i }
-			set_variable = { ENG_cmw_rank_gdp^ENG_cmw_rank_i = -1 }
-		}
-	}
 }
 
 # Monthly, ROOT = ENG on the Western path. Cohesion above 25 buys influence in every member outside the Union.
@@ -1977,17 +1954,16 @@ ENG_cmw_chogm_outcome = {
 			ENG_cmw_is_member = yes
 			NOT = { check_variable = { global.ENG_cmw_chogm_host = THIS } }
 		}
-		set_variable = { ENG_cmw_event_host = global.ENG_cmw_chogm_host }
 		country_event = { id = ENG_cmw.14 days = 1 }
 	}
 }
 
-# Call in the member's scope with ROOT = the suspending leading member.
+# Call in the member's scope with ROOT = ENG.
 ENG_cmw_suspend_member = {
 	if = { limit = { has_dynamic_modifier = { modifier = Commonwealth_member_modifier } } remove_dynamic_modifier = { modifier = Commonwealth_member_modifier } }
 	remove_from_array = { global.commonwealth_member = THIS }
 	add_ideas = ENG_cmw_suspended
-	set_country_flag = ENG_cmw_former_member
+	add_to_array = { global.ENG_cmw_former_members = THIS }
 	add_opinion_modifier = { target = ROOT modifier = ENG_cmw_suspended_opinion }
 	country_event = ENG_cmw.20
 }
@@ -2000,7 +1976,7 @@ ENG_cmw_restore_member = {
 	}
 	add_dynamic_modifier = { modifier = Commonwealth_member_modifier }
 	add_to_array = { global.commonwealth_member = THIS }
-	clr_country_flag = ENG_cmw_former_member
+	remove_from_array = { global.ENG_cmw_former_members = THIS }
 	set_temp_variable = { ENG_cmw_cohesion_change = 1 }
 	ENG_cmw_change_cohesion = yes
 	country_event = ENG_cmw.21
@@ -2009,7 +1985,6 @@ ENG_cmw_restore_member = {
 # Monthly driver, ROOT = ENG
 ENG_cmw_monthly = {
 	ENG_cmw_update_cohesion = yes
-	ENG_cmw_update_leading_members = yes
 	if = {
 		limit = {
 			has_completed_focus = ENG_a_family_of_nations

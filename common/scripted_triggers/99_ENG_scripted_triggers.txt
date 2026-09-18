@@ -515,13 +515,6 @@ ENG_cmw_is_member = {
 	has_dynamic_modifier = { modifier = Commonwealth_member_modifier }
 }
 
-ENG_cmw_is_leading_member = {
-	custom_trigger_tooltip = {
-		tooltip = ENG_cmw_is_leading_member_TT
-		is_in_array = { global.ENG_cmw_leading_members = THIS.id }
-	}
-}
-
 ENG_cmw_violates_harare_principles = {
 	custom_trigger_tooltip = {
 		tooltip = ENG_cmw_violates_harare_principles_TT

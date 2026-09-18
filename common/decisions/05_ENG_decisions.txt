@@ -6565,11 +6565,10 @@ ENG_ai_path_category = {
 	}
 }
 
-ENG_cmw_commonwealth_decisions = {
+ENG_commonwealth_decisions = {
 	ENG_cmw_host_games = {
 		icon = GFX_decision_olympics
 
-		visible = { ENG_cmw_is_member = yes }
 		available = {
 			NOT = { has_global_flag = ENG_cmw_games_cycle }
 			has_war = no
@@ -6605,24 +6604,16 @@ ENG_cmw_commonwealth_decisions = {
 			every_other_country = {
 				limit = { ENG_cmw_is_member = yes }
 				add_opinion_modifier = { target = ROOT modifier = ENG_cmw_games_host_opinion }
-				set_variable = { ENG_cmw_event_host = ROOT.id }
 				news_event = ENG_cmw.1
 			}
 		}
 
-		ai_will_do = {
-			base = 1
-			modifier = {
-				factor = 0
-				NOT = { gdp_per_capita_greater_than_10 = yes }
-			}
-		}
+		ai_will_do = { base = 1 }
 	}
 
 	ENG_cmw_host_chogm = {
 		icon = GFX_decision_negotiate_icon
 
-		visible = { ENG_cmw_is_member = yes }
 		available = {
 			NOT = { has_global_flag = ENG_cmw_chogm_host_bid }
 			has_war = no
@@ -6656,10 +6647,6 @@ ENG_cmw_commonwealth_decisions = {
 		icon = GFX_decision_generic_fundraising
 
 		target_array = global.commonwealth_member
-		target_root_trigger = {
-			ENG_cmw_is_member = yes
-			check_variable = { gdp_per_capita > 19.999 }
-		}
 		target_trigger = {
 			FROM = {
 				NOT = { tag = ROOT }
@@ -6708,8 +6695,6 @@ ENG_cmw_commonwealth_decisions = {
 	ENG_cmw_scholarship_plan = {
 		icon = GFX_decision_generic_research
 
-		visible = { ENG_cmw_is_member = yes }
-
 		cost = 25
 		custom_cost_trigger = {
 			check_expr = {
@@ -6739,7 +6724,6 @@ ENG_cmw_commonwealth_decisions = {
 		icon = GFX_decision_generic_leave_commonwealth_of_nation
 
 		target_array = global.commonwealth_member
-		target_root_trigger = { ENG_cmw_is_leading_member = yes }
 		target_trigger = {
 			FROM = {
 				NOT = { tag = ROOT }
@@ -6760,37 +6744,32 @@ ENG_cmw_commonwealth_decisions = {
 	ENG_cmw_restore_membership = {
 		icon = GFX_decision_generic_political_discourse
 
-		visible = {
-			OR = {
-				has_idea = ENG_cmw_suspended
-				AND = {
-					has_country_flag = ENG_cmw_former_member
-					ENG_cmw_is_member = no
-				}
-			}
+		target_array = global.ENG_cmw_former_members
+		target_trigger = {
+			FROM = { ENG_cmw_is_member = no }
 		}
 		available = {
-			ENG_cmw_violates_harare_principles = no
-			has_war = no
+			FROM = {
+				ENG_cmw_violates_harare_principles = no
+				has_war = no
+			}
 		}
 
 		cost = 100
 		days_remove = 180
 
 		remove_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_restore_membership completed"
-			ENG_cmw_restore_member = yes
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_restore_membership for [FROM.GetName] completed"
+			FROM = { ENG_cmw_restore_member = yes }
 		}
 
 		ai_will_do = { base = 5 }
 	}
-}
 
-ENG_cmw_secretariat_decisions = {
 	ENG_cmw_trade_area = {
 		icon = GFX_decision_export_button
 
-		available = { ENG_cmw_is_member = yes }
+		visible = { has_completed_focus = ENG_a_family_of_nations }
 
 		cost = 75
 		custom_cost_trigger = {
@@ -6825,10 +6804,7 @@ ENG_cmw_secretariat_decisions = {
 		icon = GFX_decision_generic_construction
 
 		target_array = global.commonwealth_member
-		target_root_trigger = {
-			has_completed_focus = ENG_a_family_of_nations
-			ENG_cmw_is_member = yes
-		}
+		target_root_trigger = { has_completed_focus = ENG_a_family_of_nations }
 		target_trigger = {
 			FROM = {
 				NOT = { tag = ROOT }
@@ -6879,9 +6855,11 @@ ENG_cmw_secretariat_decisions = {
 	ENG_cmw_defence_pact = {
 		icon = GFX_decision_faction
 
-		visible = { NOT = { has_global_flag = ENG_cmw_defence_pact } }
+		visible = {
+			has_completed_focus = ENG_a_family_of_nations
+			NOT = { has_global_flag = ENG_cmw_defence_pact }
+		}
 		available = {
-			ENG_cmw_is_member = yes
 			ENG_cmw_cohesion_greater_60 = yes
 			is_in_faction = no
 		}
