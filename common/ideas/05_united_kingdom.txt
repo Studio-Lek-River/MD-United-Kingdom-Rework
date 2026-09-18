@@ -1125,19 +1125,6 @@ ideas = {
 				defense_bonus_against = 0.70
 			}
 		}
-		ENG_recent_defections = {
-			picture = fire
-			modifier = {
-				army_attack_factor = -0.50
-				air_superiority_efficiency = -0.70
-				air_fuel_consumption_factor = 0.8
-				army_morale_factor = -0.30
-			}
-			targeted_modifier = {
-				tag = ENG
-				defense_bonus_against = 0.70
-			}
-		}
 		ENG_harmony_doctrine_idea = {
 			picture = ENG_charles_coat_of_arms
 			modifier = {

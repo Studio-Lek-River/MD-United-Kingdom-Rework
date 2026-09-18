@@ -209,22 +209,6 @@ scripted_gui = {
 			}
 		}
 	}
-	ENG_checklist_reunite_realm = {
-		window_name = "ENG_checklist_reunite_realm_ui_window"
-		context_type = decision_category
-		triggers = {
-			# Scotland Info
-			ENG_x_econ_visible = { NOT = { has_country_flag = ENG_established_econ_heg } }
-			ENG_check_econ_visible = { has_country_flag = ENG_established_econ_heg }
-
-			ENG_x_military_visible = { NOT = { has_country_flag = ENG_established_military_heg } }
-			ENG_check_military_visible = { has_country_flag = ENG_established_military_heg }
-
-			ENG_x_political_visible = { NOT = { has_country_flag = ENG_established_political_heg } }
-			ENG_check_political_visible = { has_country_flag = ENG_established_political_heg }
-		}
-	}
-
 	ENG_uq_ladder_ui = {
 		window_name = "ENG_uq_ladder_ui_window"
 		context_type = decision_category

@@ -90,8 +90,10 @@ ENG_FOCUS_RULE_BRITANNIA = {
 		ENG_the_sun_which_never_set
 		ENG_operation_barras
 		ENG_falklands_policy
-		ENG_a_more_united_kingdom
-		ENG_declare_the_commonwealth
+		ENG_the_union_question
+		ENG_the_crown_imperial
+		ENG_the_crowns_peace
+		ENG_direct_rule_from_london
 	}
 
 	ai_strategy = { type = area_priority id = africa value = 150 }

@@ -91,13 +91,6 @@ on_actions = {
 				}
 			}
 
-			if = {
-				limit = {
-					has_completed_focus = ENG_a_more_united_kingdom
-				}
-				ENG_update_commonwealth_totals = yes
-			}
-
 			# Devolution
 
 			if = {

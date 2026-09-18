@@ -1270,52 +1270,6 @@ decisions_ENG = {
 
 		ai_will_do = { base = 10 }
 	}
-
-	# Core Ireland
-	ENG_integrate_ireland = {
-		visible = {
-			controls_state = 27
-			controls_state = 28
-			controls_state = 29
-			has_completed_focus = ENG_uniting_the_isle
-			NOT = { has_completed_focus = ENG_the_crown_imperial }
-		}
-
-		available = {
-			27 = {
-				compliance > 49
-				resistance < 40
-			}
-			28 = {
-				compliance > 49
-				resistance < 40
-			}
-			29 = {
-				compliance > 49
-				resistance < 40
-			}
-		}
-
-		highlight_states = {
-			highlight_state_targets = {
-				state = 27
-				state = 28
-				state = 29
-			}
-		}
-
-		days_remove = 90
-
-		remove_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision ENG_integrate_ireland"
-			27 = { add_core_of = ENG }
-			28 = { add_core_of = ENG }
-			29 = { add_core_of = ENG }
-		}
-
-		modifier = { tax_gain_multiplier_modifier = -0.05 }
-		ai_will_do = { base = 1 }
-	}
 }
 ENG_monarchy_decision_category = {
 	ENG_charles_charities_network_decision = {
@@ -4403,105 +4357,6 @@ ENG_devolved_matters = {
 		}
 	}
 }
-ENG_a_more_united_kingdom_decisions = {
-	ENG_declare_economic_hegemony = {
-		days_remove = 80
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = ENG_tooltip_TT
-				check_variable = { gdp_total > commonwealth_total_gdp }
-			}
-		}
-
-		fire_only_once = yes
-
-		remove_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision ENG_declare_economic_hegemony"
-			set_country_flag = ENG_established_econ_heg
-			custom_effect_tooltip = {
-				localization_key = modifies_dynamic_modifier_tt
-				MODIFIER = ENG_economy_modifier
-			}
-			add_to_variable = { ENG_civilian_industry_tax_modifier = 0.10 tooltip = civilian_industry_tax_modifier_tt }
-			add_to_variable = { ENG_production_factory_efficiency_gain_factor = 0.15 tooltip = production_factory_efficiency_gain_factor_tt }
-			add_to_variable = { ENG_interest_rate_multiplier_modifier = -1.25 tooltip = interest_rate_multiplier_modifier_tt }
-		}
-
-		ai_will_do = { base = 1 }
-	}
-
-	ENG_declare_military_hegemony = {
-		days_remove = 80
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = ENG_tooltip2_TT
-				check_variable = { deployed_army_manpower_k > commonwealth_total_army }
-			}
-		}
-
-		fire_only_once = yes
-
-		remove_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision ENG_declare_military_hegemony"
-			set_country_flag = ENG_established_military_heg
-		}
-
-		ai_will_do = { base = 1 }
-	}
-
-	ENG_declare_political_hegemony = {
-		days_remove = 80
-
-		available = {
-			if = {
-				limit = {
-					country_exists = CAN
-					NOT = { CAN = { is_subject_of = ROOT } }
-				}
-				CAN = { influence_higher_50 = yes }
-			}
-			if = {
-				limit = {
-					country_exists = AST
-					NOT = { AST = { is_subject_of = ROOT } }
-				}
-				AST = { influence_higher_50 = yes }
-			}
-			if = {
-				limit = {
-					country_exists = NZL
-					NOT = { NZL = { is_subject_of = ROOT } }
-				}
-				NZL = { influence_higher_50 = yes }
-			}
-		}
-
-		fire_only_once = yes
-
-		remove_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision ENG_declare_political_hegemony"
-			set_country_flag = ENG_established_political_heg
-			custom_effect_tooltip = {
-				localization_key = modifies_dynamic_modifier_tt
-				MODIFIER = ENG_economy_modifier
-			}
-			add_to_variable = { ENG_health_cost = -0.05 tooltip = health_cost_multiplier_modifier_tt }
-			add_to_variable = { ENG_welfare_cost = -0.05 tooltip = social_cost_multiplier_modifier_tt }
-			newline = yes
-			custom_effect_tooltip = {
-				localization_key = modifies_dynamic_modifier_tt
-				MODIFIER = ENG_political_modifier
-			}
-			add_to_variable = { ENG_police_cost_multiplier_modifier = -0.05 tooltip = police_cost_multiplier_modifier_tt }
-			add_to_variable = { ENG_political_power_factor = 0.05 tooltip = political_power_factor_tt }
-		}
-
-		ai_will_do = { base = 1 }
-	}
-}
-
 ENG_the_crown_imperial_decisions = {
 	ENG_uq_sponsor_loyalists = {
 		icon = GFX_decision_generic_political_rally
@@ -6437,23 +6292,6 @@ ENG_union_question_decisions = {
 				check_variable = { ENG_union_strain > 40 }
 			}
 		}
-	}
-}
-
-ENG_fractured_kingdom_united_state_decisions = {
-	ENG_grant_land_in_isle_of_man = {
-		days_remove = 80
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = ENG_tooltip2_TT
-				check_variable = { deployed_army_manpower_k > commonwealth_total_army }
-			}
-		}
-
-		fire_only_once = yes
-		remove_effect = { log = "[GetDateText]: [Root.GetName]: Decision ENG_grant_land_in_isle_of_man" }
-		ai_will_do = { base = 1 }
 	}
 }
 
