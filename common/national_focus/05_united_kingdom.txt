@@ -25732,7 +25732,6 @@ focus_tree = {
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_imperial_mission }
-		prerequisite = { focus = ENG_operation_barras focus = ENG_operation_coastal_star focus = ENG_operation_delta_guard }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -25815,7 +25814,6 @@ focus_tree = {
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_imperial_mission }
-		prerequisite = { focus = ENG_regime_change_in_zimbabwe }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -25862,7 +25860,6 @@ focus_tree = {
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_imperial_mission }
-		prerequisite = { focus = ENG_operation_dagger }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
