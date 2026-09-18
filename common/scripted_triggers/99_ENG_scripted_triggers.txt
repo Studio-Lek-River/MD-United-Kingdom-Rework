@@ -265,3 +265,33 @@ ENG_uq_is_crown_realm = {
 		original_tag = TUL
 	}
 }
+
+# Commonwealth of Nations institution. Membership is the MD dynamic modifier; MD's is_commonwealth_member tests ROOT and is wrong inside loops.
+ENG_cmw_is_member = {
+	has_dynamic_modifier = { modifier = Commonwealth_member_modifier }
+}
+
+ENG_cmw_is_leading_member = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_cmw_is_leading_member_TT
+		is_in_array = { global.ENG_cmw_leading_members = THIS.id }
+	}
+}
+
+ENG_cmw_violates_harare_principles = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_cmw_violates_harare_principles_TT
+		OR = {
+			nationalist_military_junta_are_in_power = yes
+			jihadist_government = yes
+			has_civil_war = yes
+		}
+	}
+}
+
+ENG_cmw_cohesion_greater_60 = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_cmw_cohesion_greater_60_tt
+		check_variable = { global.commonwealth_cohesion > 59.999 }
+	}
+}

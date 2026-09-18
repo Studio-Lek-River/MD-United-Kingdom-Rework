@@ -1,4 +1,14 @@
 on_actions = {
+	on_startup = {
+		effect = {
+			if = {
+				limit = { NOT = { has_global_flag = ENG_cmw_initialised } }
+				set_variable = { global.commonwealth_cohesion = 50 }
+				set_global_flag = ENG_cmw_initialised
+			}
+		}
+	}
+
 	on_daily_ENG = {
 		effect = {
 			if = {
@@ -337,6 +347,8 @@ on_actions = {
 				limit = { has_country_flag = ENG_union_question_opened }
 				ENG_uq_update_imperial_tension = yes
 			}
+
+			ENG_cmw_monthly = yes
 		}
 	}
 

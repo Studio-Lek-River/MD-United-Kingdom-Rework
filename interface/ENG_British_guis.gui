@@ -416,10 +416,10 @@ containerWindowType = {
 		instantTextBoxType = {
 			name = "ENG_union_strain_label"
 			text = "ENG_union_strain_ui_label"
-			position = { x = 100 y = 10 }
+			position = { x = 10 y = 10 }
 			font = "hoi_18mbs"
-			format = center
-			maxwidth = 200
+			format = left
+			maxwidth = 130
 			maxheight = 20
 			text_color_code = Y
 			pdx_tooltip = ENG_union_strain_ui_TT
@@ -427,12 +427,33 @@ containerWindowType = {
 		instantTextBoxType = {
 			name = "ENG_union_strain_VAR"
 			text = "ENG_union_strain_ui_VAR"
-			position = { x = 300 y = 10 }
+			position = { x = 140 y = 10 }
 			font = "hoi_18mbs"
 			format = center
-			maxwidth = 80
+			maxwidth = 60
 			maxheight = 20
 			pdx_tooltip = ENG_union_strain_ui_TT
+		}
+		instantTextBoxType = {
+			name = "ENG_cmw_cohesion_label"
+			text = "ENG_cmw_cohesion_ui_label"
+			position = { x = 220 y = 10 }
+			font = "hoi_18mbs"
+			format = left
+			maxwidth = 130
+			maxheight = 20
+			text_color_code = Y
+			pdx_tooltip = ENG_cmw_cohesion_ui_TT
+		}
+		instantTextBoxType = {
+			name = "ENG_cmw_cohesion_VAR"
+			text = "ENG_cmw_cohesion_ui_VAR"
+			position = { x = 350 y = 10 }
+			font = "hoi_18mbs"
+			format = center
+			maxwidth = 60
+			maxheight = 20
+			pdx_tooltip = ENG_cmw_cohesion_ui_TT
 		}
 		instantTextBoxType = {
 			name = "ENG_uq_ladder_label"

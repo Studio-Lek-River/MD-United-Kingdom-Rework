@@ -27,6 +27,7 @@ add_namespace = ENG_inner_circle_edward
 add_namespace = ENG_inner_circle_philip
 add_namespace = ENG_inner_circle_william
 add_namespace = ENG_uq
+add_namespace = ENG_cmw
 
 ########################## Moon And Space Event Chain #########################
 #Moon Outpost
@@ -8131,5 +8132,175 @@ country_event = {
 				}
 			}
 		}
+	}
+}
+
+########################## Commonwealth of Nations #########################
+# Commonwealth Games held
+news_event = {
+	id = ENG_cmw.1
+	title = ENG_cmw.1.t
+	desc = ENG_cmw.1.d
+	picture = GFX_event_olympics
+	is_triggered_only = yes
+
+	option = { name = ENG_cmw.1.a }
+}
+
+# CHOGM opens in the host country
+country_event = {
+	id = ENG_cmw.10
+	title = ENG_cmw.10.t
+	desc = ENG_cmw.10.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_cmw.10.a
+		log = "[GetDateText]: [This.GetName]: ENG_cmw.10.a executed"
+		every_other_country = {
+			limit = { ENG_cmw_is_member = yes }
+			add_opinion_modifier = { target = ROOT modifier = ENG_cmw_chogm_host_opinion }
+			set_temp_variable = { percent_change = 1 }
+			set_temp_variable = { tag_index = ROOT.id }
+			change_influence_percentage = yes
+		}
+	}
+}
+
+# CHOGM communique endorses British conduct
+country_event = {
+	id = ENG_cmw.11
+	title = ENG_cmw.11.t
+	desc = ENG_cmw.11.d
+	picture = GFX_handshake_black
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_cmw.11.a
+		log = "[GetDateText]: [This.GetName]: ENG_cmw.11.a executed"
+		set_temp_variable = { ENG_cmw_cohesion_change = 3 }
+		ENG_cmw_change_cohesion = yes
+		for_each_scope_loop = {
+			array = ENG_integration_targets
+			set_temp_variable = { ENG_uq_consent_change = 3 }
+			ENG_uq_change_consent = yes
+		}
+	}
+}
+
+# CHOGM censures Britain
+country_event = {
+	id = ENG_cmw.12
+	title = ENG_cmw.12.t
+	desc = ENG_cmw.12.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_cmw.12.a
+		log = "[GetDateText]: [This.GetName]: ENG_cmw.12.a executed"
+		set_temp_variable = { ENG_cmw_cohesion_change = -5 }
+		ENG_cmw_change_cohesion = yes
+		every_other_country = {
+			limit = { ENG_cmw_is_member = yes }
+			add_opinion_modifier = { target = ROOT modifier = ENG_cmw_censure_opinion }
+		}
+	}
+}
+
+# CHOGM ends without judgement
+country_event = {
+	id = ENG_cmw.13
+	title = ENG_cmw.13.t
+	desc = ENG_cmw.13.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_cmw.13.a }
+}
+
+# Members hear the outcome
+country_event = {
+	id = ENG_cmw.14
+	title = ENG_cmw.14.t
+	desc = {
+		text = ENG_cmw.14.d
+		trigger = { check_variable = { global.ENG_cmw_chogm_result = 1 } }
+	}
+	desc = {
+		text = ENG_cmw.14.d2
+		trigger = { check_variable = { global.ENG_cmw_chogm_result = -1 } }
+	}
+	desc = {
+		text = ENG_cmw.14.d3
+		trigger = { check_variable = { global.ENG_cmw_chogm_result = 0 } }
+	}
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_cmw.14.a }
+}
+
+# Suspended from the Commonwealth
+country_event = {
+	id = ENG_cmw.20
+	title = ENG_cmw.20.t
+	desc = ENG_cmw.20.d
+	picture = GFX_news_leave_commonwealth
+	is_triggered_only = yes
+
+	option = { name = ENG_cmw.20.a }
+}
+
+# Readmitted to the Commonwealth
+country_event = {
+	id = ENG_cmw.21
+	title = ENG_cmw.21.t
+	desc = ENG_cmw.21.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_cmw.21.a }
+}
+
+# Commonwealth Defence Pact invitation to a realm
+country_event = {
+	id = ENG_cmw.30
+	title = ENG_cmw.30.t
+	desc = ENG_cmw.30.d
+	picture = GFX_ENG_canzuk_alliance
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_cmw.30.a
+		log = "[GetDateText]: [This.GetName]: ENG_cmw.30.a executed"
+		ai_chance = {
+			base = 40
+			modifier = {
+				add = 30
+				has_opinion = { target = ENG value > 50 }
+			}
+			modifier = {
+				factor = 0.3
+				has_opinion = { target = ENG value < 0 }
+			}
+			modifier = {
+				factor = 0
+				ENG = { has_war = yes }
+			}
+		}
+		ENG = { add_to_faction = ROOT }
+		set_temp_variable = { ENG_cmw_cohesion_change = 2 }
+		ENG_cmw_change_cohesion = yes
+	}
+
+	option = {
+		name = ENG_cmw.30.b
+		log = "[GetDateText]: [This.GetName]: ENG_cmw.30.b executed"
+		ai_chance = { base = 60 }
 	}
 }

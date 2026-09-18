@@ -1173,6 +1173,10 @@ ENG_uq_commonwealth_exodus = {
 		limit = { has_country_flag = ENG_uq_tension_band_80 }
 		multiply_temp_variable = { ENG_uq_leave_chance = 2 }
 	}
+	if = {
+		limit = { check_variable = { global.commonwealth_cohesion < 30 } }
+		multiply_temp_variable = { ENG_uq_leave_chance = 2 }
+	}
 	every_other_country = {
 		limit = {
 			is_in_array = { array = global.commonwealth_member value = THIS }
@@ -1189,7 +1193,12 @@ ENG_uq_commonwealth_exodus = {
 ENG_uq_commonwealth_leave = {
 	remove_dynamic_modifier = { modifier = Commonwealth_member_modifier }
 	remove_from_array = { global.commonwealth_member = THIS }
-	ROOT = { add_opinion_modifier = { target = PREV modifier = left_alliance } }
+	set_country_flag = ENG_cmw_former_member
+	ROOT = {
+		add_opinion_modifier = { target = PREV modifier = left_alliance }
+		set_temp_variable = { ENG_cmw_cohesion_change = -2 }
+		ENG_cmw_change_cohesion = yes
+	}
 	if = {
 		limit = { ENG_uq_is_crown_realm = yes }
 		set_country_flag = ENG_uq_republic
@@ -1209,6 +1218,202 @@ ENG_uq_commonwealth_leave = {
 		}
 		country_event = CMW_Leaving.1
 	}
+}
+
+# Commonwealth of Nations institution. Cohesion is global so member projects can move it; monthly driver runs from on_monthly_ENG.
+ENG_cmw_change_cohesion = {
+	add_to_variable = { global.commonwealth_cohesion = ENG_cmw_cohesion_change }
+	clamp_variable = { var = global.commonwealth_cohesion min = 0 max = 100 }
+	custom_effect_tooltip = ENG_cmw_cohesion_change_tt
+}
+
+# Monthly, ROOT = ENG
+ENG_cmw_update_cohesion = {
+	set_temp_variable = { ENG_cmw_cohesion_change = 0 }
+	if = {
+		limit = {
+			ENG_cmw_is_member = yes
+			has_stability > 0.6
+			has_war = no
+		}
+		add_to_temp_variable = { ENG_cmw_cohesion_change = 0.5 }
+	}
+	if = {
+		limit = { has_idea = ENG_cmw_trade_area_idea }
+		add_to_temp_variable = { ENG_cmw_cohesion_change = 0.3 }
+	}
+	if = {
+		limit = { has_idea = ENG_cmw_development_fund_idea }
+		add_to_temp_variable = { ENG_cmw_cohesion_change = 0.3 }
+	}
+	if = {
+		limit = {
+			has_global_flag = ENG_cmw_defence_pact
+			is_faction_leader = yes
+		}
+		add_to_temp_variable = { ENG_cmw_cohesion_change = 0.3 }
+	}
+	if = {
+		limit = { check_variable = { ENG_imperial_tension > 20 } }
+		set_temp_variable = { ENG_cmw_tension_drag = { value = ENG_imperial_tension subtract = 20 multiply = 0.1 } }
+		subtract_from_temp_variable = { ENG_cmw_cohesion_change = ENG_cmw_tension_drag }
+	}
+	if = {
+		limit = { has_country_flag = ENG_uq_nationalist }
+		subtract_from_temp_variable = { ENG_cmw_cohesion_change = 0.5 }
+	}
+	set_variable = { global.ENG_cmw_cohesion_delta = ENG_cmw_cohesion_change }
+	ENG_cmw_change_cohesion = yes
+}
+
+# Monthly, ROOT = ENG. Top 3 members by GDP; index aligned with global.commonwealth_member.
+ENG_cmw_update_leading_members = {
+	clear_array = global.ENG_cmw_leading_members
+	clear_array = ENG_cmw_rank_gdp
+	for_each_scope_loop = {
+		array = global.commonwealth_member
+		add_to_array = { var = ROOT.ENG_cmw_rank_gdp value = gdp_total }
+	}
+	for_loop_effect = {
+		end = 3
+		find_highest_in_array = {
+			array = ENG_cmw_rank_gdp
+			value = ENG_cmw_rank_max
+			index = ENG_cmw_rank_i
+		}
+		if = {
+			limit = { check_variable = { ENG_cmw_rank_max > 0 } }
+			add_to_array = { global.ENG_cmw_leading_members = global.commonwealth_member^ENG_cmw_rank_i }
+			set_variable = { ENG_cmw_rank_gdp^ENG_cmw_rank_i = -1 }
+		}
+	}
+}
+
+# Monthly, ROOT = ENG on the Western path. Cohesion above 25 buys influence in every member outside the Union.
+ENG_cmw_influence_drip = {
+	set_temp_variable = { ENG_cmw_drip = { value = global.commonwealth_cohesion subtract = 25 multiply = 0.02 } }
+	if = {
+		limit = { has_idea = ENG_cmw_trade_area_idea }
+		multiply_temp_variable = { ENG_cmw_drip = 1.33 }
+	}
+	if = {
+		limit = { check_variable = { ENG_cmw_drip > 0 } }
+		every_other_country = {
+			limit = {
+				ENG_cmw_is_member = yes
+				NOT = { is_subject_of = ROOT }
+			}
+			set_temp_variable = { percent_change = ENG_cmw_drip }
+			set_temp_variable = { tag_index = ENG }
+			change_influence_percentage = yes
+		}
+	}
+}
+
+# Monthly, ROOT = ENG. CHOGM meets every other October; a member that bid hosts, otherwise a random member.
+ENG_cmw_schedule_chogm = {
+	if = {
+		limit = {
+			NOT = { has_global_flag = ENG_cmw_chogm_cycle }
+			check_variable = { global.month = 10 }
+			check_variable = { global.commonwealth_member^num > 0 }
+		}
+		if = {
+			limit = {
+				has_global_flag = ENG_cmw_chogm_host_bid
+				var:global.ENG_cmw_chogm_host = { ENG_cmw_is_member = yes }
+			}
+			var:global.ENG_cmw_chogm_host = { country_event = ENG_cmw.10 }
+		}
+		else = {
+			random_scope_in_array = {
+				array = global.commonwealth_member
+				set_variable = { global.ENG_cmw_chogm_host = THIS.id }
+				country_event = ENG_cmw.10
+			}
+		}
+		ENG_cmw_chogm_outcome = yes
+		set_global_flag = { flag = ENG_cmw_chogm_cycle days = 700 }
+		clr_global_flag = ENG_cmw_chogm_host_bid
+	}
+}
+
+# ROOT = ENG. The meeting judges British conduct; only a member is judged.
+ENG_cmw_chogm_outcome = {
+	if = {
+		limit = { ENG_cmw_is_member = yes }
+		if = {
+			limit = {
+				check_variable = { global.commonwealth_cohesion > 59.999 }
+				check_variable = { ENG_imperial_tension < 40 }
+			}
+			country_event = { id = ENG_cmw.11 days = 1 }
+			set_variable = { global.ENG_cmw_chogm_result = 1 }
+		}
+		else_if = {
+			limit = {
+				OR = {
+					check_variable = { global.commonwealth_cohesion < 40 }
+					check_variable = { ENG_imperial_tension > 39.999 }
+				}
+			}
+			country_event = { id = ENG_cmw.12 days = 1 }
+			set_variable = { global.ENG_cmw_chogm_result = -1 }
+		}
+		else = {
+			country_event = { id = ENG_cmw.13 days = 1 }
+			set_variable = { global.ENG_cmw_chogm_result = 0 }
+		}
+	}
+	else = {
+		set_variable = { global.ENG_cmw_chogm_result = 0 }
+	}
+	every_other_country = {
+		limit = {
+			ENG_cmw_is_member = yes
+			NOT = { check_variable = { global.ENG_cmw_chogm_host = THIS } }
+		}
+		set_variable = { ENG_cmw_event_host = global.ENG_cmw_chogm_host }
+		country_event = { id = ENG_cmw.14 days = 1 }
+	}
+}
+
+# Call in the member's scope with ROOT = the suspending leading member.
+ENG_cmw_suspend_member = {
+	remove_dynamic_modifier = { modifier = Commonwealth_member_modifier }
+	remove_from_array = { global.commonwealth_member = THIS }
+	add_ideas = ENG_cmw_suspended
+	set_country_flag = ENG_cmw_former_member
+	add_opinion_modifier = { target = ROOT modifier = ENG_cmw_suspended_opinion }
+	country_event = ENG_cmw.20
+}
+
+# Call in the rejoining country's scope.
+ENG_cmw_restore_member = {
+	if = {
+		limit = { has_idea = ENG_cmw_suspended }
+		remove_ideas = ENG_cmw_suspended
+	}
+	add_dynamic_modifier = { modifier = Commonwealth_member_modifier }
+	add_to_array = { global.commonwealth_member = THIS }
+	clr_country_flag = ENG_cmw_former_member
+	set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+	ENG_cmw_change_cohesion = yes
+	country_event = ENG_cmw.21
+}
+
+# Monthly driver, ROOT = ENG
+ENG_cmw_monthly = {
+	ENG_cmw_update_cohesion = yes
+	ENG_cmw_update_leading_members = yes
+	if = {
+		limit = {
+			has_country_flag = ENG_uq_western
+			ENG_cmw_is_member = yes
+		}
+		ENG_cmw_influence_drip = yes
+	}
+	ENG_cmw_schedule_chogm = yes
 }
 
 ENG_settle_northern_ireland_question = {

@@ -5435,3 +5435,351 @@ ENG_ai_path_category = {
 		ai_will_do = { base = 100 }
 	}
 }
+
+ENG_cmw_commonwealth_decisions = {
+	ENG_cmw_host_games = {
+		icon = GFX_decision_olympics
+
+		visible = { ENG_cmw_is_member = yes }
+		available = {
+			NOT = { has_global_flag = ENG_cmw_games_cycle }
+			has_war = no
+			has_stability > 0.5
+		}
+
+		cost = 50
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.004
+				less_than = { value = treasury }
+			}
+			has_political_power > 49.999
+		}
+		custom_cost_text = ENG_cost_medium_expenditure_pp50
+		ai_hint_pp_cost = 50
+		days_remove = 365
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_host_games"
+			hidden_effect = { add_political_power = -50 }
+			medium_expenditure = yes
+			set_global_flag = { flag = ENG_cmw_games_cycle days = 1460 }
+			set_variable = { global.ENG_cmw_games_host = THIS.id }
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_host_games completed"
+			add_stability = 0.03
+			add_timed_idea = { idea = ENG_cmw_games_host_idea days = 365 }
+			set_temp_variable = { ENG_cmw_cohesion_change = 5 }
+			ENG_cmw_change_cohesion = yes
+			every_other_country = {
+				limit = { ENG_cmw_is_member = yes }
+				add_opinion_modifier = { target = ROOT modifier = ENG_cmw_games_host_opinion }
+				set_variable = { ENG_cmw_event_host = ROOT.id }
+				news_event = ENG_cmw.1
+			}
+		}
+
+		ai_will_do = {
+			base = 1
+			modifier = {
+				factor = 0
+				NOT = { gdp_per_capita_greater_than_10 = yes }
+			}
+		}
+	}
+
+	ENG_cmw_host_chogm = {
+		icon = GFX_decision_negotiate_icon
+
+		visible = { ENG_cmw_is_member = yes }
+		available = {
+			NOT = { has_global_flag = ENG_cmw_chogm_host_bid }
+			has_war = no
+		}
+
+		cost = 25
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.002
+				less_than = { value = treasury }
+			}
+			has_political_power > 24.999
+		}
+		custom_cost_text = ENG_cost_small_expenditure_pp25
+		ai_hint_pp_cost = 25
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_host_chogm"
+			hidden_effect = { add_political_power = -25 }
+			small_expenditure = yes
+			set_variable = { global.ENG_cmw_chogm_host = THIS.id }
+			set_global_flag = ENG_cmw_chogm_host_bid
+			custom_effect_tooltip = ENG_cmw_host_chogm_TT
+		}
+
+		ai_will_do = { base = 1 }
+	}
+
+	ENG_cmw_technical_cooperation_grant = {
+		icon = GFX_decision_generic_fundraising
+
+		target_array = global.commonwealth_member
+		target_root_trigger = {
+			ENG_cmw_is_member = yes
+			check_variable = { gdp_per_capita > 19.999 }
+		}
+		target_trigger = {
+			FROM = {
+				NOT = { tag = ROOT }
+				check_variable = { gdp_per_capita < 10 }
+			}
+		}
+
+		cost = 25
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.002
+				less_than = { value = treasury }
+			}
+			has_political_power > 24.999
+		}
+		custom_cost_text = ENG_cost_small_expenditure_pp25
+		ai_hint_pp_cost = 25
+		days_re_enable = 365
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_technical_cooperation_grant for [FROM.GetName]"
+			hidden_effect = { add_political_power = -25 }
+			small_expenditure = yes
+			set_temp_variable = { treasury_change = { value = gdp_total multiply = 0.002 } }
+			FROM = {
+				modify_treasury_effect = yes
+				add_timed_idea = { idea = ENG_cmw_cftc_grant_idea days = 365 }
+				set_temp_variable = { percent_change = 3 }
+				set_temp_variable = { tag_index = ROOT.id }
+				change_influence_percentage = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+		}
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 0
+				check_variable = { treasury < 5 }
+			}
+		}
+	}
+
+	ENG_cmw_scholarship_plan = {
+		icon = GFX_decision_generic_research
+
+		visible = { ENG_cmw_is_member = yes }
+
+		cost = 25
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.002
+				less_than = { value = treasury }
+			}
+			has_political_power > 24.999
+		}
+		custom_cost_text = ENG_cost_small_expenditure_pp25
+		ai_hint_pp_cost = 25
+		days_re_enable = 730
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_scholarship_plan"
+			hidden_effect = { add_political_power = -25 }
+			small_expenditure = yes
+			add_timed_idea = { idea = ENG_cmw_scholarship_idea days = 730 }
+			set_temp_variable = { ENG_cmw_cohesion_change = 0.5 }
+			ENG_cmw_change_cohesion = yes
+		}
+
+		ai_will_do = { base = 1 }
+	}
+
+	ENG_cmw_suspend_member = {
+		icon = GFX_decision_generic_leave_commonwealth_of_nation
+
+		target_array = global.commonwealth_member
+		target_root_trigger = { ENG_cmw_is_leading_member = yes }
+		target_trigger = {
+			FROM = {
+				NOT = { tag = ROOT }
+				ENG_cmw_violates_harare_principles = yes
+			}
+		}
+
+		cost = 50
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_suspend_member for [FROM.GetName]"
+			FROM = { ENG_cmw_suspend_member = yes }
+		}
+
+		ai_will_do = { base = 3 }
+	}
+
+	ENG_cmw_restore_membership = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = {
+			OR = {
+				has_idea = ENG_cmw_suspended
+				AND = {
+					has_country_flag = ENG_cmw_former_member
+					ENG_cmw_is_member = no
+				}
+			}
+		}
+		available = {
+			ENG_cmw_violates_harare_principles = no
+			has_war = no
+		}
+
+		cost = 100
+		days_remove = 180
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_restore_membership"
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_restore_membership completed"
+			ENG_cmw_restore_member = yes
+		}
+
+		ai_will_do = { base = 5 }
+	}
+}
+
+ENG_cmw_secretariat_decisions = {
+	ENG_cmw_trade_area = {
+		icon = GFX_decision_export_button
+
+		available = { ENG_cmw_is_member = yes }
+
+		cost = 75
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.004
+				less_than = { value = treasury }
+			}
+			has_political_power > 74.999
+		}
+		custom_cost_text = cost_medium_expenditure_pp75
+		ai_hint_pp_cost = 75
+		days_re_enable = 730
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_trade_area"
+			hidden_effect = { add_political_power = -75 }
+			medium_expenditure = yes
+			add_timed_idea = { idea = ENG_cmw_trade_area_idea days = 730 }
+			every_other_country = {
+				limit = { ENG_cmw_is_member = yes }
+				add_timed_idea = { idea = ENG_cmw_trade_area_member_idea days = 730 }
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 3 }
+			ENG_cmw_change_cohesion = yes
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_cmw_development_fund = {
+		icon = GFX_decision_generic_construction
+
+		target_array = global.commonwealth_member
+		target_root_trigger = {
+			has_country_flag = ENG_uq_western
+			ENG_cmw_is_member = yes
+		}
+		target_trigger = {
+			FROM = {
+				NOT = { tag = ROOT }
+				check_variable = { gdp_per_capita < 15 }
+			}
+		}
+
+		cost = 75
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.004
+				less_than = { value = treasury }
+			}
+			has_political_power > 74.999
+		}
+		custom_cost_text = cost_medium_expenditure_pp75
+		ai_hint_pp_cost = 75
+		days_re_enable = 365
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_development_fund for [FROM.GetName]"
+			hidden_effect = { add_political_power = -75 }
+			medium_expenditure = yes
+			set_temp_variable = { treasury_change = { value = gdp_total multiply = 0.002 } }
+			FROM = {
+				modify_treasury_effect = yes
+				set_temp_variable = { percent_change = 5 }
+				set_temp_variable = { tag_index = ENG }
+				change_influence_percentage = yes
+				add_opinion_modifier = { target = ENG modifier = ENG_cmw_development_fund_opinion }
+			}
+			if = {
+				limit = { is_in_array = { ENG_integration_targets = FROM } }
+				FROM = {
+					set_temp_variable = { ENG_uq_consent_change = 5 }
+					ENG_uq_change_consent = yes
+				}
+			}
+			add_timed_idea = { idea = ENG_cmw_development_fund_idea days = 365 }
+			set_temp_variable = { ENG_cmw_cohesion_change = 2 }
+			ENG_cmw_change_cohesion = yes
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_cmw_defence_pact = {
+		icon = GFX_decision_faction
+
+		visible = { NOT = { has_global_flag = ENG_cmw_defence_pact } }
+		available = {
+			ENG_cmw_is_member = yes
+			ENG_cmw_cohesion_greater_60 = yes
+			is_in_faction = no
+		}
+
+		cost = 150
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_defence_pact"
+			create_faction_from_template = faction_template_eng_commonwealth
+			set_global_flag = ENG_cmw_defence_pact
+			set_temp_variable = { ENG_cmw_cohesion_change = 5 }
+			ENG_cmw_change_cohesion = yes
+			every_other_country = {
+				limit = {
+					ENG_cmw_is_member = yes
+					ENG_uq_is_crown_realm = yes
+					is_in_faction = no
+				}
+				country_event = { id = ENG_cmw.30 days = 3 }
+			}
+		}
+
+		ai_will_do = { base = 3 }
+	}
+}
