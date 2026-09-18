@@ -220,5 +220,9 @@ scripted_gui = {
 				change_scope = yes
 			}
 		}
+
+		triggers = {
+			ENG_uq_ladder_entry_lock_visible = { ROOT = { has_country_flag = ENG_uq_lock@PREV } }
+		}
 	}
 }

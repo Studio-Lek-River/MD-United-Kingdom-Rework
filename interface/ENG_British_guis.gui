@@ -314,104 +314,106 @@ guiTypes = {
 
 	containerWindowType = {
 		name = "ENG_uq_ladder_ui_window"
-		size = { width = 420 height = 400 }
+		size = { width = 420 height = 490 }
 		position = { x = 0 y = 40 }
 		instantTextBoxType = {
-			name = "ENG_union_strain_label"
-			text = "ENG_union_strain_ui_label"
-			position = { x = 10 y = 10 }
-			font = "hoi_18mbs"
+			name = "ENG_uq_dbg_strain"
+			text = "ENG_uq_dbg_strain"
+			position = { x = 10 y = 6 }
+			font = "hoi_16mbs"
 			format = left
-			maxwidth = 130
-			maxheight = 20
-			text_color_code = Y
+			maxwidth = 200
+			maxheight = 18
 			pdx_tooltip = ENG_union_strain_ui_TT
 		}
 		instantTextBoxType = {
-			name = "ENG_union_strain_VAR"
-			text = "ENG_union_strain_ui_VAR"
-			position = { x = 140 y = 10 }
-			font = "hoi_18mbs"
-			format = center
-			maxwidth = 60
-			maxheight = 20
-			pdx_tooltip = ENG_union_strain_ui_TT
-		}
-		instantTextBoxType = {
-			name = "ENG_cmw_cohesion_label"
-			text = "ENG_cmw_cohesion_ui_label"
-			position = { x = 220 y = 10 }
-			font = "hoi_18mbs"
+			name = "ENG_uq_dbg_cohesion"
+			text = "ENG_uq_dbg_cohesion"
+			position = { x = 215 y = 6 }
+			font = "hoi_16mbs"
 			format = left
-			maxwidth = 130
-			maxheight = 20
+			maxwidth = 200
+			maxheight = 18
+			pdx_tooltip = ENG_cmw_cohesion_ui_TT
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_dbg_carib"
+			text = "ENG_uq_dbg_carib"
+			position = { x = 10 y = 24 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 400
+			maxheight = 18
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_dbg_home_hdr"
+			text = "ENG_uq_dbg_home_hdr"
+			position = { x = 10 y = 46 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 400
+			maxheight = 18
 			text_color_code = Y
-			pdx_tooltip = ENG_cmw_cohesion_ui_TT
 		}
 		instantTextBoxType = {
-			name = "ENG_cmw_cohesion_VAR"
-			text = "ENG_cmw_cohesion_ui_VAR"
-			position = { x = 350 y = 10 }
-			font = "hoi_18mbs"
-			format = center
-			maxwidth = 60
-			maxheight = 20
-			pdx_tooltip = ENG_cmw_cohesion_ui_TT
+			name = "ENG_uq_dbg_sco"
+			text = "ENG_uq_dbg_sco"
+			position = { x = 10 y = 64 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 400
+			maxheight = 18
 		}
 		instantTextBoxType = {
-			name = "ENG_uq_ladder_label"
-			text = "ENG_uq_ladder_ui_label"
-			position = { x = 100 y = 40 }
-			font = "hoi_18mbs"
-			format = center
-			maxwidth = 220
-			maxheight = 20
+			name = "ENG_uq_dbg_nir"
+			text = "ENG_uq_dbg_nir"
+			position = { x = 10 y = 82 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 400
+			maxheight = 18
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_dbg_was"
+			text = "ENG_uq_dbg_was"
+			position = { x = 10 y = 100 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 400
+			maxheight = 18
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_dbg_caps1"
+			text = "ENG_uq_dbg_caps1"
+			position = { x = 10 y = 122 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 400
+			maxheight = 18
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_dbg_caps2"
+			text = "ENG_uq_dbg_caps2"
+			position = { x = 10 y = 140 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 400
+			maxheight = 18
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_dbg_ladder_hdr"
+			text = "ENG_uq_dbg_ladder_hdr"
+			position = { x = 10 y = 162 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 400
+			maxheight = 18
 			text_color_code = Y
 			pdx_tooltip = ENG_uq_ladder_ui_TT
 		}
-		instantTextBoxType = {
-			name = "ENG_uq_ladder_col_target"
-			text = "ENG_uq_ladder_col_target"
-			position = { x = 10 y = 68 }
-			font = "hoi_16mbs"
-			format = left
-			maxwidth = 140
-			maxheight = 20
-			text_color_code = Y
-		}
-		instantTextBoxType = {
-			name = "ENG_uq_ladder_col_stage"
-			text = "ENG_uq_ladder_col_stage"
-			position = { x = 150 y = 68 }
-			font = "hoi_16mbs"
-			format = center
-			maxwidth = 90
-			maxheight = 20
-			text_color_code = Y
-		}
-		instantTextBoxType = {
-			name = "ENG_uq_ladder_col_meter"
-			text = "ENG_uq_ladder_col_meter"
-			position = { x = 240 y = 68 }
-			font = "hoi_16mbs"
-			format = center
-			maxwidth = 80
-			maxheight = 20
-			text_color_code = Y
-		}
-		instantTextBoxType = {
-			name = "ENG_uq_ladder_col_next"
-			text = "ENG_uq_ladder_col_next"
-			position = { x = 320 y = 68 }
-			font = "hoi_16mbs"
-			format = center
-			maxwidth = 95
-			maxheight = 20
-			text_color_code = Y
-		}
 		gridboxType = {
 			name = "ENG_uq_ladder_grid"
-			position = { x = 0 y = 90 }
+			position = { x = 0 y = 182 }
 			size = { width = 420 height = 308 }
 			slotsize = { width = 420 height = 22 }
 			format = "UPPER_LEFT"
@@ -423,46 +425,25 @@ guiTypes = {
 		name = "ENG_uq_ladder_entry"
 		position = { x = 0 y = 0 }
 		instantTextBoxType = {
-			name = "ENG_uq_ladder_entry_name"
-			text = "[THIS.GetNameWithFlag]"
+			name = "ENG_uq_ladder_entry_row"
+			text = "ENG_uq_dbg_entry"
 			position = { x = 10 y = 0 }
 			font = "hoi_16mbs"
 			format = left
-			maxwidth = 140
-			maxheight = 20
-			fixedsize = yes
-		}
-		instantTextBoxType = {
-			name = "ENG_uq_ladder_entry_stage"
-			text = "[ENG_uq_target_stage]"
-			position = { x = 150 y = 0 }
-			font = "hoi_16mbs"
-			format = center
-			maxwidth = 90
-			maxheight = 20
-			fixedsize = yes
-		}
-		instantTextBoxType = {
-			name = "ENG_uq_ladder_entry_meter"
-			text = "[ENG_uq_target_meter]"
-			position = { x = 240 y = 0 }
-			font = "hoi_16mbs"
-			format = center
-			maxwidth = 80
+			maxwidth = 365
 			maxheight = 20
 			fixedsize = yes
 			pdx_tooltip = ENG_uq_ladder_meter_TT
 		}
 		instantTextBoxType = {
-			name = "ENG_uq_ladder_entry_next"
-			text = "[ENG_uq_target_next]"
-			position = { x = 320 y = 0 }
+			name = "ENG_uq_ladder_entry_lock"
+			text = "ENG_uq_dbg_lock"
+			position = { x = 375 y = 0 }
 			font = "hoi_16mbs"
 			format = center
-			maxwidth = 95
+			maxwidth = 40
 			maxheight = 20
 			fixedsize = yes
-			pdx_tooltip = ENG_uq_ladder_next_TT
 		}
 	}
 }
