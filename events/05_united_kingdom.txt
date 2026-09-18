@@ -9640,7 +9640,13 @@ country_event = {
 		name = ENG_uq.221.b
 		log = "[GetDateText]: [This.GetName]: ENG_uq.221.b executed"
 		small_expenditure = yes
-		add_ideas = ENG_uq_gibraltar_joint_sovereignty
+		custom_effect_tooltip = {
+			localization_key = modifies_dynamic_modifier_tt
+			MODIFIER = ENG_union_question_dm
+		}
+		add_to_variable = { ENG_uq_bonus_political_power_factor = -0.02 tooltip = political_power_factor_tt }
+		add_to_variable = { ENG_uq_stability_factor = -0.01 tooltip = stability_factor_tt }
+		hidden_effect = { ENG_uq_update_dm = yes }
 		19 = { remove_claim_by = SPR }
 		add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_treaty_opinion }
 		reverse_add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_treaty_opinion }

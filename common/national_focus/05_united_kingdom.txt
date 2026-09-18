@@ -21952,7 +21952,7 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_union_question"
-			add_dynamic_modifier = { modifier = ENG_union_strain_dm }
+			add_dynamic_modifier = { modifier = ENG_union_question_dm }
 			hidden_effect = {
 				news_event = {
 					id = United_Kingdom_News.5
@@ -22224,7 +22224,13 @@ focus_tree = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_act_of_union"
 			custom_effect_tooltip = ENG_act_of_union_TT
 			set_country_flag = ENG_devolution_purged
-			add_ideas = ENG_one_nation_idea
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_stability_factor = 0.05 tooltip = stability_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
 			hidden_effect = { update_eng_devolution_dirty_variable = yes }
 		}
 
@@ -22581,7 +22587,14 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_home_rule_in_reverse"
-			add_ideas = ENG_union_of_the_isles_idea
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_stability_factor = 0.03 tooltip = stability_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
+			add_to_variable = { ENG_uq_trade_opinion_factor = 0.05 tooltip = trade_opinion_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
 			set_temp_variable = { ENG_union_strain_change = -10 }
 			ENG_change_union_strain = yes
 			custom_effect_tooltip = ENG_home_rule_in_reverse_TT
@@ -22774,7 +22787,12 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_kings_men"
-			add_ideas = ENG_kings_men_idea
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_required_garrison_factor = -0.15 tooltip = required_garrison_factor_tt }
+			add_to_variable = { ENG_uq_war_support_factor = -0.05 tooltip = war_support_factor_tt }
 			custom_effect_tooltip = ENG_kings_men_pacification_TT
 			hidden_effect = { set_variable = { ENG_pacification_pressure_cap = 35 } }
 			set_temp_variable = { ENG_union_strain_change = 10 }
@@ -22809,7 +22827,12 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_loyal_ulster_regiments"
-			add_ideas = ENG_loyal_ulster_regiments_idea
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_conscription_factor = 0.03 tooltip = conscription_factor_tt }
+			add_to_variable = { ENG_uq_army_morale_factor = 0.03 tooltip = army_morale_factor_tt }
 		}
 
 		ai_will_do = { base = 0 }
@@ -22865,7 +22888,14 @@ focus_tree = {
 			}
 			set_temp_variable = { ENG_union_strain_change = 30 }
 			ENG_change_union_strain = yes
-			add_ideas = ENG_crown_union_idea
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_war_support_factor = 0.05 tooltip = war_support_factor_tt }
+			add_to_variable = { ENG_uq_bonus_democratic_drift = -0.03 tooltip = democratic_drift_tt }
+			add_to_variable = { ENG_uq_stability_factor = -0.05 tooltip = stability_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
 		}
 
 		ai_will_do = { base = 0 }
@@ -23115,7 +23145,14 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_isles_under_one_crown"
-			add_ideas = ENG_isles_under_one_crown_idea
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_stability_factor = 0.03 tooltip = stability_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
+			add_to_variable = { ENG_uq_war_support_factor = 0.03 tooltip = war_support_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
 			custom_effect_tooltip = ENG_the_isles_under_one_crown_TT
 			if = {
 				limit = { has_idea = ENG_the_dissident_campaign }
@@ -23487,7 +23524,14 @@ focus_tree = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crown_realms_united"
 			custom_effect_tooltip = ENG_the_crown_realms_united_TT
 			set_cosmetic_tag = ENG_commonwealth_federation
-			add_ideas = ENG_crown_realms_united_idea
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_stability_factor = 0.03 tooltip = stability_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
+			add_to_variable = { ENG_uq_opinion_gain_monthly_factor = 0.10 tooltip = opinion_gain_monthly_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
 			set_temp_variable = { ENG_union_strain_change = -10 }
 			ENG_change_union_strain = yes
 		}
@@ -23838,7 +23882,14 @@ focus_tree = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_dominions_restored"
 			custom_effect_tooltip = ENG_the_dominions_restored_TT
 			set_cosmetic_tag = ENG_commonwealth_federation
-			add_ideas = ENG_dominions_restored_idea
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_stability_factor = 0.03 tooltip = stability_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
+			add_to_variable = { ENG_uq_war_support_factor = 0.03 tooltip = war_support_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
 			set_temp_variable = { ENG_union_strain_change = -10 }
 			ENG_change_union_strain = yes
 		}

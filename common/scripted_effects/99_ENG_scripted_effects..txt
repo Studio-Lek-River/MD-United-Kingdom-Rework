@@ -465,22 +465,23 @@ ENG_change_union_strain = {
 	custom_effect_tooltip = ENG_union_strain_change_tt
 	hidden_effect = {
 		set_variable = { ROOT.ENG_union_strain = { value = ROOT.ENG_union_strain add = ENG_union_strain_change clamp = { min = 0 max = 100 } } }
-		ROOT = { ENG_update_union_strain_modifier = yes }
+		ROOT = { ENG_uq_update_dm = yes }
 	}
 }
 
-# Penalties scale linearly to the issue's caps at 100 strain; Westminster overreach only bites on the Western path
-ENG_update_union_strain_modifier = {
-	set_variable = { ENG_union_strain_stability_weekly = { value = ENG_union_strain multiply = -0.00002 } }
-	set_variable = { ENG_union_strain_political_power_factor = { value = ENG_union_strain multiply = -0.003 } }
-	set_variable = { ENG_union_strain_consumer_goods_factor = { value = ENG_union_strain multiply = 0.001 } }
-	set_variable = { ENG_union_strain_bureaucracy_cost = { value = ENG_union_strain multiply = 0.002 } }
+# Strain penalties scale linearly to the issue's caps at 100; Westminster overreach only bites on the Western path.
+# political_power_factor and democratic_drift also carry the focus bonuses, so any change to a ENG_uq_bonus_* variable must call this.
+ENG_uq_update_dm = {
+	set_variable = { ENG_uq_stability_weekly = { value = ENG_union_strain multiply = -0.00002 } }
+	set_variable = { ENG_uq_political_power_factor = { value = ENG_union_strain multiply = -0.003 add = ENG_uq_bonus_political_power_factor } }
+	set_variable = { ENG_uq_consumer_goods_factor = { value = ENG_union_strain multiply = 0.001 } }
+	set_variable = { ENG_uq_bureaucracy_cost = { value = ENG_union_strain multiply = 0.002 } }
 	if = {
 		limit = { has_completed_focus = ENG_a_family_of_nations }
-		set_variable = { ENG_union_strain_democratic_drift = { value = ENG_union_strain multiply = -0.001 } }
+		set_variable = { ENG_uq_democratic_drift = { value = ENG_union_strain multiply = -0.001 add = ENG_uq_bonus_democratic_drift } }
 	}
 	else = {
-		set_variable = { ENG_union_strain_democratic_drift = 0 }
+		set_variable = { ENG_uq_democratic_drift = ENG_uq_bonus_democratic_drift }
 	}
 }
 
