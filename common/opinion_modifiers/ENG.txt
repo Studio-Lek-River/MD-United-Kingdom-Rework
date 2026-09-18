@@ -88,6 +88,14 @@ opinion_modifiers = {
 		value = -15
 		months = 36
 	}
+	ENG_uq_irish_question_opinion = {
+		value = -20
+		months = 24
+	}
+	ENG_uq_irish_war_opinion = {
+		value = -30
+		months = 36
+	}
 	ENG_cmw_games_host_opinion = {
 		value = 10
 		months = 48

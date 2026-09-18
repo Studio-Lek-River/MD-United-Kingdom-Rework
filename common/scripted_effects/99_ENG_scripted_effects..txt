@@ -774,6 +774,72 @@ ENG_uq_irish_lobby_reaction = {
 	}
 }
 
+# ENG scope. War on Ireland: NATO turns on us, Washington's Irish lobby mobilises and the Commonwealth wavers.
+ENG_uq_irish_war_reactions = {
+	custom_effect_tooltip = ENG_uq_irish_war_reactions_TT
+	set_temp_variable = { ENG_imperial_tension_change = 15 }
+	ENG_change_imperial_tension = yes
+	set_temp_variable = { ENG_cmw_cohesion_change = -5 }
+	ENG_cmw_change_cohesion = yes
+	hidden_effect = {
+		for_each_scope_loop = {
+			array = global.nato_members
+			if = {
+				limit = { NOT = { tag = ROOT } }
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_irish_war_opinion }
+			}
+		}
+		if = {
+			limit = { country_exists = USA }
+			USA = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_irish_lobby_opinion } }
+		}
+		country_event = { id = ENG_uq.111 days = 3 }
+	}
+}
+
+# ENG scope. Dublin holds Ulster at peace: the Irish tier resets and the Ulster question is settled Ireland's way.
+ENG_uq_reset_irish_tier = {
+	set_variable = { ENG_coercion@IRE = 0 }
+	set_variable = { ENG_integration_stage@IRE = 0 }
+	remove_from_array = { ENG_integration_targets = IRE }
+	clr_country_flag = ENG_uq_claims@IRE
+	clr_country_flag = ENG_uq_ultimatum_rejected@IRE
+	clr_country_flag = ENG_uq_ultimatum_cooldown@IRE
+	every_state = {
+		limit = { is_core_of = IRE }
+		remove_claim_by = ROOT
+		if = {
+			limit = { has_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm } }
+			remove_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm }
+		}
+	}
+	if = {
+		limit = { has_idea = ENG_uq_irish_sea_blockade }
+		remove_ideas = ENG_uq_irish_sea_blockade
+	}
+	IRE = {
+		if = {
+			limit = { has_idea = ENG_uq_loyalist_movement }
+			remove_ideas = ENG_uq_loyalist_movement
+		}
+		if = {
+			limit = { has_idea = ENG_uq_irish_sea_blockaded }
+			remove_ideas = ENG_uq_irish_sea_blockaded
+		}
+	}
+	uncomplete_national_focus = { focus = ENG_the_irish_question_reopened refund_political_power = no }
+	uncomplete_national_focus = { focus = ENG_no_border_poll refund_political_power = no }
+	uncomplete_national_focus = { focus = ENG_sponsor_the_unionist_lobby_in_dublin refund_political_power = no }
+	uncomplete_national_focus = { focus = ENG_close_the_irish_sea refund_political_power = no }
+	uncomplete_national_focus = { focus = ENG_ultimatum_to_dublin refund_political_power = no }
+	uncomplete_national_focus = { focus = ENG_the_pacification_of_ireland refund_political_power = no }
+	ENG_settle_northern_ireland_question = yes
+	set_temp_variable = { ENG_union_strain_change = 10 }
+	ENG_change_union_strain = yes
+	add_stability = -0.05
+	country_event = { id = ENG_uq.112 days = 1 }
+}
+
 # Parameters:
 # - ENG_imperial_tension_change: signed amount. ROOT must be ENG. Decay and the reaction bands run in ENG_uq_update_imperial_tension.
 ENG_change_imperial_tension = {
@@ -880,7 +946,7 @@ ENG_uq_expire_claims = {
 	}
 }
 
-# Monthly insurgency roll for one occupied target. Call in the target's scope with ROOT = ENG. Event chance equals the highest resistance among its states.
+# Monthly insurgency roll for one occupied target. Call in the target's scope with ROOT = ENG. Event chance equals the highest resistance among its states; the dissident campaign makes an Irish occupation half again as violent.
 ENG_uq_roll_insurgency = {
 	set_temp_variable = { ENG_uq_max_resistance = 0 }
 	every_state = {
@@ -895,6 +961,14 @@ ENG_uq_roll_insurgency = {
 	set_temp_variable = { ENG_uq_bombing_weight = { value = ENG_uq_max_resistance multiply = 0.6 } }
 	set_temp_variable = { ENG_uq_defection_weight = { value = ENG_uq_max_resistance multiply = 0.4 } }
 	set_temp_variable = { ENG_uq_quiet_weight = { value = 100 subtract = ENG_uq_max_resistance } }
+	if = {
+		limit = {
+			original_tag = IRE
+			ROOT = { has_idea = ENG_the_dissident_campaign }
+		}
+		multiply_temp_variable = { ENG_uq_bombing_weight = 1.5 }
+		multiply_temp_variable = { ENG_uq_defection_weight = 1.5 }
+	}
 	ROOT = { set_variable = { ENG_uq_event_target = PREV } }
 	random_list = {
 		ENG_uq_bombing_weight = {
@@ -1438,6 +1512,26 @@ ENG_cmw_monthly = {
 		ENG_cmw_influence_drip = yes
 	}
 	ENG_cmw_schedule_chogm = yes
+}
+
+# ENG scope. Repeals the Good Friday Agreement: the decision and ENG_no_border_poll share it.
+ENG_repeal_good_friday_agreement_effect = {
+	custom_effect_tooltip = ENG_repeal_gfa_remove_TT
+	hidden_effect = { remove_ideas = ENG_good_friday_agreement }
+	add_stability = -0.10
+	set_temp_variable = { ENG_agitation_change = 25 }
+	ENG_change_north_irish_agitation = yes
+	set_temp_variable = { ENG_nationalists_change = 15 }
+	ENG_change_north_irish_nationalists = yes
+	set_temp_variable = { ENG_dependency_change = -10 }
+	ENG_change_north_irish_dependency = yes
+	if = {
+		limit = { NOT = { has_idea = ENG_the_dissident_campaign } }
+		add_ideas = ENG_the_dissident_campaign
+	}
+	newline = yes
+	activate_mission = ENG_ulster_on_the_brink
+	custom_effect_tooltip = ENG_ulster_on_the_brink_activated_TT
 }
 
 ENG_settle_northern_ireland_question = {

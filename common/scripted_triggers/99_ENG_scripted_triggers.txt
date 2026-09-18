@@ -317,6 +317,13 @@ ENG_uq_states_pacified = {
 	}
 }
 
+# ENG scope. Ireland's three states are quiet under the stricter Irish pacification bar.
+ENG_uq_irish_states_pacified = {
+	27 = { compliance > 75 resistance < 15 }
+	28 = { compliance > 75 resistance < 15 }
+	29 = { compliance > 75 resistance < 15 }
+}
+
 # Target scope with ROOT = ENG. Every state it holds a core on is under British rule.
 ENG_uq_all_cores_held = {
 	any_state = { is_core_of = PREV }

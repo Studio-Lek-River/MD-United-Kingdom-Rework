@@ -1278,6 +1278,7 @@ decisions_ENG = {
 			controls_state = 28
 			controls_state = 29
 			has_completed_focus = ENG_uniting_the_isle
+			NOT = { has_country_flag = ENG_uq_nationalist }
 		}
 
 		available = {
@@ -4366,22 +4367,7 @@ ENG_devolved_matters = {
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_repeal_good_friday_agreement"
-			custom_effect_tooltip = ENG_repeal_gfa_remove_TT
-			hidden_effect = { remove_ideas = ENG_good_friday_agreement }
-			add_stability = -0.10
-			set_temp_variable = { ENG_agitation_change = 25 }
-			ENG_change_north_irish_agitation = yes
-			set_temp_variable = { ENG_nationalists_change = 15 }
-			ENG_change_north_irish_nationalists = yes
-			set_temp_variable = { ENG_dependency_change = -10 }
-			ENG_change_north_irish_dependency = yes
-			if = {
-				limit = { NOT = { has_idea = ENG_the_dissident_campaign } }
-				add_ideas = ENG_the_dissident_campaign
-			}
-			newline = yes
-			activate_mission = ENG_ulster_on_the_brink
-			custom_effect_tooltip = ENG_ulster_on_the_brink_activated_TT
+			ENG_repeal_good_friday_agreement_effect = yes
 		}
 
 		ai_will_do = { base = 0 }
@@ -4701,6 +4687,10 @@ ENG_the_crown_imperial_decisions = {
 					target = FROM
 				}
 			}
+			if = {
+				limit = { FROM = { original_tag = IRE } }
+				ENG_uq_irish_war_reactions = yes
+			}
 		}
 
 		ai_will_do = { base = 5 }
@@ -4711,6 +4701,7 @@ ENG_the_crown_imperial_decisions = {
 
 		target_array = ENG_integration_targets
 		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+		target_trigger = { NOT = { FROM = { original_tag = IRE } } }
 
 		is_good = yes
 		days_mission_timeout = 365
@@ -4736,6 +4727,39 @@ ENG_the_crown_imperial_decisions = {
 			set_variable = { ENG_coercion@FROM = 6 }
 			custom_effect_tooltip = ENG_uq_coercion_6_TT
 			FROM = { ENG_uq_end_occupation = yes }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_irish_pacification = {
+		icon = GFX_decision_generic_civil_support
+
+		is_good = yes
+		days_mission_timeout = 540
+		fire_only_once = no
+
+		activation = {
+			has_completed_focus = ENG_the_pacification_of_ireland
+			check_variable = { ENG_coercion@IRE = 5 }
+			ENG_uq_irish_states_pacified = yes
+		}
+
+		available = { always = no }
+
+		cancel_trigger = { NOT = { ENG_uq_irish_states_pacified = yes } }
+
+		cancel_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision cancel ENG_uq_irish_pacification"
+			set_temp_variable = { ENG_union_strain_change = 1 }
+			ENG_change_union_strain = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_irish_pacification"
+			set_variable = { ENG_coercion@IRE = 6 }
+			custom_effect_tooltip = ENG_uq_irish_coercion_6_TT
+			IRE = { ENG_uq_end_occupation = yes }
 		}
 
 		ai_will_do = { base = 5 }
@@ -5376,6 +5400,15 @@ ENG_union_question_decisions = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_target_pacified_TT
 					check_variable = { ENG_coercion@FROM > 5 }
+				}
+				if = {
+					limit = { FROM = { original_tag = IRE } }
+					custom_trigger_tooltip = {
+						tooltip = ENG_uq_ireland_strict_TT
+						27 = { compliance > 80 resistance < 10 }
+						28 = { compliance > 80 resistance < 10 }
+						29 = { compliance > 80 resistance < 10 }
+					}
 				}
 			}
 		}

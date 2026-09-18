@@ -331,6 +331,16 @@ on_actions = {
 				ENG_uq_suspension_monthly = yes
 			}
 
+			# The Irish war is lost once Dublin owns Ulster at peace
+			if = {
+				limit = {
+					check_variable = { ENG_coercion@IRE = 4 }
+					NOT = { has_war_with = IRE }
+					17 = { is_owned_by = IRE }
+				}
+				ENG_uq_reset_irish_tier = yes
+			}
+
 			# Every ladder target: consent drifts on both paths, coercion only on the Nationalist path
 			for_each_scope_loop = {
 				array = ENG_integration_targets

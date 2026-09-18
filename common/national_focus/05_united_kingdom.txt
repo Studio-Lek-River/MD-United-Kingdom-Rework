@@ -21923,7 +21923,7 @@ focus_tree = {
 		icon = invest_in_britain
 
 		x = 23
-		y = 10
+		y = 30
 		offset = {
 			x = 1
 			y = 0
@@ -22502,7 +22502,7 @@ focus_tree = {
 		icon = Generic_British_Soldiers03
 
 		x = 25
-		y = 10
+		y = 30
 		offset = {
 			x = -1
 			y = 0
@@ -23831,6 +23831,280 @@ focus_tree = {
 			set_temp_variable = { ENG_union_strain_change = 30 }
 			ENG_change_union_strain = yes
 			add_ideas = ENG_crown_union_idea
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_irish_question_reopened
+		icon = ENG_ireland_collaboration
+
+		x = 0
+		y = 1
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_crown_union }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+			IRE = { is_subject = no }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_irish_question_reopened"
+			custom_effect_tooltip = ENG_the_irish_question_reopened_TT
+			IRE = {
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_irish_question_opinion }
+				hidden_effect = { ENG_uq_align_target = yes }
+			}
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_no_border_poll
+		icon = scottish_referendum
+
+		x = -1
+		y = 2
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_irish_question_reopened }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			ENG_holds_north_ireland = yes
+		}
+
+		bypass = { NOT = { ENG_holds_north_ireland = yes } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_no_border_poll"
+			if = {
+				limit = { has_idea = ENG_good_friday_agreement }
+				ENG_repeal_good_friday_agreement_effect = yes
+			}
+			if = {
+				limit = { has_active_mission = ENG_border_poll_mission }
+				remove_mission = ENG_border_poll_mission
+			}
+			set_country_flag = { flag = ENG_border_poll_cooldown days = 3650 }
+			custom_effect_tooltip = ENG_no_border_poll_TT
+			set_temp_variable = { ENG_agitation_change = 10 }
+			ENG_change_north_irish_agitation = yes
+			custom_effect_tooltip = ENG_no_border_poll_dublin_TT
+			hidden_effect = {
+				IRE = { country_event = { id = ENG_uq.110 days = 2 } }
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_sponsor_the_unionist_lobby_in_dublin
+		icon = british_nationalism
+
+		x = 1
+		y = 2
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_irish_question_reopened }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = IRE
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irish_coercion_1_TT
+				check_variable = { ENG_coercion@IRE > 0 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_sponsor_the_unionist_lobby_in_dublin"
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = IRE }
+			change_influence_percentage = yes
+			set_temp_variable = { ENG_imperial_tension_change = 1 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_economic_pressure
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_close_the_irish_sea
+		icon = trade_with_britain
+
+		x = 1
+		y = 3
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_sponsor_the_unionist_lobby_in_dublin }
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ECONOMY }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irish_coercion_2_TT
+				check_variable = { ENG_coercion@IRE > 1 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_close_the_irish_sea"
+			add_timed_idea = { idea = ENG_uq_irish_sea_blockade days = 365 }
+			IRE = { add_timed_idea = { idea = ENG_uq_irish_sea_blockaded days = 365 } }
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+			if = {
+				limit = { has_idea = EU_member }
+				custom_effect_tooltip = ENG_close_the_irish_sea_eu_TT
+				leaving_EU = yes
+				hidden_effect = { country_event = { id = ENG_uq.61 days = 1 } }
+			}
+			unlock_decision_tooltip = ENG_uq_deliver_ultimatum
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_ultimatum_to_dublin
+		icon = treaty2
+
+		x = 0
+		y = 4
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_no_border_poll }
+		prerequisite = { focus = ENG_close_the_irish_sea }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irish_coercion_3_TT
+				check_variable = { ENG_coercion@IRE > 2 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_ultimatum_to_dublin"
+			custom_effect_tooltip = ENG_ultimatum_to_dublin_TT
+			add_war_support = 0.05
+			unlock_decision_tooltip = ENG_uq_enforce_ultimatum
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_pacification_of_ireland
+		icon = Generic_Policeman
+
+		x = 0
+		y = 5
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_ultimatum_to_dublin }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_ireland_occupied_TT
+				check_variable = { ENG_coercion@IRE = 5 }
+			}
+		}
+
+		bypass = { check_variable = { ENG_coercion@IRE > 5 } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_pacification_of_ireland"
+			custom_effect_tooltip = ENG_the_pacification_of_ireland_TT
+			if = {
+				limit = { NOT = { has_idea = ENG_the_dissident_campaign } }
+				add_ideas = ENG_the_dissident_campaign
+			}
+			27 = { add_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm } }
+			28 = { add_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm } }
+			29 = { add_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm } }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_isles_under_one_crown
+		icon = british_isles
+
+		x = 0
+		y = 6
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_pacification_of_ireland }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_ireland_integrated_TT
+				check_variable = { ENG_integration_stage@IRE > 3 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strain_allows_transition_TT
+				check_variable = { ENG_union_strain < 61 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_isles_under_one_crown"
+			add_ideas = ENG_isles_under_one_crown_idea
+			custom_effect_tooltip = ENG_the_isles_under_one_crown_TT
+			if = {
+				limit = { has_idea = ENG_the_dissident_campaign }
+				remove_ideas = ENG_the_dissident_campaign
+			}
+			if = {
+				limit = { has_idea = ENG_the_dissident_campaign_hidden_idea }
+				remove_ideas = ENG_the_dissident_campaign_hidden_idea
+			}
+			hidden_effect = {
+				every_state = {
+					limit = {
+						is_core_of = IRE
+						has_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm }
+					}
+					remove_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm }
+				}
+				every_state = {
+					limit = { is_core_of = IRE }
+					add_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm days = 1825 }
+				}
+			}
+			set_temp_variable = { ENG_union_strain_change = -10 }
+			ENG_change_union_strain = yes
 		}
 
 		ai_will_do = { base = 0 }

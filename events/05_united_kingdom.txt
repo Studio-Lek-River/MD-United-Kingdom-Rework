@@ -7922,6 +7922,7 @@ country_event = {
 			base = 0
 			modifier = {
 				add = 100
+				NOT = { original_tag = IRE }
 				OR = {
 					AND = {
 						has_idea = ENG_uq_loyalist_movement
@@ -7931,6 +7932,15 @@ country_event = {
 					}
 					FROM = { check_variable = { ENG_consent@ROOT > 60 } }
 				}
+			}
+			modifier = {
+				add = 100
+				original_tag = IRE
+				NOT = { has_idea = EU_member }
+				NOT = { has_idea = NATO_member }
+				NOT = { has_idea = Major_Non_NATO_Ally }
+				NOT = { is_in_faction_with = USA }
+				FROM = { strength_ratio = { tag = ROOT ratio > 5 } }
 			}
 		}
 	}
@@ -7946,6 +7956,7 @@ country_event = {
 			base = 100
 			modifier = {
 				factor = 0
+				NOT = { original_tag = IRE }
 				OR = {
 					AND = {
 						has_idea = ENG_uq_loyalist_movement
@@ -7955,6 +7966,15 @@ country_event = {
 					}
 					FROM = { check_variable = { ENG_consent@ROOT > 60 } }
 				}
+			}
+			modifier = {
+				factor = 0
+				original_tag = IRE
+				NOT = { has_idea = EU_member }
+				NOT = { has_idea = NATO_member }
+				NOT = { has_idea = Major_Non_NATO_Ally }
+				NOT = { is_in_faction_with = USA }
+				FROM = { strength_ratio = { tag = ROOT ratio > 5 } }
 			}
 		}
 	}
@@ -8832,6 +8852,48 @@ country_event = {
 		set_temp_variable = { ENG_imperial_tension_change = 5 }
 		ENG_change_imperial_tension = yes
 	}
+}
+
+# The Union Question: Ireland (Nationalist path)
+
+# Dublin protests the closed border poll (IRE)
+country_event = {
+	id = ENG_uq.110
+	title = ENG_uq.110.t
+	desc = ENG_uq.110.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.110.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.110.a executed"
+		add_opinion_modifier = { target = ENG modifier = medium_decrease }
+		set_temp_variable = { ENG_uq_consent_change = -10 }
+		ENG_uq_change_consent = yes
+	}
+}
+
+# The world reacts to the Irish war (ENG)
+country_event = {
+	id = ENG_uq.111
+	title = ENG_uq.111.t
+	desc = ENG_uq.111.d
+	picture = GFX_UN_emergency_meeting
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.111.a }
+}
+
+# Ulster lost in the peace (ENG)
+country_event = {
+	id = ENG_uq.112
+	title = ENG_uq.112.t
+	desc = ENG_uq.112.d
+	picture = GFX_event_ENG_ulster_nationalism
+	is_triggered_only = yes
+
+	option = { name = ENG_uq.112.a }
 }
 
 ########################## Commonwealth of Nations #########################

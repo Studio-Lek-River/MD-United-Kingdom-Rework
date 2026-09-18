@@ -175,6 +175,14 @@ ENG_uq_strike_dm = {
 	state_productivity_growth_modifier = -0.10
 }
 
+ENG_uq_irish_partisans_dm = {
+	icon = GFX_idea_fire
+
+	local_factory_sabotage = 0.15
+	required_garrison_factor = 0.25
+	state_productivity_growth_modifier = -0.10
+}
+
 ENG_invest_northern_ireland = {
 	icon = GFX_idea_economic_road_idea
 
