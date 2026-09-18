@@ -7957,6 +7957,12 @@ country_event = {
 				NOT = { is_in_faction_with = USA }
 				FROM = { strength_ratio = { tag = ROOT ratio > 5 } }
 			}
+			modifier = {
+				add = 100
+				ENG_uq_is_caribbean_realm = yes
+				is_in_faction = no
+				NOT = { is_guaranteed_by = USA }
+			}
 		}
 	}
 
@@ -7990,6 +7996,12 @@ country_event = {
 				NOT = { has_idea = Major_Non_NATO_Ally }
 				NOT = { is_in_faction_with = USA }
 				FROM = { strength_ratio = { tag = ROOT ratio > 5 } }
+			}
+			modifier = {
+				factor = 0
+				ENG_uq_is_caribbean_realm = yes
+				is_in_faction = no
+				NOT = { is_guaranteed_by = USA }
 			}
 		}
 	}
@@ -9418,6 +9430,144 @@ country_event = {
 		}
 		ai_chance = { base = 70 }
 	}
+}
+
+# The Union Question: the Realms (Nationalist path)
+# Washington considers guaranteeing a Crown realm (USA, FROM = ENG)
+country_event = {
+	id = ENG_uq.134
+	title = ENG_uq.134.t
+	desc = ENG_uq.134.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.134.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.134.a executed"
+		every_country = {
+			limit = { has_country_flag = ENG_uq_us_guarantee_candidate }
+			ROOT = { give_guarantee = PREV }
+		}
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.135 days = 1 } }
+		}
+		ai_chance = {
+			base = 50
+			modifier = {
+				add = 30
+				has_opinion = { target = ENG value < 0 }
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = ENG
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.134.b
+		ai_chance = { base = 50 }
+	}
+}
+
+# Washington guarantees the realm (ENG)
+country_event = {
+	id = ENG_uq.135
+	title = ENG_uq.135.t
+	desc = ENG_uq.135.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.135.a }
+}
+
+# The Governor-General dismisses the loyalist government (realm, FROM = ENG)
+country_event = {
+	id = ENG_uq.180
+	title = ENG_uq.180.t
+	desc = ENG_uq.180.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.180.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.180.a executed"
+		custom_effect_tooltip = ENG_uq_ultimatum_we_accept_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.41 days = 1 } }
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				is_in_faction = no
+				NOT = { has_idea = NATO_member }
+				FROM = { strength_ratio = { tag = ROOT ratio > 3 } }
+			}
+			modifier = {
+				add = 40
+				FROM = { has_completed_focus = ENG_the_statute_of_westminster_repealed }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.180.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.180.b executed"
+		custom_effect_tooltip = ENG_uq_dismissal_we_refuse_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.181 days = 1 } }
+		}
+		ai_chance = {
+			base = 100
+			modifier = {
+				factor = 0
+				is_in_faction = no
+				NOT = { has_idea = NATO_member }
+				FROM = { strength_ratio = { tag = ROOT ratio > 3 } }
+			}
+		}
+	}
+}
+
+# The realm declares a republic and leaves the Commonwealth (ENG, FROM = realm)
+country_event = {
+	id = ENG_uq.181
+	title = ENG_uq.181.t
+	desc = ENG_uq.181.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.181.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.181.a executed"
+		FROM = {
+			if = {
+				limit = { ENG_cmw_is_member = yes }
+				ENG_uq_commonwealth_leave = yes
+			}
+			ENG_uq_realm_republic = yes
+		}
+		set_variable = { ENG_coercion@FROM = 3 }
+		set_country_flag = ENG_uq_ultimatum_rejected@FROM
+		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@FROM days = 180 }
+		custom_effect_tooltip = ENG_uq_cooldown_started_TT
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# Sponsorship of loyalists is exposed in Australia (ENG, FROM = AST)
+country_event = {
+	id = ENG_uq.190
+	title = ENG_uq.190.t
+	desc = ENG_uq.190.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.190.a }
 }
 
 ########################## Commonwealth of Nations #########################

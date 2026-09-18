@@ -24445,6 +24445,347 @@ focus_tree = {
 		ai_will_do = { base = 0 }
 	}
 
+	focus = {
+		id = ENG_dominions_of_the_crown
+		icon = british_monarchy
+
+		x = 0
+		y = 7
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_isles_under_one_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				ENG_uq_ireland_done = yes
+				NOT = { country_exists = IRE }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_dominions_of_the_crown"
+			custom_effect_tooltip = ENG_dominions_of_the_crown_TT
+			set_country_flag = ENG_uq_caribbean_opened
+			set_temp_variable = { ENG_imperial_tension_change = 3 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			hidden_effect = {
+				ENG_uq_align_realms = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_reserve_powers
+		icon = Generic_Crown_Box
+
+		x = 0
+		y = 8
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_dominions_of_the_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_reserve_powers"
+			unlock_decision_tooltip = ENG_uq_dismissal
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_loyalists_in_ottawa
+		icon = align_to_canada
+
+		x = -2
+		y = 9
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_reserve_powers }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = CAN
+			check_variable = { ENG_integration_stage@CAN > 0 }
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = CAN }
+				check_variable = { ENG_integration_stage@CAN > 3 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_loyalists_in_ottawa"
+			custom_effect_tooltip = ENG_loyalists_in_ottawa_TT
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = CAN }
+			change_influence_percentage = yes
+			set_temp_variable = { ENG_imperial_tension_change = 1 }
+			ENG_change_imperial_tension = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_loyalists_in_canberra
+		icon = align_to_australia
+
+		x = 0
+		y = 9
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_reserve_powers }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = AST
+			check_variable = { ENG_integration_stage@AST > 0 }
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = AST }
+				check_variable = { ENG_integration_stage@AST > 3 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_loyalists_in_canberra"
+			custom_effect_tooltip = ENG_loyalists_in_canberra_TT
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = AST }
+			change_influence_percentage = yes
+			set_temp_variable = { ENG_imperial_tension_change = 1 }
+			ENG_change_imperial_tension = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_loyalists_in_wellington
+		icon = align_to_new_zealand
+
+		x = 2
+		y = 9
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_reserve_powers }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = NZL
+			check_variable = { ENG_integration_stage@NZL > 0 }
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = NZL }
+				check_variable = { ENG_integration_stage@NZL > 3 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_loyalists_in_wellington"
+			custom_effect_tooltip = ENG_loyalists_in_wellington_TT
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = NZL }
+			change_influence_percentage = yes
+			set_temp_variable = { ENG_imperial_tension_change = 1 }
+			ENG_change_imperial_tension = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_gunboats_in_the_caribbean
+		icon = British_Army_1
+
+		x = 4
+		y = 9
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_reserve_powers }
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_DIPLOMACY }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_caribbean_realm_aligned_TT
+				any_country = {
+					ENG_uq_is_caribbean_realm = yes
+					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					check_variable = { ROOT.ENG_integration_stage@THIS > 0 }
+				}
+			}
+		}
+
+		bypass = {
+			NOT = {
+				any_country = {
+					ENG_uq_is_caribbean_realm = yes
+					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					check_variable = { ROOT.ENG_integration_stage@THIS > 0 }
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_gunboats_in_the_caribbean"
+			unlock_decision_tooltip = ENG_uq_caribbean_gunboat_diplomacy
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_statute_of_westminster_repealed
+		icon = british_nationalism
+
+		x = -1
+		y = 10
+		relative_position_id = ENG_crown_union
+
+		prerequisite = {
+			focus = ENG_loyalists_in_ottawa
+			focus = ENG_loyalists_in_canberra
+			focus = ENG_loyalists_in_wellington
+			focus = ENG_gunboats_in_the_caribbean
+		}
+
+		mutually_exclusive = { focus = ENG_the_imperial_conference }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_statute_of_westminster_repealed"
+			custom_effect_tooltip = ENG_the_statute_of_westminster_repealed_TT
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+			hidden_effect = {
+				every_country = {
+					limit = {
+						ENG_uq_is_crown_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					}
+					add_opinion_modifier = { target = ROOT modifier = ENG_uq_statute_opinion }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_imperial_conference
+		icon = united_anglosphere
+
+		x = 1
+		y = 10
+		relative_position_id = ENG_crown_union
+
+		prerequisite = {
+			focus = ENG_loyalists_in_ottawa
+			focus = ENG_loyalists_in_canberra
+			focus = ENG_loyalists_in_wellington
+			focus = ENG_gunboats_in_the_caribbean
+		}
+
+		mutually_exclusive = { focus = ENG_the_statute_of_westminster_repealed }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_imperial_conference"
+			custom_effect_tooltip = ENG_the_imperial_conference_TT
+			set_temp_variable = { ENG_cmw_cohesion_change = 5 }
+			ENG_cmw_change_cohesion = yes
+			set_temp_variable = { ENG_imperial_tension_change = -5 }
+			ENG_change_imperial_tension = yes
+			hidden_effect = {
+				every_country = {
+					limit = {
+						ENG_uq_is_crown_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					}
+					set_temp_variable = { ENG_uq_consent_change = 5 }
+					ENG_uq_change_consent = yes
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_dominions_restored
+		icon = british_emblem2
+
+		x = 0
+		y = 11
+		relative_position_id = ENG_crown_union
+
+		prerequisite = {
+			focus = ENG_the_statute_of_westminster_repealed
+			focus = ENG_the_imperial_conference
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			ENG_uq_canzuk_integrated = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strain_allows_transition_TT
+				check_variable = { ENG_union_strain < 61 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_dominions_restored"
+			custom_effect_tooltip = ENG_the_dominions_restored_TT
+			add_ideas = ENG_dominions_restored_idea
+			set_temp_variable = { ENG_union_strain_change = -10 }
+			ENG_change_union_strain = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
 	# Junta Tree
 
 	# focus = {

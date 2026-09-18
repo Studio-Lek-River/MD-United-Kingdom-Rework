@@ -103,6 +103,10 @@ opinion_modifiers = {
 	ENG_uq_realm_accord_opinion = {
 		value = 15
 	}
+	ENG_uq_statute_opinion = {
+		value = -15
+		months = 24
+	}
 	ENG_cmw_games_host_opinion = {
 		value = 10
 		months = 48

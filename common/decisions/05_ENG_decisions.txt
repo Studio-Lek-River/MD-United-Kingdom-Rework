@@ -4511,6 +4511,7 @@ ENG_the_crown_imperial_decisions = {
 		target_trigger = {
 			check_variable = { ENG_integration_stage@FROM = 1 }
 			check_variable = { ENG_coercion@FROM = 0 }
+			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
 			FROM = {
 				exists = yes
 				NOT = { is_subject_of = ROOT }
@@ -4547,9 +4548,27 @@ ENG_the_crown_imperial_decisions = {
 
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_sponsor_loyalists"
-			FROM = { add_ideas = ENG_uq_loyalist_movement }
-			set_variable = { ENG_coercion@FROM = 1 }
-			custom_effect_tooltip = ENG_uq_coercion_1_TT
+			if = {
+				limit = { FROM = { original_tag = AST } }
+				random_list = {
+					40 = {
+						FROM = { add_ideas = ENG_uq_loyalist_movement }
+						set_variable = { ENG_coercion@FROM = 1 }
+						custom_effect_tooltip = ENG_uq_coercion_1_TT
+					}
+					60 = {
+						custom_effect_tooltip = ENG_uq_sponsorship_exposed_TT
+						set_temp_variable = { ENG_imperial_tension_change = 2 }
+						ENG_change_imperial_tension = yes
+						country_event = { id = ENG_uq.190 days = 1 }
+					}
+				}
+			}
+			else = {
+				FROM = { add_ideas = ENG_uq_loyalist_movement }
+				set_variable = { ENG_coercion@FROM = 1 }
+				custom_effect_tooltip = ENG_uq_coercion_1_TT
+			}
 		}
 
 		ai_will_do = { base = 5 }
@@ -4563,6 +4582,7 @@ ENG_the_crown_imperial_decisions = {
 		target_trigger = {
 			check_variable = { ENG_integration_stage@FROM = 1 }
 			check_variable = { ENG_coercion@FROM = 1 }
+			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
 			FROM = {
 				exists = yes
 				NOT = { is_subject_of = ROOT }
@@ -4608,6 +4628,7 @@ ENG_the_crown_imperial_decisions = {
 		target_trigger = {
 			check_variable = { ENG_coercion@FROM = 2 }
 			NOT = { has_country_flag = ENG_uq_ultimatum_rejected@FROM }
+			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
 			FROM = { exists = yes }
 		}
 
@@ -4625,10 +4646,57 @@ ENG_the_crown_imperial_decisions = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_deliver_ultimatum"
 			set_variable = { ENG_coercion@FROM = 3 }
 			FROM = { country_event = { id = ENG_uq.40 days = 1 } }
+			if = {
+				limit = {
+					FROM = { original_tag = CAN }
+					country_exists = USA
+					NOT = { has_war_with = USA }
+					NOT = { is_in_faction_with = USA }
+				}
+				FROM = { set_country_flag = { flag = ENG_uq_us_guarantee_candidate days = 30 } }
+				USA = { country_event = { id = ENG_uq.134 days = 2 } }
+			}
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = { custom_effect_tooltip = ENG_uq_ultimatum_accept_TT }
 			custom_effect_tooltip = TT_IF_THEY_REJECT
 			effect_tooltip = { custom_effect_tooltip = ENG_uq_ultimatum_reject_TT }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_dismissal = {
+		icon = GFX_decision_generic_nationalism
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_country_flag = ENG_uq_nationalist has_completed_focus = ENG_reserve_powers }
+		target_trigger = {
+			check_variable = { ENG_integration_stage@FROM = 1 }
+			check_variable = { ENG_coercion@FROM > 0 }
+			check_variable = { ENG_coercion@FROM < 3 }
+			NOT = { has_country_flag = ENG_uq_ultimatum_rejected@FROM }
+			FROM = {
+				exists = yes
+				ENG_uq_is_crown_realm = yes
+				NOT = { ENG_uq_is_caribbean_realm = yes }
+				has_idea = ENG_uq_loyalist_movement
+			}
+		}
+
+		cost = 100
+
+		available = {
+			NOT = { has_war_with = FROM }
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_dismissal"
+			set_variable = { ENG_coercion@FROM = 3 }
+			FROM = { country_event = { id = ENG_uq.180 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_ultimatum_accept_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_dismissal_reject_TT }
 		}
 
 		ai_will_do = { base = 5 }
@@ -4690,6 +4758,66 @@ ENG_the_crown_imperial_decisions = {
 			if = {
 				limit = { FROM = { original_tag = IRE } }
 				ENG_uq_irish_war_reactions = yes
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_caribbean_gunboat_diplomacy = {
+		icon = GFX_decision_generic_police_action
+
+		visible = {
+			has_country_flag = ENG_uq_nationalist
+			has_completed_focus = ENG_gunboats_in_the_caribbean
+		}
+
+		cost = 100
+		days_re_enable = 365
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_caribbean_member_uncoerced_TT
+				any_country = {
+					ENG_uq_is_caribbean_realm = yes
+					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					ROOT = {
+						check_variable = { ENG_integration_stage@PREV = 1 }
+						check_variable = { ENG_coercion@PREV < 3 }
+						NOT = { has_country_flag = ENG_uq_ultimatum_rejected@PREV }
+					}
+					NOT = { has_war_with = ROOT }
+				}
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_caribbean_gunboat_diplomacy"
+			custom_effect_tooltip = ENG_uq_gunboat_TT
+			every_country = {
+				limit = {
+					ENG_uq_is_caribbean_realm = yes
+					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					ROOT = {
+						check_variable = { ENG_integration_stage@PREV = 1 }
+						check_variable = { ENG_coercion@PREV < 3 }
+						NOT = { has_country_flag = ENG_uq_ultimatum_rejected@PREV }
+					}
+					NOT = { has_war_with = ROOT }
+				}
+				ROOT = { set_variable = { ENG_coercion@PREV = 3 } }
+				set_country_flag = { flag = ENG_uq_us_guarantee_candidate days = 30 }
+				country_event = { id = ENG_uq.40 days = 1 }
+			}
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+			if = {
+				limit = {
+					country_exists = USA
+					NOT = { has_war_with = USA }
+					NOT = { is_in_faction_with = USA }
+				}
+				USA = { country_event = { id = ENG_uq.134 days = 2 } }
 			}
 		}
 

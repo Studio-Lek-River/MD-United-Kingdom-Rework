@@ -1443,6 +1443,16 @@ ideas = {
 			}
 		}
 
+		ENG_dominions_restored_idea = {
+			picture = monarchy
+			allowed_civil_war = { always = yes }
+			modifier = {
+				stability_factor = 0.03
+				political_power_factor = 0.05
+				war_support_factor = 0.03
+			}
+		}
+
 		ENG_cmw_trade_area_idea = {
 			picture = trade
 			allowed_civil_war = { always = yes }
