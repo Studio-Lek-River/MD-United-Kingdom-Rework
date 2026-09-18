@@ -1253,6 +1253,51 @@ ideas = {
 			}
 		}
 
+		ENG_uq_council_of_the_isles_idea = {
+			picture = guided_by_england
+			allowed_civil_war = { always = yes }
+			targeted_modifier = {
+				tag = ENG
+				trade_cost_for_target_factor = -0.10
+				extra_trade_to_target_factor = 0.10
+			}
+			modifier = {
+				opinion_gain_monthly_factor = 0.10
+			}
+		}
+
+		ENG_uq_anglo_irish_economic_union_idea = {
+			picture = trade
+			allowed_civil_war = { always = yes }
+			targeted_modifier = {
+				tag = ENG
+				trade_cost_for_target_factor = -0.25
+				extra_trade_to_target_factor = 0.25
+			}
+			modifier = {
+				trade_opinion_factor = 0.10
+			}
+		}
+
+		ENG_uq_eu_infringement_idea = {
+			picture = trade
+			allowed_civil_war = { always = yes }
+			modifier = {
+				trade_opinion_factor = -0.10
+				consumer_goods_factor = 0.02
+			}
+		}
+
+		ENG_union_of_the_isles_idea = {
+			picture = national_unity
+			allowed_civil_war = { always = yes }
+			modifier = {
+				stability_factor = 0.03
+				political_power_factor = 0.05
+				trade_opinion_factor = 0.05
+			}
+		}
+
 		ENG_uq_loyalist_movement = {
 			picture = nationalism
 			allowed_civil_war = { always = yes }

@@ -7646,7 +7646,7 @@ country_event = {
 
 # The Union Question: consent
 
-# Sovereignty Movement forms once consent first crosses 50
+# Sovereignty Movement forms once consent first crosses 50; Ireland's lasts five years
 country_event = {
 	id = ENG_uq.10
 	title = ENG_uq.10.t
@@ -7657,7 +7657,13 @@ country_event = {
 	option = {
 		name = ENG_uq.10.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.10.a executed"
-		add_timed_idea = { idea = ENG_uq_sovereignty_movement days = 1095 }
+		if = {
+			limit = { original_tag = IRE }
+			add_timed_idea = { idea = ENG_uq_sovereignty_movement days = 1825 }
+		}
+		else = {
+			add_timed_idea = { idea = ENG_uq_sovereignty_movement days = 1095 }
+		}
 		hidden_effect = {
 			ENG = { country_event = { id = ENG_uq.11 days = 1 } }
 		}
@@ -8494,6 +8500,335 @@ country_event = {
 			type = annex_everything
 		}
 		add_stability = -0.10
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# The Union Question: Ireland (Western path)
+
+# Ireland is invited to rejoin the Commonwealth
+country_event = {
+	id = ENG_uq.90
+	title = ENG_uq.90.t
+	desc = ENG_uq.90.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	immediate = { ENG_uq_set_accept_weight = yes }
+
+	option = {
+		name = ENG_uq.90.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.90.a executed"
+		custom_effect_tooltip = TT_IF_WE_ACCEPT
+		add_dynamic_modifier = { modifier = Commonwealth_member_modifier }
+		add_to_array = { global.commonwealth_member = THIS }
+		set_temp_variable = { ENG_cmw_cohesion_change = 2 }
+		ENG_cmw_change_cohesion = yes
+		set_temp_variable = { ENG_uq_consent_change = 5 }
+		ENG_uq_change_consent = yes
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.91 days = 1 } }
+		}
+		ai_chance = {
+			base = 20
+			modifier = { add = ENG_uq_accept_weight }
+			modifier = {
+				add = 25
+				OR = {
+					western_conservatism_are_in_power = yes
+					western_liberals_are_in_power = yes
+					neutrality_neutral_conservatism_are_in_power = yes
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.90.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.90.b executed"
+		custom_effect_tooltip = TT_IF_WE_DECLINE
+		custom_effect_tooltip = ENG_uq_we_decline_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.92 days = 1 } }
+		}
+		ai_chance = { base = 40 }
+	}
+}
+
+# Dublin accepts (ENG)
+country_event = {
+	id = ENG_uq.91
+	title = ENG_uq.91.t
+	desc = ENG_uq.91.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.91.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.91.a executed"
+		custom_effect_tooltip = ENG_uq_ireland_joins_commonwealth_TT
+	}
+}
+
+# Dublin declines (ENG)
+country_event = {
+	id = ENG_uq.92
+	title = ENG_uq.92.t
+	desc = ENG_uq.92.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.92.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.92.a executed"
+		ENG_uq_fail_transition = yes
+	}
+}
+
+# Brussels reacts to the Anglo-Irish economic union (IRE)
+country_event = {
+	id = ENG_uq.93
+	title = ENG_uq.93.t
+	desc = ENG_uq.93.d
+	picture = GFX_eu
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.93.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.93.a executed"
+		random_list = {
+			60 = { custom_effect_tooltip = ENG_uq_brussels_tolerates_TT }
+			40 = {
+				add_timed_idea = { idea = ENG_uq_eu_infringement_idea days = 730 }
+				set_temp_variable = { ENG_uq_consent_change = -5 }
+				ENG_uq_change_consent = yes
+			}
+		}
+	}
+}
+
+# Irexit campaign opens (IRE)
+country_event = {
+	id = ENG_uq.94
+	title = ENG_uq.94.t
+	desc = ENG_uq.94.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.94.a }
+}
+
+# Irexit result roll (IRE, hidden)
+country_event = {
+	id = ENG_uq.95
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		set_variable = { ENG_uq_irexit_leave = ENG.ENG_consent@THIS }
+		add_to_variable = { ENG_uq_irexit_leave = ENG.ENG_uq_irexit_campaign }
+		set_temp_variable = { ENG_uq_europeanism_drag = { value = europeanism multiply = 40 } }
+		subtract_from_variable = { ENG_uq_irexit_leave = ENG_uq_europeanism_drag }
+		if = {
+			limit = { has_idea = ENG_uq_anglo_irish_economic_union_idea }
+			add_to_variable = { ENG_uq_irexit_leave = 10 }
+		}
+		if = {
+			limit = { check_variable = { debt_ratio > 0.9 } }
+			add_to_variable = { ENG_uq_irexit_leave = 10 }
+		}
+		else_if = {
+			limit = { check_variable = { debt_ratio < 0.6 } }
+			subtract_from_variable = { ENG_uq_irexit_leave = 10 }
+		}
+		clamp_variable = { var = ENG_uq_irexit_leave min = 5 max = 95 }
+		set_variable = { ENG_uq_irexit_remain = 100 }
+		subtract_from_variable = { ENG_uq_irexit_remain = ENG_uq_irexit_leave }
+		random_list = {
+			ENG_uq_irexit_leave = {
+				country_event = ENG_uq.96
+				ENG = { country_event = ENG_uq.97 }
+			}
+			ENG_uq_irexit_remain = {
+				country_event = ENG_uq.98
+				ENG = { country_event = ENG_uq.99 }
+			}
+		}
+	}
+}
+
+# Leave wins (IRE)
+country_event = {
+	id = ENG_uq.96
+	title = ENG_uq.96.t
+	desc = ENG_uq.96.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.96.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.96.a executed"
+		leaving_EU = yes
+		add_stability = -0.05
+		hidden_effect = { news_event = EU_news.21 }
+	}
+}
+
+# Leave wins (ENG)
+country_event = {
+	id = ENG_uq.97
+	title = ENG_uq.97.t
+	desc = ENG_uq.97.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.97.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.97.a executed"
+		IRE = {
+			set_temp_variable = { ENG_uq_consent_change = 5 }
+			ENG_uq_change_consent = yes
+		}
+	}
+}
+
+# Remain wins (IRE)
+country_event = {
+	id = ENG_uq.98
+	title = ENG_uq.98.t
+	desc = ENG_uq.98.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.98.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.98.a executed"
+		add_timed_idea = { idea = ENG_uq_sovereignty_movement days = 1825 }
+	}
+}
+
+# Remain wins (ENG): ten-year lock
+country_event = {
+	id = ENG_uq.99
+	title = ENG_uq.99.t
+	desc = ENG_uq.99.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.99.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.99.a executed"
+		custom_effect_tooltip = ENG_uq_irexit_lock_TT
+		hidden_effect = { set_country_flag = { flag = ENG_uq_lock@IRE days = 3650 } }
+		IRE = {
+			set_temp_variable = { ENG_uq_consent_change = -20 }
+			ENG_uq_change_consent = yes
+		}
+	}
+}
+
+# Dublin receives Northern Ireland and the Crown (IRE)
+country_event = {
+	id = ENG_uq.100
+	title = ENG_uq.100.t
+	desc = ENG_uq.100.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.100.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.100.a executed"
+		custom_effect_tooltip = ENG_uq_ireland_dominion_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.101 days = 1 } }
+		}
+	}
+}
+
+# Ireland enters the Union as a Crown Dominion (ENG, FROM = IRE)
+country_event = {
+	id = ENG_uq.101
+	title = ENG_uq.101.t
+	desc = ENG_uq.101.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.101.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.101.a executed"
+		custom_effect_tooltip = ENG_uq_stage_2_TT
+		ENG_uq_enter_stage_2 = yes
+		hidden_effect = {
+			country_event = { id = ENG_uq.102 days = 7 }
+		}
+	}
+}
+
+# Unionist backlash (ENG)
+country_event = {
+	id = ENG_uq.102
+	title = ENG_uq.102.t
+	desc = ENG_uq.102.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.102.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.102.a executed"
+		add_stability = -0.05
+		set_temp_variable = { ENG_union_strain_change = 10 }
+		ENG_change_union_strain = yes
+		hidden_effect = {
+			IRE = { country_event = { id = ENG_uq.103 days = 3 } }
+		}
+	}
+}
+
+# Loyalists march in Belfast (IRE)
+country_event = {
+	id = ENG_uq.103
+	title = ENG_uq.103.t
+	desc = ENG_uq.103.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.103.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.103.a executed"
+		add_stability = -0.05
+		add_timed_idea = { idea = ENG_uq_loyalist_movement days = 730 }
+	}
+}
+
+# Irish-American lobby protests (ENG)
+country_event = {
+	id = ENG_uq.104
+	title = ENG_uq.104.t
+	desc = ENG_uq.104.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.104.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.104.a executed"
+		USA = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_irish_lobby_opinion } }
+	}
+}
+
+# Irish-American lobby: Washington tables a UN statement (ENG)
+country_event = {
+	id = ENG_uq.105
+	title = ENG_uq.105.t
+	desc = ENG_uq.105.d
+	picture = GFX_UN_emergency_meeting
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.105.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.105.a executed"
+		USA = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_irish_lobby_opinion } }
 		set_temp_variable = { ENG_imperial_tension_change = 5 }
 		ENG_change_imperial_tension = yes
 	}

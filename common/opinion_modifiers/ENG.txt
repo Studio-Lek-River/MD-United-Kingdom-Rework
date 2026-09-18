@@ -70,6 +70,24 @@ opinion_modifiers = {
 		value = -25
 		months = 36
 	}
+	ENG_uq_council_of_the_isles_opinion = {
+		value = 15
+	}
+	ENG_uq_dublin_outreach_opinion = {
+		value = 10
+		months = 24
+	}
+	ENG_uq_common_travel_area_opinion = {
+		value = 20
+	}
+	ENG_uq_brussels_displeasure_opinion = {
+		value = -15
+		months = 24
+	}
+	ENG_uq_irish_lobby_opinion = {
+		value = -15
+		months = 36
+	}
 	ENG_cmw_games_host_opinion = {
 		value = 10
 		months = 48

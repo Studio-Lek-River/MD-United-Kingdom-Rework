@@ -23206,6 +23206,365 @@ focus_tree = {
 	}
 
 	focus = {
+		id = ENG_council_of_the_isles
+		icon = union_negotiations
+
+		x = -2
+		y = 5
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_act_of_union }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+			IRE = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
+				has_opinion = { target = ROOT value > 40 }
+			}
+		}
+
+		bypass = { NOT = { country_exists = IRE } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_council_of_the_isles"
+			custom_effect_tooltip = ENG_council_of_the_isles_TT
+			IRE = {
+				add_ideas = ENG_uq_council_of_the_isles_idea
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_council_of_the_isles_opinion }
+				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_council_of_the_isles_opinion }
+				hidden_effect = { ENG_uq_align_target = yes }
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_dublin_question
+		icon = ENG_ireland_collaboration
+
+		x = -2
+		y = 6
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_council_of_the_isles }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+		}
+
+		bypass = { NOT = { country_exists = IRE } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_dublin_question"
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = IRE }
+			change_influence_percentage = yes
+			IRE = {
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_dublin_outreach_opinion }
+				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_dublin_outreach_opinion }
+				set_temp_variable = { ENG_uq_consent_change = 10 }
+				ENG_uq_change_consent = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_ireland_rejoins_the_commonwealth
+		icon = align_to_commonwealth
+
+		x = -2
+		y = 7
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_the_dublin_question }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+			IRE = { ENG_cmw_is_member = no }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irish_consent_40_TT
+				check_variable = { ENG_consent@IRE > 40 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_cmw_cohesion_50_TT
+				check_variable = { global.commonwealth_cohesion > 50 }
+			}
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = IRE }
+				IRE = { ENG_cmw_is_member = yes }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_ireland_rejoins_the_commonwealth"
+			IRE = { country_event = { id = ENG_uq.90 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_ireland_joins_commonwealth_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_ireland_commonwealth_refused_TT }
+			unlock_decision_tooltip = ENG_uq_renew_commonwealth_invitation
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_anglo_irish_economic_union
+		icon = trade_with_britain
+
+		x = -3
+		y = 8
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_ireland_rejoins_the_commonwealth }
+
+		mutually_exclusive = { focus = ENG_common_travel_area_plus }
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ECONOMY }
+
+		available = {
+			has_government = democratic
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+		}
+
+		bypass = { NOT = { country_exists = IRE } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_anglo_irish_economic_union"
+			IRE = {
+				add_ideas = ENG_uq_anglo_irish_economic_union_idea
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			if = {
+				limit = { IRE = { has_idea = EU_member } }
+				custom_effect_tooltip = ENG_anglo_irish_economic_union_TT
+				hidden_effect = {
+					for_each_scope_loop = {
+						array = global.EU_member
+						if = {
+							limit = {
+								NOT = { tag = ROOT }
+								NOT = { tag = IRE }
+							}
+							add_opinion_modifier = { target = ROOT modifier = ENG_uq_brussels_displeasure_opinion }
+						}
+					}
+					IRE = { country_event = { id = ENG_uq.93 days = 30 } }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_common_travel_area_plus
+		icon = treaty2
+
+		x = -1
+		y = 8
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_ireland_rejoins_the_commonwealth }
+
+		mutually_exclusive = { focus = ENG_anglo_irish_economic_union }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+		}
+
+		bypass = { NOT = { country_exists = IRE } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_common_travel_area_plus"
+			IRE = {
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_common_travel_area_opinion }
+				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_common_travel_area_opinion }
+				set_temp_variable = { ENG_uq_consent_change = 10 }
+				ENG_uq_change_consent = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_irexit_question
+		icon = scottish_referendum
+
+		x = -2
+		y = 9
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = {
+			focus = ENG_anglo_irish_economic_union
+			focus = ENG_common_travel_area_plus
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irexit_not_eu_member_TT
+				NOT = { has_idea = EU_member }
+			}
+			IRE = { has_idea = EU_member }
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = IRE }
+				IRE = { NOT = { has_idea = EU_member } }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_irexit_question"
+			unlock_decision_tooltip = ENG_uq_irexit_referendum
+			unlock_decision_tooltip = ENG_uq_fund_irexit_campaign
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_an_ireland_united_under_the_crown
+		icon = british_isles
+
+		x = -2
+		y = 10
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_the_irexit_question }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+			17 = { is_owned_and_controlled_by = ROOT }
+			IRE = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_ireland_outside_eu_TT
+					NOT = { has_idea = EU_member }
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_ireland_in_commonwealth_TT
+					ENG_cmw_is_member = yes
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irish_consent_60_TT
+				check_variable = { ENG_consent@IRE > 60 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strain_allows_transition_TT
+				check_variable = { ENG_union_strain < 61 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_ireland_not_locked_TT
+				NOT = { has_country_flag = ENG_uq_lock@IRE }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_border_poll_needs_peace_tt
+				NOT = { has_idea = ENG_the_dissident_campaign }
+			}
+			check_variable = {
+				tooltip = ENG_dominion_tension_tt
+				var = ENG_north_irish_agitation
+				value = 10
+				compare = less_than
+			}
+		}
+
+		bypass = { NOT = { country_exists = IRE } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_an_ireland_united_under_the_crown"
+			IRE = { transfer_state = 17 }
+			ENG_settle_northern_ireland_question = yes
+			IRE = { add_opinion_modifier = { target = ROOT modifier = large_increase } }
+			custom_effect_tooltip = ENG_an_ireland_united_under_the_crown_TT
+			hidden_effect = {
+				IRE = { country_event = { id = ENG_uq.100 days = 1 } }
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_home_rule_in_reverse
+		icon = british_emblem2
+
+		x = -2
+		y = 11
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_an_ireland_united_under_the_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_ireland_integrated_TT
+				check_variable = { ENG_integration_stage@IRE > 3 }
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = IRE }
+			check_variable = { ENG_integration_stage@IRE < 4 }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_home_rule_in_reverse"
+			add_ideas = ENG_union_of_the_isles_idea
+			set_temp_variable = { ENG_union_strain_change = -10 }
+			ENG_change_union_strain = yes
+			custom_effect_tooltip = ENG_home_rule_in_reverse_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
 		id = ENG_the_crowns_peace
 		icon = Generic_Crown_Box
 

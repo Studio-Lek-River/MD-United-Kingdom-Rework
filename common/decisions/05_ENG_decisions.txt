@@ -5032,6 +5032,135 @@ ENG_a_family_of_nations_decisions = {
 		ai_will_do = { base = 5 }
 	}
 
+	ENG_uq_renew_commonwealth_invitation = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = {
+			has_completed_focus = ENG_ireland_rejoins_the_commonwealth
+			country_exists = IRE
+			IRE = { ENG_cmw_is_member = no }
+		}
+
+		available = {
+			NOT = { has_war_with = IRE }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_ireland_not_locked_TT
+				NOT = { has_country_flag = ENG_uq_lock@IRE }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irish_consent_40_TT
+				check_variable = { ENG_consent@IRE > 40 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_cmw_cohesion_50_TT
+				check_variable = { global.commonwealth_cohesion > 50 }
+			}
+		}
+
+		cost = 50
+		days_re_enable = 365
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_renew_commonwealth_invitation"
+			IRE = { country_event = { id = ENG_uq.90 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_ireland_joins_commonwealth_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_ireland_commonwealth_refused_TT }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_irexit_referendum = {
+		icon = GFX_decision_generic_nationalism
+
+		visible = {
+			has_completed_focus = ENG_the_irexit_question
+			country_exists = IRE
+			IRE = { has_idea = EU_member }
+		}
+
+		available = {
+			NOT = { has_war_with = IRE }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irexit_not_eu_member_TT
+				NOT = { has_idea = EU_member }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_ireland_not_locked_TT
+				NOT = { has_country_flag = ENG_uq_lock@IRE }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irish_consent_50_TT
+				check_variable = { ENG_consent@IRE > 50 }
+			}
+		}
+
+		cost = 100
+		days_remove = 365
+
+		cancel_trigger = {
+			OR = {
+				has_war_with = IRE
+				NOT = { country_exists = IRE }
+				IRE = { NOT = { has_idea = EU_member } }
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_irexit_referendum"
+			set_variable = { ENG_uq_irexit_campaign = 0 }
+			custom_effect_tooltip = ENG_uq_irexit_campaign_TT
+			hidden_effect = {
+				IRE = { country_event = { id = ENG_uq.94 days = 1 } }
+			}
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_irexit_referendum resolved"
+			IRE = { country_event = ENG_uq.95 }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_fund_irexit_campaign = {
+		icon = GFX_decision_generic_fundraising
+
+		visible = { has_decision = ENG_uq_irexit_referendum }
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irexit_campaign_cap_TT
+				check_variable = { ENG_uq_irexit_campaign < 20 }
+			}
+		}
+
+		cost = 25
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.002
+				less_than = { value = treasury }
+			}
+			has_political_power > 24.999
+		}
+		custom_cost_text = ENG_cost_small_expenditure_pp25
+		ai_hint_pp_cost = 25
+		days_re_enable = 60
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_fund_irexit_campaign"
+			hidden_effect = { add_political_power = -25 }
+			small_expenditure = yes
+			add_to_variable = { ENG_uq_irexit_campaign = 5 }
+			custom_effect_tooltip = ENG_uq_irexit_campaign_funded_TT
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
 	ENG_union_dividend_programme = {
 		icon = GFX_decision_generic_construction
 		activation = { always = no }
@@ -5222,6 +5351,12 @@ ENG_union_question_decisions = {
 				OR = {
 					is_subject = no
 					is_subject_of = ROOT
+				}
+			}
+			NOT = {
+				AND = {
+					has_country_flag = ENG_uq_western
+					FROM = { original_tag = IRE }
 				}
 			}
 		}

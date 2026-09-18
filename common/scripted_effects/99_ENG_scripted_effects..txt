@@ -542,6 +542,7 @@ ENG_uq_enter_stage_2 = {
 		set_temp_variable = { ENG_union_strain_stage = 2 }
 		ENG_add_union_strain_for_target = yes
 	}
+	ENG_uq_irish_lobby_reaction = yes
 }
 
 # Stage 2 -> 3. Call with ROOT = ENG and FROM = target. A non-existing target is an annexed Nationalist occupation and is released first.
@@ -566,6 +567,7 @@ ENG_uq_enter_stage_3 = {
 		set_temp_variable = { ENG_union_strain_stage = 3 }
 		ENG_add_union_strain_for_target = yes
 	}
+	ENG_uq_irish_lobby_reaction = yes
 }
 
 # Stage 3 -> 4. Call with ROOT = ENG and FROM = target.
@@ -594,6 +596,7 @@ ENG_uq_enter_stage_4 = {
 		set_temp_variable = { ENG_imperial_tension_change = 10 }
 	}
 	ENG_change_imperial_tension = yes
+	ENG_uq_irish_lobby_reaction = yes
 	remove_from_array = { ENG_integration_targets = FROM }
 	annex_country = {
 		target = FROM
@@ -683,6 +686,10 @@ ENG_uq_update_consent = {
 		add_to_temp_variable = { ENG_uq_consent_change = 0.5 }
 	}
 	if = {
+		limit = { has_idea = ENG_uq_anglo_irish_economic_union_idea }
+		add_to_temp_variable = { ENG_uq_consent_change = 1 }
+	}
+	if = {
 		limit = { has_idea = ENG_uq_sovereignty_movement }
 		add_to_temp_variable = { ENG_uq_consent_change = -0.5 }
 	}
@@ -747,6 +754,23 @@ ENG_uq_set_accept_weight = {
 	if = {
 		limit = { has_opinion = { target = FROM value > 80 } }
 		add_to_variable = { ENG_uq_accept_weight = 15 }
+	}
+}
+
+# USA reaction to each Irish stage transition. Call with ROOT = ENG and FROM = target; only Ireland triggers it.
+ENG_uq_irish_lobby_reaction = {
+	if = {
+		limit = {
+			FROM = { original_tag = IRE }
+			country_exists = USA
+			NOT = { has_war_with = USA }
+		}
+		hidden_effect = {
+			random_list = {
+				70 = { country_event = { id = ENG_uq.104 days = 5 } }
+				30 = { country_event = { id = ENG_uq.105 days = 5 } }
+			}
+		}
 	}
 }
 
