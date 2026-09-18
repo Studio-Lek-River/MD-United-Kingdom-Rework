@@ -25651,6 +25651,297 @@ focus_tree = {
 		ai_will_do = { base = 0 }
 	}
 
+	# Tier 4: wider empire (Nationalist)
+
+	focus = {
+		id = ENG_the_imperial_mission
+		icon = british_isles
+
+		x = -8
+		y = 9
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_dominions_of_the_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			ENG_uq_realms_done = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_imperial_mission"
+			custom_effect_tooltip = ENG_the_imperial_mission_TT
+			set_temp_variable = { ENG_imperial_tension_change = 3 }
+			ENG_change_imperial_tension = yes
+			add_war_support = 0.02
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_west_african_protectorates
+		icon = british_isles
+
+		x = -13
+		y = 10
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_imperial_mission }
+		prerequisite = { focus = ENG_operation_barras focus = ENG_operation_coastal_star focus = ENG_operation_delta_guard }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = SIE
+				country_exists = GAM
+				country_exists = GAH
+				country_exists = NIG
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = SIE }
+			NOT = { country_exists = GAM }
+			NOT = { country_exists = GAH }
+			NOT = { country_exists = NIG }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_west_african_protectorates"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_west_africa = yes }
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_east_african_protectorates
+		icon = british_isles
+
+		x = -11
+		y = 10
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_imperial_mission }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = KEN
+				country_exists = UGA
+				country_exists = TNZ
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = KEN }
+			NOT = { country_exists = UGA }
+			NOT = { country_exists = TNZ }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_east_african_protectorates"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_east_africa = yes }
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_southern_african_protectorates
+		icon = british_isles
+
+		x = -9
+		y = 10
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_imperial_mission }
+		prerequisite = { focus = ENG_regime_change_in_zimbabwe }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = ZAM
+				country_exists = ZIM
+				country_exists = MLW
+				country_exists = BOT
+				country_exists = SWA
+				country_exists = LES
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = ZAM }
+			NOT = { country_exists = ZIM }
+			NOT = { country_exists = MLW }
+			NOT = { country_exists = BOT }
+			NOT = { country_exists = SWA }
+			NOT = { country_exists = LES }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_southern_african_protectorates"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_southern_africa = yes }
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_gulf_protectorates
+		icon = british_isles
+
+		x = -7
+		y = 10
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_imperial_mission }
+		prerequisite = { focus = ENG_operation_dagger }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = KUW
+				country_exists = QAT
+				country_exists = BHR
+				country_exists = UAE
+				country_exists = OMA
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = KUW }
+			NOT = { country_exists = QAT }
+			NOT = { country_exists = BHR }
+			NOT = { country_exists = UAE }
+			NOT = { country_exists = OMA }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_gulf_protectorates"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_gulf = yes }
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_asian_protectorates
+		icon = british_isles
+
+		x = -5
+		y = 10
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_imperial_mission }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = MAY
+				country_exists = SIN
+				country_exists = BRU
+				country_exists = SRI
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = MAY }
+			NOT = { country_exists = SIN }
+			NOT = { country_exists = BRU }
+			NOT = { country_exists = SRI }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_asian_protectorates"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_asia = yes }
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_pacific_protectorates
+		icon = british_isles
+
+		x = -3
+		y = 10
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_imperial_mission }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = FIJ
+				country_exists = SOL
+				country_exists = VAN
+				country_exists = TON
+				country_exists = SAM
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = FIJ }
+			NOT = { country_exists = SOL }
+			NOT = { country_exists = VAN }
+			NOT = { country_exists = TON }
+			NOT = { country_exists = SAM }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_pacific_protectorates"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_pacific = yes }
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
 	# Junta Tree
 
 	# focus = {
