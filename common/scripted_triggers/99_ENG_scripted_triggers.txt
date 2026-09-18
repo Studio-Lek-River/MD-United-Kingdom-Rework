@@ -407,6 +407,71 @@ ENG_uq_is_caribbean_realm = {
 	}
 }
 
+# Target scope. Hong Kong is permanently capped short of full integration; Malta and Cyprus are capped until the Crown is restored there.
+ENG_uq_stage_capped = {
+	OR = {
+		original_tag = HKG
+		AND = {
+			OR = {
+				original_tag = MLT
+				original_tag = CYP
+			}
+			NOT = { has_country_flag = ENG_uq_monarchy_restored }
+		}
+	}
+}
+
+# ENG scope. Cyprus is settled: either the island has one government controlling both its cores, or the Cypriot side is at peace.
+ENG_uq_cyprus_settled = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_cyprus_settled_TT
+		OR = {
+			NOT = { country_exists = NCY }
+			NOT = { country_exists = CYP }
+			146 = { owner = { owns_state = 145 } }
+		}
+	}
+	OR = {
+		NOT = { country_exists = CYP }
+		CYP = { has_war = no }
+	}
+}
+
+# ENG scope. Washington is distracted by domestic crisis and cannot press back over the Chagos.
+ENG_uq_usa_distracted = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_usa_distracted_TT
+		USA = {
+			OR = {
+				has_war = yes
+				has_stability < 0.4
+				has_civil_war = yes
+				has_idea = us_public_disorder
+				has_idea = us_public_disorder_two
+				has_idea = us_public_disorder_three
+				has_country_flag = collapsed_nation
+			}
+		}
+	}
+}
+
+# ENG scope. Washington is open to reopening the Chagos question.
+ENG_uq_chagos_gate = {
+	USA = { has_opinion = { target = ROOT value > 70 } }
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_usa_medium_influence_TT
+		USA = { influence_higher_20 = yes }
+	}
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_chagos_opening_TT
+		OR = {
+			USA = { has_war = yes }
+			USA = { NOT = { check_variable = { ruling_party = 1 } } }
+			has_country_flag = ENG_uq_chagos_ruling
+		}
+	}
+}
+
 # ENG scope. Canada, Australia and New Zealand have each reached full integration or ceased to exist as a separate realm.
 ENG_uq_canzuk_integrated = {
 	custom_trigger_tooltip = {

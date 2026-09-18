@@ -5460,6 +5460,126 @@ ENG_a_family_of_nations_decisions = {
 
 		ai_will_do = { base = 0 }
 	}
+
+	ENG_uq_chagos_to_the_hague = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = {
+			has_completed_focus = ENG_the_overseas_settlements
+			USA = { owns_state = 824 }
+			NOT = { has_country_flag = ENG_uq_chagos_ruling }
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_chagos_case_open_TT
+				NOT = { has_country_flag = ENG_uq_chagos_case_lost }
+			}
+		}
+
+		cost = 100
+		days_remove = 365
+		fixed_random_seed = no
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_chagos_to_the_hague"
+			small_expenditure = yes
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_chagos_to_the_hague"
+			custom_effect_tooltip = ENG_uq_chagos_case_TT
+			random_list = {
+				55 = {
+					modifier = {
+						add = 20
+						check_variable = { global.commonwealth_cohesion > 60 }
+					}
+					set_country_flag = ENG_uq_chagos_ruling
+					country_event = { id = ENG_uq.204 }
+				}
+				45 = {
+					modifier = {
+						add = 30
+						check_variable = { ENG_imperial_tension > 39 }
+					}
+					set_country_flag = { flag = ENG_uq_chagos_case_lost days = 1825 }
+					country_event = { id = ENG_uq.205 }
+				}
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_reopen_chagos_talks = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = {
+			has_completed_focus = ENG_the_chagos_settlement
+			USA = { owns_state = 824 }
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_chagos_not_locked_TT
+				NOT = { has_country_flag = ENG_uq_chagos_lock }
+			}
+			ENG_uq_chagos_gate = yes
+			NOT = { has_war_with = USA }
+		}
+
+		cost = 100
+		days_re_enable = 365
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_reopen_chagos_talks"
+			USA = { country_event = { id = ENG_uq.200 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_chagos_accept_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_chagos_reject_TT }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_gibraltar_talks = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = {
+			has_completed_focus = ENG_the_rock_settled
+			19 = { is_claimed_by = SPR }
+			country_exists = SPR
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_gibraltar_not_locked_TT
+				NOT = { has_country_flag = ENG_uq_gibraltar_lock }
+			}
+			SPR = { has_opinion = { target = ROOT value > 60 } }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_eu_not_hostile_TT
+				NOT = { has_idea = ENG_uq_eu_trade_penalty }
+			}
+			NOT = { has_war_with = SPR }
+		}
+
+		cost = 100
+		days_re_enable = 365
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_gibraltar_talks"
+			SPR = { country_event = { id = ENG_uq.220 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_gibraltar_accept_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_gibraltar_reject_TT }
+		}
+
+		ai_will_do = { base = 5 }
+	}
 }
 
 ENG_union_question_decisions = {
@@ -5616,6 +5736,10 @@ ENG_union_question_decisions = {
 		available = {
 			ENG_uq_can_transition = yes
 			if = {
+				limit = { FROM = { original_tag = CYP } }
+				ENG_uq_cyprus_settled = yes
+			}
+			if = {
 				limit = { has_country_flag = ENG_uq_western }
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_consent_60_TT
@@ -5684,6 +5808,7 @@ ENG_union_question_decisions = {
 		target_trigger = {
 			check_variable = { ENG_integration_stage@FROM = 2 }
 			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
+			NOT = { FROM = { ENG_uq_stage_capped = yes } }
 		}
 
 		cost = 150

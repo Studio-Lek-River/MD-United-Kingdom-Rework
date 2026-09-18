@@ -24786,6 +24786,266 @@ focus_tree = {
 		ai_will_do = { base = 0 }
 	}
 
+	# Tier 3b: lost possessions (Western)
+
+	focus = {
+		id = ENG_the_overseas_settlements
+		icon = british_isles
+
+		x = -9
+		y = 13
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_overseas_settlements"
+			custom_effect_tooltip = ENG_the_overseas_settlements_TT
+			set_temp_variable = { ENG_cmw_cohesion_change = 2 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_chagos_to_the_hague
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_chagos_settlement
+		icon = british_isles
+
+		x = -13
+		y = 14
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_the_overseas_settlements }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = USA
+			USA = { owns_state = 824 }
+			NOT = { has_war_with = USA }
+			ENG_uq_chagos_gate = yes
+		}
+
+		bypass = { owns_state = 824 }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_chagos_settlement"
+			custom_effect_tooltip = ENG_the_chagos_settlement_TT
+			USA = { country_event = { id = ENG_uq.200 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_chagos_accept_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_chagos_reject_TT }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_south_atlantic_command
+		icon = british_isles
+
+		x = -11
+		y = 14
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_the_overseas_settlements }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			owns_state = 26
+			OR = {
+				has_completed_focus = ENG_falklands_policy
+				NOT = { country_exists = ARG }
+			}
+		}
+
+		bypass = { NOT = { owns_state = 26 } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_south_atlantic_command"
+			custom_effect_tooltip = ENG_south_atlantic_command_TT
+			26 = { add_core_of = ROOT }
+			22 = { add_core_of = ROOT }
+			hidden_effect = {
+				if = {
+					limit = {
+						country_exists = ARG
+						NOT = { has_war_with = ARG }
+					}
+					ARG = { country_event = { id = ENG_uq.210 days = 2 } }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_rock_settled
+		icon = british_isles
+
+		x = -9
+		y = 14
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_the_overseas_settlements }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = SPR
+			19 = { is_claimed_by = SPR }
+			SPR = { has_opinion = { target = ROOT value > 60 } }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_eu_not_hostile_TT
+				NOT = { has_idea = ENG_uq_eu_trade_penalty }
+			}
+			NOT = { has_war_with = SPR }
+		}
+
+		bypass = { NOT = { 19 = { is_claimed_by = SPR } } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_rock_settled"
+			custom_effect_tooltip = ENG_the_rock_settled_TT
+			SPR = { country_event = { id = ENG_uq.220 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_gibraltar_accept_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_gibraltar_reject_TT }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_pearl_river_accord
+		icon = british_isles
+
+		x = -7
+		y = 14
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_the_overseas_settlements }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = HKG
+			HKG = {
+				is_subject = no
+				NOT = { has_war_with = ROOT }
+			}
+			NOT = { has_war_with = CHI }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_pearl_river_accord"
+			custom_effect_tooltip = ENG_the_pearl_river_accord_TT
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = HKG }
+			change_influence_percentage = yes
+			HKG = {
+				hidden_effect = { ENG_uq_align_target = yes }
+				set_temp_variable = { ENG_uq_consent_change = 15 }
+				ENG_uq_change_consent = yes
+			}
+			custom_effect_tooltip = ENG_uq_hong_kong_cap_TT
+			hidden_effect = {
+				if = {
+					limit = {
+						country_exists = CHI
+						NOT = { has_war_with = CHI }
+					}
+					CHI = { country_event = { id = ENG_uq.230 days = 2 } }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_mediterranean_partners
+		icon = british_isles
+
+		x = -5
+		y = 14
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_the_overseas_settlements }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_med_commonwealth_TT
+				OR = {
+					MLT = { ENG_cmw_is_member = yes }
+					CYP = { ENG_cmw_is_member = yes }
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_cmw_cohesion_50_TT
+				check_variable = { global.commonwealth_cohesion > 50 }
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = MLT }
+			NOT = { country_exists = CYP }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_mediterranean_partners"
+			custom_effect_tooltip = ENG_the_mediterranean_partners_TT
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = MLT
+						original_tag = CYP
+					}
+					ENG_cmw_is_member = yes
+				}
+				hidden_effect = { ENG_uq_align_realm = yes }
+				set_temp_variable = { ENG_uq_consent_change = 10 }
+				ENG_uq_change_consent = yes
+			}
+			if = {
+				limit = { country_exists = MLT }
+				set_temp_variable = { percent_change = 5 }
+				set_temp_variable = { influence_target = MLT }
+				change_influence_percentage = yes
+			}
+			if = {
+				limit = { country_exists = CYP }
+				set_temp_variable = { percent_change = 5 }
+				set_temp_variable = { influence_target = CYP }
+				change_influence_percentage = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 2 }
+			ENG_cmw_change_cohesion = yes
+			custom_effect_tooltip = ENG_uq_med_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
 	# Junta Tree
 
 	# focus = {

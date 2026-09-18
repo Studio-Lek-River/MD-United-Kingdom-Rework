@@ -107,6 +107,20 @@ opinion_modifiers = {
 		value = -15
 		months = 24
 	}
+	ENG_uq_chagos_settlement_opinion = {
+		value = 15
+	}
+	ENG_uq_south_atlantic_opinion = {
+		value = -20
+		months = 24
+	}
+	ENG_uq_gibraltar_treaty_opinion = {
+		value = 20
+	}
+	ENG_uq_hong_kong_opinion = {
+		value = -20
+		months = 36
+	}
 	ENG_cmw_games_host_opinion = {
 		value = 10
 		months = 48

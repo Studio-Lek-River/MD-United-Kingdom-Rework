@@ -544,6 +544,7 @@ ENG_uq_enter_stage_2 = {
 	}
 	ENG_uq_irish_lobby_reaction = yes
 	ENG_uq_realm_stage_reaction = yes
+	ENG_uq_possession_stage_reaction = yes
 }
 
 # Stage 2 -> 3. Call with ROOT = ENG and FROM = target. A non-existing target is an annexed Nationalist occupation and is released first.
@@ -570,6 +571,7 @@ ENG_uq_enter_stage_3 = {
 	}
 	ENG_uq_irish_lobby_reaction = yes
 	ENG_uq_realm_stage_reaction = yes
+	ENG_uq_possession_stage_reaction = yes
 }
 
 # Stage 3 -> 4. Call with ROOT = ENG and FROM = target.
@@ -600,6 +602,7 @@ ENG_uq_enter_stage_4 = {
 	ENG_change_imperial_tension = yes
 	ENG_uq_irish_lobby_reaction = yes
 	ENG_uq_realm_stage_reaction = yes
+	ENG_uq_possession_stage_reaction = yes
 	remove_from_array = { ENG_integration_targets = FROM }
 	annex_country = {
 		target = FROM
@@ -984,6 +987,39 @@ ENG_uq_realm_monthly = {
 			}
 		}
 	}
+}
+
+# China and Cyprus reactions to a possession's stage transition. Call with ROOT = ENG and FROM = target, right after ENG_uq_realm_stage_reaction inside ENG_uq_enter_stage_2/3/4.
+ENG_uq_possession_stage_reaction = {
+	if = {
+		limit = {
+			FROM = { original_tag = HKG }
+			check_variable = { ENG_integration_stage@FROM = 2 }
+			country_exists = CHI
+			NOT = { has_war_with = CHI }
+		}
+		CHI = { country_event = { id = ENG_uq.231 days = 3 } }
+	}
+	if = {
+		limit = {
+			FROM = { original_tag = CYP }
+			check_variable = { ENG_integration_stage@FROM > 1 }
+			owns_state = 812
+			NOT = { 812 = { is_core_of = ROOT } }
+		}
+		812 = { add_core_of = ROOT }
+	}
+}
+
+# ENG scope. The Chagos question is settled: the archipelago returns to British sovereignty.
+ENG_uq_chagos_settled = {
+	transfer_state = 824
+	USA = {
+		add_opinion_modifier = { target = ROOT modifier = ENG_uq_chagos_settlement_opinion }
+		reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_chagos_settlement_opinion }
+	}
+	clr_country_flag = ENG_uq_chagos_crisis
+	clr_country_flag = ENG_uq_chagos_lock
 }
 
 # ENG scope. War on Ireland: NATO turns on us, Washington's Irish lobby mobilises and the Commonwealth wavers.

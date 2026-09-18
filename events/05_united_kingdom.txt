@@ -9570,6 +9570,366 @@ country_event = {
 	option = { name = ENG_uq.190.a }
 }
 
+# The Union Question: lost possessions
+
+# Washington is asked to hand back the Chagos Archipelago (USA, FROM = ENG)
+country_event = {
+	id = ENG_uq.200
+	title = ENG_uq.200.t
+	desc = ENG_uq.200.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.200.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.200.a executed"
+		ENG = { country_event = { id = ENG_uq.201 days = 1 } }
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 50
+				has_opinion = { target = FROM value > 80 }
+			}
+			modifier = {
+				add = 30
+				has_war = yes
+			}
+			modifier = {
+				add = 30
+				FROM = { has_country_flag = ENG_uq_chagos_ruling }
+			}
+			modifier = {
+				add = 20
+				NOT = { check_variable = { ruling_party = 1 } }
+			}
+			modifier = {
+				factor = 0
+				has_war_with = FROM
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.200.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.200.b executed"
+		ENG = { country_event = { id = ENG_uq.202 days = 1 } }
+		ai_chance = { base = 40 }
+	}
+}
+
+# Diego Garcia returns to the Crown (ENG)
+country_event = {
+	id = ENG_uq.201
+	title = ENG_uq.201.t
+	desc = ENG_uq.201.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.201.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.201.a executed"
+		ENG_uq_chagos_settled = yes
+		add_ideas = ENG_uq_diego_garcia_joint_basing
+		give_military_access = USA
+		set_temp_variable = { ENG_imperial_tension_change = 2 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# Washington declines to discuss the Chagos (ENG)
+country_event = {
+	id = ENG_uq.202
+	title = ENG_uq.202.t
+	desc = ENG_uq.202.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.202.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.202.a executed"
+		set_country_flag = { flag = ENG_uq_chagos_lock days = 3650 }
+		custom_effect_tooltip = ENG_uq_chagos_locked_TT
+		unlock_decision_tooltip = ENG_uq_reopen_chagos_talks
+	}
+}
+
+# The Hague rules for Britain (ENG)
+country_event = {
+	id = ENG_uq.204
+	title = ENG_uq.204.t
+	desc = ENG_uq.204.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.204.a }
+}
+
+# The Hague rules against Britain (ENG)
+country_event = {
+	id = ENG_uq.205
+	title = ENG_uq.205.t
+	desc = ENG_uq.205.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.205.a }
+}
+
+# Buenos Aires reacts to a reinforced South Atlantic Command (ARG, FROM = ENG)
+country_event = {
+	id = ENG_uq.210
+	title = ENG_uq.210.t
+	desc = ENG_uq.210.d
+	picture = GFX_falkland_islands
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.210.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.210.a executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_south_atlantic_opinion }
+		ai_chance = {
+			base = 50
+			modifier = {
+				factor = 0
+				has_government = nationalist
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.210.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.210.b executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_south_atlantic_opinion }
+		add_war_support = 0.05
+		ai_chance = {
+			base = 20
+			modifier = {
+				factor = 3
+				has_government = nationalist
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.210.c
+		ai_chance = {
+			base = 30
+			modifier = {
+				factor = 0
+				has_government = nationalist
+			}
+			modifier = {
+				factor = 0
+				has_opinion = { target = FROM value < 0 }
+			}
+		}
+	}
+}
+
+# Madrid weighs a settlement over the Rock (SPR, FROM = ENG)
+country_event = {
+	id = ENG_uq.220
+	title = ENG_uq.220.t
+	desc = ENG_uq.220.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.220.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.220.a executed"
+		ENG = { country_event = { id = ENG_uq.221 days = 1 } }
+		ai_chance = {
+			base = 50
+			modifier = {
+				add = 30
+				has_idea = EU_member
+				FROM = { has_idea = EU_member }
+			}
+			modifier = {
+				factor = 0.3
+				has_government = nationalist
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.220.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.220.b executed"
+		ENG = { country_event = { id = ENG_uq.223 days = 1 } }
+		ai_chance = {
+			base = 20
+			modifier = {
+				factor = 3
+				has_government = nationalist
+			}
+		}
+	}
+}
+
+# Terms from Madrid on Gibraltar (ENG, FROM = SPR)
+country_event = {
+	id = ENG_uq.221
+	title = ENG_uq.221.t
+	desc = ENG_uq.221.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.221.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.221.a executed"
+		large_expenditure = yes
+		19 = { remove_claim_by = SPR }
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_treaty_opinion }
+		reverse_add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_treaty_opinion }
+		ai_chance = { base = 40 }
+	}
+
+	option = {
+		name = ENG_uq.221.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.221.b executed"
+		small_expenditure = yes
+		add_ideas = ENG_uq_gibraltar_joint_sovereignty
+		19 = { remove_claim_by = SPR }
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_treaty_opinion }
+		reverse_add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_treaty_opinion }
+		ai_chance = { base = 40 }
+	}
+
+	option = {
+		name = ENG_uq.221.c
+		log = "[GetDateText]: [This.GetName]: ENG_uq.221.c executed"
+		set_country_flag = { flag = ENG_uq_gibraltar_lock days = 1825 }
+		custom_effect_tooltip = ENG_uq_gibraltar_locked_TT
+		ai_chance = { base = 20 }
+	}
+}
+
+# Madrid refuses to discuss Gibraltar (ENG, FROM = SPR)
+country_event = {
+	id = ENG_uq.223
+	title = ENG_uq.223.t
+	desc = ENG_uq.223.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.223.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.223.a executed"
+		set_country_flag = { flag = ENG_uq_gibraltar_lock days = 1825 }
+		custom_effect_tooltip = ENG_uq_gibraltar_locked_TT
+		unlock_decision_tooltip = ENG_uq_gibraltar_talks
+	}
+}
+
+# Beijing reacts to British courting of Hong Kong (CHI, FROM = ENG)
+country_event = {
+	id = ENG_uq.230
+	title = ENG_uq.230.t
+	desc = ENG_uq.230.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.230.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.230.a executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_hong_kong_opinion }
+		ai_chance = { base = 70 }
+	}
+
+	option = {
+		name = ENG_uq.230.b
+		ai_chance = {
+			base = 30
+			modifier = {
+				factor = 0
+				has_opinion = { target = FROM value < 30 }
+			}
+		}
+	}
+}
+
+# Beijing reacts to Hong Kong's alignment with the Crown (CHI, FROM = ENG)
+country_event = {
+	id = ENG_uq.231
+	title = ENG_uq.231.t
+	desc = ENG_uq.231.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.231.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.231.a executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_hong_kong_opinion }
+		ai_chance = { base = 50 }
+	}
+
+	option = {
+		name = ENG_uq.231.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.231.b executed"
+		if = {
+			limit = { has_dlc = "By Blood Alone" }
+			send_embargo = FROM
+		}
+		FROM = {
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+		}
+		ai_chance = {
+			base = 30
+			modifier = {
+				add = 20
+				FROM = { has_country_flag = ENG_uq_nationalist }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.231.c
+		trigger = { country_exists = HKG }
+		log = "[GetDateText]: [This.GetName]: ENG_uq.231.c executed"
+		add_named_threat = { threat = 5 name = ENG_uq_hong_kong_threat }
+		create_wargoal = {
+			type = annex_everything
+			target = HKG
+			expire = 365
+		}
+		FROM = { country_event = { id = ENG_uq.232 days = 1 } }
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 30
+				FROM = { has_country_flag = ENG_uq_nationalist }
+			}
+			modifier = {
+				factor = 0
+				has_war = yes
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = FROM
+			}
+			modifier = {
+				factor = 0
+				strength_ratio = { tag = FROM ratio < 1 }
+			}
+		}
+	}
+}
+
+# Beijing prepares to retake Hong Kong (ENG, FROM = CHI)
+country_event = {
+	id = ENG_uq.232
+	title = ENG_uq.232.t
+	desc = ENG_uq.232.d
+	picture = GFX_generic_soldiers
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.232.a }
+}
+
 ########################## Commonwealth of Nations #########################
 # Commonwealth Games held
 news_event = {

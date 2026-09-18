@@ -1337,6 +1337,27 @@ ideas = {
 			}
 		}
 
+		ENG_uq_diego_garcia_joint_basing = {
+			picture = liberty_ships
+			allowed_civil_war = { always = yes }
+			targeted_modifier = {
+				tag = USA
+				trade_opinion_factor = 0.1
+			}
+			modifier = {
+				air_range_factor = 0.02
+			}
+		}
+
+		ENG_uq_gibraltar_joint_sovereignty = {
+			picture = embargo
+			allowed_civil_war = { always = yes }
+			modifier = {
+				political_power_factor = -0.02
+				stability_factor = -0.01
+			}
+		}
+
 		ENG_uq_embargoed = {
 			picture = trade
 			allowed_civil_war = { always = yes }
