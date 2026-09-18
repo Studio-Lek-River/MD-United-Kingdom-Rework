@@ -24450,7 +24450,7 @@ focus_tree = {
 		icon = british_monarchy
 
 		x = 0
-		y = 7
+		y = 12
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_isles_under_one_crown }
@@ -24485,7 +24485,7 @@ focus_tree = {
 		icon = Generic_Crown_Box
 
 		x = 0
-		y = 8
+		y = 13
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_dominions_of_the_crown }
@@ -24511,7 +24511,7 @@ focus_tree = {
 		icon = align_to_canada
 
 		x = -2
-		y = 9
+		y = 14
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_reserve_powers }
@@ -24549,7 +24549,7 @@ focus_tree = {
 		icon = align_to_australia
 
 		x = 0
-		y = 9
+		y = 14
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_reserve_powers }
@@ -24587,7 +24587,7 @@ focus_tree = {
 		icon = align_to_new_zealand
 
 		x = 2
-		y = 9
+		y = 14
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_reserve_powers }
@@ -24625,7 +24625,7 @@ focus_tree = {
 		icon = British_Army_1
 
 		x = 4
-		y = 9
+		y = 14
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_reserve_powers }
@@ -24669,7 +24669,7 @@ focus_tree = {
 		icon = british_nationalism
 
 		x = -1
-		y = 10
+		y = 15
 		relative_position_id = ENG_crown_union
 
 		prerequisite = {
@@ -24711,7 +24711,7 @@ focus_tree = {
 		icon = united_anglosphere
 
 		x = 1
-		y = 10
+		y = 15
 		relative_position_id = ENG_crown_union
 
 		prerequisite = {
@@ -24756,7 +24756,7 @@ focus_tree = {
 		icon = british_emblem2
 
 		x = 0
-		y = 11
+		y = 16
 		relative_position_id = ENG_crown_union
 
 		prerequisite = {
@@ -25413,7 +25413,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = 7
-		y = 9
+		y = 14
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_dominions_of_the_crown }
@@ -25440,7 +25440,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = 3
-		y = 10
+		y = 15
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
@@ -25474,7 +25474,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = 5
-		y = 10
+		y = 15
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
@@ -25519,7 +25519,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = 7
-		y = 10
+		y = 15
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
@@ -25559,7 +25559,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = 9
-		y = 10
+		y = 15
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
@@ -25608,7 +25608,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = 11
-		y = 10
+		y = 15
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
@@ -25658,7 +25658,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = -8
-		y = 9
+		y = 14
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_dominions_of_the_crown }
@@ -25686,7 +25686,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = -13
-		y = 10
+		y = 15
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_imperial_mission }
@@ -25729,7 +25729,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = -11
-		y = 10
+		y = 15
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_imperial_mission }
@@ -25769,7 +25769,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = -9
-		y = 10
+		y = 15
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_imperial_mission }
@@ -25816,7 +25816,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = -7
-		y = 10
+		y = 15
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_imperial_mission }
@@ -25861,7 +25861,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = -5
-		y = 10
+		y = 15
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_imperial_mission }
@@ -25903,7 +25903,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = -3
-		y = 10
+		y = 15
 		relative_position_id = ENG_crown_union
 
 		prerequisite = { focus = ENG_the_imperial_mission }
