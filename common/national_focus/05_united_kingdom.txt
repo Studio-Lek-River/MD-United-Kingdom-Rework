@@ -24132,7 +24132,7 @@ focus_tree = {
 		id = ENG_the_realms_beyond_the_seas
 		icon = align_to_commonwealth
 
-		x = -2
+		x = -16
 		y = 12
 		relative_position_id = ENG_a_family_of_nations
 
@@ -24167,9 +24167,9 @@ focus_tree = {
 		id = ENG_ottawa_accord
 		icon = align_to_canada
 
-		x = -5
-		y = 13
-		relative_position_id = ENG_a_family_of_nations
+		x = -3
+		y = 1
+		relative_position_id = ENG_the_realms_beyond_the_seas
 
 		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
 
@@ -24213,9 +24213,9 @@ focus_tree = {
 		id = ENG_canberra_accord
 		icon = align_to_australia
 
-		x = -3
-		y = 13
-		relative_position_id = ENG_a_family_of_nations
+		x = -1
+		y = 1
+		relative_position_id = ENG_the_realms_beyond_the_seas
 
 		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
 
@@ -24259,9 +24259,9 @@ focus_tree = {
 		id = ENG_wellington_accord
 		icon = align_to_new_zealand
 
-		x = -1
-		y = 13
-		relative_position_id = ENG_a_family_of_nations
+		x = 1
+		y = 1
+		relative_position_id = ENG_the_realms_beyond_the_seas
 
 		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
 
@@ -24304,9 +24304,9 @@ focus_tree = {
 		id = ENG_caribbean_partnership
 		icon = trade_with_britain
 
-		x = 1
-		y = 13
-		relative_position_id = ENG_a_family_of_nations
+		x = 3
+		y = 1
+		relative_position_id = ENG_the_realms_beyond_the_seas
 
 		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
 
@@ -24362,9 +24362,9 @@ focus_tree = {
 		id = ENG_a_shared_crown
 		icon = british_monarchy
 
-		x = -3
-		y = 14
-		relative_position_id = ENG_a_family_of_nations
+		x = -1
+		y = 2
+		relative_position_id = ENG_the_realms_beyond_the_seas
 
 		prerequisite = {
 			focus = ENG_ottawa_accord
@@ -24403,9 +24403,9 @@ focus_tree = {
 		id = ENG_a_commonwealth_of_equals
 		icon = united_anglosphere
 
-		x = -1
-		y = 14
-		relative_position_id = ENG_a_family_of_nations
+		x = 1
+		y = 2
+		relative_position_id = ENG_the_realms_beyond_the_seas
 
 		prerequisite = {
 			focus = ENG_ottawa_accord
@@ -24445,9 +24445,9 @@ focus_tree = {
 		id = ENG_the_crown_realms_united
 		icon = united_anglosphere
 
-		x = -2
-		y = 15
-		relative_position_id = ENG_a_family_of_nations
+		x = 0
+		y = 3
+		relative_position_id = ENG_the_realms_beyond_the_seas
 
 		prerequisite = {
 			focus = ENG_a_shared_crown
@@ -24476,7 +24476,7 @@ focus_tree = {
 		id = ENG_dominions_of_the_crown
 		icon = british_monarchy
 
-		x = 0
+		x = 10
 		y = 12
 		relative_position_id = ENG_crown_union
 
@@ -24512,8 +24512,8 @@ focus_tree = {
 		icon = Generic_Crown_Box
 
 		x = 0
-		y = 13
-		relative_position_id = ENG_crown_union
+		y = 1
+		relative_position_id = ENG_dominions_of_the_crown
 
 		prerequisite = { focus = ENG_dominions_of_the_crown }
 
@@ -24537,9 +24537,9 @@ focus_tree = {
 		id = ENG_loyalists_in_ottawa
 		icon = align_to_canada
 
-		x = -2
-		y = 14
-		relative_position_id = ENG_crown_union
+		x = -3
+		y = 1
+		relative_position_id = ENG_reserve_powers
 
 		prerequisite = { focus = ENG_reserve_powers }
 
@@ -24578,9 +24578,9 @@ focus_tree = {
 		id = ENG_loyalists_in_canberra
 		icon = align_to_australia
 
-		x = 0
-		y = 14
-		relative_position_id = ENG_crown_union
+		x = -1
+		y = 1
+		relative_position_id = ENG_reserve_powers
 
 		prerequisite = { focus = ENG_reserve_powers }
 
@@ -24619,9 +24619,9 @@ focus_tree = {
 		id = ENG_loyalists_in_wellington
 		icon = align_to_new_zealand
 
-		x = 2
-		y = 14
-		relative_position_id = ENG_crown_union
+		x = 1
+		y = 1
+		relative_position_id = ENG_reserve_powers
 
 		prerequisite = { focus = ENG_reserve_powers }
 
@@ -24660,9 +24660,9 @@ focus_tree = {
 		id = ENG_gunboats_in_the_caribbean
 		icon = British_Army_1
 
-		x = 4
-		y = 14
-		relative_position_id = ENG_crown_union
+		x = 3
+		y = 1
+		relative_position_id = ENG_reserve_powers
 
 		prerequisite = { focus = ENG_reserve_powers }
 
@@ -24705,8 +24705,8 @@ focus_tree = {
 		icon = british_nationalism
 
 		x = -1
-		y = 15
-		relative_position_id = ENG_crown_union
+		y = 2
+		relative_position_id = ENG_reserve_powers
 
 		prerequisite = {
 			focus = ENG_loyalists_in_ottawa
@@ -24747,8 +24747,8 @@ focus_tree = {
 		icon = united_anglosphere
 
 		x = 1
-		y = 15
-		relative_position_id = ENG_crown_union
+		y = 2
+		relative_position_id = ENG_reserve_powers
 
 		prerequisite = {
 			focus = ENG_loyalists_in_ottawa
@@ -24792,8 +24792,8 @@ focus_tree = {
 		icon = british_emblem2
 
 		x = 0
-		y = 16
-		relative_position_id = ENG_crown_union
+		y = 3
+		relative_position_id = ENG_reserve_powers
 
 		prerequisite = {
 			focus = ENG_the_statute_of_westminster_repealed
@@ -24828,9 +24828,9 @@ focus_tree = {
 		id = ENG_the_overseas_settlements
 		icon = british_isles
 
-		x = -9
-		y = 13
-		relative_position_id = ENG_a_family_of_nations
+		x = -7
+		y = 1
+		relative_position_id = ENG_the_realms_beyond_the_seas
 
 		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
 
@@ -24855,9 +24855,9 @@ focus_tree = {
 		id = ENG_the_chagos_settlement
 		icon = british_isles
 
-		x = -13
-		y = 14
-		relative_position_id = ENG_a_family_of_nations
+		x = -1
+		y = 2
+		relative_position_id = ENG_the_overseas_settlements
 
 		prerequisite = { focus = ENG_the_overseas_settlements }
 
@@ -24890,9 +24890,9 @@ focus_tree = {
 		id = ENG_south_atlantic_command
 		icon = british_isles
 
-		x = -11
-		y = 14
-		relative_position_id = ENG_a_family_of_nations
+		x = -2
+		y = 1
+		relative_position_id = ENG_the_overseas_settlements
 
 		prerequisite = { focus = ENG_the_overseas_settlements }
 
@@ -24932,9 +24932,9 @@ focus_tree = {
 		id = ENG_the_rock_settled
 		icon = british_isles
 
-		x = -9
-		y = 14
-		relative_position_id = ENG_a_family_of_nations
+		x = 0
+		y = 1
+		relative_position_id = ENG_the_overseas_settlements
 
 		prerequisite = { focus = ENG_the_overseas_settlements }
 
@@ -24971,9 +24971,9 @@ focus_tree = {
 		id = ENG_the_pearl_river_accord
 		icon = british_isles
 
-		x = -7
-		y = 14
-		relative_position_id = ENG_a_family_of_nations
+		x = 1
+		y = 2
+		relative_position_id = ENG_the_overseas_settlements
 
 		prerequisite = { focus = ENG_the_overseas_settlements }
 
@@ -25019,9 +25019,9 @@ focus_tree = {
 		id = ENG_the_mediterranean_partners
 		icon = british_isles
 
-		x = -5
-		y = 14
-		relative_position_id = ENG_a_family_of_nations
+		x = 2
+		y = 1
+		relative_position_id = ENG_the_overseas_settlements
 
 		prerequisite = { focus = ENG_the_overseas_settlements }
 
@@ -25088,9 +25088,9 @@ focus_tree = {
 		id = ENG_commonwealth_development_partnership
 		icon = british_isles
 
-		x = 6
-		y = 13
-		relative_position_id = ENG_a_family_of_nations
+		x = 7
+		y = 1
+		relative_position_id = ENG_the_realms_beyond_the_seas
 
 		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
 
@@ -25116,9 +25116,9 @@ focus_tree = {
 		id = ENG_west_african_partnership
 		icon = british_isles
 
-		x = 1
-		y = 14
-		relative_position_id = ENG_a_family_of_nations
+		x = -3
+		y = 1
+		relative_position_id = ENG_commonwealth_development_partnership
 
 		prerequisite = { focus = ENG_commonwealth_development_partnership }
 
@@ -25170,9 +25170,9 @@ focus_tree = {
 		id = ENG_east_african_partnership
 		icon = british_isles
 
-		x = 3
-		y = 14
-		relative_position_id = ENG_a_family_of_nations
+		x = -2
+		y = 2
+		relative_position_id = ENG_commonwealth_development_partnership
 
 		prerequisite = { focus = ENG_commonwealth_development_partnership }
 
@@ -25222,9 +25222,9 @@ focus_tree = {
 		id = ENG_southern_african_partnership
 		icon = british_isles
 
-		x = 5
-		y = 14
-		relative_position_id = ENG_a_family_of_nations
+		x = -1
+		y = 1
+		relative_position_id = ENG_commonwealth_development_partnership
 
 		prerequisite = { focus = ENG_commonwealth_development_partnership }
 
@@ -25280,9 +25280,9 @@ focus_tree = {
 		id = ENG_gulf_partnership
 		icon = british_isles
 
-		x = 7
-		y = 14
-		relative_position_id = ENG_a_family_of_nations
+		x = 1
+		y = 1
+		relative_position_id = ENG_commonwealth_development_partnership
 
 		prerequisite = { focus = ENG_commonwealth_development_partnership }
 
@@ -25336,9 +25336,9 @@ focus_tree = {
 		id = ENG_asian_partnership
 		icon = british_isles
 
-		x = 9
-		y = 14
-		relative_position_id = ENG_a_family_of_nations
+		x = 2
+		y = 2
+		relative_position_id = ENG_commonwealth_development_partnership
 
 		prerequisite = { focus = ENG_commonwealth_development_partnership }
 
@@ -25390,9 +25390,9 @@ focus_tree = {
 		id = ENG_pacific_partnership
 		icon = british_isles
 
-		x = 11
-		y = 14
-		relative_position_id = ENG_a_family_of_nations
+		x = 3
+		y = 1
+		relative_position_id = ENG_commonwealth_development_partnership
 
 		prerequisite = { focus = ENG_commonwealth_development_partnership }
 
@@ -25449,8 +25449,8 @@ focus_tree = {
 		icon = british_isles
 
 		x = 7
-		y = 14
-		relative_position_id = ENG_crown_union
+		y = 1
+		relative_position_id = ENG_dominions_of_the_crown
 
 		prerequisite = { focus = ENG_dominions_of_the_crown }
 
@@ -25475,9 +25475,9 @@ focus_tree = {
 		id = ENG_reclaim_the_chagos
 		icon = british_isles
 
-		x = 3
-		y = 15
-		relative_position_id = ENG_crown_union
+		x = -2
+		y = 1
+		relative_position_id = ENG_the_outposts_of_empire
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
 
@@ -25509,9 +25509,9 @@ focus_tree = {
 		id = ENG_fortress_falklands
 		icon = british_isles
 
-		x = 5
-		y = 15
-		relative_position_id = ENG_crown_union
+		x = -1
+		y = 2
+		relative_position_id = ENG_the_outposts_of_empire
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
 
@@ -25554,9 +25554,9 @@ focus_tree = {
 		id = ENG_the_rock_defiant
 		icon = british_isles
 
-		x = 7
-		y = 15
-		relative_position_id = ENG_crown_union
+		x = 0
+		y = 1
+		relative_position_id = ENG_the_outposts_of_empire
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
 
@@ -25600,9 +25600,9 @@ focus_tree = {
 		id = ENG_the_fragrant_harbour
 		icon = british_isles
 
-		x = 9
-		y = 15
-		relative_position_id = ENG_crown_union
+		x = 1
+		y = 2
+		relative_position_id = ENG_the_outposts_of_empire
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
 
@@ -25649,9 +25649,9 @@ focus_tree = {
 		id = ENG_crowns_of_the_mediterranean
 		icon = british_isles
 
-		x = 11
-		y = 15
-		relative_position_id = ENG_crown_union
+		x = 2
+		y = 1
+		relative_position_id = ENG_the_outposts_of_empire
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
 
@@ -25700,8 +25700,8 @@ focus_tree = {
 		icon = british_isles
 
 		x = -8
-		y = 14
-		relative_position_id = ENG_crown_union
+		y = 1
+		relative_position_id = ENG_dominions_of_the_crown
 
 		prerequisite = { focus = ENG_dominions_of_the_crown }
 
@@ -25727,9 +25727,9 @@ focus_tree = {
 		id = ENG_the_west_african_protectorates
 		icon = british_isles
 
-		x = -13
-		y = 15
-		relative_position_id = ENG_crown_union
+		x = -3
+		y = 1
+		relative_position_id = ENG_the_imperial_mission
 
 		prerequisite = { focus = ENG_the_imperial_mission }
 
@@ -25769,9 +25769,9 @@ focus_tree = {
 		id = ENG_the_east_african_protectorates
 		icon = british_isles
 
-		x = -11
-		y = 15
-		relative_position_id = ENG_crown_union
+		x = -2
+		y = 2
+		relative_position_id = ENG_the_imperial_mission
 
 		prerequisite = { focus = ENG_the_imperial_mission }
 
@@ -25809,9 +25809,9 @@ focus_tree = {
 		id = ENG_the_southern_african_protectorates
 		icon = british_isles
 
-		x = -9
-		y = 15
-		relative_position_id = ENG_crown_union
+		x = -1
+		y = 1
+		relative_position_id = ENG_the_imperial_mission
 
 		prerequisite = { focus = ENG_the_imperial_mission }
 
@@ -25855,9 +25855,9 @@ focus_tree = {
 		id = ENG_the_gulf_protectorates
 		icon = british_isles
 
-		x = -7
-		y = 15
-		relative_position_id = ENG_crown_union
+		x = 1
+		y = 1
+		relative_position_id = ENG_the_imperial_mission
 
 		prerequisite = { focus = ENG_the_imperial_mission }
 
@@ -25899,9 +25899,9 @@ focus_tree = {
 		id = ENG_the_asian_protectorates
 		icon = british_isles
 
-		x = -5
-		y = 15
-		relative_position_id = ENG_crown_union
+		x = 2
+		y = 2
+		relative_position_id = ENG_the_imperial_mission
 
 		prerequisite = { focus = ENG_the_imperial_mission }
 
@@ -25941,9 +25941,9 @@ focus_tree = {
 		id = ENG_the_pacific_protectorates
 		icon = british_isles
 
-		x = -3
-		y = 15
-		relative_position_id = ENG_crown_union
+		x = 3
+		y = 1
+		relative_position_id = ENG_the_imperial_mission
 
 		prerequisite = { focus = ENG_the_imperial_mission }
 
