@@ -1445,6 +1445,19 @@ ENG_settle_northern_ireland_question = {
 	ENG_update_north_irish_pressure = yes
 }
 
+# Hard mode lengthens the campaign to a year and remembers who called it
+ENG_activate_union_settlement_referendum = {
+	set_variable = { ENG_settlement_ruling_party = ruling_party }
+	activate_mission = ENG_union_settlement_referendum
+	if = {
+		limit = { has_country_flag = ENG_uq_settlement_hard_mode }
+		add_days_mission_timeout = {
+			mission = ENG_union_settlement_referendum
+			days = 185
+		}
+	}
+}
+
 # Opening ballot position: nationalism carries twice the weight of the wider pressure score
 ENG_seed_referendum_campaign = {
 	clr_country_flag = ENG_referendum_pledge_used
@@ -1503,6 +1516,15 @@ ENG_resolve_independence_referendum = {
 ENG_resolve_union_settlement = {
 	set_variable = { ENG_referendum_stay_vote = 100 }
 	subtract_from_variable = { var = ENG_referendum_stay_vote value = ENG_referendum_leave_vote }
+	# Hard mode: the status quo bias only lifts once the Union Dividend has been paid
+	if = {
+		limit = {
+			has_country_flag = ENG_uq_settlement_hard_mode
+			NOT = { has_completed_focus = ENG_the_union_dividend }
+		}
+		subtract_from_variable = { var = ENG_referendum_stay_vote value = 10 }
+		clamp_variable = { var = ENG_referendum_stay_vote min = 0 max = 100 }
+	}
 	update_eng_devolution_dirty_variable = yes
 	random_list = {
 		ENG_referendum_stay_vote = {
@@ -1612,6 +1634,35 @@ ENG_integrate_referendum_region = {
 			remove_core_of = WAS
 		}
 		ENG_apply_integrated_baseline = yes
+	}
+	ENG_centralisation_backlash = yes
+}
+
+# Hard mode: each integration unsettles the regions still devolved
+ENG_centralisation_backlash = {
+	if = {
+		limit = { has_country_flag = ENG_uq_settlement_hard_mode }
+		if = {
+			limit = { NOT = { has_country_flag = ENG_scottish_integrated } }
+			set_temp_variable = { ENG_agitation_change = 5 }
+			ENG_change_scottish_agitation = yes
+			set_temp_variable = { ENG_nationalists_change = 3 }
+			ENG_change_scottish_nationalists = yes
+		}
+		if = {
+			limit = { NOT = { has_country_flag = ENG_north_irish_integrated } }
+			set_temp_variable = { ENG_agitation_change = 5 }
+			ENG_change_north_irish_agitation = yes
+			set_temp_variable = { ENG_nationalists_change = 3 }
+			ENG_change_north_irish_nationalists = yes
+		}
+		if = {
+			limit = { NOT = { has_country_flag = ENG_welsh_integrated } }
+			set_temp_variable = { ENG_agitation_change = 5 }
+			ENG_change_wales_agitation = yes
+			set_temp_variable = { ENG_nationalists_change = 3 }
+			ENG_change_wales_nationalists = yes
+		}
 	}
 }
 

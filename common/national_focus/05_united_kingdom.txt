@@ -21923,7 +21923,7 @@ focus_tree = {
 		icon = invest_in_britain
 
 		x = 23
-		y = 5
+		y = 10
 		offset = {
 			x = 1
 			y = 0
@@ -22502,7 +22502,7 @@ focus_tree = {
 		icon = Generic_British_Soldiers03
 
 		x = 25
-		y = 5
+		y = 10
 		offset = {
 			x = -1
 			y = 0
@@ -23190,6 +23190,197 @@ focus_tree = {
 			add_stability = -0.10
 			add_named_threat = { threat = 1 name = ENG_crown_imperial_threat }
 			set_country_flag = ENG_uq_nationalist
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_one_nation
+		icon = democratic_stability
+
+		x = 0
+		y = 1
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_a_family_of_nations }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_one_nation_convention_TT
+				has_country_flag = ENG_constitutional_convention
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_one_nation"
+			set_country_flag = ENG_uq_settlement_hard_mode
+			custom_effect_tooltip = ENG_uq_settlement_hard_mode_tt
+			hidden_effect = {
+				set_variable = { ENG_settlement_cost = 300 }
+				set_variable = { ENG_settlement_pressure_cap = 15 }
+				set_variable = { ENG_settlement_nationalists_cap = 20 }
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_union_dividend
+		icon = pound_sterling
+
+		x = -2
+		y = 2
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_one_nation }
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_EXPENDITURE }
+
+		available = { has_government = democratic }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_union_dividend"
+			activate_mission = ENG_union_dividend_programme
+			unlock_decision_tooltip = ENG_renew_the_union_dividend
+			newline = yes
+			set_temp_variable = { treasury_change = { value = gdp_total multiply = -0.01 } }
+			modify_treasury_effect = yes
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				factor = 0
+				has_active_mission = bankruptcy_incoming_collapse
+			}
+		}
+	}
+
+	focus = {
+		id = ENG_a_british_curriculum
+		icon = university
+
+		x = 0
+		y = 2
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_one_nation }
+
+		mutually_exclusive = { focus = ENG_a_union_of_equals }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = { has_government = democratic }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_british_curriculum"
+			set_temp_variable = { ENG_nationalists_change = -5 }
+			ENG_change_scottish_nationalists = yes
+			ENG_change_north_irish_nationalists = yes
+			ENG_change_wales_nationalists = yes
+			set_temp_variable = { ENG_agitation_change = 5 }
+			ENG_change_scottish_agitation = yes
+			ENG_change_north_irish_agitation = yes
+			ENG_change_wales_agitation = yes
+			add_stability = -0.03
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_a_union_of_equals
+		icon = union_negotiations
+
+		x = 2
+		y = 2
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_one_nation }
+
+		mutually_exclusive = { focus = ENG_a_british_curriculum }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = { has_government = democratic }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_union_of_equals"
+			set_temp_variable = { ENG_dependency_change = 5 }
+			ENG_change_scottish_dependency = yes
+			ENG_change_north_irish_dependency = yes
+			ENG_change_wales_dependency = yes
+			set_temp_variable = { ENG_agitation_change = -5 }
+			ENG_change_scottish_agitation = yes
+			ENG_change_north_irish_agitation = yes
+			ENG_change_wales_agitation = yes
+			set_temp_variable = { ENG_nationalists_change = 3 }
+			ENG_change_scottish_nationalists = yes
+			ENG_change_north_irish_nationalists = yes
+			ENG_change_wales_nationalists = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_westminster_first
+		icon = pass_legislation
+
+		x = 0
+		y = 3
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = {
+			focus = ENG_a_british_curriculum
+			focus = ENG_a_union_of_equals
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			ENG_two_home_nations_integrated = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_westminster_first"
+			set_temp_variable = { ENG_union_strain_change = -5 }
+			ENG_change_union_strain = yes
+			add_political_power = 100
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_act_of_union
+		icon = british_isles
+
+		x = 0
+		y = 4
+		relative_position_id = ENG_a_family_of_nations
+
+		prerequisite = { focus = ENG_westminster_first }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			ENG_uq_home_nations_done = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_act_of_union"
+			custom_effect_tooltip = ENG_act_of_union_TT
+			set_country_flag = ENG_devolution_purged
+			add_ideas = ENG_one_nation_idea
+			hidden_effect = { update_eng_devolution_dirty_variable = yes }
 		}
 
 		ai_will_do = { base = 0 }

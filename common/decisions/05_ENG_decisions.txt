@@ -3382,6 +3382,7 @@ ENG_devolved_matters = {
 			OR = {
 				has_country_flag = ENG_devolution_purged
 				ENG_settlement_region_lost = yes
+				ENG_settlement_government_fell = yes
 			}
 		}
 
@@ -3389,6 +3390,15 @@ ENG_devolved_matters = {
 		is_good = no
 		selectable_mission = no
 		fixed_random_seed = no
+
+		cancel_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_union_settlement_referendum"
+			if = {
+				limit = { ENG_settlement_government_fell = yes }
+				country_event = devolution.29
+			}
+			ENG_clear_referendum_campaign = yes
+		}
 
 		timeout_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_union_settlement_referendum"
@@ -3948,7 +3958,8 @@ ENG_devolved_matters = {
 			}
 		}
 
-		cost = 200
+		cost = ENG_settlement_cost
+		ai_hint_pp_cost = 200
 		custom_cost_trigger = { check_variable = { treasury > 5 } }
 		custom_cost_text = cost_5_0
 		days_remove = 30
@@ -3957,14 +3968,23 @@ ENG_devolved_matters = {
 			check_variable = {
 				tooltip = ENG_scottish_settlement_calm_tt
 				var = ENG_scottish_pressure
-				value = 20
+				value = ENG_settlement_pressure_cap
 				compare = less_than
 			}
 			check_variable = {
 				tooltip = ENG_scottish_settlement_ready_tt
 				var = ENG_scottish_nationalists
-				value = 25
+				value = ENG_settlement_nationalists_cap
 				compare = less_than
+			}
+			if = {
+				limit = { has_country_flag = ENG_uq_settlement_hard_mode }
+				check_variable = {
+					tooltip = ENG_scottish_settlement_dependent_tt
+					var = ENG_scottish_dependency
+					value = 90
+					compare = greater_than
+				}
 			}
 		}
 
@@ -3972,7 +3992,7 @@ ENG_devolved_matters = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_scottish_union_settlement"
 			set_variable = { ENG_referendum_target = 1 }
 			ENG_seed_referendum_campaign = yes
-			activate_mission = ENG_union_settlement_referendum
+			ENG_activate_union_settlement_referendum = yes
 			newline = yes
 			set_temp_variable = { treasury_change = -5 }
 			modify_treasury_effect = yes
@@ -4003,7 +4023,8 @@ ENG_devolved_matters = {
 		}
 
 		highlight_states = { highlight_state_targets = { state = 17 } }
-		cost = 200
+		cost = ENG_settlement_cost
+		ai_hint_pp_cost = 200
 		custom_cost_trigger = { check_variable = { treasury > 5 } }
 		custom_cost_text = cost_5_0
 		days_remove = 30
@@ -4016,14 +4037,27 @@ ENG_devolved_matters = {
 			check_variable = {
 				tooltip = ENG_north_irish_settlement_calm_tt
 				var = ENG_north_irish_pressure
-				value = 20
+				value = ENG_settlement_pressure_cap
 				compare = less_than
 			}
 			check_variable = {
 				tooltip = ENG_north_irish_settlement_ready_tt
 				var = ENG_north_irish_nationalists
-				value = 25
+				value = ENG_settlement_nationalists_cap
 				compare = less_than
+			}
+			if = {
+				limit = { has_country_flag = ENG_uq_settlement_hard_mode }
+				check_variable = {
+					tooltip = ENG_north_irish_settlement_dependent_tt
+					var = ENG_north_irish_dependency
+					value = 90
+					compare = greater_than
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_settlement_no_lost_border_poll_tt
+					NOT = { has_country_flag = ENG_border_poll_lost }
+				}
 			}
 		}
 
@@ -4031,7 +4065,15 @@ ENG_devolved_matters = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_north_irish_union_settlement"
 			set_variable = { ENG_referendum_target = 2 }
 			ENG_seed_referendum_campaign = yes
-			activate_mission = ENG_union_settlement_referendum
+			ENG_activate_union_settlement_referendum = yes
+			if = {
+				limit = {
+					has_country_flag = ENG_uq_settlement_hard_mode
+					country_exists = IRE
+					NOT = { IRE = { has_opinion = { target = ROOT value > 50 } } }
+				}
+				country_event = ENG_uq.67
+			}
 			newline = yes
 			set_temp_variable = { treasury_change = -5 }
 			modify_treasury_effect = yes
@@ -4066,7 +4108,8 @@ ENG_devolved_matters = {
 			}
 		}
 
-		cost = 200
+		cost = ENG_settlement_cost
+		ai_hint_pp_cost = 200
 		custom_cost_trigger = { check_variable = { treasury > 5 } }
 		custom_cost_text = cost_5_0
 		days_remove = 30
@@ -4075,14 +4118,23 @@ ENG_devolved_matters = {
 			check_variable = {
 				tooltip = ENG_wales_settlement_calm_tt
 				var = ENG_wales_pressure
-				value = 20
+				value = ENG_settlement_pressure_cap
 				compare = less_than
 			}
 			check_variable = {
 				tooltip = ENG_wales_settlement_ready_tt
 				var = ENG_wales_nationalists
-				value = 25
+				value = ENG_settlement_nationalists_cap
 				compare = less_than
+			}
+			if = {
+				limit = { has_country_flag = ENG_uq_settlement_hard_mode }
+				check_variable = {
+					tooltip = ENG_wales_settlement_dependent_tt
+					var = ENG_wales_dependency
+					value = 90
+					compare = greater_than
+				}
 			}
 		}
 
@@ -4090,7 +4142,7 @@ ENG_devolved_matters = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_welsh_union_settlement"
 			set_variable = { ENG_referendum_target = 3 }
 			ENG_seed_referendum_campaign = yes
-			activate_mission = ENG_union_settlement_referendum
+			ENG_activate_union_settlement_referendum = yes
 			newline = yes
 			set_temp_variable = { treasury_change = -5 }
 			modify_treasury_effect = yes
@@ -4842,6 +4894,57 @@ ENG_a_family_of_nations_decisions = {
 		}
 
 		ai_will_do = { base = 5 }
+	}
+
+	ENG_union_dividend_programme = {
+		icon = GFX_decision_generic_construction
+		activation = { always = no }
+		available = { always = no }
+		cancel_trigger = { has_country_flag = ENG_devolution_purged }
+		days_mission_timeout = 730
+		is_good = yes
+		selectable_mission = no
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_union_dividend_programme"
+			set_temp_variable = { ENG_dependency_change = 5 }
+			ENG_change_scottish_dependency = yes
+			ENG_change_north_irish_dependency = yes
+			ENG_change_wales_dependency = yes
+			set_temp_variable = { ENG_agitation_change = -3 }
+			ENG_change_scottish_agitation = yes
+			ENG_change_north_irish_agitation = yes
+			ENG_change_wales_agitation = yes
+		}
+	}
+
+	ENG_renew_the_union_dividend = {
+		icon = GFX_decision_generic_construction
+
+		visible = {
+			has_completed_focus = ENG_the_union_dividend
+			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { has_active_mission = ENG_union_dividend_programme }
+		}
+
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.01
+				less_than = { value = treasury }
+			}
+		}
+		custom_cost_text = ENG_cost_gdp_1_percent
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_renew_the_union_dividend"
+			activate_mission = ENG_union_dividend_programme
+			newline = yes
+			set_temp_variable = { treasury_change = { value = gdp_total multiply = -0.01 } }
+			modify_treasury_effect = yes
+		}
+
+		ai_will_do = { base = 0 }
 	}
 }
 

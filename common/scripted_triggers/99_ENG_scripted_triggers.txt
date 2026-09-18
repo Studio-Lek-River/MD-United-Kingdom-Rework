@@ -74,6 +74,32 @@ ENG_settlement_region_lost = {
 	}
 }
 
+# Hard mode: the party that called the settlement referendum has lost office
+ENG_settlement_government_fell = {
+	has_country_flag = ENG_uq_settlement_hard_mode
+	NOT = { check_variable = { ruling_party = ENG_settlement_ruling_party } }
+}
+
+ENG_two_home_nations_integrated = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_two_home_nations_integrated_TT
+		OR = {
+			AND = {
+				has_country_flag = ENG_scottish_integrated
+				has_country_flag = ENG_welsh_integrated
+			}
+			AND = {
+				has_country_flag = ENG_scottish_integrated
+				has_country_flag = ENG_north_irish_integrated
+			}
+			AND = {
+				has_country_flag = ENG_welsh_integrated
+				has_country_flag = ENG_north_irish_integrated
+			}
+		}
+	}
+}
+
 ENG_inner_circle_is_ascension_cd_over = {
 	NOT = {
 		has_country_flag = {

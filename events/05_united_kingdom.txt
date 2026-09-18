@@ -2734,6 +2734,23 @@ country_event = {
 				ENG_change_wales_nationalists = yes
 			}
 		}
+		# Hard mode: a defeat emboldens the other nationalist movements
+		if = {
+			limit = { has_country_flag = ENG_uq_settlement_hard_mode }
+			set_temp_variable = { ENG_nationalists_change = 10 }
+			if = {
+				limit = { NOT = { check_variable = { ENG_referendum_target = 1 } } }
+				ENG_change_scottish_nationalists = yes
+			}
+			if = {
+				limit = { NOT = { check_variable = { ENG_referendum_target = 2 } } }
+				ENG_change_north_irish_nationalists = yes
+			}
+			if = {
+				limit = { NOT = { check_variable = { ENG_referendum_target = 3 } } }
+				ENG_change_wales_nationalists = yes
+			}
+		}
 		ENG_clear_referendum_campaign = yes
 	}
 }
@@ -3322,6 +3339,7 @@ country_event = {
 		else_if = {
 			limit = { check_variable = { ENG_north_irish_nationalists > 49 } }
 			set_country_flag = { flag = ENG_border_poll_cooldown days = 1825 value = 1 }
+			set_country_flag = { flag = ENG_border_poll_lost days = 3650 value = 1 }
 			set_temp_variable = { ENG_nationalists_change = -5 }
 			ENG_change_north_irish_nationalists = yes
 			set_temp_variable = { ENG_agitation_change = 5 }
@@ -3418,6 +3436,7 @@ country_event = {
 		name = devolution.26.a
 		log = "[GetDateText]: [This.GetName]: devolution.26.a executed"
 		set_country_flag = { flag = ENG_border_poll_cooldown days = 1825 value = 1 }
+		set_country_flag = { flag = ENG_border_poll_lost days = 3650 value = 1 }
 		set_temp_variable = { ENG_agitation_change = 10 }
 		ENG_change_north_irish_agitation = yes
 	}
@@ -3453,6 +3472,21 @@ country_event = {
 			}
 			IRE = { country_event = { id = devolution.28 days = 3 } }
 		}
+	}
+}
+
+# The Government Falls, the Settlement With It
+country_event = {
+	id = devolution.29
+	title = devolution.29.t
+	desc = devolution.29.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = devolution.29.a
+		log = "[GetDateText]: [This.GetName]: devolution.29.a executed"
+		add_stability = -0.03
 	}
 }
 
@@ -8131,6 +8165,24 @@ country_event = {
 					}
 				}
 			}
+		}
+	}
+}
+
+# Dublin protests a Northern Ireland settlement pushed through over its head
+country_event = {
+	id = ENG_uq.67
+	title = ENG_uq.67.t
+	desc = ENG_uq.67.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.67.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.67.a executed"
+		IRE = {
+			set_temp_variable = { ENG_uq_consent_change = -10 }
+			ENG_uq_change_consent = yes
 		}
 	}
 }
