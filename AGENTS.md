@@ -41,7 +41,10 @@ overrides MD's copy. Everything else lives in MD, checked out at `D:/secondary-m
 
 ## Validation
 
-- Content validation runs in GitHub CI at PR time. Do not run it proactively.
+- Content validation runs in GitHub CI at PR time (`validation.yml`): MD's validator suite,
+  run against the owned files overlaid on MD at the commit in `tools/md_base_ref.txt`.
+  Locally: `python tools/validate_with_md.py [--batch core|targeted-a|targeted-b]`
+  (needs an MD checkout, default `D:/secondary-md`). Do not run it proactively.
 - Never run `pre-commit run --all-files`. Use normal staged-file hooks or
   `pre-commit run --files <changed paths>`; do not include unrelated formatter edits.
 - Before changing or debugging validation, read

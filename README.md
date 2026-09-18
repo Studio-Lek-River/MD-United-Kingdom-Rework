@@ -28,8 +28,14 @@ Millennium Dawn is touched. The full list of owned paths is `ENG_PATHS` and `ENG
 python tools/sync_md_base.py --md <path to a Millennium Dawn checkout>
 ```
 
-The script refreshes `md-base` from that checkout, commits with the MD hash, and merges `md-base`
-into `main`. Files you did not change merge clean; your reworked files get normal git conflicts to
-resolve.
+The script refreshes `md-base` from that checkout, commits with the MD hash, writes the full hash to
+`tools/md_base_ref.txt`, and merges `md-base` into `main`. Files you did not change merge clean; your
+reworked files get normal git conflicts to resolve.
+
+## Validation
+
+Pull requests run Millennium Dawn's validator suite against this repo's files overlaid on MD at the
+commit in `tools/md_base_ref.txt`. Run it locally with `python tools/validate_with_md.py` (needs an
+MD checkout that contains that commit, default `D:/secondary-md`).
 
 Base: Millennium Dawn `533ffcee4e` (development branch, ahead of the current Steam release).
