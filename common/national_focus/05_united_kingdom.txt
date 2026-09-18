@@ -25046,6 +25046,251 @@ focus_tree = {
 		ai_will_do = { base = 0 }
 	}
 
+	# Tier 3b: lost possessions (Nationalist)
+
+	focus = {
+		id = ENG_the_outposts_of_empire
+		icon = british_isles
+
+		x = 7
+		y = 9
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_dominions_of_the_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_outposts_of_empire"
+			custom_effect_tooltip = ENG_the_outposts_of_empire_TT
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			add_war_support = 0.02
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_reclaim_the_chagos
+		icon = british_isles
+
+		x = 3
+		y = 10
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_outposts_of_empire }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = USA
+			USA = { owns_state = 824 }
+			NOT = { has_war_with = USA }
+		}
+
+		bypass = { owns_state = 824 }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_reclaim_the_chagos"
+			custom_effect_tooltip = ENG_reclaim_the_chagos_TT
+			USA = { country_event = { id = ENG_uq.206 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_chagos_accept_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_chagos_crisis_TT }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_fortress_falklands
+		icon = british_isles
+
+		x = 5
+		y = 10
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_outposts_of_empire }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			owns_state = 26
+			OR = {
+				has_completed_focus = ENG_falklands_policy
+				NOT = { country_exists = ARG }
+			}
+		}
+
+		bypass = { NOT = { owns_state = 26 } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_fortress_falklands"
+			custom_effect_tooltip = ENG_fortress_falklands_TT
+			26 = { add_core_of = ROOT }
+			22 = { add_core_of = ROOT }
+			26 = { add_dynamic_modifier = { modifier = ENG_uq_fortress_state } }
+			set_temp_variable = { ENG_imperial_tension_change = 3 }
+			ENG_change_imperial_tension = yes
+			hidden_effect = {
+				if = {
+					limit = {
+						country_exists = ARG
+						NOT = { has_war_with = ARG }
+					}
+					ARG = { country_event = { id = ENG_uq.210 days = 2 } }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_rock_defiant
+		icon = british_isles
+
+		x = 7
+		y = 10
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_outposts_of_empire }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = SPR
+			owns_state = 19
+			NOT = { has_war_with = SPR }
+		}
+
+		bypass = { NOT = { 19 = { is_claimed_by = SPR } } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_rock_defiant"
+			custom_effect_tooltip = ENG_the_rock_defiant_TT
+			19 = {
+				add_dynamic_modifier = { modifier = ENG_uq_fortress_state }
+				one_state_anti_air = yes
+			}
+			SPR = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_gibraltar_defiance_opinion } }
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+			custom_effect_tooltip = ENG_uq_spain_may_escalate_TT
+			hidden_effect = {
+				SPR = { country_event = { id = ENG_uq.225 days = 2 } }
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_fragrant_harbour
+		icon = british_isles
+
+		x = 9
+		y = 10
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_outposts_of_empire }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = HKG
+			HKG = {
+				is_subject = no
+				NOT = { has_war_with = ROOT }
+			}
+			NOT = { has_war_with = CHI }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_fragrant_harbour"
+			custom_effect_tooltip = ENG_the_fragrant_harbour_TT
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = HKG }
+			change_influence_percentage = yes
+			HKG = {
+				hidden_effect = { ENG_uq_align_target = yes }
+			}
+			custom_effect_tooltip = ENG_uq_hong_kong_cap_TT
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			hidden_effect = {
+				if = {
+					limit = {
+						country_exists = CHI
+						NOT = { has_war_with = CHI }
+					}
+					CHI = { country_event = { id = ENG_uq.230 days = 2 } }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_crowns_of_the_mediterranean
+		icon = british_isles
+
+		x = 11
+		y = 10
+		relative_position_id = ENG_crown_union
+
+		prerequisite = { focus = ENG_the_outposts_of_empire }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = MLT
+				country_exists = CYP
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = MLT }
+			NOT = { country_exists = CYP }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_crowns_of_the_mediterranean"
+			custom_effect_tooltip = ENG_crowns_of_the_mediterranean_TT
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = MLT
+						original_tag = CYP
+					}
+					is_subject = no
+					NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+				}
+				hidden_effect = { ENG_uq_align_target = yes }
+			}
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_monarchists
+			custom_effect_tooltip = ENG_uq_med_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
 	# Junta Tree
 
 	# focus = {

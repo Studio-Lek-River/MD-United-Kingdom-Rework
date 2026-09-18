@@ -121,6 +121,14 @@ opinion_modifiers = {
 		value = -20
 		months = 36
 	}
+	ENG_uq_chagos_crisis_opinion = {
+		value = -50
+		months = 36
+	}
+	ENG_uq_gibraltar_defiance_opinion = {
+		value = -40
+		months = 36
+	}
 	ENG_cmw_games_host_opinion = {
 		value = 10
 		months = 48

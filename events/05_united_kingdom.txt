@@ -9930,6 +9930,235 @@ country_event = {
 	option = { name = ENG_uq.232.a }
 }
 
+# Britain demands the Chagos (USA, FROM = ENG)
+country_event = {
+	id = ENG_uq.206
+	title = ENG_uq.206.t
+	desc = ENG_uq.206.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.206.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.206.a executed"
+		ENG = { country_event = { id = ENG_uq.207 days = 1 } }
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 40
+				has_opinion = { target = FROM value > 80 }
+			}
+			modifier = {
+				add = 30
+				has_war = yes
+			}
+			modifier = {
+				factor = 0
+				has_war_with = FROM
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.206.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.206.b executed"
+		ENG = { country_event = { id = ENG_uq.208 days = 1 } }
+		ai_chance = { base = 60 }
+	}
+}
+
+# Washington yields on the Chagos (ENG)
+country_event = {
+	id = ENG_uq.207
+	title = ENG_uq.207.t
+	desc = ENG_uq.207.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.207.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.207.a executed"
+		ENG_uq_chagos_settled = yes
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# The Chagos crisis (ENG)
+country_event = {
+	id = ENG_uq.208
+	title = ENG_uq.208.t
+	desc = ENG_uq.208.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.208.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.208.a executed"
+		set_temp_variable = { ENG_imperial_tension_change = 15 }
+		ENG_change_imperial_tension = yes
+		USA = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_chagos_crisis_opinion } }
+		if = {
+			limit = { USA = { has_opinion_modifier = ENG_monarch_outreach } }
+			USA = { remove_opinion_modifier = { target = ROOT modifier = ENG_monarch_outreach } }
+		}
+		if = {
+			limit = { has_opinion_modifier = ENG_monarch_outreach }
+			remove_opinion_modifier = { target = USA modifier = ENG_monarch_outreach }
+		}
+		set_country_flag = ENG_uq_chagos_crisis
+		unlock_decision_tooltip = ENG_uq_seize_diego_garcia
+	}
+}
+
+# Fortress Gibraltar (SPR, FROM = ENG)
+country_event = {
+	id = ENG_uq.225
+	title = ENG_uq.225.t
+	desc = ENG_uq.225.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.225.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.225.a executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_defiance_opinion }
+		ai_chance = { base = 50 }
+	}
+
+	option = {
+		name = ENG_uq.225.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.225.b executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_defiance_opinion }
+		if = {
+			limit = { has_dlc = "By Blood Alone" }
+			send_embargo = FROM
+		}
+		FROM = {
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+			country_event = { id = ENG_uq.226 days = 1 }
+		}
+		ai_chance = {
+			base = 30
+			modifier = {
+				factor = 2
+				has_government = nationalist
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = FROM
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.225.c
+		ai_chance = {
+			base = 20
+			modifier = {
+				factor = 0
+				has_opinion = { target = FROM value < 0 }
+			}
+		}
+	}
+}
+
+# Madrid closes the frontier (ENG, FROM = SPR)
+country_event = {
+	id = ENG_uq.226
+	title = ENG_uq.226.t
+	desc = ENG_uq.226.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.226.a }
+}
+
+# The Crown's friends (MLT/CYP, FROM = ENG)
+country_event = {
+	id = ENG_uq.240
+	title = ENG_uq.240.t
+	desc = ENG_uq.240.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.240.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.240.a executed"
+		hidden_effect = {
+			set_temp_variable = { rul_party_temp = 23 }
+			set_temp_variable = { disable_elections = 1 }
+			change_ruling_party_effect = yes
+			set_temp_variable = { party_index = 23 }
+			set_temp_variable = { party_popularity_increase = 0.15 }
+			change_relative_party_popularity = yes
+		}
+		custom_effect_tooltip = ENG_uq_monarchy_restored_TT
+		set_country_flag = ENG_uq_monarchy_restored
+		clr_country_flag = ENG_uq_republic
+		if = {
+			limit = { NOT = { has_idea = ENG_crown_realm_status } }
+			add_ideas = ENG_crown_realm_status
+		}
+		add_stability = -0.05
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.241 days = 1 } }
+		}
+		ai_chance = {
+			base = 20
+			modifier = {
+				add = 40
+				has_idea = ENG_uq_loyalist_movement
+			}
+			modifier = {
+				add = 20
+				FROM = { check_variable = { ENG_consent@ROOT > 40 } }
+			}
+			modifier = {
+				factor = 0
+				has_war_with = FROM
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.240.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.240.b executed"
+		set_temp_variable = { ENG_uq_consent_change = -10 }
+		ENG_uq_change_consent = yes
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.242 days = 1 } }
+		}
+		ai_chance = { base = 60 }
+	}
+}
+
+# A crown restored (ENG, FROM = target)
+country_event = {
+	id = ENG_uq.241
+	title = ENG_uq.241.t
+	desc = ENG_uq.241.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.241.a }
+}
+
+# Republicans hold (ENG, FROM = target)
+country_event = {
+	id = ENG_uq.242
+	title = ENG_uq.242.t
+	desc = ENG_uq.242.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.242.a }
+}
+
 ########################## Commonwealth of Nations #########################
 # Commonwealth Games held
 news_event = {

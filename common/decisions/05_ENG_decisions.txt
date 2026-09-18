@@ -5013,6 +5013,104 @@ ENG_the_crown_imperial_decisions = {
 			ENG_change_wales_agitation = yes
 		}
 	}
+
+	ENG_uq_seize_diego_garcia = {
+		icon = GFX_decision_generic_police_action
+
+		visible = {
+			has_country_flag = ENG_uq_chagos_crisis
+			USA = { owns_state = 824 }
+			NOT = { has_war_with = USA }
+		}
+
+		available = {
+			ENG_uq_usa_distracted = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_not_allied_usa_TT
+				NOT = { is_in_faction_with = USA }
+			}
+		}
+
+		cost = 150
+		days_re_enable = 365
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_seize_diego_garcia"
+			824 = { add_claim_by = ROOT }
+			add_named_threat = { threat = 5 name = ENG_uq_enforce_threat }
+			set_temp_variable = { ENG_imperial_tension_change = 10 }
+			ENG_change_imperial_tension = yes
+			set_temp_variable = { wargoal_on = USA }
+			add_threat_from_wargoal_effect = yes
+			create_wargoal = {
+				type = take_claimed_state
+				target = USA
+			}
+			if = {
+				limit = {
+					has_idea = NATO_member
+					NOT = { has_idea = ENG_uq_nato_strain }
+				}
+				add_ideas = ENG_uq_nato_strain
+				custom_effect_tooltip = ENG_uq_nato_at_risk_TT
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_sponsor_monarchists = {
+		icon = GFX_decision_generic_political_discourse
+
+		targets = { MLT CYP }
+		target_root_trigger = {
+			has_country_flag = ENG_uq_nationalist
+			has_completed_focus = ENG_crowns_of_the_mediterranean
+		}
+		target_trigger = {
+			FROM = {
+				exists = yes
+				NOT = { has_country_flag = ENG_uq_monarchy_restored }
+				nationalist_monarchists_are_in_power = no
+				NOT = { has_war_with = ROOT }
+			}
+			is_in_array = { array = ENG_integration_targets value = FROM }
+			check_variable = { ENG_coercion@FROM > 0 }
+		}
+
+		cost = 100
+		custom_cost_trigger = {
+			check_expr = {
+				value = gdp_total
+				multiply = 0.002
+				less_than = { value = treasury }
+			}
+			has_political_power > 99.999
+		}
+		custom_cost_text = ENG_cost_small_expenditure_pp100
+		ai_hint_pp_cost = 100
+		days_remove = 365
+		days_re_enable = 730
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_sponsor_monarchists"
+			hidden_effect = { add_political_power = -100 }
+			small_expenditure = yes
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_sponsor_monarchists"
+			FROM = { country_event = { id = ENG_uq.240 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_monarchy_restored_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_monarchy_refused_TT }
+		}
+
+		ai_will_do = { base = 5 }
+	}
 }
 
 ENG_a_family_of_nations_decisions = {
