@@ -1278,7 +1278,7 @@ decisions_ENG = {
 			controls_state = 28
 			controls_state = 29
 			has_completed_focus = ENG_uniting_the_isle
-			NOT = { has_country_flag = ENG_uq_nationalist }
+			NOT = { has_completed_focus = ENG_the_crown_imperial }
 		}
 
 		available = {
@@ -3990,7 +3990,7 @@ ENG_devolved_matters = {
 				compare = less_than
 			}
 			if = {
-				limit = { has_country_flag = ENG_uq_settlement_hard_mode }
+				limit = { has_completed_focus = ENG_one_nation }
 				check_variable = {
 					tooltip = ENG_scottish_settlement_dependent_tt
 					var = ENG_scottish_dependency
@@ -4060,7 +4060,7 @@ ENG_devolved_matters = {
 				compare = less_than
 			}
 			if = {
-				limit = { has_country_flag = ENG_uq_settlement_hard_mode }
+				limit = { has_completed_focus = ENG_one_nation }
 				check_variable = {
 					tooltip = ENG_north_irish_settlement_dependent_tt
 					var = ENG_north_irish_dependency
@@ -4081,7 +4081,7 @@ ENG_devolved_matters = {
 			ENG_activate_union_settlement_referendum = yes
 			if = {
 				limit = {
-					has_country_flag = ENG_uq_settlement_hard_mode
+					has_completed_focus = ENG_one_nation
 					country_exists = IRE
 					NOT = { IRE = { has_opinion = { target = ROOT value > 50 } } }
 				}
@@ -4142,7 +4142,7 @@ ENG_devolved_matters = {
 				compare = less_than
 			}
 			if = {
-				limit = { has_country_flag = ENG_uq_settlement_hard_mode }
+				limit = { has_completed_focus = ENG_one_nation }
 				check_variable = {
 					tooltip = ENG_wales_settlement_dependent_tt
 					var = ENG_wales_dependency
@@ -4507,7 +4507,7 @@ ENG_the_crown_imperial_decisions = {
 		icon = GFX_decision_generic_political_rally
 
 		target_array = ENG_integration_targets
-		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+		target_root_trigger = { has_completed_focus = ENG_the_crown_imperial }
 		target_trigger = {
 			check_variable = { ENG_integration_stage@FROM = 1 }
 			check_variable = { ENG_coercion@FROM = 0 }
@@ -4530,6 +4530,8 @@ ENG_the_crown_imperial_decisions = {
 		custom_cost_text = ENG_cost_small_expenditure_pp100
 		ai_hint_pp_cost = 100
 		days_remove = 180
+
+		fixed_random_seed = no
 
 		available = {
 			custom_trigger_tooltip = {
@@ -4578,7 +4580,7 @@ ENG_the_crown_imperial_decisions = {
 		icon = GFX_decision_export_button
 
 		target_array = ENG_integration_targets
-		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+		target_root_trigger = { has_completed_focus = ENG_the_crown_imperial }
 		target_trigger = {
 			check_variable = { ENG_integration_stage@FROM = 1 }
 			check_variable = { ENG_coercion@FROM = 1 }
@@ -4624,7 +4626,7 @@ ENG_the_crown_imperial_decisions = {
 		icon = GFX_decision_generic_nationalism
 
 		target_array = ENG_integration_targets
-		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+		target_root_trigger = { has_completed_focus = ENG_the_crown_imperial }
 		target_trigger = {
 			check_variable = { ENG_coercion@FROM = 2 }
 			NOT = { has_country_flag = ENG_uq_ultimatum_rejected@FROM }
@@ -4653,7 +4655,7 @@ ENG_the_crown_imperial_decisions = {
 					NOT = { has_war_with = USA }
 					NOT = { is_in_faction_with = USA }
 				}
-				FROM = { set_country_flag = { flag = ENG_uq_us_guarantee_candidate days = 30 } }
+				FROM = { set_country_flag = { flag = ENG_uq_us_guarantee_candidate value = 1 days = 30 } }
 				USA = { country_event = { id = ENG_uq.134 days = 2 } }
 			}
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
@@ -4669,7 +4671,7 @@ ENG_the_crown_imperial_decisions = {
 		icon = GFX_decision_generic_nationalism
 
 		target_array = ENG_integration_targets
-		target_root_trigger = { has_country_flag = ENG_uq_nationalist has_completed_focus = ENG_reserve_powers }
+		target_root_trigger = { has_completed_focus = ENG_the_crown_imperial has_completed_focus = ENG_reserve_powers }
 		target_trigger = {
 			check_variable = { ENG_integration_stage@FROM = 1 }
 			check_variable = { ENG_coercion@FROM > 0 }
@@ -4706,7 +4708,7 @@ ENG_the_crown_imperial_decisions = {
 		icon = GFX_decision_generic_police_action
 
 		target_array = ENG_integration_targets
-		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+		target_root_trigger = { has_completed_focus = ENG_the_crown_imperial }
 		target_trigger = {
 			check_variable = { ENG_coercion@FROM = 3 }
 			has_country_flag = ENG_uq_ultimatum_rejected@FROM
@@ -4739,7 +4741,7 @@ ENG_the_crown_imperial_decisions = {
 				limit = { is_core_of = FROM }
 				add_claim_by = ROOT
 			}
-			set_country_flag = { flag = ENG_uq_claims@FROM days = 730 }
+			set_country_flag = { flag = ENG_uq_claims@FROM value = 1 days = 730 }
 			custom_effect_tooltip = ENG_uq_claims_expire_TT
 			set_temp_variable = { wargoal_on = FROM }
 			add_threat_from_wargoal_effect = yes
@@ -4769,7 +4771,7 @@ ENG_the_crown_imperial_decisions = {
 		icon = GFX_decision_generic_police_action
 
 		visible = {
-			has_country_flag = ENG_uq_nationalist
+			has_completed_focus = ENG_the_crown_imperial
 			has_completed_focus = ENG_gunboats_in_the_caribbean
 		}
 
@@ -4807,7 +4809,7 @@ ENG_the_crown_imperial_decisions = {
 					NOT = { has_war_with = ROOT }
 				}
 				ROOT = { set_variable = { ENG_coercion@PREV = 3 } }
-				set_country_flag = { flag = ENG_uq_us_guarantee_candidate days = 30 }
+				set_country_flag = { flag = ENG_uq_us_guarantee_candidate value = 1 days = 30 }
 				country_event = { id = ENG_uq.40 days = 1 }
 			}
 			set_temp_variable = { ENG_imperial_tension_change = 5 }
@@ -4829,7 +4831,7 @@ ENG_the_crown_imperial_decisions = {
 		icon = GFX_decision_generic_civil_support
 
 		target_array = ENG_integration_targets
-		target_root_trigger = { has_country_flag = ENG_uq_nationalist }
+		target_root_trigger = { has_completed_focus = ENG_the_crown_imperial }
 		target_trigger = { NOT = { FROM = { original_tag = IRE } } }
 
 		is_good = yes
@@ -5016,6 +5018,7 @@ ENG_the_crown_imperial_decisions = {
 	}
 
 	ENG_uq_seize_diego_garcia = {
+		war_with_on_complete = USA
 		icon = GFX_decision_generic_police_action
 
 		visible = {
@@ -5065,7 +5068,7 @@ ENG_the_crown_imperial_decisions = {
 
 		targets = { MLT CYP }
 		target_root_trigger = {
-			has_country_flag = ENG_uq_nationalist
+			has_completed_focus = ENG_the_crown_imperial
 			has_completed_focus = ENG_crowns_of_the_mediterranean
 		}
 		target_trigger = {
@@ -5119,7 +5122,7 @@ ENG_a_family_of_nations_decisions = {
 		icon = GFX_decision_generic_political_discourse
 
 		target_array = ENG_integration_targets
-		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_root_trigger = { has_completed_focus = ENG_a_family_of_nations }
 		target_trigger = { NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } } }
 
 		cost = 75
@@ -5166,7 +5169,7 @@ ENG_a_family_of_nations_decisions = {
 		icon = GFX_decision_generic_construction
 
 		target_array = ENG_integration_targets
-		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_root_trigger = { has_completed_focus = ENG_a_family_of_nations }
 		target_trigger = { NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } } }
 
 		cost = 75
@@ -5212,7 +5215,7 @@ ENG_a_family_of_nations_decisions = {
 		icon = GFX_decision_export_button
 
 		target_array = ENG_integration_targets
-		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_root_trigger = { has_completed_focus = ENG_a_family_of_nations }
 		target_trigger = { NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } } }
 
 		cost = 75
@@ -5257,7 +5260,7 @@ ENG_a_family_of_nations_decisions = {
 		icon = GFX_decision_generic_civil_support
 
 		target_array = ENG_integration_targets
-		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_root_trigger = { has_completed_focus = ENG_a_family_of_nations }
 		target_trigger = { NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } } }
 
 		cost = 25
@@ -5384,7 +5387,7 @@ ENG_a_family_of_nations_decisions = {
 		icon = GFX_decision_generic_construction
 
 		target_array = ENG_integration_targets
-		target_root_trigger = { has_country_flag = ENG_uq_western }
+		target_root_trigger = { has_completed_focus = ENG_a_family_of_nations }
 		target_trigger = {
 			check_variable = { ENG_integration_stage@FROM = 1 }
 			FROM = { ENG_uq_is_ex_empire = yes }
@@ -5401,6 +5404,8 @@ ENG_a_family_of_nations_decisions = {
 		custom_cost_text = ENG_uq_region_cost_pp75_TT
 		ai_hint_pp_cost = 75
 		days_re_enable = 180
+
+		fixed_random_seed = no
 
 		available = {
 			custom_trigger_tooltip = {
@@ -5664,15 +5669,15 @@ ENG_a_family_of_nations_decisions = {
 						check_variable = { global.commonwealth_cohesion > 60 }
 					}
 					set_country_flag = ENG_uq_chagos_ruling
-					country_event = { id = ENG_uq.204 }
+					country_event = ENG_uq.204
 				}
 				45 = {
 					modifier = {
 						add = 30
 						check_variable = { ENG_imperial_tension > 39 }
 					}
-					set_country_flag = { flag = ENG_uq_chagos_case_lost days = 1825 }
-					country_event = { id = ENG_uq.205 }
+					set_country_flag = { flag = ENG_uq_chagos_case_lost value = 1 days = 1825 }
+					country_event = ENG_uq.205
 				}
 			}
 		}
@@ -5792,7 +5797,7 @@ ENG_union_question_decisions = {
 	ENG_regional_assemblies_act = {
 		icon = GFX_decision_generic_political_discourse
 
-		visible = { has_country_flag = ENG_uq_western }
+		visible = { has_completed_focus = ENG_a_family_of_nations }
 
 		cost = 100
 		days_remove = 180
@@ -5824,7 +5829,7 @@ ENG_union_question_decisions = {
 	ENG_crown_commissioners = {
 		icon = GFX_decision_generic_police_action
 
-		visible = { has_country_flag = ENG_uq_nationalist }
+		visible = { has_completed_focus = ENG_the_crown_imperial }
 
 		cost = 100
 		days_remove = 180
@@ -5892,7 +5897,7 @@ ENG_union_question_decisions = {
 			}
 			NOT = {
 				AND = {
-					has_country_flag = ENG_uq_western
+					has_completed_focus = ENG_a_family_of_nations
 					FROM = { original_tag = IRE }
 				}
 			}
@@ -5909,7 +5914,7 @@ ENG_union_question_decisions = {
 				ENG_uq_cyprus_settled = yes
 			}
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_consent_60_TT
 					check_variable = { ENG_consent@FROM > 60 }
@@ -5939,7 +5944,7 @@ ENG_union_question_decisions = {
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_association"
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				if = {
 					limit = { FROM = { ENG_uq_is_crown_realm = yes } }
 					FROM = { country_event = { id = ENG_uq.120 days = 1 } }
@@ -5985,7 +5990,7 @@ ENG_union_question_decisions = {
 		available = {
 			ENG_uq_can_transition = yes
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_consent_75_TT
 					check_variable = { ENG_consent@FROM > 75 }
@@ -6006,7 +6011,7 @@ ENG_union_question_decisions = {
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_constituent_status"
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				FROM = { country_event = { id = ENG_uq.23 days = 1 } }
 				custom_effect_tooltip = TT_IF_THEY_ACCEPT
 				effect_tooltip = { custom_effect_tooltip = ENG_uq_referendum_scheduled_TT }
@@ -6052,7 +6057,7 @@ ENG_union_question_decisions = {
 			ENG_uq_can_transition = yes
 			has_stability > 0.6
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_consent_85_TT
 					check_variable = { ENG_consent@FROM > 85 }
@@ -6075,7 +6080,7 @@ ENG_union_question_decisions = {
 			hidden_effect = { add_political_power = -300 }
 			large_expenditure = yes
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				FROM = { country_event = { id = ENG_uq.20 days = 1 } }
 				custom_effect_tooltip = TT_IF_THEY_ACCEPT
 				effect_tooltip = { custom_effect_tooltip = ENG_uq_stage_4_TT }
@@ -6126,7 +6131,7 @@ ENG_union_question_decisions = {
 		available = {
 			ENG_uq_can_transition = yes
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_region_consent_50_TT
 					check_variable = { ENG_uq_region_consent@FROM > 50 }
@@ -6151,7 +6156,7 @@ ENG_union_question_decisions = {
 			multiply_temp_variable = { treasury_change = -1 }
 			modify_treasury_effect = yes
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				FROM = { country_event = { id = ENG_uq.20 days = 1 } }
 				custom_effect_tooltip = TT_IF_THEY_ACCEPT
 				effect_tooltip = { custom_effect_tooltip = ENG_uq_stage_2_TT }
@@ -6180,9 +6185,12 @@ ENG_union_question_decisions = {
 		cost = 100
 
 		available = {
-			check_variable = { ENG_union_strain < 61 }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strain_allows_transition_TT
+				check_variable = { ENG_union_strain < 61 }
+			}
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_caribbean_consent_60_TT
 					check_variable = { ENG_uq_caribbean_consent > 60 }
@@ -6216,7 +6224,7 @@ ENG_union_question_decisions = {
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_caribbean_association"
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				every_country = {
 					limit = {
 						ENG_uq_is_caribbean_realm = yes
@@ -6260,9 +6268,12 @@ ENG_union_question_decisions = {
 		cost = 150
 
 		available = {
-			check_variable = { ENG_union_strain < 61 }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strain_allows_transition_TT
+				check_variable = { ENG_union_strain < 61 }
+			}
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_caribbean_consent_75_TT
 					check_variable = { ENG_uq_caribbean_consent > 75 }
@@ -6296,7 +6307,7 @@ ENG_union_question_decisions = {
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_caribbean_constituent"
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				every_country = {
 					limit = {
 						ENG_uq_is_caribbean_realm = yes
@@ -6350,10 +6361,13 @@ ENG_union_question_decisions = {
 		ai_hint_pp_cost = 300
 
 		available = {
-			check_variable = { ENG_union_strain < 61 }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strain_allows_transition_TT
+				check_variable = { ENG_union_strain < 61 }
+			}
 			has_stability > 0.6
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_caribbean_consent_85_TT
 					check_variable = { ENG_uq_caribbean_consent > 85 }
@@ -6389,7 +6403,7 @@ ENG_union_question_decisions = {
 			hidden_effect = { add_political_power = -300 }
 			large_expenditure = yes
 			if = {
-				limit = { has_country_flag = ENG_uq_western }
+				limit = { has_completed_focus = ENG_a_family_of_nations }
 				every_country = {
 					limit = {
 						ENG_uq_is_caribbean_realm = yes
@@ -6744,8 +6758,7 @@ ENG_cmw_commonwealth_decisions = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_host_games"
 			hidden_effect = { add_political_power = -50 }
 			medium_expenditure = yes
-			set_global_flag = { flag = ENG_cmw_games_cycle days = 1460 }
-			set_variable = { global.ENG_cmw_games_host = THIS.id }
+			set_global_flag = { flag = ENG_cmw_games_cycle value = 1 days = 1460 }
 		}
 
 		remove_effect = {
@@ -6929,10 +6942,6 @@ ENG_cmw_commonwealth_decisions = {
 		cost = 100
 		days_remove = 180
 
-		complete_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_restore_membership"
-		}
-
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_restore_membership completed"
 			ENG_cmw_restore_member = yes
@@ -6982,7 +6991,7 @@ ENG_cmw_secretariat_decisions = {
 
 		target_array = global.commonwealth_member
 		target_root_trigger = {
-			has_country_flag = ENG_uq_western
+			has_completed_focus = ENG_a_family_of_nations
 			ENG_cmw_is_member = yes
 		}
 		target_trigger = {

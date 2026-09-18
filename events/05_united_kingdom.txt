@@ -2739,7 +2739,7 @@ country_event = {
 		}
 		# Hard mode: a defeat emboldens the other nationalist movements
 		if = {
-			limit = { has_country_flag = ENG_uq_settlement_hard_mode }
+			limit = { has_completed_focus = ENG_one_nation }
 			set_temp_variable = { ENG_nationalists_change = 10 }
 			if = {
 				limit = { NOT = { check_variable = { ENG_referendum_target = 1 } } }
@@ -8040,7 +8040,7 @@ country_event = {
 		name = ENG_uq.42.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.42.a executed"
 		set_country_flag = ENG_uq_ultimatum_rejected@FROM
-		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@FROM days = 180 }
+		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@FROM value = 1 days = 180 }
 		custom_effect_tooltip = ENG_uq_cooldown_started_TT
 		set_temp_variable = { ENG_imperial_tension_change = 5 }
 		ENG_change_imperial_tension = yes
@@ -8102,6 +8102,7 @@ country_event = {
 
 	option = {
 		name = ENG_uq.60.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.60.a executed"
 		effect_tooltip = { add_ideas = ENG_uq_eu_trade_penalty }
 	}
 }
@@ -8115,6 +8116,7 @@ country_event = {
 
 	option = {
 		name = ENG_uq.61.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.61.a executed"
 		effect_tooltip = { remove_ideas = EU_member }
 	}
 }
@@ -8128,6 +8130,7 @@ country_event = {
 
 	option = {
 		name = ENG_uq.62.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.62.a executed"
 		custom_effect_tooltip = ENG_uq_special_relationship_TT
 	}
 }
@@ -8148,6 +8151,7 @@ country_event = {
 
 	option = {
 		name = ENG_uq.63.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.63.a executed"
 		custom_effect_tooltip = ENG_uq_sanctions_exposure_TT
 		effect_tooltip = {
 			if = {
@@ -8167,6 +8171,7 @@ country_event = {
 
 	option = {
 		name = ENG_uq.64.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.64.a executed"
 		custom_effect_tooltip = ENG_uq_sponsored_resistance_TT
 	}
 }
@@ -8768,7 +8773,7 @@ country_event = {
 		name = ENG_uq.99.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.99.a executed"
 		custom_effect_tooltip = ENG_uq_irexit_lock_TT
-		hidden_effect = { set_country_flag = { flag = ENG_uq_lock@IRE days = 3650 } }
+		hidden_effect = { set_country_flag = { flag = ENG_uq_lock@IRE value = 1 days = 3650 } }
 		IRE = {
 			set_temp_variable = { ENG_uq_consent_change = -20 }
 			ENG_uq_change_consent = yes
@@ -9408,7 +9413,7 @@ country_event = {
 		}
 		set_variable = { ENG_integration_stage@FROM = 0 }
 		remove_from_array = { ENG_integration_targets = FROM }
-		set_country_flag = { flag = ENG_uq_lock@FROM days = 1825 }
+		set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1825 }
 		set_temp_variable = { ENG_union_strain_change = -5 }
 		ENG_change_union_strain = yes
 		ai_chance = { base = 30 }
@@ -9551,7 +9556,7 @@ country_event = {
 		}
 		set_variable = { ENG_coercion@FROM = 3 }
 		set_country_flag = ENG_uq_ultimatum_rejected@FROM
-		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@FROM days = 180 }
+		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@FROM value = 1 days = 180 }
 		custom_effect_tooltip = ENG_uq_cooldown_started_TT
 		set_temp_variable = { ENG_imperial_tension_change = 5 }
 		ENG_change_imperial_tension = yes
@@ -9647,7 +9652,7 @@ country_event = {
 	option = {
 		name = ENG_uq.202.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.202.a executed"
-		set_country_flag = { flag = ENG_uq_chagos_lock days = 3650 }
+		set_country_flag = { flag = ENG_uq_chagos_lock value = 1 days = 3650 }
 		custom_effect_tooltip = ENG_uq_chagos_locked_TT
 		unlock_decision_tooltip = ENG_uq_reopen_chagos_talks
 	}
@@ -9800,7 +9805,7 @@ country_event = {
 	option = {
 		name = ENG_uq.221.c
 		log = "[GetDateText]: [This.GetName]: ENG_uq.221.c executed"
-		set_country_flag = { flag = ENG_uq_gibraltar_lock days = 1825 }
+		set_country_flag = { flag = ENG_uq_gibraltar_lock value = 1 days = 1825 }
 		custom_effect_tooltip = ENG_uq_gibraltar_locked_TT
 		ai_chance = { base = 20 }
 	}
@@ -9817,7 +9822,7 @@ country_event = {
 	option = {
 		name = ENG_uq.223.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.223.a executed"
-		set_country_flag = { flag = ENG_uq_gibraltar_lock days = 1825 }
+		set_country_flag = { flag = ENG_uq_gibraltar_lock value = 1 days = 1825 }
 		custom_effect_tooltip = ENG_uq_gibraltar_locked_TT
 		unlock_decision_tooltip = ENG_uq_gibraltar_talks
 	}
@@ -9880,7 +9885,7 @@ country_event = {
 			base = 30
 			modifier = {
 				add = 20
-				FROM = { has_country_flag = ENG_uq_nationalist }
+				FROM = { has_completed_focus = ENG_the_crown_imperial }
 			}
 		}
 	}
@@ -9900,7 +9905,7 @@ country_event = {
 			base = 0
 			modifier = {
 				add = 30
-				FROM = { has_country_flag = ENG_uq_nationalist }
+				FROM = { has_completed_focus = ENG_the_crown_imperial }
 			}
 			modifier = {
 				factor = 0
@@ -10197,7 +10202,7 @@ country_event = {
 			base = 30
 			modifier = {
 				add = 20
-				FROM = { has_country_flag = ENG_uq_nationalist }
+				FROM = { has_completed_focus = ENG_the_crown_imperial }
 			}
 			modifier = {
 				factor = 0
@@ -10279,7 +10284,7 @@ country_event = {
 		}
 		set_variable = { ENG_integration_stage@FROM = 0 }
 		remove_from_array = { ENG_integration_targets = FROM }
-		set_country_flag = { flag = ENG_uq_lock@FROM days = 1825 }
+		set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1825 }
 		set_temp_variable = { ENG_union_strain_change = 5 }
 		ENG_change_union_strain = yes
 		ai_chance = { base = 40 }
@@ -10486,7 +10491,6 @@ country_event = {
 
 	option = {
 		name = ENG_cmw.30.b
-		log = "[GetDateText]: [This.GetName]: ENG_cmw.30.b executed"
 		ai_chance = { base = 60 }
 	}
 }

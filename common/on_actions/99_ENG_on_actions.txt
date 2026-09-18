@@ -348,7 +348,7 @@ on_actions = {
 				ENG_uq_realm_monthly = yes
 				ENG_uq_ex_empire_monthly = yes
 				if = {
-					limit = { ROOT = { has_country_flag = ENG_uq_nationalist } }
+					limit = { ROOT = { has_completed_focus = ENG_the_crown_imperial } }
 					ENG_uq_update_coercion = yes
 				}
 			}
@@ -373,7 +373,7 @@ on_actions = {
 				remove_ideas = ENG_uq_occupation_burden
 			}
 			if = {
-				limit = { has_country_flag = ENG_union_question_opened }
+				limit = { has_completed_focus = ENG_the_union_question }
 				ENG_uq_update_imperial_tension = yes
 			}
 

@@ -76,7 +76,7 @@ ENG_settlement_region_lost = {
 
 # Hard mode: the party that called the settlement referendum has lost office
 ENG_settlement_government_fell = {
-	has_country_flag = ENG_uq_settlement_hard_mode
+	has_completed_focus = ENG_one_nation
 	NOT = { check_variable = { ruling_party = ENG_settlement_ruling_party } }
 }
 
@@ -258,7 +258,7 @@ ENG_uq_can_transition = {
 		tooltip = ENG_uq_not_at_war_TT
 		OR = {
 			has_war = no
-			has_country_flag = ENG_uq_nationalist
+			has_completed_focus = ENG_the_crown_imperial
 		}
 	}
 	custom_trigger_tooltip = {

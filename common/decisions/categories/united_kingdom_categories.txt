@@ -86,8 +86,8 @@ ENG_union_question_decisions = {
 
 	visible = {
 		OR = {
-			has_country_flag = ENG_uq_western
-			has_country_flag = ENG_uq_nationalist
+			has_completed_focus = ENG_a_family_of_nations
+			has_completed_focus = ENG_the_crown_imperial
 		}
 	}
 }
@@ -142,5 +142,5 @@ ENG_cmw_secretariat_decisions = {
 	priority = 1000
 	visible_when_empty = yes
 
-	visible = { has_country_flag = ENG_uq_western }
+	visible = { has_completed_focus = ENG_a_family_of_nations }
 }

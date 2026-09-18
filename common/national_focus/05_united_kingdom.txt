@@ -5531,11 +5531,22 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_share_vtol_research"
-			add_tech_bonus = {
-				name = ENG_share_vtol_research
-				uses = 1
-				bonus = 0.15
-				category = CAT_air_engine
+			if = {
+				limit = { has_dlc = "By Blood Alone" }
+				add_tech_bonus = {
+					name = ENG_share_vtol_research
+					uses = 1
+					bonus = 0.15
+					category = CAT_air_engine
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = ENG_share_vtol_research
+					uses = 1
+					bonus = 0.15
+					category = CAT_air_eqp
+				}
 			}
 			newline = yes
 			set_temp_variable = { temp_opinion = 5 }
@@ -5789,12 +5800,23 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_skylon_engine"
-			add_tech_bonus = {
-				name = ENG_skylon_engine
-				ahead_reduction = 2
-				uses = 2
-				category = CAT_space
-				category = CAT_air_engine
+			if = {
+				limit = { has_dlc = "By Blood Alone" }
+				add_tech_bonus = {
+					name = ENG_skylon_engine
+					ahead_reduction = 2
+					uses = 2
+					category = CAT_space
+					category = CAT_air_engine
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = ENG_skylon_engine
+					ahead_reduction = 2
+					uses = 2
+					category = CAT_space
+				}
 			}
 			newline = yes
 			set_temp_variable = { temp_opinion = 5 }
@@ -22940,7 +22962,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_union_question"
-			set_country_flag = ENG_union_question_opened
 			add_dynamic_modifier = { modifier = ENG_union_strain_dm }
 			custom_effect_tooltip = { localization_key = adds_dynamic_modifier_tt MODIFIER = ENG_union_strain_dm }
 			hidden_effect = {
@@ -22977,7 +22998,6 @@ focus_tree = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_family_of_nations"
 			unlock_decision_category_tooltip = ENG_a_family_of_nations_decisions
 			unlock_decision_category_tooltip = ENG_union_question_decisions
-			set_country_flag = ENG_uq_western
 		}
 
 		ai_will_do = { base = 0 }
@@ -23008,7 +23028,6 @@ focus_tree = {
 			unlock_decision_category_tooltip = ENG_union_question_decisions
 			add_stability = -0.10
 			add_named_threat = { threat = 1 name = ENG_crown_imperial_threat }
-			set_country_flag = ENG_uq_nationalist
 		}
 
 		ai_will_do = { base = 0 }
@@ -23036,7 +23055,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_one_nation"
-			set_country_flag = ENG_uq_settlement_hard_mode
 			custom_effect_tooltip = ENG_uq_settlement_hard_mode_tt
 			hidden_effect = {
 				set_variable = { ENG_settlement_cost = 300 }
@@ -23899,7 +23917,7 @@ focus_tree = {
 				limit = { has_active_mission = ENG_border_poll_mission }
 				remove_mission = ENG_border_poll_mission
 			}
-			set_country_flag = { flag = ENG_border_poll_cooldown days = 3650 }
+			set_country_flag = { flag = ENG_border_poll_cooldown value = 1 days = 3650 }
 			custom_effect_tooltip = ENG_no_border_poll_TT
 			set_temp_variable = { ENG_agitation_change = 10 }
 			ENG_change_north_irish_agitation = yes
@@ -24160,7 +24178,10 @@ focus_tree = {
 		available = {
 			has_government = democratic
 			country_exists = CAN
-			check_variable = { ENG_integration_stage@CAN > 0 }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_canada_on_ladder_TT
+				check_variable = { ENG_integration_stage@CAN > 0 }
+			}
 			CAN = { NOT = { has_country_flag = ENG_uq_republic } }
 		}
 
@@ -24203,7 +24224,10 @@ focus_tree = {
 		available = {
 			has_government = democratic
 			country_exists = AST
-			check_variable = { ENG_integration_stage@AST > 0 }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_australia_on_ladder_TT
+				check_variable = { ENG_integration_stage@AST > 0 }
+			}
 			AST = { NOT = { has_country_flag = ENG_uq_republic } }
 		}
 
@@ -24246,7 +24270,10 @@ focus_tree = {
 		available = {
 			has_government = democratic
 			country_exists = NZL
-			check_variable = { ENG_integration_stage@NZL > 0 }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_new_zealand_on_ladder_TT
+				check_variable = { ENG_integration_stage@NZL > 0 }
+			}
 			NZL = { NOT = { has_country_flag = ENG_uq_republic } }
 		}
 
@@ -24521,7 +24548,10 @@ focus_tree = {
 		available = {
 			nationalist_monarchists_are_in_power = yes
 			country_exists = CAN
-			check_variable = { ENG_integration_stage@CAN > 0 }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_canada_on_ladder_TT
+				check_variable = { ENG_integration_stage@CAN > 0 }
+			}
 		}
 
 		bypass = {
@@ -24559,7 +24589,10 @@ focus_tree = {
 		available = {
 			nationalist_monarchists_are_in_power = yes
 			country_exists = AST
-			check_variable = { ENG_integration_stage@AST > 0 }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_australia_on_ladder_TT
+				check_variable = { ENG_integration_stage@AST > 0 }
+			}
 		}
 
 		bypass = {
@@ -24597,7 +24630,10 @@ focus_tree = {
 		available = {
 			nationalist_monarchists_are_in_power = yes
 			country_exists = NZL
-			check_variable = { ENG_integration_stage@NZL > 0 }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_new_zealand_on_ladder_TT
+				check_variable = { ENG_integration_stage@NZL > 0 }
+			}
 		}
 
 		bypass = {
@@ -25551,7 +25587,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				factor = 0
+				has_active_mission = bankruptcy_incoming_collapse
+			}
+		}
 	}
 
 	focus = {

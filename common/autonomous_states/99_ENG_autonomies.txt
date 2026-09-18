@@ -41,7 +41,7 @@ autonomy_state = {
 		is_subject = yes
 		OVERLORD = {
 			original_tag = ENG
-			has_country_flag = ENG_uq_western
+			has_completed_focus = ENG_a_family_of_nations
 		}
 	}
 
@@ -96,7 +96,7 @@ autonomy_state = {
 		is_subject = yes
 		OVERLORD = {
 			original_tag = ENG
-			has_country_flag = ENG_uq_nationalist
+			has_completed_focus = ENG_the_crown_imperial
 		}
 	}
 

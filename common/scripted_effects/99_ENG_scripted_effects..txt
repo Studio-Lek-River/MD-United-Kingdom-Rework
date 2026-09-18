@@ -476,7 +476,7 @@ ENG_update_union_strain_modifier = {
 	set_variable = { ENG_union_strain_consumer_goods_factor = { value = ENG_union_strain multiply = 0.001 } }
 	set_variable = { ENG_union_strain_bureaucracy_cost = { value = ENG_union_strain multiply = 0.002 } }
 	if = {
-		limit = { has_country_flag = ENG_uq_western }
+		limit = { has_completed_focus = ENG_a_family_of_nations }
 		set_variable = { ENG_union_strain_democratic_drift = { value = ENG_union_strain multiply = -0.001 } }
 	}
 	else = {
@@ -523,7 +523,7 @@ ENG_uq_align_target = {
 ENG_uq_enter_stage_2 = {
 	set_variable = { ENG_integration_stage@FROM = 2 }
 	if = {
-		limit = { has_country_flag = ENG_uq_western }
+		limit = { has_completed_focus = ENG_a_family_of_nations }
 		set_autonomy = {
 			target = FROM
 			autonomy_state = autonomy_crown_dominion
@@ -594,7 +594,7 @@ ENG_uq_enter_stage_4 = {
 		add_core_of = ROOT
 	}
 	if = {
-		limit = { has_country_flag = ENG_uq_western }
+		limit = { has_completed_focus = ENG_a_family_of_nations }
 		set_temp_variable = { ENG_imperial_tension_change = 5 }
 	}
 	else = {
@@ -616,11 +616,11 @@ ENG_uq_fail_transition = {
 	custom_effect_tooltip = ENG_uq_fail_transition_TT
 	hidden_effect = {
 		if = {
-			limit = { has_country_flag = ENG_uq_western }
-			set_country_flag = { flag = ENG_uq_lock@FROM days = 1825 }
+			limit = { has_completed_focus = ENG_a_family_of_nations }
+			set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1825 }
 		}
 		else = {
-			set_country_flag = { flag = ENG_uq_lock@FROM days = 1095 }
+			set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1095 }
 		}
 	}
 	FROM = {
@@ -723,7 +723,7 @@ ENG_uq_update_consent = {
 		multiply_temp_variable = { ENG_uq_consent_change = 0.5 }
 	}
 	if = {
-		limit = { ENG = { has_country_flag = ENG_uq_nationalist } }
+		limit = { ENG = { has_completed_focus = ENG_the_crown_imperial } }
 		multiply_temp_variable = { ENG_uq_consent_change = 0.5 }
 	}
 	ENG = { set_variable = { ENG_consent_delta@PREV = ENG_uq_consent_change } }
@@ -742,7 +742,8 @@ ENG_uq_update_consent = {
 
 # AI weight for accepting a ladder offer or referendum request. Call in the target's scope with FROM = ENG.
 ENG_uq_set_accept_weight = {
-	set_variable = { ENG_uq_accept_weight = { value = FROM.ENG_consent@THIS subtract = 50 multiply = 2 } }
+	set_temp_variable = { ENG_uq_from_consent = FROM.ENG_consent@THIS }
+	set_variable = { ENG_uq_accept_weight = { value = ENG_uq_from_consent subtract = 50 multiply = 2 } }
 	if = {
 		limit = { is_in_faction_with = FROM }
 		add_to_variable = { ENG_uq_accept_weight = 20 }
@@ -875,7 +876,7 @@ ENG_uq_realm_republic = {
 		limit = { has_idea = ENG_crown_realm_status }
 		remove_ideas = ENG_crown_realm_status
 	}
-	ENG = { set_country_flag = { flag = ENG_uq_lock@PREV days = 3650 } }
+	ENG = { set_country_flag = { flag = ENG_uq_lock@PREV value = 1 days = 3650 } }
 	set_temp_variable = { ENG_uq_consent_change = -30 }
 	ENG_uq_change_consent = yes
 }
@@ -915,7 +916,7 @@ ENG_uq_realm_stage_reaction = {
 			}
 		}
 		FROM = {
-			set_country_flag = { flag = ENG_uq_quebec_pending days = 400 }
+			set_country_flag = { flag = ENG_uq_quebec_pending value = 1 days = 400 }
 			country_event = { id = ENG_uq.150 days = 10 }
 		}
 	}
@@ -960,12 +961,10 @@ ENG_uq_realm_monthly = {
 			}
 			NOT = { ROOT = { has_country_flag = ENG_uq_realm_crisis@PREV } }
 		}
-		random_list = {
-			90 = {}
-			10 = {
-				ROOT = { set_country_flag = { flag = ENG_uq_realm_crisis@PREV days = 365 } }
-				ENG = { country_event = { id = ENG_uq.170 } }
-			}
+		random = {
+			chance = 10
+			ROOT = { set_country_flag = { flag = ENG_uq_realm_crisis@PREV value = 1 days = 365 } }
+			ENG = { country_event = ENG_uq.170 }
 		}
 	}
 	if = {
@@ -1231,11 +1230,10 @@ ENG_uq_ex_empire_stage_reaction = {
 	}
 }
 
-# ENG scope, monthly once a region is open. Writes each region's average consent and the current decision cost to every member, and counts subjects for the upkeep expense.
+# ENG scope, monthly once a region is open. Writes each region's average consent and the current decision cost to every member.
 ENG_uq_update_regions = {
 	resize_temp_array = { array = ENG_uq_rc_sum size = 7 }
 	resize_temp_array = { array = ENG_uq_rc_count size = 7 }
-	set_variable = { ENG_uq_protectorate_count = 0 }
 	set_temp_variable = { ENG_uq_strain_cost = { value = ENG_union_strain divide = 100 add = 1 } }
 	for_each_scope_loop = {
 		array = ENG_integration_targets
@@ -1245,13 +1243,6 @@ ENG_uq_update_regions = {
 			ROOT = {
 				add_to_temp_variable = { ENG_uq_rc_sum^ENG_uq_r = ENG_consent@PREV }
 				add_to_temp_variable = { ENG_uq_rc_count^ENG_uq_r = 1 }
-			}
-			if = {
-				limit = {
-					is_subject_of = ROOT
-					check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
-				}
-				ROOT = { add_to_variable = { ENG_uq_protectorate_count = 1 } }
 			}
 		}
 	}
@@ -1288,12 +1279,10 @@ ENG_uq_ex_empire_monthly = {
 				NOT = { has_country_flag = ENG_uq_realm_crisis@PREV }
 			}
 		}
-		random_list = {
-			95 = {}
-			5 = {
-				ROOT = { set_country_flag = { flag = ENG_uq_realm_crisis@PREV days = 365 } }
-				ENG = { country_event = { id = ENG_uq.252 } }
-			}
+		random = {
+			chance = 5
+			ROOT = { set_country_flag = { flag = ENG_uq_realm_crisis@PREV value = 1 days = 365 } }
+			ENG = { country_event = ENG_uq.252 }
 		}
 	}
 }
@@ -1475,7 +1464,7 @@ ENG_uq_expire_claims = {
 	ROOT = {
 		set_variable = { ENG_coercion@PREV = 3 }
 		set_country_flag = ENG_uq_ultimatum_rejected@PREV
-		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@PREV days = 180 }
+		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@PREV value = 1 days = 180 }
 		set_variable = { ENG_uq_event_target = PREV }
 		country_event = { id = ENG_uq.43 days = 1 }
 	}
@@ -1510,9 +1499,12 @@ ENG_uq_roll_insurgency = {
 			ROOT = {
 				add_stability = -0.01
 				var:ENG_uq_event_state = {
-					damage_building = {
-						type = infrastructure
-						damage = 1
+					if = {
+						limit = { infrastructure > 0 }
+						damage_building = {
+							type = infrastructure
+							damage = 1
+						}
 					}
 				}
 				country_event = ENG_uq.50
@@ -1824,7 +1816,7 @@ ENG_uq_commonwealth_exodus = {
 
 # Call in the leaver's scope with ROOT = ENG. Mirrors MD's denounce decision; a realm that leaves also becomes a republic.
 ENG_uq_commonwealth_leave = {
-	remove_dynamic_modifier = { modifier = Commonwealth_member_modifier }
+	if = { limit = { has_dynamic_modifier = { modifier = Commonwealth_member_modifier } } remove_dynamic_modifier = { modifier = Commonwealth_member_modifier } }
 	remove_from_array = { global.commonwealth_member = THIS }
 	set_country_flag = ENG_cmw_former_member
 	ROOT = {
@@ -1892,7 +1884,7 @@ ENG_cmw_update_cohesion = {
 		subtract_from_temp_variable = { ENG_cmw_cohesion_change = ENG_cmw_tension_drag }
 	}
 	if = {
-		limit = { has_country_flag = ENG_uq_nationalist }
+		limit = { has_completed_focus = ENG_the_crown_imperial }
 		subtract_from_temp_variable = { ENG_cmw_cohesion_change = 0.5 }
 	}
 	set_variable = { global.ENG_cmw_cohesion_delta = ENG_cmw_cohesion_change }
@@ -1966,7 +1958,7 @@ ENG_cmw_schedule_chogm = {
 			}
 		}
 		ENG_cmw_chogm_outcome = yes
-		set_global_flag = { flag = ENG_cmw_chogm_cycle days = 700 }
+		set_global_flag = { flag = ENG_cmw_chogm_cycle value = 1 days = 700 }
 		clr_global_flag = ENG_cmw_chogm_host_bid
 	}
 }
@@ -2013,7 +2005,7 @@ ENG_cmw_chogm_outcome = {
 
 # Call in the member's scope with ROOT = the suspending leading member.
 ENG_cmw_suspend_member = {
-	remove_dynamic_modifier = { modifier = Commonwealth_member_modifier }
+	if = { limit = { has_dynamic_modifier = { modifier = Commonwealth_member_modifier } } remove_dynamic_modifier = { modifier = Commonwealth_member_modifier } }
 	remove_from_array = { global.commonwealth_member = THIS }
 	add_ideas = ENG_cmw_suspended
 	set_country_flag = ENG_cmw_former_member
@@ -2041,7 +2033,7 @@ ENG_cmw_monthly = {
 	ENG_cmw_update_leading_members = yes
 	if = {
 		limit = {
-			has_country_flag = ENG_uq_western
+			has_completed_focus = ENG_a_family_of_nations
 			ENG_cmw_is_member = yes
 		}
 		ENG_cmw_influence_drip = yes
@@ -2103,7 +2095,7 @@ ENG_activate_union_settlement_referendum = {
 	set_variable = { ENG_settlement_ruling_party = ruling_party }
 	activate_mission = ENG_union_settlement_referendum
 	if = {
-		limit = { has_country_flag = ENG_uq_settlement_hard_mode }
+		limit = { has_completed_focus = ENG_one_nation }
 		add_days_mission_timeout = {
 			mission = ENG_union_settlement_referendum
 			days = 185
@@ -2172,7 +2164,7 @@ ENG_resolve_union_settlement = {
 	# Hard mode: the status quo bias only lifts once the Union Dividend has been paid
 	if = {
 		limit = {
-			has_country_flag = ENG_uq_settlement_hard_mode
+			has_completed_focus = ENG_one_nation
 			NOT = { has_completed_focus = ENG_the_union_dividend }
 		}
 		subtract_from_variable = { var = ENG_referendum_stay_vote value = 10 }
@@ -2294,7 +2286,7 @@ ENG_integrate_referendum_region = {
 # Hard mode: each integration unsettles the regions still devolved
 ENG_centralisation_backlash = {
 	if = {
-		limit = { has_country_flag = ENG_uq_settlement_hard_mode }
+		limit = { has_completed_focus = ENG_one_nation }
 		if = {
 			limit = { NOT = { has_country_flag = ENG_scottish_integrated } }
 			set_temp_variable = { ENG_agitation_change = 5 }

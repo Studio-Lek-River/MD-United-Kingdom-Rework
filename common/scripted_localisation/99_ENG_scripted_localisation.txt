@@ -2365,14 +2365,14 @@ defined_text = {
 
 	text = {
 		trigger = {
-			ROOT = { has_country_flag = ENG_uq_western }
+			ROOT = { has_completed_focus = ENG_a_family_of_nations }
 		}
 		localization_key = ENG_uq_meter_consent_loc
 	}
 
 	text = {
 		trigger = {
-			ROOT = { NOT = { has_country_flag = ENG_uq_western } }
+			ROOT = { NOT = { has_completed_focus = ENG_a_family_of_nations } }
 		}
 		localization_key = ENG_uq_meter_coercion_loc
 	}
@@ -2391,7 +2391,7 @@ defined_text = {
 
 	text = {
 		trigger = {
-			ROOT = { has_country_flag = ENG_uq_western }
+			ROOT = { has_completed_focus = ENG_a_family_of_nations }
 			check_variable = { ROOT.ENG_integration_stage@THIS = 1 }
 		}
 		localization_key = ENG_uq_next_w_1_loc
@@ -2399,7 +2399,7 @@ defined_text = {
 
 	text = {
 		trigger = {
-			ROOT = { has_country_flag = ENG_uq_western }
+			ROOT = { has_completed_focus = ENG_a_family_of_nations }
 			check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
 		}
 		localization_key = ENG_uq_next_w_2_loc
@@ -2407,7 +2407,7 @@ defined_text = {
 
 	text = {
 		trigger = {
-			ROOT = { has_country_flag = ENG_uq_western }
+			ROOT = { has_completed_focus = ENG_a_family_of_nations }
 			check_variable = { ROOT.ENG_integration_stage@THIS = 3 }
 		}
 		localization_key = ENG_uq_next_w_3_loc
@@ -2415,7 +2415,7 @@ defined_text = {
 
 	text = {
 		trigger = {
-			ROOT = { NOT = { has_country_flag = ENG_uq_western } }
+			ROOT = { NOT = { has_completed_focus = ENG_a_family_of_nations } }
 			check_variable = { ROOT.ENG_integration_stage@THIS = 1 }
 		}
 		localization_key = ENG_uq_next_n_1_loc
@@ -2423,7 +2423,7 @@ defined_text = {
 
 	text = {
 		trigger = {
-			ROOT = { NOT = { has_country_flag = ENG_uq_western } }
+			ROOT = { NOT = { has_completed_focus = ENG_a_family_of_nations } }
 			check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
 		}
 		localization_key = ENG_uq_next_n_2_loc
@@ -2431,7 +2431,7 @@ defined_text = {
 
 	text = {
 		trigger = {
-			ROOT = { NOT = { has_country_flag = ENG_uq_western } }
+			ROOT = { NOT = { has_completed_focus = ENG_a_family_of_nations } }
 			check_variable = { ROOT.ENG_integration_stage@THIS = 3 }
 		}
 		localization_key = ENG_uq_next_n_3_loc
