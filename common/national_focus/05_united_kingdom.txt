@@ -22946,7 +22946,7 @@ focus_tree = {
 		icon = invest_in_britain
 
 		x = 0
-		y = 3
+		y = 7
 		relative_position_id = ENG_the_sun_which_never_set
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -22963,7 +22963,6 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_union_question"
 			add_dynamic_modifier = { modifier = ENG_union_strain_dm }
-			custom_effect_tooltip = { localization_key = adds_dynamic_modifier_tt MODIFIER = ENG_union_strain_dm }
 			hidden_effect = {
 				news_event = {
 					id = United_Kingdom_News.5
@@ -23301,7 +23300,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_ireland_rejoins_the_commonwealth
+		id = ENG_ireland_rejoins_the_commonwealth #Can be a decision
 		icon = align_to_commonwealth
 
 		x = -2
@@ -24476,9 +24475,9 @@ focus_tree = {
 		id = ENG_dominions_of_the_crown
 		icon = british_monarchy
 
-		x = 10
-		y = 12
-		relative_position_id = ENG_crown_union
+		x = 0
+		y = 1
+		relative_position_id = ENG_the_isles_under_one_crown
 
 		prerequisite = { focus = ENG_the_isles_under_one_crown }
 
@@ -25089,7 +25088,7 @@ focus_tree = {
 		icon = british_isles
 
 		x = 7
-		y = 1
+		y = 2
 		relative_position_id = ENG_the_realms_beyond_the_seas
 
 		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
