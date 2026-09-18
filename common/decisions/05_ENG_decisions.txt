@@ -3312,6 +3312,7 @@ ENG_devolved_matters = {
 			OR = {
 				country_exists = SCO
 				has_country_flag = ENG_devolution_purged
+				has_country_flag = ENG_uq_assemblies_suspended
 				has_country_flag = ENG_scottish_integrated
 				NOT = { ENG_holds_scotland = yes }
 			}
@@ -3335,6 +3336,7 @@ ENG_devolved_matters = {
 			OR = {
 				country_exists = NIR
 				has_country_flag = ENG_devolution_purged
+				has_country_flag = ENG_uq_assemblies_suspended
 				has_country_flag = ENG_north_irish_integrated
 				NOT = { ENG_holds_north_ireland = yes }
 			}
@@ -3358,6 +3360,7 @@ ENG_devolved_matters = {
 			OR = {
 				country_exists = WAS
 				has_country_flag = ENG_devolution_purged
+				has_country_flag = ENG_uq_assemblies_suspended
 				has_country_flag = ENG_welsh_integrated
 				NOT = { ENG_holds_wales = yes }
 			}
@@ -3381,6 +3384,7 @@ ENG_devolved_matters = {
 		cancel_trigger = {
 			OR = {
 				has_country_flag = ENG_devolution_purged
+				has_country_flag = ENG_uq_assemblies_suspended
 				ENG_settlement_region_lost = yes
 				ENG_settlement_government_fell = yes
 			}
@@ -3589,6 +3593,7 @@ ENG_devolved_matters = {
 			OR = {
 				country_exists = SCO
 				has_country_flag = ENG_devolution_purged
+				has_country_flag = ENG_uq_assemblies_suspended
 				has_country_flag = ENG_scottish_integrated
 				NOT = { ENG_holds_scotland = yes }
 			}
@@ -3648,6 +3653,7 @@ ENG_devolved_matters = {
 			OR = {
 				country_exists = NIR
 				has_country_flag = ENG_devolution_purged
+				has_country_flag = ENG_uq_assemblies_suspended
 				has_country_flag = ENG_north_irish_integrated
 				NOT = { 17 = { is_owned_and_controlled_by = ROOT } }
 			}
@@ -3707,6 +3713,7 @@ ENG_devolved_matters = {
 			OR = {
 				country_exists = WAS
 				has_country_flag = ENG_devolution_purged
+				has_country_flag = ENG_uq_assemblies_suspended
 				has_country_flag = ENG_welsh_integrated
 				NOT = { ENG_holds_wales = yes }
 			}
@@ -4240,6 +4247,7 @@ ENG_devolved_matters = {
 
 		visible = {
 			has_idea = ENG_good_friday_agreement
+			NOT = { has_country_flag = ENG_uq_assemblies_suspended }
 			NOT = { has_country_flag = ENG_north_irish_integrated }
 			17 = { is_owned_and_controlled_by = ROOT }
 			country_exists = IRE
@@ -4279,6 +4287,7 @@ ENG_devolved_matters = {
 			OR = {
 				NOT = { 17 = { is_owned_and_controlled_by = ROOT } }
 				has_country_flag = ENG_devolution_purged
+				has_country_flag = ENG_uq_assemblies_suspended
 			}
 		}
 

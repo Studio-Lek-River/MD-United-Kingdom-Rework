@@ -8412,9 +8412,10 @@ country_event = {
 			ENG_remove_resistance_against_westminster = yes
 		}
 		release = SCO
-		SCO = {
-			add_ideas = ENG_war_of_independence
-			hidden_effect = { ingame_startup_nations_effect = yes }
+		custom_effect_tooltip = ENG_uq_rising_army_TT
+		hidden_effect = {
+			ENG_raise_scottish_rising = yes
+			SCO = { ingame_startup_nations_effect = yes }
 		}
 		declare_war_on = {
 			target = SCO
@@ -8446,9 +8447,10 @@ country_event = {
 			ENG_remove_resistance_against_westminster = yes
 		}
 		release = NIR
-		NIR = {
-			add_ideas = ENG_war_of_independence
-			hidden_effect = { ingame_startup_nations_effect = yes }
+		custom_effect_tooltip = ENG_uq_rising_army_TT
+		hidden_effect = {
+			ENG_raise_north_irish_rising = yes
+			NIR = { ingame_startup_nations_effect = yes }
 		}
 		declare_war_on = {
 			target = NIR
@@ -8482,9 +8484,10 @@ country_event = {
 			ENG_remove_resistance_against_westminster = yes
 		}
 		release = WAS
-		WAS = {
-			add_ideas = ENG_war_of_independence
-			hidden_effect = { ingame_startup_nations_effect = yes }
+		custom_effect_tooltip = ENG_uq_rising_army_TT
+		hidden_effect = {
+			ENG_raise_welsh_rising = yes
+			WAS = { ingame_startup_nations_effect = yes }
 		}
 		declare_war_on = {
 			target = WAS
