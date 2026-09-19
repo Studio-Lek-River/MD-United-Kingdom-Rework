@@ -21933,27 +21933,32 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_union_question
-		icon = invest_in_britain
+		icon = british_isles
 
 		x = 0
 		y = 7
 		relative_position_id = ENG_the_sun_which_never_set
 
+		cost = 10
+
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		available = {
 			has_stability > 0.6
-			has_war = no
-			custom_trigger_tooltip = {
-				tooltip = ENG_uq_not_overthrown_TT
-				NOT = { has_country_flag = ENG_overthrown }
+			NOT = { has_country_flag = ENG_overthrown }
+			OR = {
+				AND = {
+					has_government = democratic
+					is_commonwealth_member = yes
+				}
+				nationalist_monarchists_are_in_power = yes
 			}
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_union_question"
-			add_dynamic_modifier = { modifier = ENG_union_question_dm }
 			hidden_effect = {
+				add_dynamic_modifier = { modifier = ENG_union_question_dm }
 				news_event = {
 					id = United_Kingdom_News.5
 					hours = 6
@@ -21966,11 +21971,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_a_family_of_nations
-		icon = invest_in_britain
+		icon = align_to_commonwealth
 
-		x = -2
+		x = -4
 		y = 1
 		relative_position_id = ENG_the_union_question
+
+		cost = 10
 
 		prerequisite = { focus = ENG_the_union_question }
 
@@ -21986,6 +21993,10 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_family_of_nations"
 			unlock_decision_category_tooltip = ENG_union_question_decisions
+			newline = yes
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_union_question_dm }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.15 tooltip = political_power_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
 		}
 
 		ai_will_do = { base = 0 }
@@ -21993,11 +22004,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_crown_imperial
-		icon = Generic_Crown_Box
+		icon = british_isles
 
 		x = 2
 		y = 1
 		relative_position_id = ENG_the_union_question
+
+		cost = 10
 
 		prerequisite = { focus = ENG_the_union_question }
 
@@ -22007,14 +22020,23 @@ focus_tree = {
 
 		available = {
 			nationalist_monarchists_are_in_power = yes
-			has_completed_focus = ENG_royal_prerogative_activation
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crown_imperial"
 			unlock_decision_category_tooltip = ENG_union_question_decisions
-			add_stability = -0.10
 			add_named_threat = { threat = 1 name = ENG_crown_imperial_threat }
+			newline = yes
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_union_question_dm }
+			add_to_variable = { ENG_uq_war_support_factor = 0.05 tooltip = war_support_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
+			hidden_effect = {
+				ENG_uq_update_dm = yes
+				news_event = {
+					id = United_Kingdom_News.8
+					hours = 6
+				}
+			}
 		}
 
 		ai_will_do = { base = 0 }
@@ -22022,11 +22044,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_one_nation
-		icon = democratic_stability
+		icon = british_isles
 
 		x = 0
 		y = 1
 		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_a_family_of_nations }
 
@@ -22034,19 +22058,21 @@ focus_tree = {
 
 		available = {
 			has_government = democratic
-			custom_trigger_tooltip = {
-				tooltip = ENG_one_nation_convention_TT
-				has_country_flag = ENG_constitutional_convention
-			}
+			has_country_flag = ENG_constitutional_convention
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_one_nation"
 			custom_effect_tooltip = ENG_uq_settlement_hard_mode_tt
+			newline = yes
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_union_question_dm }
+			add_to_variable = { ENG_uq_stability_factor = 0.05 tooltip = stability_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
 			hidden_effect = {
 				set_variable = { ENG_settlement_cost = 300 }
 				set_variable = { ENG_settlement_pressure_cap = 15 }
 				set_variable = { ENG_settlement_nationalists_cap = 20 }
+				ENG_uq_update_dm = yes
 			}
 		}
 
@@ -22055,11 +22081,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_union_dividend
-		icon = pound_sterling
+		icon = focus_england_money_vizhat
 
 		x = -2
 		y = 2
 		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_one_nation }
 
@@ -22099,11 +22127,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_a_british_curriculum
-		icon = university
+		icon = british_isles
 
 		x = 0
 		y = 2
 		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_one_nation }
 
@@ -22123,7 +22153,10 @@ focus_tree = {
 			ENG_change_scottish_agitation = yes
 			ENG_change_north_irish_agitation = yes
 			ENG_change_wales_agitation = yes
-			add_stability = -0.03
+			newline = yes
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_economy_modifier }
+			add_to_variable = { ENG_research_speed_factor = 0.05 tooltip = research_speed_factor_tt }
+			add_to_variable = { ENG_education_cost_multiplier_modifier = -0.025 tooltip = education_cost_multiplier_modifier_tt }
 		}
 
 		ai_will_do = { base = 0 }
@@ -22131,11 +22164,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_a_union_of_equals
-		icon = union_negotiations
+		icon = focus_ENG_union_flags
 
 		x = 2
 		y = 2
 		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_one_nation }
 
@@ -22166,16 +22201,15 @@ focus_tree = {
 
 	focus = {
 		id = ENG_westminster_first
-		icon = pass_legislation
+		icon = british_isles
 
 		x = 0
 		y = 3
 		relative_position_id = ENG_a_family_of_nations
 
-		prerequisite = {
-			focus = ENG_a_british_curriculum
-			focus = ENG_a_union_of_equals
-		}
+		cost = 5.72
+
+		prerequisite = { focus = ENG_a_british_curriculum }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -22207,11 +22241,13 @@ focus_tree = {
 		id = ENG_act_of_union
 		icon = british_isles
 
-		x = 0
-		y = 4
+		x = 2
+		y = 3
 		relative_position_id = ENG_a_family_of_nations
 
-		prerequisite = { focus = ENG_westminster_first }
+		cost = 7.9
+
+		prerequisite = { focus = ENG_a_union_of_equals }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -22239,13 +22275,20 @@ focus_tree = {
 
 	focus = {
 		id = ENG_council_of_the_isles
-		icon = union_negotiations
+		icon = british_isles
 
 		x = -2
-		y = 5
+		y = 3
 		relative_position_id = ENG_a_family_of_nations
 
-		prerequisite = { focus = ENG_act_of_union }
+		cost = 5.72
+
+		prerequisite = {
+			focus = ENG_a_british_curriculum
+			focus = ENG_a_union_of_equals
+		}
+
+		prerequisite = { focus = ENG_the_union_dividend }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -22280,13 +22323,16 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_dublin_question
-		icon = ENG_ireland_collaboration
+		icon = british_isles
 
-		x = -2
-		y = 6
+		x = 0
+		y = 4
 		relative_position_id = ENG_a_family_of_nations
 
+		cost = 5.72
+
 		prerequisite = { focus = ENG_council_of_the_isles }
+		prerequisite = { focus = ENG_act_of_union focus = ENG_westminster_first }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -22315,61 +22361,16 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_ireland_rejoins_the_commonwealth #Can be a decision
-		icon = align_to_commonwealth
+		id = ENG_anglo_irish_economic_union
+		icon = british_isles
 
-		x = -2
-		y = 7
+		x = 1
+		y = 5
 		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_dublin_question }
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available = {
-			has_government = democratic
-			country_exists = IRE
-			NOT = { has_war_with = IRE }
-			IRE = { ENG_cmw_is_member = no }
-			custom_trigger_tooltip = {
-				tooltip = ENG_uq_irish_consent_40_TT
-				check_variable = { ENG_consent@IRE > 40 }
-			}
-			custom_trigger_tooltip = {
-				tooltip = ENG_uq_cmw_cohesion_50_TT
-				check_variable = { global.commonwealth_cohesion > 50 }
-			}
-		}
-
-		bypass = {
-			OR = {
-				NOT = { country_exists = IRE }
-				IRE = { ENG_cmw_is_member = yes }
-			}
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_ireland_rejoins_the_commonwealth"
-			IRE = { country_event = { id = ENG_uq.90 days = 1 } }
-			custom_effect_tooltip = TT_IF_THEY_ACCEPT
-			effect_tooltip = { custom_effect_tooltip = ENG_uq_ireland_joins_commonwealth_TT }
-			custom_effect_tooltip = TT_IF_THEY_REJECT
-			effect_tooltip = { custom_effect_tooltip = ENG_uq_ireland_commonwealth_refused_TT }
-			unlock_decision_tooltip = ENG_uq_renew_commonwealth_invitation
-		}
-
-		ai_will_do = { base = 0 }
-	}
-
-	focus = {
-		id = ENG_anglo_irish_economic_union
-		icon = trade_with_britain
-
-		x = -3
-		y = 8
-		relative_position_id = ENG_a_family_of_nations
-
-		prerequisite = { focus = ENG_ireland_rejoins_the_commonwealth }
 
 		mutually_exclusive = { focus = ENG_common_travel_area_plus }
 
@@ -22414,13 +22415,15 @@ focus_tree = {
 
 	focus = {
 		id = ENG_common_travel_area_plus
-		icon = treaty2
+		icon = british_isles
 
 		x = -1
-		y = 8
+		y = 5
 		relative_position_id = ENG_a_family_of_nations
 
-		prerequisite = { focus = ENG_ireland_rejoins_the_commonwealth }
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_dublin_question }
 
 		mutually_exclusive = { focus = ENG_anglo_irish_economic_union }
 
@@ -22449,11 +22452,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_irexit_question
-		icon = scottish_referendum
+		icon = british_isles
 
-		x = -2
-		y = 9
+		x = 0
+		y = 6
 		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
 
 		prerequisite = {
 			focus = ENG_anglo_irish_economic_union
@@ -22493,9 +22498,11 @@ focus_tree = {
 		id = ENG_an_ireland_united_under_the_crown
 		icon = british_isles
 
-		x = -2
-		y = 10
+		x = 0
+		y = 7
 		relative_position_id = ENG_a_family_of_nations
+
+		cost = 7.9
 
 		prerequisite = { focus = ENG_the_irexit_question }
 
@@ -22548,11 +22555,13 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_an_ireland_united_under_the_crown"
-			IRE = { transfer_state = 17 }
-			ENG_settle_northern_ireland_question = yes
-			IRE = { add_opinion_modifier = { target = ROOT modifier = large_increase } }
+			IRE = {
+				transfer_state = 17
+				add_opinion_modifier = { target = ROOT modifier = large_increase }
+			}
 			custom_effect_tooltip = ENG_an_ireland_united_under_the_crown_TT
 			hidden_effect = {
+				ENG_settle_northern_ireland_question = yes
 				IRE = { country_event = { id = ENG_uq.100 days = 1 } }
 			}
 		}
@@ -22562,11 +22571,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_home_rule_in_reverse
-		icon = british_emblem2
+		icon = british_isles
 
-		x = -2
-		y = 11
+		x = 0
+		y = 8
 		relative_position_id = ENG_a_family_of_nations
+
+		cost = 7.9
 
 		prerequisite = { focus = ENG_an_ireland_united_under_the_crown }
 
@@ -22605,11 +22616,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_crowns_peace
-		icon = Generic_Crown_Box
+		icon = british_isles
 
 		x = 0
 		y = 1
 		relative_position_id = ENG_the_crown_imperial
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_crown_imperial }
 
@@ -22631,15 +22644,11 @@ focus_tree = {
 			ENG_change_scottish_nationalists = yes
 			ENG_change_north_irish_nationalists = yes
 			ENG_change_wales_nationalists = yes
-			add_stability = -0.10
 			set_temp_variable = { ENG_imperial_tension_change = 5 }
 			ENG_change_imperial_tension = yes
 			hidden_effect = { update_eng_devolution_dirty_variable = yes }
 			newline = yes
-			custom_effect_tooltip = {
-				localization_key = modifies_dynamic_modifier_tt
-				MODIFIER = ENG_economy_modifier
-			}
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_economy_modifier }
 			add_to_variable = { ENG_foreign_influence_defense_modifier = 0.05 tooltip = foreign_influence_defense_modifier_tt }
 			newline = yes
 			set_temp_variable = { percent_change = 5 }
@@ -22651,11 +22660,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_direct_rule_from_london
-		icon = Generic_Policeman
+		icon = british_isles
 
 		x = 0
 		y = 2
 		relative_position_id = ENG_the_crown_imperial
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_crowns_peace }
 
@@ -22677,11 +22688,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_ulster_settled_by_the_crown
-		icon = Ulster_Industry
+		icon = british_isles
 
 		x = 2
 		y = 2
 		relative_position_id = ENG_the_crown_imperial
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_crowns_peace }
 
@@ -22734,11 +22747,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_unionist_ascendancy
-		icon = british_nationalism
+		icon = british_isles
 
 		x = -1
 		y = 3
 		relative_position_id = ENG_the_crown_imperial
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_direct_rule_from_london }
 
@@ -22769,11 +22784,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_kings_men
-		icon = Generic_British_Soldiers03
+		icon = british_isles
 
 		x = 1
 		y = 3
 		relative_position_id = ENG_the_crown_imperial
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_direct_rule_from_london }
 
@@ -22804,11 +22821,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_loyal_ulster_regiments
-		icon = British_Army_1
+		icon = british_isles
 
 		x = 3
 		y = 3
 		relative_position_id = ENG_the_crown_imperial
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_ulster_settled_by_the_crown }
 
@@ -22840,11 +22859,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_crown_union
-		icon = british_monarchy
+		icon = british_isles
 
 		x = 0
 		y = 4
 		relative_position_id = ENG_the_crown_imperial
+
+		cost = 7.9
 
 		prerequisite = {
 			focus = ENG_the_unionist_ascendancy
@@ -22903,11 +22924,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_irish_question_reopened
-		icon = ENG_ireland_collaboration
+		icon = british_isles
 
 		x = 0
 		y = 1
 		relative_position_id = ENG_crown_union
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_crown_union }
 
@@ -22937,11 +22960,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_no_border_poll
-		icon = scottish_referendum
+		icon = british_isles
 
 		x = -1
 		y = 2
 		relative_position_id = ENG_crown_union
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_irish_question_reopened }
 
@@ -22979,11 +23004,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_sponsor_the_unionist_lobby_in_dublin
-		icon = british_nationalism
+		icon = british_isles
 
 		x = 1
 		y = 2
 		relative_position_id = ENG_crown_union
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_irish_question_reopened }
 
@@ -23013,11 +23040,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_close_the_irish_sea
-		icon = trade_with_britain
+		icon = british_isles
 
 		x = 1
 		y = 3
 		relative_position_id = ENG_crown_union
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_sponsor_the_unionist_lobby_in_dublin }
 
@@ -23053,11 +23082,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_ultimatum_to_dublin
-		icon = treaty2
+		icon = british_isles
 
 		x = 0
 		y = 4
 		relative_position_id = ENG_crown_union
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_no_border_poll }
 		prerequisite = { focus = ENG_close_the_irish_sea }
@@ -23084,11 +23115,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_pacification_of_ireland
-		icon = Generic_Policeman
+		icon = british_isles
 
 		x = 0
 		y = 5
 		relative_position_id = ENG_crown_union
+
+		cost = 7.9
 
 		prerequisite = { focus = ENG_ultimatum_to_dublin }
 
@@ -23126,6 +23159,8 @@ focus_tree = {
 		x = 0
 		y = 6
 		relative_position_id = ENG_crown_union
+
+		cost = 7.9
 
 		prerequisite = { focus = ENG_the_pacification_of_ireland }
 
@@ -23184,11 +23219,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_realms_beyond_the_seas
-		icon = align_to_commonwealth
+		icon = british_isles
 
 		x = -16
-		y = 12
+		y = 9
 		relative_position_id = ENG_a_family_of_nations
+
+		cost = 10
 
 		prerequisite = { focus = ENG_home_rule_in_reverse }
 
@@ -23223,11 +23260,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_ottawa_accord
-		icon = align_to_canada
+		icon = british_isles
 
 		x = -3
 		y = 1
 		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
 
@@ -23269,11 +23308,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_canberra_accord
-		icon = align_to_australia
+		icon = british_isles
 
 		x = -1
 		y = 1
 		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
 
@@ -23315,11 +23356,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_wellington_accord
-		icon = align_to_new_zealand
+		icon = british_isles
 
 		x = 1
 		y = 1
 		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
 
@@ -23360,11 +23403,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_caribbean_partnership
-		icon = trade_with_britain
+		icon = british_isles
 
 		x = 3
 		y = 1
 		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
 
@@ -23418,11 +23463,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_a_shared_crown
-		icon = british_monarchy
+		icon = british_isles
 
 		x = -1
 		y = 2
 		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
 
 		prerequisite = {
 			focus = ENG_ottawa_accord
@@ -23459,11 +23506,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_a_commonwealth_of_equals
-		icon = united_anglosphere
+		icon = british_isles
 
 		x = 1
 		y = 2
 		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
 
 		prerequisite = {
 			focus = ENG_ottawa_accord
@@ -23501,11 +23550,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_crown_realms_united
-		icon = united_anglosphere
+		icon = british_isles
 
 		x = 0
 		y = 3
 		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 7.9
 
 		prerequisite = {
 			focus = ENG_a_shared_crown
@@ -23521,7 +23572,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crown_realms_united"
-			custom_effect_tooltip = ENG_the_crown_realms_united_TT
 			set_cosmetic_tag = ENG_commonwealth_federation
 			custom_effect_tooltip = {
 				localization_key = modifies_dynamic_modifier_tt
@@ -23540,11 +23590,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_dominions_of_the_crown
-		icon = british_monarchy
+		icon = british_isles
 
 		x = 0
 		y = 1
 		relative_position_id = ENG_the_isles_under_one_crown
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_isles_under_one_crown }
 
@@ -23574,11 +23626,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_reserve_powers
-		icon = Generic_Crown_Box
+		icon = british_isles
 
 		x = 0
 		y = 1
 		relative_position_id = ENG_dominions_of_the_crown
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_dominions_of_the_crown }
 
@@ -23600,11 +23654,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_loyalists_in_ottawa
-		icon = align_to_canada
+		icon = british_isles
 
 		x = -3
 		y = 1
 		relative_position_id = ENG_reserve_powers
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_reserve_powers }
 
@@ -23641,11 +23697,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_loyalists_in_canberra
-		icon = align_to_australia
+		icon = british_isles
 
 		x = -1
 		y = 1
 		relative_position_id = ENG_reserve_powers
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_reserve_powers }
 
@@ -23682,11 +23740,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_loyalists_in_wellington
-		icon = align_to_new_zealand
+		icon = british_isles
 
 		x = 1
 		y = 1
 		relative_position_id = ENG_reserve_powers
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_reserve_powers }
 
@@ -23710,7 +23770,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_loyalists_in_wellington"
-			custom_effect_tooltip = ENG_loyalists_in_wellington_TT
 			set_temp_variable = { percent_change = 5 }
 			set_temp_variable = { influence_target = NZL }
 			change_influence_percentage = yes
@@ -23723,11 +23782,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_gunboats_in_the_caribbean
-		icon = British_Army_1
+		icon = british_isles
 
 		x = 3
 		y = 1
 		relative_position_id = ENG_reserve_powers
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_reserve_powers }
 
@@ -23767,11 +23828,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_statute_of_westminster_repealed
-		icon = british_nationalism
+		icon = british_isles
 
 		x = -1
 		y = 2
 		relative_position_id = ENG_reserve_powers
+
+		cost = 5.72
 
 		prerequisite = {
 			focus = ENG_loyalists_in_ottawa
@@ -23809,11 +23872,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_imperial_conference
-		icon = united_anglosphere
+		icon = british_isles
 
 		x = 1
 		y = 2
 		relative_position_id = ENG_reserve_powers
+
+		cost = 5.72
 
 		prerequisite = {
 			focus = ENG_loyalists_in_ottawa
@@ -23854,11 +23919,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_dominions_restored
-		icon = british_emblem2
+		icon = british_isles
 
 		x = 0
 		y = 3
 		relative_position_id = ENG_reserve_powers
+
+		cost = 7.9
 
 		prerequisite = {
 			focus = ENG_the_statute_of_westminster_repealed
@@ -23878,7 +23945,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_dominions_restored"
-			custom_effect_tooltip = ENG_the_dominions_restored_TT
 			set_cosmetic_tag = ENG_commonwealth_federation
 			custom_effect_tooltip = {
 				localization_key = modifies_dynamic_modifier_tt
@@ -23905,6 +23971,8 @@ focus_tree = {
 		y = 1
 		relative_position_id = ENG_the_realms_beyond_the_seas
 
+		cost = 5.72
+
 		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -23915,7 +23983,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_overseas_settlements"
-			custom_effect_tooltip = ENG_the_overseas_settlements_TT
 			set_temp_variable = { ENG_cmw_cohesion_change = 2 }
 			ENG_cmw_change_cohesion = yes
 			unlock_decision_tooltip = ENG_uq_chagos_to_the_hague
@@ -23931,6 +23998,8 @@ focus_tree = {
 		x = -1
 		y = 2
 		relative_position_id = ENG_the_overseas_settlements
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_overseas_settlements }
 
@@ -23966,6 +24035,8 @@ focus_tree = {
 		x = -2
 		y = 1
 		relative_position_id = ENG_the_overseas_settlements
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_overseas_settlements }
 
@@ -24009,6 +24080,8 @@ focus_tree = {
 		y = 1
 		relative_position_id = ENG_the_overseas_settlements
 
+		cost = 5.72
+
 		prerequisite = { focus = ENG_the_overseas_settlements }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -24047,6 +24120,8 @@ focus_tree = {
 		x = 1
 		y = 2
 		relative_position_id = ENG_the_overseas_settlements
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_overseas_settlements }
 
@@ -24095,6 +24170,8 @@ focus_tree = {
 		x = 2
 		y = 1
 		relative_position_id = ENG_the_overseas_settlements
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_overseas_settlements }
 
@@ -24162,8 +24239,10 @@ focus_tree = {
 		icon = british_isles
 
 		x = 7
-		y = 2
+		y = 1
 		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
 
@@ -24192,6 +24271,8 @@ focus_tree = {
 		x = -3
 		y = 1
 		relative_position_id = ENG_commonwealth_development_partnership
+
+		cost = 10
 
 		prerequisite = { focus = ENG_commonwealth_development_partnership }
 
@@ -24247,6 +24328,8 @@ focus_tree = {
 		y = 2
 		relative_position_id = ENG_commonwealth_development_partnership
 
+		cost = 10
+
 		prerequisite = { focus = ENG_commonwealth_development_partnership }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -24298,6 +24381,8 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = ENG_commonwealth_development_partnership
+
+		cost = 10
 
 		prerequisite = { focus = ENG_commonwealth_development_partnership }
 
@@ -24357,6 +24442,8 @@ focus_tree = {
 		y = 1
 		relative_position_id = ENG_commonwealth_development_partnership
 
+		cost = 10
+
 		prerequisite = { focus = ENG_commonwealth_development_partnership }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -24413,6 +24500,8 @@ focus_tree = {
 		y = 2
 		relative_position_id = ENG_commonwealth_development_partnership
 
+		cost = 10
+
 		prerequisite = { focus = ENG_commonwealth_development_partnership }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -24466,6 +24555,8 @@ focus_tree = {
 		x = 3
 		y = 1
 		relative_position_id = ENG_commonwealth_development_partnership
+
+		cost = 10
 
 		prerequisite = { focus = ENG_commonwealth_development_partnership }
 
@@ -24525,6 +24616,8 @@ focus_tree = {
 		y = 1
 		relative_position_id = ENG_dominions_of_the_crown
 
+		cost = 5.72
+
 		prerequisite = { focus = ENG_dominions_of_the_crown }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -24535,7 +24628,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_outposts_of_empire"
-			custom_effect_tooltip = ENG_the_outposts_of_empire_TT
 			set_temp_variable = { ENG_imperial_tension_change = 2 }
 			ENG_change_imperial_tension = yes
 			add_war_support = 0.02
@@ -24551,6 +24643,8 @@ focus_tree = {
 		x = -2
 		y = 1
 		relative_position_id = ENG_the_outposts_of_empire
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
 
@@ -24585,6 +24679,8 @@ focus_tree = {
 		x = -1
 		y = 2
 		relative_position_id = ENG_the_outposts_of_empire
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
 
@@ -24631,6 +24727,8 @@ focus_tree = {
 		y = 1
 		relative_position_id = ENG_the_outposts_of_empire
 
+		cost = 5.72
+
 		prerequisite = { focus = ENG_the_outposts_of_empire }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -24646,7 +24744,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_rock_defiant"
-			custom_effect_tooltip = ENG_the_rock_defiant_TT
 			19 = {
 				add_dynamic_modifier = { modifier = ENG_uq_fortress_state }
 				one_state_anti_air = yes
@@ -24676,6 +24773,8 @@ focus_tree = {
 		x = 1
 		y = 2
 		relative_position_id = ENG_the_outposts_of_empire
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
 
@@ -24725,6 +24824,8 @@ focus_tree = {
 		x = 2
 		y = 1
 		relative_position_id = ENG_the_outposts_of_empire
+
+		cost = 5.72
 
 		prerequisite = { focus = ENG_the_outposts_of_empire }
 
@@ -24776,6 +24877,8 @@ focus_tree = {
 		y = 1
 		relative_position_id = ENG_dominions_of_the_crown
 
+		cost = 5.72
+
 		prerequisite = { focus = ENG_dominions_of_the_crown }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -24803,6 +24906,8 @@ focus_tree = {
 		x = -3
 		y = 1
 		relative_position_id = ENG_the_imperial_mission
+
+		cost = 10
 
 		prerequisite = { focus = ENG_the_imperial_mission }
 
@@ -24846,6 +24951,8 @@ focus_tree = {
 		y = 2
 		relative_position_id = ENG_the_imperial_mission
 
+		cost = 10
+
 		prerequisite = { focus = ENG_the_imperial_mission }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -24885,6 +24992,8 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = ENG_the_imperial_mission
+
+		cost = 10
 
 		prerequisite = { focus = ENG_the_imperial_mission }
 
@@ -24932,6 +25041,8 @@ focus_tree = {
 		y = 1
 		relative_position_id = ENG_the_imperial_mission
 
+		cost = 10
+
 		prerequisite = { focus = ENG_the_imperial_mission }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -24976,6 +25087,8 @@ focus_tree = {
 		y = 2
 		relative_position_id = ENG_the_imperial_mission
 
+		cost = 10
+
 		prerequisite = { focus = ENG_the_imperial_mission }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -25017,6 +25130,8 @@ focus_tree = {
 		x = 3
 		y = 1
 		relative_position_id = ENG_the_imperial_mission
+
+		cost = 10
 
 		prerequisite = { focus = ENG_the_imperial_mission }
 

@@ -3884,6 +3884,11 @@ ENG_devolved_matters = {
 			unlock_decision_tooltip = ENG_scottish_union_settlement
 			unlock_decision_tooltip = ENG_north_irish_union_settlement
 			unlock_decision_tooltip = ENG_welsh_union_settlement
+			hidden_effect = {
+				set_variable = { ENG_settlement_cost = 200 }
+				set_variable = { ENG_settlement_pressure_cap = 25 }
+				set_variable = { ENG_settlement_nationalists_cap = 30 }
+			}
 			newline = yes
 			set_temp_variable = { treasury_change = -3 }
 			modify_treasury_effect = yes
@@ -5312,7 +5317,7 @@ ENG_union_question_decisions = {
 		icon = GFX_decision_generic_political_discourse
 
 		visible = {
-			has_completed_focus = ENG_ireland_rejoins_the_commonwealth
+			has_completed_focus = ENG_a_family_of_nations
 			country_exists = IRE
 			IRE = { ENG_cmw_is_member = no }
 		}

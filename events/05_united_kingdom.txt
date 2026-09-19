@@ -731,6 +731,18 @@ news_event = {
 
 	option = { name = United_Kingdom_News.7.a }
 }
+
+news_event = {
+	id = United_Kingdom_News.8
+	title = United_Kingdom_News.8.t
+	desc = United_Kingdom_News.8.d
+	picture = GFX_ENG_canzuk_alliance
+	is_triggered_only = yes
+	major = yes
+
+	option = { name = United_Kingdom_News.8.a }
+}
+
 ########################## Political #########################
 
 ########################## Economy #########################
