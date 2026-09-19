@@ -5531,11 +5531,22 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_share_vtol_research"
-			add_tech_bonus = {
-				name = ENG_share_vtol_research
-				uses = 1
-				bonus = 0.15
-				category = CAT_air_engine
+			if = {
+				limit = { has_dlc = "By Blood Alone" }
+				add_tech_bonus = {
+					name = ENG_share_vtol_research
+					uses = 1
+					bonus = 0.15
+					category = CAT_air_engine
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = ENG_share_vtol_research
+					uses = 1
+					bonus = 0.15
+					category = CAT_air_eqp
+				}
 			}
 			newline = yes
 			set_temp_variable = { temp_opinion = 5 }
@@ -5789,12 +5800,23 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_skylon_engine"
-			add_tech_bonus = {
-				name = ENG_skylon_engine
-				ahead_reduction = 2
-				uses = 2
-				category = CAT_space
-				category = CAT_air_engine
+			if = {
+				limit = { has_dlc = "By Blood Alone" }
+				add_tech_bonus = {
+					name = ENG_skylon_engine
+					ahead_reduction = 2
+					uses = 2
+					category = CAT_space
+					category = CAT_air_engine
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = ENG_skylon_engine
+					ahead_reduction = 2
+					uses = 2
+					category = CAT_space
+				}
 			}
 			newline = yes
 			set_temp_variable = { temp_opinion = 5 }
@@ -21414,7 +21436,6 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_operation_barras"
 			unlock_decision_tooltip = ENG_seize_sierra_leone_resources
-			add_to_variable = { ENG_fp_count = 1 }
 			set_temp_variable = { percent_change = 3 }
 			set_temp_variable = { influence_target = SIE }
 			change_influence_percentage = yes
@@ -21472,7 +21493,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_falklands_policy"
-			add_to_variable = { ENG_fp_count = 1 }
 			country_event = britain_md.26
 		}
 
@@ -21534,7 +21554,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_regime_change_in_zimbabwe"
-			add_to_variable = { ENG_fp_count = 1 }
 			custom_effect_tooltip = ENG_raid_enabled_2_TT
 		}
 
@@ -21591,7 +21610,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_operation_dagger"
-			add_to_variable = { ENG_fp_count = 1 }
 			country_event = britain_md.100
 		}
 
@@ -21652,7 +21670,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_operation_coastal_star"
-			add_to_variable = { ENG_fp_count = 1 }
 			country_event = britain_md.16
 		}
 
@@ -21713,7 +21730,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_operation_east_divide"
-			add_to_variable = { ENG_fp_count = 1 }
 			213 = { set_state_flag = EGY_sinai }
 			country_event = britain_md.30
 		}
@@ -21775,7 +21791,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_wonga_coup"
-			add_to_variable = { ENG_fp_count = 1 }
 			custom_effect_tooltip = ENG_seize_oil_wonga_coup_TT
 			hidden_effect = {
 				set_technology = { special_forces_tech_3 = 1 popup = no }
@@ -21826,7 +21841,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_operation_resolute_banner"
-			add_to_variable = { ENG_fp_count = 1 }
 			give_guarantee = KOS
 			newline = yes
 			set_temp_variable = { percent_change = 3 }
@@ -21895,7 +21909,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_operation_delta_guard"
-			add_to_variable = { ENG_fp_count = 1 }
 			custom_effect_tooltip = ENG_raid_enalbed_TT
 		}
 
@@ -21916,1212 +21929,36 @@ focus_tree = {
 		}
 	}
 
-	# Do something branch
-
-	focus = {
-		id = ENG_a_more_united_kingdom
-		icon = invest_in_britain
-
-		x = 23
-		y = 5
-		offset = {
-			x = 1
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_a_more_united_kingdom
-			}
-		}
-
-		cost = 7.2
-
-		allow_branch = {
-			if = {
-				limit = {
-					has_game_rule = {
-						rule = obsolete_focus_branches_visibility
-						option = HIDE
-					}
-				}
-				NOT = { has_completed_focus = ENG_fractured_kingdom_united_state }
-			}
-		}
-
-		mutually_exclusive = { focus = ENG_fractured_kingdom_united_state }
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = ENG_do_fp_TT
-				check_variable = { ENG_fp_count > 3 }
-			}
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_more_united_kingdom"
-			unlock_decision_category_tooltip = ENG_a_more_united_kingdom_decisions
-			drop_cosmetic_tag = yes
-			clear_variable = dynamic_flag_variant
-			custom_effect_tooltip = ENG_unlock_uniting_the_realm_decisions_TT
-			ENG_update_commonwealth_totals = yes
-			update_focus_tree_obsolete_branches = yes
-		}
-
-		ai_will_do = {
-			base = 3
-			modifier = {
-				factor = 4
-				has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS
-			}
-			modifier = {
-				factor = 0.3
-				OR = {
-					is_historical_focus_on = yes
-					has_global_flag = ENG_HISTORICAL_AI_FOCUS
-				}
-				NOT = { has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS }
-			}
-		}
-	}
-
-	focus = {
-		id = ENG_deeper_commonwealth_integration
-		icon = align_to_commonwealth
-
-		x = -1
-		y = 1
-		relative_position_id = ENG_a_more_united_kingdom
-		offset = {
-			x = 1
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_a_more_united_kingdom
-			}
-		}
-
-		cost = 5.72
-
-		prerequisite = { focus = ENG_a_more_united_kingdom }
-
-		search_filters = { FOCUS_FILTER_ECONOMY }
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_deeper_commonwealth_integration"
-			custom_effect_tooltip = {
-				localization_key = modifies_dynamic_modifier_tt
-				MODIFIER = ENG_political_modifier
-			}
-			add_to_variable = { ENG_foreign_influence_modifier = 0.05 tooltip = foreign_influence_modifier_tt }
-			newline = yes
-			set_temp_variable = { percent_change = 4 }
-			set_temp_variable = { influence_target = CAN }
-			change_influence_percentage = yes
-			newline = yes
-			set_temp_variable = { percent_change = 4 }
-			set_temp_variable = { influence_target = AST }
-			change_influence_percentage = yes
-			newline = yes
-			set_temp_variable = { percent_change = 4 }
-			set_temp_variable = { influence_target = NZL }
-			change_influence_percentage = yes
-		}
-
-		ai_will_do = {
-			base = 1
-			modifier = {
-				factor = 4
-				has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS
-			}
-			modifier = {
-				factor = 0.3
-				OR = {
-					is_historical_focus_on = yes
-					has_global_flag = ENG_HISTORICAL_AI_FOCUS
-				}
-				NOT = { has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS }
-			}
-		}
-	}
-
-	focus = {
-		id = ENG_sovereignty_above_all
-		icon = housing_secured
-
-		x = 1
-		y = 1
-		relative_position_id = ENG_a_more_united_kingdom
-		offset = {
-			x = -2
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_fractured_kingdom_united_state
-			}
-		}
-		offset = {
-			x = 1
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_a_more_united_kingdom
-			}
-		}
-
-		cost = 5
-
-		prerequisite = { focus = ENG_a_more_united_kingdom focus = ENG_fractured_kingdom_united_state }
-
-		search_filters = { FOCUS_FILTER_ECONOMY }
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_sovereignty_above_all"
-			custom_effect_tooltip = {
-				localization_key = modifies_dynamic_modifier_tt
-				MODIFIER = ENG_economy_modifier
-			}
-			add_to_variable = { ENG_foreign_influence_defense_modifier = 0.05 tooltip = foreign_influence_defense_modifier_tt }
-			newline = yes
-			set_temp_variable = { percent_change = 5 }
-			change_domestic_influence_percentage = yes
-			newline = yes
-			set_temp_variable = { party_popularity_increase = 0.055 }
-			set_temp_variable = { temp_outlook_increase = 0.075 }
-			change_relative_party_popularity = yes
-		}
-
-		ai_will_do = { base = 2 }
-	}
-
-	focus = {
-		id = ENG_two_way_concessions
-		icon = scottish_referendum
-
-		x = 0
-		y = 2
-		relative_position_id = ENG_a_more_united_kingdom
-		offset = {
-			x = 2
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_a_more_united_kingdom
-			}
-		}
-
-		cost = 7.2
-
-		prerequisite = { focus = ENG_deeper_commonwealth_integration }
-
-		search_filters = { FOCUS_FILTER_ECONOMY FOCUS_FILTER_EXPENDITURE }
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_two_way_concessions"
-			set_temp_variable = { treasury_change = { value = gdp_total multiply = -0.03 } }
-			modify_treasury_effect = yes
-			newline = yes
-			SCO = {
-				set_temp_variable = { ENG_agitation_change = -5 }
-				ENG_change_scottish_agitation = yes
-			}
-			newline = yes
-			set_temp_variable = { temp_productivity_change = 50 }
-			every_core_state = {
-				limit = { is_core_of = SCO }
-				state_flat_productivity_change_effect = yes
-			}
-		}
-
-		ai_will_do = {
-			base = 1
-			modifier = {
-				factor = 0
-				has_active_mission = bankruptcy_incoming_collapse
-			}
-			modifier = {
-				factor = 4
-				has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS
-			}
-			modifier = {
-				factor = 0.3
-				OR = {
-					is_historical_focus_on = yes
-					has_global_flag = ENG_HISTORICAL_AI_FOCUS
-				}
-				NOT = { has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS }
-			}
-		}
-	}
-
-	focus = {
-		id = ENG_bring_in_canada
-		icon = align_to_canada
-
-		x = -1
-		y = 3
-		relative_position_id = ENG_a_more_united_kingdom
-		offset = {
-			x = 1
-			y = -1
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_a_more_united_kingdom
-			}
-		}
-
-		cost = 10
-
-		prerequisite = { focus = ENG_deeper_commonwealth_integration }
-
-		search_filters = { FOCUS_FILTER_ECONOMY }
-
-		available = {
-			country_exists = CAN
-			custom_trigger_tooltip = {
-				tooltip = ENG_has_met_all_requirements_TT
-				has_country_flag = ENG_established_econ_heg
-				has_country_flag = ENG_established_military_heg
-				has_country_flag = ENG_established_political_heg
-			}
-		}
-
-		bypass = { NOT = { country_exists = CAN } }
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_bring_in_canada"
-			CAN = {
-				country_event = {
-					id = britain_md.35
-					days = 1
-				}
-			}
-			custom_effect_tooltip = TT_IF_THEY_ACCEPT
-			effect_tooltip = {
-				set_autonomy = {
-					target = CAN
-					autonomy_state = autonomy_constituent_country_very_low_devolution
-				}
-			}
-			newline = yes
-			custom_effect_tooltip = IRQ_more_likely_accept_TT
-		}
-
-		ai_will_do = {
-			base = 1
-			modifier = {
-				factor = 4
-				has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS
-			}
-			modifier = {
-				factor = 0.3
-				OR = {
-					is_historical_focus_on = yes
-					has_global_flag = ENG_HISTORICAL_AI_FOCUS
-				}
-				NOT = { has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS }
-			}
-		}
-	}
-
-	focus = {
-		id = ENG_australian_outreach
-		icon = align_to_australia
-
-		x = -2
-		y = 4
-		relative_position_id = ENG_a_more_united_kingdom
-		offset = {
-			x = 1
-			y = -1
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_a_more_united_kingdom
-			}
-		}
-
-		cost = 10
-
-		prerequisite = { focus = ENG_bring_in_canada }
-
-		search_filters = { FOCUS_FILTER_ECONOMY }
-
-		available = {
-			country_exists = AST
-			custom_trigger_tooltip = {
-				tooltip = ENG_has_met_all_requirements_TT
-				has_country_flag = ENG_established_econ_heg
-				has_country_flag = ENG_established_military_heg
-				has_country_flag = ENG_established_political_heg
-			}
-		}
-
-		bypass = { NOT = { country_exists = AST } }
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_australian_outreach"
-			AST = {
-				country_event = {
-					id = britain_md.35
-					days = 1
-				}
-			}
-			custom_effect_tooltip = TT_IF_THEY_ACCEPT
-			effect_tooltip = {
-				set_autonomy = {
-					target = AST
-					autonomy_state = autonomy_constituent_country_very_low_devolution
-				}
-			}
-			newline = yes
-			custom_effect_tooltip = IRQ_more_likely_accept_TT
-		}
-
-		ai_will_do = {
-			base = 1
-			modifier = {
-				factor = 4
-				has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS
-			}
-			modifier = {
-				factor = 0.3
-				OR = {
-					is_historical_focus_on = yes
-					has_global_flag = ENG_HISTORICAL_AI_FOCUS
-				}
-				NOT = { has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS }
-			}
-		}
-	}
-
-	focus = {
-		id = ENG_new_zealands_offer
-		icon = align_to_new_zealand
-
-		x = 0
-		y = 4
-		relative_position_id = ENG_a_more_united_kingdom
-		offset = {
-			x = 1
-			y = -1
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_a_more_united_kingdom
-			}
-		}
-
-		cost = 10
-
-		prerequisite = { focus = ENG_bring_in_canada }
-
-		search_filters = { FOCUS_FILTER_ECONOMY }
-
-		available = {
-			country_exists = NZL
-			custom_trigger_tooltip = {
-				tooltip = ENG_has_met_all_requirements_TT
-				has_country_flag = ENG_established_econ_heg
-				has_country_flag = ENG_established_military_heg
-				has_country_flag = ENG_established_political_heg
-			}
-		}
-
-		bypass = { NOT = { country_exists = NZL } }
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_new_zealands_offer"
-			NZL = {
-				country_event = {
-					id = britain_md.35
-					days = 1
-				}
-			}
-			custom_effect_tooltip = TT_IF_THEY_ACCEPT
-			effect_tooltip = {
-				set_autonomy = {
-					target = NZL
-					autonomy_state = autonomy_constituent_country_very_low_devolution
-				}
-			}
-			newline = yes
-			custom_effect_tooltip = IRQ_more_likely_accept_TT
-		}
-
-		ai_will_do = {
-			base = 1
-			modifier = {
-				factor = 4
-				has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS
-			}
-			modifier = {
-				factor = 0.3
-				OR = {
-					is_historical_focus_on = yes
-					has_global_flag = ENG_HISTORICAL_AI_FOCUS
-				}
-				NOT = { has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS }
-			}
-		}
-	}
-
-	focus = {
-		id = ENG_declare_the_commonwealth
-		icon = united_anglosphere
-
-		x = -1
-		y = 5
-		relative_position_id = ENG_a_more_united_kingdom
-		offset = {
-			x = 1
-			y = -1
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_a_more_united_kingdom
-			}
-		}
-
-		cost = 5
-
-		prerequisite = { focus = ENG_new_zealands_offer }
-		prerequisite = { focus = ENG_australian_outreach }
-
-		search_filters = { FOCUS_FILTER_ECONOMY }
-
-		available = {
-			if = {
-				limit = { country_exists = CAN }
-				CAN = { is_subject_of = ENG }
-			}
-			if = {
-				limit = { country_exists = AST }
-				AST = { is_subject_of = ENG }
-			}
-			if = {
-				limit = { country_exists = NZL }
-				NZL = { is_subject_of = ENG }
-			}
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_declare_the_commonwealth"
-			#TODO: Global event here
-			custom_effect_tooltip = ENG_declares_commonwealth_federation_TT
-			hidden_effect = {
-				set_cosmetic_tag = ENG_commonwealth_federation
-				if = {
-					limit = {
-						country_exists = CAN
-					}
-					CAN = {
-						every_controlled_state = {
-							add_core_of = ENG
-						}
-					}
-					annex_country = {
-						target = CAN
-						transfer_troops = yes
-					}
-				}
-				if = {
-					limit = {
-						country_exists = NZL
-					}
-					NZL = {
-						every_controlled_state = {
-							add_core_of = ENG
-						}
-					}
-					annex_country = {
-						target = NZL
-						transfer_troops = yes
-					}
-				}
-				if = {
-					limit = {
-						country_exists = AST
-					}
-					AST = {
-						every_controlled_state = {
-							add_core_of = ENG
-						}
-					}
-					annex_country = {
-						target = AST
-						transfer_troops = yes
-					}
-				}
-			}
-		}
-
-		ai_will_do = {
-			base = 1
-			modifier = {
-				factor = 4
-				has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS
-			}
-			modifier = {
-				factor = 0.3
-				OR = {
-					is_historical_focus_on = yes
-					has_global_flag = ENG_HISTORICAL_AI_FOCUS
-				}
-				NOT = { has_global_flag = ENG_RULE_BRITANNIA_AI_FOCUS }
-			}
-		}
-	}
-
-	focus = {
-		id = ENG_fractured_kingdom_united_state
-		icon = Generic_British_Soldiers03
-
-		x = 25
-		y = 5
-		offset = {
-			x = -1
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_fractured_kingdom_united_state
-			}
-		}
-
-		cost = 7.2
-
-		allow_branch = {
-			if = {
-				limit = {
-					has_game_rule = {
-						rule = obsolete_focus_branches_visibility
-						option = HIDE
-					}
-				}
-				NOT = { has_completed_focus = ENG_a_more_united_kingdom }
-			}
-		}
-
-		mutually_exclusive = { focus = ENG_a_more_united_kingdom }
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = ENG_has_overthrown_current_system_TT
-				has_country_flag = ENG_overthrown
-			}
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_fractured_kingdom_united_state"
-			unlock_decision_category_tooltip = ENG_fractured_kingdom_united_state_decisions
-			custom_effect_tooltip = ENG_unlock_the_next_era_TT
-			hidden_effect = {
-				955 = {
-					transfer_state_to = ADS
-					add_core_of = ADS
-					add_extra_state_shared_building_slots = 7
-					add_building_construction = {
-						type = fossil_powerplant
-						level = 1
-						instant_build = yes
-					}
-				}
-				ADS = {
-					ingame_startup_nations_effect = yes
-				}
-				ENG = {
-					set_autonomy = {
-						target = ADS
-						autonomy_state = autonomy_associated_state_colored
-					}
-				}
-				ADS = {
-					set_temp_variable = { party_index = 22 }
-					set_temp_variable = { party_popularity_increase = 1 }
-					set_temp_variable = { temp_outlook_increase = 1 }
-					change_relative_party_popularity = yes
-					set_temp_variable = { rul_party_temp = 22 }
-					set_temp_variable = { disable_elections = 1 }
-					change_ruling_party_effect = yes
-					create_country_leader = {
-						name = "Toby 'Hunter' Campbell"
-						picture = "ENG_pmc_leader_2.dds"
-						ideology = Nat_Autocracy
-						traits = {
-							nationalist_Nat_Autocracy
-						}
-					}
-					add_ideas = ENG_ADS_money
-					set_variable = { additional_income_change = 2.0 } #10% of GDP yearly
-					custom_effect_tooltip = additional_income_rate_percent_tt
-					# Army
-					division_template = {
-						name = "Albionis Special Forces Brigade"
-						regiments = {
-							Special_Forces = { x = 0 y = 0 }
-							Special_Forces = { x = 0 y = 1 }
-							Special_Forces = { x = 0 y = 2 }
-							Special_Forces = { x = 0 y = 3 }
-							Special_Forces = { x = 1 y = 0 }
-							Special_Forces = { x = 1 y = 1 }
-							Special_Forces = { x = 1 y = 2 }
-							Special_Forces = { x = 1 y = 3 }
-						}
-						priority = 2
-					}
-					955 = {
-						create_unit = {
-							division = "name = \"1st. 'Spicer' Special Forces Group\" division_template = \"Albionis Special Forces Brigade\" start_experience_factor = 1.0"
-							owner = ADS
-						}
-						create_unit = {
-							division = "name = \"2nd. 'Hound' Special Forces Group\" division_template = \"Albionis Special Forces Brigade\" start_experience_factor = 1.0"
-							owner = ADS
-						}
-						create_unit = {
-							division = "name = \"3rd. 'Enforcer' Special Forces Group\" division_template = \"Albionis Special Forces Brigade\" start_experience_factor = 1.0"
-							owner = ADS
-						}
-					}
-				}
-				if = {
-					limit = {
-						has_game_rule = {
-							rule = obsolete_focus_branches_visibility
-							option = HIDE
-						}
-					}
-					mark_focus_tree_layout_dirty = yes
-				}
-			}
-		}
-
-		ai_will_do = { base = 1 }
-	}
-
-	focus = {
-		id = ENG_establishing_new_leadership
-		icon = break_free
-
-		x = 1
-		y = 1
-		relative_position_id = ENG_fractured_kingdom_united_state
-		offset = {
-			x = -1
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_fractured_kingdom_united_state
-			}
-		}
-
-		cost = 5.72
-
-		prerequisite = { focus = ENG_fractured_kingdom_united_state }
-
-		search_filters = { FOCUS_FILTER_ECONOMY }
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_establishing_new_leadership"
-			remove_ideas = ENG_two_party_system_idea
-			newline = yes
-			country_event = britain_md.39
-		}
-
-		ai_will_do = { base = 1 }
-	}
-
-	focus = {
-		id = ENG_uniting_the_isle
-		icon = ENG_uniting_the_isle
-
-		x = 0
-		y = 2
-		relative_position_id = ENG_fractured_kingdom_united_state
-		offset = {
-			x = -1
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_fractured_kingdom_united_state
-			}
-		}
-
-		cost = 10
-
-		prerequisite = { focus = ENG_establishing_new_leadership }
-		will_lead_to_war_with = IRE
-
-		search_filters = { FOCUS_FILTER_ECONOMY }
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_uniting_the_isle"
-			unlock_decision_tooltip = ENG_integrate_ireland
-			29 = { add_claim_by = ENG }
-			newline = yes
-			27 = { add_claim_by = ENG }
-			newline = yes
-			28 = { add_claim_by = ENG }
-			newline = yes
-			declare_war_on = {
-				target = IRE
-				type = take_claimed_state
-			}
-			newline = yes
-			custom_effect_tooltip = ENG_annex_ireland_TT
-		}
-
-		ai_will_do = { base = 1 }
-	}
-
-	focus = {
-		id = ENG_revolution_not_devolution
-		icon = political_pressure
-
-		x = 2
-		y = 2
-		relative_position_id = ENG_fractured_kingdom_united_state
-		offset = {
-			x = -1
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_fractured_kingdom_united_state
-			}
-		}
-
-		cost = 7.2
-
-		prerequisite = { focus = ENG_establishing_new_leadership }
-		will_lead_to_war_with = SCO
-		will_lead_to_war_with = WAS
-		will_lead_to_war_with = NIR
-
-		search_filters = { FOCUS_FILTER_ECONOMY }
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_revolution_not_devolution"
-			custom_effect_tooltip = ENG_abolish_devolution_TT
-			#TODO: Global event here
-			set_country_flag = ENG_devolution_purged
-			hidden_effect = {
-				add_timed_idea = {
-					idea = ENG_recent_defections
-					days = 600
-				}
-				if = {
-					limit = { NOT = { has_country_flag = ENG_scottish_integrated } }
-					release = SCO
-				}
-				if = {
-					limit = { NOT = { has_country_flag = ENG_welsh_integrated } }
-					release = WAS
-				}
-				if = {
-					limit = { NOT = { has_country_flag = ENG_north_irish_integrated } }
-					release = NIR
-				}
-				delete_units = {
-					division_template = "Mechanized Infantry Brigade"
-					disband = no
-				}
-				delete_units = {
-					division_template = "Special Forces"
-					disband = no
-				}
-				delete_unit = {
-					state = 437
-					disband = no
-				}
-				delete_unit = {
-					state = 17
-					disband = no
-				}
-				delete_unit = {
-					state = 16
-					disband = no
-				}
-				# Scotland
-				SCO = {
-					add_ideas = ENG_war_of_independence
-					division_template = {
-						name = "The Fowk's Airmy o Scotland"
-						priority = 0
-						regiments = {
-							Militia_Bat = { x = 0 y = 0 }
-							Militia_Bat = { x = 0 y = 1 }
-							Militia_Bat = { x = 0 y = 2 }
-							Arty_Bat = { x = 0 y = 3 }
-							Militia_Bat = { x = 1 y = 0 }
-							Militia_Bat = { x = 1 y = 1 }
-							Militia_Bat = { x = 1 y = 2 }
-							Arty_Bat = { x = 1 y = 3 }
-							Militia_Bat = { x = 2 y = 0 }
-							Militia_Bat = { x = 2 y = 1 }
-							Militia_Bat = { x = 2 y = 2 }
-							Arty_Bat = { x = 2 y = 3 }
-						}
-						support = {
-							L_Recce_Comp = { x = 0 y = 0 }
-							L_Engi_Comp = { x = 0 y = 1 }
-							combat_service_support_company = { x = 0 y = 2 }
-							Arty_Battery = { x = 0 y = 3 }
-						}
-					}
-					9 = {
-						create_unit = {
-							division = "name = \"1st. Airmy o Freedom\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = SCO
-							prioritize_location = 6395
-						}
-						create_unit = {
-							division = "name = \"2nd. Airmy o Leddom\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = SCO
-							prioritize_location = 9392
-						}
-						create_unit = {
-							division = "name = \"3rd. Scots Freedom Division\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = SCO
-							prioritize_location = 9383
-						}
-						create_unit = {
-							division = "name = \"4th. Red Thistle Division\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = SCO
-							prioritize_location = 6320
-						}
-					}
-					1194 = {
-						create_unit = {
-							division = "name = \"5th. Bannockburn Division\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = SCO
-							prioritize_location = 9237
-						}
-						create_unit = {
-							division = "name = \"6th. Bruce Division\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = SCO
-							prioritize_location = 9350
-						}
-						create_unit = {
-							division = "name = \"7th. Covenant Host\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = SCO
-							prioritize_location = 11218
-						}
-						create_unit = {
-							division = "name = \"8th. Host o Alba\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = SCO
-							prioritize_location = 9314
-						}
-					}
-				}
-				# Wales
-				WAS = {
-					add_ideas = ENG_war_of_independence
-					division_template = {
-						name = "Byddin Rhyddid"
-						priority = 0
-						regiments = {
-							Militia_Bat = { x = 0 y = 0 }
-							Militia_Bat = { x = 0 y = 1 }
-							Militia_Bat = { x = 0 y = 2 }
-							Arty_Bat = { x = 0 y = 3 }
-							Militia_Bat = { x = 1 y = 0 }
-							Militia_Bat = { x = 1 y = 1 }
-							Militia_Bat = { x = 1 y = 2 }
-							Arty_Bat = { x = 1 y = 3 }
-							Militia_Bat = { x = 2 y = 0 }
-							Militia_Bat = { x = 2 y = 1 }
-							Militia_Bat = { x = 2 y = 2 }
-							Arty_Bat = { x = 2 y = 3 }
-						}
-						support = {
-							L_Recce_Comp = { x = 0 y = 0 }
-							L_Engi_Comp = { x = 0 y = 1 }
-							combat_service_support_company = { x = 0 y = 2 }
-							Arty_Battery = { x = 0 y = 3 }
-						}
-					}
-					16 = {
-						create_unit = {
-							division = "name = \"1st. Byddin y Bobl\" division_template = \"Byddin Rhyddid\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = WAS
-							prioritize_location = 3274
-						}
-						create_unit = {
-							division = "name = \"2nd. Byddin Gwrthsafiad\" division_template = \"Byddin Rhyddid\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = WAS
-							prioritize_location = 253
-						}
-						create_unit = {
-							division = "name = \"3rd. Byddin Genedlaethol Cymru\" division_template = \"Byddin Rhyddid\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = WAS
-							prioritize_location = 407
-						}
-						create_unit = {
-							division = "name = \"4th. Byddin y Faner Goch\" division_template = \"Byddin Rhyddid\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = WAS
-							prioritize_location = 377
-						}
-					}
-					1192 = {
-						create_unit = {
-							division = "name = \"5th. Byddin y Bobl\" division_template = \"Byddin Rhyddid\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = WAS
-							prioritize_location = 9364
-						}
-						create_unit = {
-							division = "name = \"6th. Byddin Gwrthsafiad\" division_template = \"Byddin Rhyddid\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = WAS
-							prioritize_location = 311
-						}
-					}
-				}
-				# Northern Ireland
-				NIR = {
-					add_ideas = ENG_war_of_independence
-					division_template = {
-						name = "Arm Saoirse"
-						priority = 0
-						regiments = {
-							Militia_Bat = { x = 0 y = 0 }
-							Militia_Bat = { x = 0 y = 1 }
-							Militia_Bat = { x = 0 y = 2 }
-							Arty_Bat = { x = 0 y = 3 }
-							Militia_Bat = { x = 1 y = 0 }
-							Militia_Bat = { x = 1 y = 1 }
-							Militia_Bat = { x = 1 y = 2 }
-							Arty_Bat = { x = 1 y = 3 }
-							Militia_Bat = { x = 2 y = 0 }
-							Militia_Bat = { x = 2 y = 1 }
-							Militia_Bat = { x = 2 y = 2 }
-							Arty_Bat = { x = 2 y = 3 }
-						}
-						support = {
-							L_Recce_Comp = { x = 0 y = 0 }
-							L_Engi_Comp = { x = 0 y = 1 }
-							combat_service_support_company = { x = 0 y = 2 }
-							Arty_Battery = { x = 0 y = 3 }
-						}
-					}
-					17 = {
-						create_unit = {
-							division = "name = \"1st. Arm Fuascailte\" division_template = \"Arm Saoirse\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = NIR
-							prioritize_location = 14492
-						}
-						create_unit = {
-							division = "name = \"2nd. Arm an Phobail\" division_template = \"Arm Saoirse\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = NIR
-							prioritize_location = 276
-						}
-						create_unit = {
-							division = "name = \"3rd. Arm an Athbheochana\" division_template = \"Arm Saoirse\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = NIR
-							prioritize_location = 3329
-						}
-						create_unit = {
-							division = "name = \"4th. Arm Uladh\" division_template = \"Arm Saoirse\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
-							owner = NIR
-							prioritize_location = 3379
-						}
-					}
-				}
-				# War
-				ENG = {
-					declare_war_on = {
-						target = SCO
-						type = annex_everything
-					}
-					declare_war_on = {
-						target = WAS
-						type = annex_everything
-					}
-					declare_war_on = {
-						target = NIR
-						type = annex_everything
-					}
-					set_cosmetic_tag = ENG_England
-				}
-			}
-		}
-
-		ai_will_do = { base = 1 }
-	}
-
-	focus = {
-		id = ENG_glory_of_pax_britannica
-		icon = Rule_Britannia
-
-		x = 1
-		y = 3
-		relative_position_id = ENG_fractured_kingdom_united_state
-		offset = {
-			x = -1
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_fractured_kingdom_united_state
-			}
-		}
-
-		cost = 10
-
-		prerequisite = { focus = ENG_uniting_the_isle focus = ENG_revolution_not_devolution }
-
-		search_filters = { FOCUS_FILTER_ECONOMY }
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_glory_of_pax_britannica"
-			custom_effect_tooltip = ENG_create_new_faction_TT
-			newline = yes
-			add_ideas = faction_aso_alliance
-			create_faction_from_template = faction_template_aso
-			hidden_effect = { add_to_faction = ADS }
-		}
-
-		ai_will_do = { base = 1 }
-	}
-
-	focus = {
-		id = ENG_fracture_nato_unity
-		icon = attack_nato
-
-		x = 0
-		y = 4
-		relative_position_id = ENG_fractured_kingdom_united_state
-		offset = {
-			x = -1
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_fractured_kingdom_united_state
-			}
-		}
-
-		cost = 7.2
-
-		prerequisite = { focus = ENG_glory_of_pax_britannica }
-		will_lead_to_war_with = USA
-
-		search_filters = { FOCUS_FILTER_ECONOMY }
-
-		available = { num_faction_members > 3 }
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_fracture_nato_unity"
-			declare_war_on = {
-				target = USA
-				type = puppet_wargoal_focus
-			}
-		}
-
-		ai_will_do = { base = 1 }
-	}
-
-	focus = {
-		id = ENG_end_eastern_suffering
-		icon = attack_csto
-
-		x = 2
-		y = 4
-		relative_position_id = ENG_fractured_kingdom_united_state
-		offset = {
-			x = -1
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = ENG_fractured_kingdom_united_state
-			}
-		}
-
-		cost = 7.2
-
-		prerequisite = { focus = ENG_glory_of_pax_britannica }
-		will_lead_to_war_with = SOV
-
-		search_filters = { FOCUS_FILTER_ECONOMY }
-
-		completion_reward = {
-			log = "[GetDateText]: [THIS.GetName]: Focus ENG_end_eastern_suffering"
-			declare_war_on = {
-				target = SOV
-				type = puppet_wargoal_focus
-			}
-		}
-
-		ai_will_do = { base = 1 }
-	}
-
 	# The Union Question
 
 	focus = {
 		id = ENG_the_union_question
-		icon = invest_in_britain
+		icon = british_isles
 
-		x = 150
-		y = 0
+		x = 0
+		y = 7
+		relative_position_id = ENG_the_sun_which_never_set
+
+		cost = 10
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		available = {
 			has_stability > 0.6
-			has_war = no
-			custom_trigger_tooltip = {
-				tooltip = ENG_uq_not_overthrown_TT
-				NOT = { has_country_flag = ENG_overthrown }
+			NOT = { has_country_flag = ENG_overthrown }
+			OR = {
+				AND = {
+					has_government = democratic
+					is_commonwealth_member = yes
+				}
+				nationalist_monarchists_are_in_power = yes
 			}
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_union_question"
-			set_country_flag = ENG_union_question_opened
 			hidden_effect = {
+				add_dynamic_modifier = { modifier = ENG_union_question_dm }
 				news_event = {
 					id = United_Kingdom_News.5
 					hours = 6
@@ -23134,11 +21971,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_a_family_of_nations
-		icon = invest_in_britain
+		icon = align_to_commonwealth
 
-		x = -2
+		x = -4
 		y = 1
 		relative_position_id = ENG_the_union_question
+
+		cost = 10
 
 		prerequisite = { focus = ENG_the_union_question }
 
@@ -23153,8 +21992,11 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_family_of_nations"
-			unlock_decision_category_tooltip = ENG_a_family_of_nations_decisions
-			set_country_flag = ENG_uq_western
+			unlock_decision_category_tooltip = ENG_union_question_decisions
+			newline = yes
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_union_question_dm }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.15 tooltip = political_power_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
 		}
 
 		ai_will_do = { base = 0 }
@@ -23162,11 +22004,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_crown_imperial
-		icon = Generic_Crown_Box
+		icon = british_isles
 
 		x = 2
 		y = 1
 		relative_position_id = ENG_the_union_question
+
+		cost = 10
 
 		prerequisite = { focus = ENG_the_union_question }
 
@@ -23176,15 +22020,3150 @@ focus_tree = {
 
 		available = {
 			nationalist_monarchists_are_in_power = yes
-			has_completed_focus = ENG_royal_prerogative_activation
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crown_imperial"
-			unlock_decision_category_tooltip = ENG_the_crown_imperial_decisions
-			add_stability = -0.10
+			unlock_decision_category_tooltip = ENG_union_question_decisions
 			add_named_threat = { threat = 1 name = ENG_crown_imperial_threat }
-			set_country_flag = ENG_uq_nationalist
+			newline = yes
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_union_question_dm }
+			add_to_variable = { ENG_uq_war_support_factor = 0.05 tooltip = war_support_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
+			hidden_effect = {
+				ENG_uq_update_dm = yes
+				news_event = {
+					id = United_Kingdom_News.8
+					hours = 6
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_one_nation
+		icon = british_isles
+
+		x = 0
+		y = 1
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_a_family_of_nations }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			has_country_flag = ENG_constitutional_convention
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_one_nation"
+			custom_effect_tooltip = ENG_uq_settlement_hard_mode_tt
+			newline = yes
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_union_question_dm }
+			add_to_variable = { ENG_uq_stability_factor = 0.05 tooltip = stability_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
+			hidden_effect = {
+				set_variable = { ENG_settlement_cost = 300 }
+				set_variable = { ENG_settlement_pressure_cap = 15 }
+				set_variable = { ENG_settlement_nationalists_cap = 20 }
+				ENG_uq_update_dm = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_union_dividend
+		icon = focus_england_money_vizhat
+
+		x = -2
+		y = 2
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_one_nation }
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_EXPENDITURE }
+
+		available = { has_government = democratic }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_union_dividend"
+			activate_mission = ENG_union_dividend_programme
+			unlock_decision_tooltip = ENG_renew_the_union_dividend
+			newline = yes
+			set_temp_variable = { treasury_change = { value = gdp_total multiply = -0.01 } }
+			modify_treasury_effect = yes
+			newline = yes
+			set_temp_variable = { temp_productivity_change = 50 }
+			every_owned_state = {
+				limit = {
+					OR = {
+						is_core_of = SCO
+						is_core_of = WAS
+						is_core_of = NIR
+					}
+				}
+				state_flat_productivity_change_effect = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				factor = 0
+				has_active_mission = bankruptcy_incoming_collapse
+			}
+		}
+	}
+
+	focus = {
+		id = ENG_a_british_curriculum
+		icon = british_isles
+
+		x = 0
+		y = 2
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_one_nation }
+
+		mutually_exclusive = { focus = ENG_a_union_of_equals }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = { has_government = democratic }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_british_curriculum"
+			set_temp_variable = { ENG_nationalists_change = -5 }
+			ENG_change_scottish_nationalists = yes
+			ENG_change_north_irish_nationalists = yes
+			ENG_change_wales_nationalists = yes
+			set_temp_variable = { ENG_agitation_change = 5 }
+			ENG_change_scottish_agitation = yes
+			ENG_change_north_irish_agitation = yes
+			ENG_change_wales_agitation = yes
+			newline = yes
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_economy_modifier }
+			add_to_variable = { ENG_research_speed_factor = 0.05 tooltip = research_speed_factor_tt }
+			add_to_variable = { ENG_education_cost_multiplier_modifier = -0.025 tooltip = education_cost_multiplier_modifier_tt }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_a_union_of_equals
+		icon = focus_ENG_union_flags
+
+		x = 2
+		y = 2
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_one_nation }
+
+		mutually_exclusive = { focus = ENG_a_british_curriculum }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = { has_government = democratic }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_union_of_equals"
+			set_temp_variable = { ENG_dependency_change = 5 }
+			ENG_change_scottish_dependency = yes
+			ENG_change_north_irish_dependency = yes
+			ENG_change_wales_dependency = yes
+			set_temp_variable = { ENG_agitation_change = -5 }
+			ENG_change_scottish_agitation = yes
+			ENG_change_north_irish_agitation = yes
+			ENG_change_wales_agitation = yes
+			set_temp_variable = { ENG_nationalists_change = 3 }
+			ENG_change_scottish_nationalists = yes
+			ENG_change_north_irish_nationalists = yes
+			ENG_change_wales_nationalists = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_westminster_first
+		icon = british_isles
+
+		x = 0
+		y = 3
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_a_british_curriculum }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			ENG_two_home_nations_integrated = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_westminster_first"
+			set_temp_variable = { ENG_union_strain_change = -5 }
+			ENG_change_union_strain = yes
+			add_political_power = 100
+			newline = yes
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_economy_modifier
+			}
+			add_to_variable = { ENG_foreign_influence_defense_modifier = 0.05 tooltip = foreign_influence_defense_modifier_tt }
+			newline = yes
+			set_temp_variable = { percent_change = 5 }
+			change_domestic_influence_percentage = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_act_of_union
+		icon = british_isles
+
+		x = 2
+		y = 3
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 7.9
+
+		prerequisite = { focus = ENG_a_union_of_equals }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			ENG_uq_home_nations_done = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_act_of_union"
+			custom_effect_tooltip = ENG_act_of_union_TT
+			set_country_flag = ENG_devolution_purged
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_stability_factor = 0.05 tooltip = stability_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
+			hidden_effect = { update_eng_devolution_dirty_variable = yes }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_council_of_the_isles
+		icon = british_isles
+
+		x = -2
+		y = 3
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
+
+		prerequisite = {
+			focus = ENG_a_british_curriculum
+			focus = ENG_a_union_of_equals
+		}
+
+		prerequisite = { focus = ENG_the_union_dividend }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+			IRE = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
+				has_opinion = { target = ROOT value > 40 }
+			}
+		}
+
+		bypass = { NOT = { country_exists = IRE } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_council_of_the_isles"
+			custom_effect_tooltip = ENG_council_of_the_isles_TT
+			IRE = {
+				add_ideas = ENG_uq_council_of_the_isles_idea
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_council_of_the_isles_opinion }
+				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_council_of_the_isles_opinion }
+				hidden_effect = { ENG_uq_align_target = yes }
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_dublin_question
+		icon = british_isles
+
+		x = 0
+		y = 4
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_council_of_the_isles }
+		prerequisite = { focus = ENG_act_of_union focus = ENG_westminster_first }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+		}
+
+		bypass = { NOT = { country_exists = IRE } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_dublin_question"
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = IRE }
+			change_influence_percentage = yes
+			IRE = {
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_dublin_outreach_opinion }
+				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_dublin_outreach_opinion }
+				set_temp_variable = { ENG_uq_consent_change = 10 }
+				ENG_uq_change_consent = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_anglo_irish_economic_union
+		icon = british_isles
+
+		x = 1
+		y = 5
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_dublin_question }
+
+		mutually_exclusive = { focus = ENG_common_travel_area_plus }
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ECONOMY }
+
+		available = {
+			has_government = democratic
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+		}
+
+		bypass = { NOT = { country_exists = IRE } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_anglo_irish_economic_union"
+			IRE = {
+				add_ideas = ENG_uq_anglo_irish_economic_union_idea
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			if = {
+				limit = { IRE = { has_idea = EU_member } }
+				custom_effect_tooltip = ENG_anglo_irish_economic_union_TT
+				hidden_effect = {
+					for_each_scope_loop = {
+						array = global.EU_member
+						if = {
+							limit = {
+								NOT = { tag = ROOT }
+								NOT = { tag = IRE }
+							}
+							add_opinion_modifier = { target = ROOT modifier = ENG_uq_brussels_displeasure_opinion }
+						}
+					}
+					IRE = { country_event = { id = ENG_uq.93 days = 30 } }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_common_travel_area_plus
+		icon = british_isles
+
+		x = -1
+		y = 5
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_dublin_question }
+
+		mutually_exclusive = { focus = ENG_anglo_irish_economic_union }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+		}
+
+		bypass = { NOT = { country_exists = IRE } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_common_travel_area_plus"
+			IRE = {
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_common_travel_area_opinion }
+				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_common_travel_area_opinion }
+				set_temp_variable = { ENG_uq_consent_change = 10 }
+				ENG_uq_change_consent = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_irexit_question
+		icon = british_isles
+
+		x = 0
+		y = 6
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 5.72
+
+		prerequisite = {
+			focus = ENG_anglo_irish_economic_union
+			focus = ENG_common_travel_area_plus
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irexit_not_eu_member_TT
+				NOT = { has_idea = EU_member }
+			}
+			IRE = { has_idea = EU_member }
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = IRE }
+				IRE = { NOT = { has_idea = EU_member } }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_irexit_question"
+			unlock_decision_tooltip = ENG_uq_irexit_referendum
+			unlock_decision_tooltip = ENG_uq_fund_irexit_campaign
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_an_ireland_united_under_the_crown
+		icon = british_isles
+
+		x = 0
+		y = 7
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 7.9
+
+		prerequisite = { focus = ENG_the_irexit_question }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+			17 = { is_owned_and_controlled_by = ROOT }
+			IRE = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_ireland_outside_eu_TT
+					NOT = { has_idea = EU_member }
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_ireland_in_commonwealth_TT
+					ENG_cmw_is_member = yes
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irish_consent_60_TT
+				check_variable = { ENG_consent@IRE > 60 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strain_allows_transition_TT
+				check_variable = { ENG_union_strain < 61 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_ireland_not_locked_TT
+				NOT = { has_country_flag = ENG_uq_lock@IRE }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_border_poll_needs_peace_tt
+				NOT = { has_idea = ENG_the_dissident_campaign }
+			}
+			check_variable = {
+				tooltip = ENG_dominion_tension_tt
+				var = ENG_north_irish_agitation
+				value = 10
+				compare = less_than
+			}
+		}
+
+		bypass = { NOT = { country_exists = IRE } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_an_ireland_united_under_the_crown"
+			IRE = {
+				transfer_state = 17
+				add_opinion_modifier = { target = ROOT modifier = large_increase }
+			}
+			custom_effect_tooltip = ENG_an_ireland_united_under_the_crown_TT
+			hidden_effect = {
+				ENG_settle_northern_ireland_question = yes
+				IRE = { country_event = { id = ENG_uq.100 days = 1 } }
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_home_rule_in_reverse
+		icon = british_isles
+
+		x = 0
+		y = 8
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 7.9
+
+		prerequisite = { focus = ENG_an_ireland_united_under_the_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_ireland_integrated_TT
+				check_variable = { ENG_integration_stage@IRE > 3 }
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = IRE }
+			check_variable = { ENG_integration_stage@IRE < 4 }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_home_rule_in_reverse"
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_stability_factor = 0.03 tooltip = stability_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
+			add_to_variable = { ENG_uq_trade_opinion_factor = 0.05 tooltip = trade_opinion_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
+			set_temp_variable = { ENG_union_strain_change = -10 }
+			ENG_change_union_strain = yes
+			custom_effect_tooltip = ENG_home_rule_in_reverse_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_crowns_peace
+		icon = british_isles
+
+		x = 0
+		y = 1
+		relative_position_id = ENG_the_crown_imperial
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_crown_imperial }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crowns_peace"
+			custom_effect_tooltip = ENG_uq_assemblies_suspended_TT
+			set_country_flag = ENG_uq_assemblies_suspended
+			set_temp_variable = { ENG_agitation_change = 15 }
+			ENG_change_scottish_agitation = yes
+			ENG_change_north_irish_agitation = yes
+			ENG_change_wales_agitation = yes
+			set_temp_variable = { ENG_nationalists_change = 10 }
+			ENG_change_scottish_nationalists = yes
+			ENG_change_north_irish_nationalists = yes
+			ENG_change_wales_nationalists = yes
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+			hidden_effect = { update_eng_devolution_dirty_variable = yes }
+			newline = yes
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_economy_modifier }
+			add_to_variable = { ENG_foreign_influence_defense_modifier = 0.05 tooltip = foreign_influence_defense_modifier_tt }
+			newline = yes
+			set_temp_variable = { percent_change = 5 }
+			change_domestic_influence_percentage = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_direct_rule_from_london
+		icon = british_isles
+
+		x = 0
+		y = 2
+		relative_position_id = ENG_the_crown_imperial
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_crowns_peace }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_direct_rule_from_london"
+			custom_effect_tooltip = ENG_direct_rule_TT
+			add_ideas = ENG_direct_rule_idea
+			hidden_effect = { ENG_uq_update_direct_rule = yes }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_ulster_settled_by_the_crown
+		icon = british_isles
+
+		x = 2
+		y = 2
+		relative_position_id = ENG_the_crown_imperial
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_crowns_peace }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_ulster_gfa_repealed_TT
+				NOT = { has_idea = ENG_good_friday_agreement }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_ulster_risk_resolved_TT
+				NOT = { has_active_mission = ENG_ulster_on_the_brink }
+				NOT = { country_exists = NIR }
+				NOT = { has_war_with = IRE }
+			}
+			ENG_holds_north_ireland = yes
+			NOT = { has_country_flag = ENG_north_irish_integrated }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_ulster_settled_by_the_crown"
+			custom_effect_tooltip = ENG_ulster_crown_settlement_TT
+			hidden_effect = {
+				if = {
+					limit = { has_idea = ENG_the_dissident_campaign }
+					remove_ideas = ENG_the_dissident_campaign
+				}
+				if = {
+					limit = { has_idea = ENG_the_dissident_campaign_hidden_idea }
+					remove_ideas = ENG_the_dissident_campaign_hidden_idea
+				}
+				17 = {
+					if = {
+						limit = { has_dynamic_modifier = { modifier = ENG_State_17_Paramilitary_Activity } }
+						remove_dynamic_modifier = { modifier = ENG_State_17_Paramilitary_Activity }
+					}
+				}
+			}
+			add_stability = -0.10
+			set_temp_variable = { ENG_agitation_change = -15 }
+			ENG_change_north_irish_agitation = yes
+			set_temp_variable = { ENG_nationalists_change = -10 }
+			ENG_change_north_irish_nationalists = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_unionist_ascendancy
+		icon = british_isles
+
+		x = -1
+		y = 3
+		relative_position_id = ENG_the_crown_imperial
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_direct_rule_from_london }
+
+		mutually_exclusive = { focus = ENG_the_kings_men }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_unionist_ascendancy"
+			custom_effect_tooltip = ENG_uq_loyalists_funded_TT
+			set_country_flag = ENG_uq_loyalists_funded
+			set_temp_variable = { ENG_nationalists_change = -10 }
+			ENG_change_scottish_nationalists = yes
+			ENG_change_north_irish_nationalists = yes
+			ENG_change_wales_nationalists = yes
+			set_temp_variable = { ENG_agitation_change = 10 }
+			ENG_change_scottish_agitation = yes
+			ENG_change_north_irish_agitation = yes
+			ENG_change_wales_agitation = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_kings_men
+		icon = british_isles
+
+		x = 1
+		y = 3
+		relative_position_id = ENG_the_crown_imperial
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_direct_rule_from_london }
+
+		mutually_exclusive = { focus = ENG_the_unionist_ascendancy }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_kings_men"
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_required_garrison_factor = -0.15 tooltip = required_garrison_factor_tt }
+			add_to_variable = { ENG_uq_war_support_factor = -0.05 tooltip = war_support_factor_tt }
+			custom_effect_tooltip = ENG_kings_men_pacification_TT
+			hidden_effect = { set_variable = { ENG_pacification_pressure_cap = 35 } }
+			set_temp_variable = { ENG_union_strain_change = 10 }
+			ENG_change_union_strain = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_loyal_ulster_regiments
+		icon = british_isles
+
+		x = 3
+		y = 3
+		relative_position_id = ENG_the_crown_imperial
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_ulster_settled_by_the_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_north_irish_pacified_or_integrated_TT
+				OR = {
+					has_country_flag = ENG_north_irish_pacified
+					has_country_flag = ENG_north_irish_integrated
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_loyal_ulster_regiments"
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_conscription_factor = 0.03 tooltip = conscription_factor_tt }
+			add_to_variable = { ENG_uq_army_morale_factor = 0.03 tooltip = army_morale_factor_tt }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_crown_union
+		icon = british_isles
+
+		x = 0
+		y = 4
+		relative_position_id = ENG_the_crown_imperial
+
+		cost = 7.9
+
+		prerequisite = {
+			focus = ENG_the_unionist_ascendancy
+			focus = ENG_the_kings_men
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			ENG_uq_home_nations_pacified = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_crown_union"
+			custom_effect_tooltip = ENG_crown_union_TT
+			hidden_effect = {
+				if = {
+					limit = { ENG_uq_scotland_suspended = yes }
+					set_variable = { ENG_referendum_target = 1 }
+					ENG_integrate_referendum_region = yes
+				}
+				if = {
+					limit = { ENG_uq_north_ireland_suspended = yes }
+					set_variable = { ENG_referendum_target = 2 }
+					ENG_integrate_referendum_region = yes
+				}
+				if = {
+					limit = { ENG_uq_wales_suspended = yes }
+					set_variable = { ENG_referendum_target = 3 }
+					ENG_integrate_referendum_region = yes
+				}
+				set_variable = { ENG_referendum_target = 0 }
+				clr_country_flag = ENG_uq_assemblies_suspended
+				clr_country_flag = ENG_uq_loyalists_funded
+				if = {
+					limit = { has_idea = ENG_direct_rule_idea }
+					remove_ideas = ENG_direct_rule_idea
+				}
+				update_eng_devolution_dirty_variable = yes
+			}
+			set_temp_variable = { ENG_union_strain_change = 30 }
+			ENG_change_union_strain = yes
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_war_support_factor = 0.05 tooltip = war_support_factor_tt }
+			add_to_variable = { ENG_uq_bonus_democratic_drift = -0.03 tooltip = democratic_drift_tt }
+			add_to_variable = { ENG_uq_stability_factor = -0.05 tooltip = stability_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_irish_question_reopened
+		icon = british_isles
+
+		x = 0
+		y = 1
+		relative_position_id = ENG_crown_union
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_crown_union }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+			IRE = { is_subject = no }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_irish_question_reopened"
+			custom_effect_tooltip = ENG_the_irish_question_reopened_TT
+			IRE = {
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_irish_question_opinion }
+				hidden_effect = { ENG_uq_align_target = yes }
+			}
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_no_border_poll
+		icon = british_isles
+
+		x = -1
+		y = 2
+		relative_position_id = ENG_crown_union
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_irish_question_reopened }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			ENG_holds_north_ireland = yes
+		}
+
+		bypass = { NOT = { ENG_holds_north_ireland = yes } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_no_border_poll"
+			if = {
+				limit = { has_idea = ENG_good_friday_agreement }
+				ENG_repeal_good_friday_agreement_effect = yes
+			}
+			if = {
+				limit = { has_active_mission = ENG_border_poll_mission }
+				remove_mission = ENG_border_poll_mission
+			}
+			set_country_flag = { flag = ENG_border_poll_cooldown value = 1 days = 3650 }
+			custom_effect_tooltip = ENG_no_border_poll_TT
+			set_temp_variable = { ENG_agitation_change = 10 }
+			ENG_change_north_irish_agitation = yes
+			custom_effect_tooltip = ENG_no_border_poll_dublin_TT
+			hidden_effect = {
+				IRE = { country_event = { id = ENG_uq.110 days = 2 } }
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_sponsor_the_unionist_lobby_in_dublin
+		icon = british_isles
+
+		x = 1
+		y = 2
+		relative_position_id = ENG_crown_union
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_irish_question_reopened }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = IRE
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irish_coercion_1_TT
+				check_variable = { ENG_coercion@IRE > 0 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_sponsor_the_unionist_lobby_in_dublin"
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = IRE }
+			change_influence_percentage = yes
+			set_temp_variable = { ENG_imperial_tension_change = 1 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_economic_pressure
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_close_the_irish_sea
+		icon = british_isles
+
+		x = 1
+		y = 3
+		relative_position_id = ENG_crown_union
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_sponsor_the_unionist_lobby_in_dublin }
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ECONOMY }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = IRE
+			NOT = { has_war_with = IRE }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irish_coercion_2_TT
+				check_variable = { ENG_coercion@IRE > 1 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_close_the_irish_sea"
+			add_timed_idea = { idea = ENG_uq_irish_sea_blockade days = 365 }
+			IRE = { add_timed_idea = { idea = ENG_uq_irish_sea_blockaded days = 365 } }
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+			if = {
+				limit = { has_idea = EU_member }
+				custom_effect_tooltip = ENG_close_the_irish_sea_eu_TT
+				leaving_EU = yes
+				hidden_effect = { country_event = { id = ENG_uq.61 days = 1 } }
+			}
+			unlock_decision_tooltip = ENG_uq_deliver_ultimatum
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_ultimatum_to_dublin
+		icon = british_isles
+
+		x = 0
+		y = 4
+		relative_position_id = ENG_crown_union
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_no_border_poll }
+		prerequisite = { focus = ENG_close_the_irish_sea }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_irish_coercion_3_TT
+				check_variable = { ENG_coercion@IRE > 2 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_ultimatum_to_dublin"
+			custom_effect_tooltip = ENG_ultimatum_to_dublin_TT
+			add_war_support = 0.05
+			unlock_decision_tooltip = ENG_uq_enforce_ultimatum
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_pacification_of_ireland
+		icon = british_isles
+
+		x = 0
+		y = 5
+		relative_position_id = ENG_crown_union
+
+		cost = 7.9
+
+		prerequisite = { focus = ENG_ultimatum_to_dublin }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_ireland_occupied_TT
+				check_variable = { ENG_coercion@IRE = 5 }
+			}
+		}
+
+		bypass = { check_variable = { ENG_coercion@IRE > 5 } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_pacification_of_ireland"
+			custom_effect_tooltip = ENG_the_pacification_of_ireland_TT
+			if = {
+				limit = { NOT = { has_idea = ENG_the_dissident_campaign } }
+				add_ideas = ENG_the_dissident_campaign
+			}
+			27 = { add_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm } }
+			28 = { add_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm } }
+			29 = { add_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm } }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_isles_under_one_crown
+		icon = british_isles
+
+		x = 0
+		y = 6
+		relative_position_id = ENG_crown_union
+
+		cost = 7.9
+
+		prerequisite = { focus = ENG_the_pacification_of_ireland }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_ireland_integrated_TT
+				check_variable = { ENG_integration_stage@IRE > 3 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strain_allows_transition_TT
+				check_variable = { ENG_union_strain < 61 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_isles_under_one_crown"
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_stability_factor = 0.03 tooltip = stability_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
+			add_to_variable = { ENG_uq_war_support_factor = 0.03 tooltip = war_support_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
+			custom_effect_tooltip = ENG_the_isles_under_one_crown_TT
+			if = {
+				limit = { has_idea = ENG_the_dissident_campaign }
+				remove_ideas = ENG_the_dissident_campaign
+			}
+			if = {
+				limit = { has_idea = ENG_the_dissident_campaign_hidden_idea }
+				remove_ideas = ENG_the_dissident_campaign_hidden_idea
+			}
+			hidden_effect = {
+				every_state = {
+					limit = {
+						is_core_of = IRE
+						has_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm }
+					}
+					remove_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm }
+				}
+				every_state = {
+					limit = { is_core_of = IRE }
+					add_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm days = 1825 }
+				}
+			}
+			set_temp_variable = { ENG_union_strain_change = -10 }
+			ENG_change_union_strain = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_realms_beyond_the_seas
+		icon = british_isles
+
+		x = -16
+		y = 9
+		relative_position_id = ENG_a_family_of_nations
+
+		cost = 10
+
+		prerequisite = { focus = ENG_home_rule_in_reverse }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			OR = {
+				ENG_uq_ireland_done = yes
+				NOT = { country_exists = IRE }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_realms_beyond_the_seas"
+			custom_effect_tooltip = ENG_the_realms_beyond_the_seas_TT
+			set_temp_variable = { ENG_cmw_cohesion_change = 3 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_caribbean_development_programme
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_political_modifier
+			}
+			add_to_variable = { ENG_foreign_influence_modifier = 0.05 tooltip = foreign_influence_modifier_tt }
+			hidden_effect = {
+				ENG_uq_align_realms = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_ottawa_accord
+		icon = british_isles
+
+		x = -3
+		y = 1
+		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = CAN
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_canada_on_ladder_TT
+				check_variable = { ENG_integration_stage@CAN > 0 }
+			}
+			CAN = { NOT = { has_country_flag = ENG_uq_republic } }
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = CAN }
+				check_variable = { ENG_integration_stage@CAN > 3 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_ottawa_accord"
+			custom_effect_tooltip = ENG_ottawa_accord_TT
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = CAN }
+			change_influence_percentage = yes
+			CAN = {
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+				set_temp_variable = { ENG_uq_consent_change = 10 }
+				ENG_uq_change_consent = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_canberra_accord
+		icon = british_isles
+
+		x = -1
+		y = 1
+		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = AST
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_australia_on_ladder_TT
+				check_variable = { ENG_integration_stage@AST > 0 }
+			}
+			AST = { NOT = { has_country_flag = ENG_uq_republic } }
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = AST }
+				check_variable = { ENG_integration_stage@AST > 3 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_canberra_accord"
+			custom_effect_tooltip = ENG_canberra_accord_TT
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = AST }
+			change_influence_percentage = yes
+			AST = {
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+				set_temp_variable = { ENG_uq_consent_change = 10 }
+				ENG_uq_change_consent = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_wellington_accord
+		icon = british_isles
+
+		x = 1
+		y = 1
+		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = NZL
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_new_zealand_on_ladder_TT
+				check_variable = { ENG_integration_stage@NZL > 0 }
+			}
+			NZL = { NOT = { has_country_flag = ENG_uq_republic } }
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = NZL }
+				check_variable = { ENG_integration_stage@NZL > 3 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_wellington_accord"
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = NZL }
+			change_influence_percentage = yes
+			NZL = {
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+				set_temp_variable = { ENG_uq_consent_change = 15 }
+				ENG_uq_change_consent = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_caribbean_partnership
+		icon = british_isles
+
+		x = 3
+		y = 1
+		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ECONOMY }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_caribbean_realm_aligned_TT
+				any_country = {
+					ENG_uq_is_caribbean_realm = yes
+					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					check_variable = { ROOT.ENG_integration_stage@THIS > 0 }
+				}
+			}
+		}
+
+		bypass = {
+			NOT = {
+				any_country = {
+					ENG_uq_is_caribbean_realm = yes
+					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					check_variable = { ROOT.ENG_integration_stage@THIS > 0 }
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_caribbean_partnership"
+			custom_effect_tooltip = ENG_caribbean_partnership_TT
+			set_temp_variable = { ENG_cmw_cohesion_change = 2 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_caribbean_association
+			unlock_decision_tooltip = ENG_uq_caribbean_constituent
+			unlock_decision_tooltip = ENG_uq_caribbean_integration_act
+			unlock_decision_tooltip = ENG_uq_royal_caribbean_tour
+			hidden_effect = {
+				every_country = {
+					limit = {
+						ENG_uq_is_caribbean_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					}
+					set_temp_variable = { ENG_uq_consent_change = 8 }
+					ENG_uq_change_consent = yes
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_a_shared_crown
+		icon = british_isles
+
+		x = -1
+		y = 2
+		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
+
+		prerequisite = {
+			focus = ENG_ottawa_accord
+			focus = ENG_canberra_accord
+			focus = ENG_wellington_accord
+			focus = ENG_caribbean_partnership
+		}
+
+		mutually_exclusive = { focus = ENG_a_commonwealth_of_equals }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_shared_crown"
+			custom_effect_tooltip = ENG_a_shared_crown_TT
+			hidden_effect = {
+				every_country = {
+					limit = {
+						ENG_uq_is_crown_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					}
+					set_temp_variable = { ENG_uq_consent_change = 5 }
+					ENG_uq_change_consent = yes
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_a_commonwealth_of_equals
+		icon = british_isles
+
+		x = 1
+		y = 2
+		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
+
+		prerequisite = {
+			focus = ENG_ottawa_accord
+			focus = ENG_canberra_accord
+			focus = ENG_wellington_accord
+			focus = ENG_caribbean_partnership
+		}
+
+		mutually_exclusive = { focus = ENG_a_shared_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ECONOMY }
+
+		available = {
+			has_government = democratic
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_commonwealth_of_equals"
+			custom_effect_tooltip = ENG_a_commonwealth_of_equals_TT
+			set_temp_variable = { ENG_cmw_cohesion_change = 10 }
+			ENG_cmw_change_cohesion = yes
+			hidden_effect = {
+				every_country = {
+					limit = {
+						ENG_uq_is_crown_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					}
+					add_timed_idea = { idea = ENG_uq_trade_preference_idea days = 730 }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_crown_realms_united
+		icon = british_isles
+
+		x = 0
+		y = 3
+		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 7.9
+
+		prerequisite = {
+			focus = ENG_a_shared_crown
+			focus = ENG_a_commonwealth_of_equals
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			ENG_uq_canzuk_integrated = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crown_realms_united"
+			set_cosmetic_tag = ENG_commonwealth_federation
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_stability_factor = 0.03 tooltip = stability_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
+			add_to_variable = { ENG_uq_opinion_gain_monthly_factor = 0.10 tooltip = opinion_gain_monthly_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
+			set_temp_variable = { ENG_union_strain_change = -10 }
+			ENG_change_union_strain = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_dominions_of_the_crown
+		icon = british_isles
+
+		x = 0
+		y = 1
+		relative_position_id = ENG_the_isles_under_one_crown
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_isles_under_one_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				ENG_uq_ireland_done = yes
+				NOT = { country_exists = IRE }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_dominions_of_the_crown"
+			custom_effect_tooltip = ENG_dominions_of_the_crown_TT
+			set_temp_variable = { ENG_imperial_tension_change = 3 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			hidden_effect = {
+				ENG_uq_align_realms = yes
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_reserve_powers
+		icon = british_isles
+
+		x = 0
+		y = 1
+		relative_position_id = ENG_dominions_of_the_crown
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_dominions_of_the_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_reserve_powers"
+			unlock_decision_tooltip = ENG_uq_dismissal
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_loyalists_in_ottawa
+		icon = british_isles
+
+		x = -3
+		y = 1
+		relative_position_id = ENG_reserve_powers
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_reserve_powers }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = CAN
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_canada_on_ladder_TT
+				check_variable = { ENG_integration_stage@CAN > 0 }
+			}
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = CAN }
+				check_variable = { ENG_integration_stage@CAN > 3 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_loyalists_in_ottawa"
+			custom_effect_tooltip = ENG_loyalists_in_ottawa_TT
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = CAN }
+			change_influence_percentage = yes
+			set_temp_variable = { ENG_imperial_tension_change = 1 }
+			ENG_change_imperial_tension = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_loyalists_in_canberra
+		icon = british_isles
+
+		x = -1
+		y = 1
+		relative_position_id = ENG_reserve_powers
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_reserve_powers }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = AST
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_australia_on_ladder_TT
+				check_variable = { ENG_integration_stage@AST > 0 }
+			}
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = AST }
+				check_variable = { ENG_integration_stage@AST > 3 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_loyalists_in_canberra"
+			custom_effect_tooltip = ENG_loyalists_in_canberra_TT
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = AST }
+			change_influence_percentage = yes
+			set_temp_variable = { ENG_imperial_tension_change = 1 }
+			ENG_change_imperial_tension = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_loyalists_in_wellington
+		icon = british_isles
+
+		x = 1
+		y = 1
+		relative_position_id = ENG_reserve_powers
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_reserve_powers }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = NZL
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_new_zealand_on_ladder_TT
+				check_variable = { ENG_integration_stage@NZL > 0 }
+			}
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = NZL }
+				check_variable = { ENG_integration_stage@NZL > 3 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_loyalists_in_wellington"
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = NZL }
+			change_influence_percentage = yes
+			set_temp_variable = { ENG_imperial_tension_change = 1 }
+			ENG_change_imperial_tension = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_gunboats_in_the_caribbean
+		icon = british_isles
+
+		x = 3
+		y = 1
+		relative_position_id = ENG_reserve_powers
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_reserve_powers }
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_DIPLOMACY }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_caribbean_realm_aligned_TT
+				any_country = {
+					ENG_uq_is_caribbean_realm = yes
+					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					check_variable = { ROOT.ENG_integration_stage@THIS > 0 }
+				}
+			}
+		}
+
+		bypass = {
+			NOT = {
+				any_country = {
+					ENG_uq_is_caribbean_realm = yes
+					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					check_variable = { ROOT.ENG_integration_stage@THIS > 0 }
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_gunboats_in_the_caribbean"
+			unlock_decision_tooltip = ENG_uq_caribbean_gunboat_diplomacy
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_statute_of_westminster_repealed
+		icon = british_isles
+
+		x = -1
+		y = 2
+		relative_position_id = ENG_reserve_powers
+
+		cost = 5.72
+
+		prerequisite = {
+			focus = ENG_loyalists_in_ottawa
+			focus = ENG_loyalists_in_canberra
+			focus = ENG_loyalists_in_wellington
+			focus = ENG_gunboats_in_the_caribbean
+		}
+
+		mutually_exclusive = { focus = ENG_the_imperial_conference }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_statute_of_westminster_repealed"
+			custom_effect_tooltip = ENG_the_statute_of_westminster_repealed_TT
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+			hidden_effect = {
+				every_country = {
+					limit = {
+						ENG_uq_is_crown_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					}
+					add_opinion_modifier = { target = ROOT modifier = ENG_uq_statute_opinion }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_imperial_conference
+		icon = british_isles
+
+		x = 1
+		y = 2
+		relative_position_id = ENG_reserve_powers
+
+		cost = 5.72
+
+		prerequisite = {
+			focus = ENG_loyalists_in_ottawa
+			focus = ENG_loyalists_in_canberra
+			focus = ENG_loyalists_in_wellington
+			focus = ENG_gunboats_in_the_caribbean
+		}
+
+		mutually_exclusive = { focus = ENG_the_statute_of_westminster_repealed }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_imperial_conference"
+			custom_effect_tooltip = ENG_the_imperial_conference_TT
+			set_temp_variable = { ENG_cmw_cohesion_change = 5 }
+			ENG_cmw_change_cohesion = yes
+			set_temp_variable = { ENG_imperial_tension_change = -5 }
+			ENG_change_imperial_tension = yes
+			hidden_effect = {
+				every_country = {
+					limit = {
+						ENG_uq_is_crown_realm = yes
+						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					}
+					set_temp_variable = { ENG_uq_consent_change = 5 }
+					ENG_uq_change_consent = yes
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_dominions_restored
+		icon = british_isles
+
+		x = 0
+		y = 3
+		relative_position_id = ENG_reserve_powers
+
+		cost = 7.9
+
+		prerequisite = {
+			focus = ENG_the_statute_of_westminster_repealed
+			focus = ENG_the_imperial_conference
+		}
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			ENG_uq_canzuk_integrated = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strain_allows_transition_TT
+				check_variable = { ENG_union_strain < 61 }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_dominions_restored"
+			set_cosmetic_tag = ENG_commonwealth_federation
+			custom_effect_tooltip = {
+				localization_key = modifies_dynamic_modifier_tt
+				MODIFIER = ENG_union_question_dm
+			}
+			add_to_variable = { ENG_uq_stability_factor = 0.03 tooltip = stability_factor_tt }
+			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
+			add_to_variable = { ENG_uq_war_support_factor = 0.03 tooltip = war_support_factor_tt }
+			hidden_effect = { ENG_uq_update_dm = yes }
+			set_temp_variable = { ENG_union_strain_change = -10 }
+			ENG_change_union_strain = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	# Tier 3b: lost possessions (Western)
+
+	focus = {
+		id = ENG_the_overseas_settlements
+		icon = british_isles
+
+		x = -7
+		y = 1
+		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_overseas_settlements"
+			set_temp_variable = { ENG_cmw_cohesion_change = 2 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_chagos_to_the_hague
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_chagos_settlement
+		icon = british_isles
+
+		x = -1
+		y = 2
+		relative_position_id = ENG_the_overseas_settlements
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_overseas_settlements }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = USA
+			USA = { owns_state = 824 }
+			NOT = { has_war_with = USA }
+			ENG_uq_chagos_gate = yes
+		}
+
+		bypass = { owns_state = 824 }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_chagos_settlement"
+			custom_effect_tooltip = ENG_the_chagos_settlement_TT
+			USA = { country_event = { id = ENG_uq.200 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_chagos_accept_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_chagos_reject_TT }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_south_atlantic_command
+		icon = british_isles
+
+		x = -2
+		y = 1
+		relative_position_id = ENG_the_overseas_settlements
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_overseas_settlements }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			owns_state = 26
+			OR = {
+				has_completed_focus = ENG_falklands_policy
+				NOT = { country_exists = ARG }
+			}
+		}
+
+		bypass = { NOT = { owns_state = 26 } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_south_atlantic_command"
+			custom_effect_tooltip = ENG_south_atlantic_command_TT
+			26 = { add_core_of = ROOT }
+			22 = { add_core_of = ROOT }
+			hidden_effect = {
+				if = {
+					limit = {
+						country_exists = ARG
+						NOT = { has_war_with = ARG }
+					}
+					ARG = { country_event = { id = ENG_uq.210 days = 2 } }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_rock_settled
+		icon = british_isles
+
+		x = 0
+		y = 1
+		relative_position_id = ENG_the_overseas_settlements
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_overseas_settlements }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = SPR
+			19 = { is_claimed_by = SPR }
+			SPR = { has_opinion = { target = ROOT value > 60 } }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_eu_not_hostile_TT
+				NOT = { has_idea = ENG_uq_eu_trade_penalty }
+			}
+			NOT = { has_war_with = SPR }
+		}
+
+		bypass = { NOT = { 19 = { is_claimed_by = SPR } } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_rock_settled"
+			custom_effect_tooltip = ENG_the_rock_settled_TT
+			SPR = { country_event = { id = ENG_uq.220 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_gibraltar_accept_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_gibraltar_reject_TT }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_pearl_river_accord
+		icon = british_isles
+
+		x = 1
+		y = 2
+		relative_position_id = ENG_the_overseas_settlements
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_overseas_settlements }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			country_exists = HKG
+			HKG = {
+				is_subject = no
+				NOT = { has_war_with = ROOT }
+			}
+			NOT = { has_war_with = CHI }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_pearl_river_accord"
+			custom_effect_tooltip = ENG_the_pearl_river_accord_TT
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = HKG }
+			change_influence_percentage = yes
+			HKG = {
+				hidden_effect = { ENG_uq_align_target = yes }
+				set_temp_variable = { ENG_uq_consent_change = 15 }
+				ENG_uq_change_consent = yes
+			}
+			custom_effect_tooltip = ENG_uq_hong_kong_cap_TT
+			hidden_effect = {
+				if = {
+					limit = {
+						country_exists = CHI
+						NOT = { has_war_with = CHI }
+					}
+					CHI = { country_event = { id = ENG_uq.230 days = 2 } }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_mediterranean_partners
+		icon = british_isles
+
+		x = 2
+		y = 1
+		relative_position_id = ENG_the_overseas_settlements
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_overseas_settlements }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_med_commonwealth_TT
+				OR = {
+					MLT = { ENG_cmw_is_member = yes }
+					CYP = { ENG_cmw_is_member = yes }
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_cmw_cohesion_50_TT
+				check_variable = { global.commonwealth_cohesion > 50 }
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = MLT }
+			NOT = { country_exists = CYP }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_mediterranean_partners"
+			custom_effect_tooltip = ENG_the_mediterranean_partners_TT
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = MLT
+						original_tag = CYP
+					}
+					ENG_cmw_is_member = yes
+				}
+				hidden_effect = { ENG_uq_align_realm = yes }
+				set_temp_variable = { ENG_uq_consent_change = 10 }
+				ENG_uq_change_consent = yes
+			}
+			if = {
+				limit = { country_exists = MLT }
+				set_temp_variable = { percent_change = 5 }
+				set_temp_variable = { influence_target = MLT }
+				change_influence_percentage = yes
+			}
+			if = {
+				limit = { country_exists = CYP }
+				set_temp_variable = { percent_change = 5 }
+				set_temp_variable = { influence_target = CYP }
+				change_influence_percentage = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 2 }
+			ENG_cmw_change_cohesion = yes
+			custom_effect_tooltip = ENG_uq_med_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	# Tier 4: wider empire (Western)
+
+	focus = {
+		id = ENG_commonwealth_development_partnership
+		icon = british_isles
+
+		x = 7
+		y = 1
+		relative_position_id = ENG_the_realms_beyond_the_seas
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_realms_beyond_the_seas }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			ENG_uq_realms_done = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_commonwealth_development_partnership"
+			custom_effect_tooltip = ENG_commonwealth_development_partnership_TT
+			set_temp_variable = { ENG_cmw_cohesion_change = 3 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_development_programme
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_west_african_partnership
+		icon = british_isles
+
+		x = -3
+		y = 1
+		relative_position_id = ENG_commonwealth_development_partnership
+
+		cost = 10
+
+		prerequisite = { focus = ENG_commonwealth_development_partnership }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_fund_running_TT
+				has_idea = ENG_cmw_development_fund_idea
+			}
+			OR = {
+				country_exists = SIE
+				country_exists = GAM
+				country_exists = GAH
+				country_exists = NIG
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = SIE }
+			NOT = { country_exists = GAM }
+			NOT = { country_exists = GAH }
+			NOT = { country_exists = NIG }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_west_african_partnership"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_west_africa = yes }
+			every_country = {
+				limit = {
+					ENG_uq_is_ex_empire = yes
+					ROOT = { check_variable = { ENG_uq_region@PREV = 1 } }
+				}
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_association
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_east_african_partnership
+		icon = british_isles
+
+		x = -2
+		y = 2
+		relative_position_id = ENG_commonwealth_development_partnership
+
+		cost = 10
+
+		prerequisite = { focus = ENG_commonwealth_development_partnership }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_fund_running_TT
+				has_idea = ENG_cmw_development_fund_idea
+			}
+			OR = {
+				country_exists = KEN
+				country_exists = UGA
+				country_exists = TNZ
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = KEN }
+			NOT = { country_exists = UGA }
+			NOT = { country_exists = TNZ }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_east_african_partnership"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_east_africa = yes }
+			every_country = {
+				limit = {
+					ENG_uq_is_ex_empire = yes
+					ROOT = { check_variable = { ENG_uq_region@PREV = 2 } }
+				}
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_association
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_southern_african_partnership
+		icon = british_isles
+
+		x = -1
+		y = 1
+		relative_position_id = ENG_commonwealth_development_partnership
+
+		cost = 10
+
+		prerequisite = { focus = ENG_commonwealth_development_partnership }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_fund_running_TT
+				has_idea = ENG_cmw_development_fund_idea
+			}
+			OR = {
+				country_exists = ZAM
+				country_exists = ZIM
+				country_exists = MLW
+				country_exists = BOT
+				country_exists = SWA
+				country_exists = LES
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = ZAM }
+			NOT = { country_exists = ZIM }
+			NOT = { country_exists = MLW }
+			NOT = { country_exists = BOT }
+			NOT = { country_exists = SWA }
+			NOT = { country_exists = LES }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_southern_african_partnership"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_southern_africa = yes }
+			every_country = {
+				limit = {
+					ENG_uq_is_ex_empire = yes
+					ROOT = { check_variable = { ENG_uq_region@PREV = 3 } }
+				}
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_association
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_gulf_partnership
+		icon = british_isles
+
+		x = 1
+		y = 1
+		relative_position_id = ENG_commonwealth_development_partnership
+
+		cost = 10
+
+		prerequisite = { focus = ENG_commonwealth_development_partnership }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_fund_running_TT
+				has_idea = ENG_cmw_development_fund_idea
+			}
+			OR = {
+				country_exists = KUW
+				country_exists = QAT
+				country_exists = BHR
+				country_exists = UAE
+				country_exists = OMA
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = KUW }
+			NOT = { country_exists = QAT }
+			NOT = { country_exists = BHR }
+			NOT = { country_exists = UAE }
+			NOT = { country_exists = OMA }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_gulf_partnership"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_gulf = yes }
+			every_country = {
+				limit = {
+					ENG_uq_is_ex_empire = yes
+					ROOT = { check_variable = { ENG_uq_region@PREV = 4 } }
+				}
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_association
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_asian_partnership
+		icon = british_isles
+
+		x = 2
+		y = 2
+		relative_position_id = ENG_commonwealth_development_partnership
+
+		cost = 10
+
+		prerequisite = { focus = ENG_commonwealth_development_partnership }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_fund_running_TT
+				has_idea = ENG_cmw_development_fund_idea
+			}
+			OR = {
+				country_exists = MAY
+				country_exists = SIN
+				country_exists = BRU
+				country_exists = SRI
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = MAY }
+			NOT = { country_exists = SIN }
+			NOT = { country_exists = BRU }
+			NOT = { country_exists = SRI }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_asian_partnership"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_asia = yes }
+			every_country = {
+				limit = {
+					ENG_uq_is_ex_empire = yes
+					ROOT = { check_variable = { ENG_uq_region@PREV = 5 } }
+				}
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_association
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_pacific_partnership
+		icon = british_isles
+
+		x = 3
+		y = 1
+		relative_position_id = ENG_commonwealth_development_partnership
+
+		cost = 10
+
+		prerequisite = { focus = ENG_commonwealth_development_partnership }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			has_government = democratic
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_fund_running_TT
+				has_idea = ENG_cmw_development_fund_idea
+			}
+			OR = {
+				country_exists = FIJ
+				country_exists = SOL
+				country_exists = VAN
+				country_exists = TON
+				country_exists = SAM
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = FIJ }
+			NOT = { country_exists = SOL }
+			NOT = { country_exists = VAN }
+			NOT = { country_exists = TON }
+			NOT = { country_exists = SAM }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_pacific_partnership"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_pacific = yes }
+			every_country = {
+				limit = {
+					ENG_uq_is_ex_empire = yes
+					ROOT = { check_variable = { ENG_uq_region@PREV = 6 } }
+				}
+				set_temp_variable = { ENG_uq_consent_change = 5 }
+				ENG_uq_change_consent = yes
+			}
+			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+			ENG_cmw_change_cohesion = yes
+			unlock_decision_tooltip = ENG_uq_regional_association
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	# Tier 3b: lost possessions (Nationalist)
+
+	focus = {
+		id = ENG_the_outposts_of_empire
+		icon = british_isles
+
+		x = 7
+		y = 1
+		relative_position_id = ENG_dominions_of_the_crown
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_dominions_of_the_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_outposts_of_empire"
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			add_war_support = 0.02
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_reclaim_the_chagos
+		icon = british_isles
+
+		x = -2
+		y = 1
+		relative_position_id = ENG_the_outposts_of_empire
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_outposts_of_empire }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = USA
+			USA = { owns_state = 824 }
+			NOT = { has_war_with = USA }
+		}
+
+		bypass = { owns_state = 824 }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_reclaim_the_chagos"
+			custom_effect_tooltip = ENG_reclaim_the_chagos_TT
+			USA = { country_event = { id = ENG_uq.206 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_chagos_accept_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_chagos_crisis_TT }
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_fortress_falklands
+		icon = british_isles
+
+		x = -1
+		y = 2
+		relative_position_id = ENG_the_outposts_of_empire
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_outposts_of_empire }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			owns_state = 26
+			OR = {
+				has_completed_focus = ENG_falklands_policy
+				NOT = { country_exists = ARG }
+			}
+		}
+
+		bypass = { NOT = { owns_state = 26 } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_fortress_falklands"
+			custom_effect_tooltip = ENG_fortress_falklands_TT
+			26 = { add_core_of = ROOT }
+			22 = { add_core_of = ROOT }
+			26 = { add_dynamic_modifier = { modifier = ENG_uq_fortress_state } }
+			set_temp_variable = { ENG_imperial_tension_change = 3 }
+			ENG_change_imperial_tension = yes
+			hidden_effect = {
+				if = {
+					limit = {
+						country_exists = ARG
+						NOT = { has_war_with = ARG }
+					}
+					ARG = { country_event = { id = ENG_uq.210 days = 2 } }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_rock_defiant
+		icon = british_isles
+
+		x = 0
+		y = 1
+		relative_position_id = ENG_the_outposts_of_empire
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_outposts_of_empire }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = SPR
+			owns_state = 19
+			NOT = { has_war_with = SPR }
+		}
+
+		bypass = { NOT = { 19 = { is_claimed_by = SPR } } }
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_rock_defiant"
+			19 = {
+				add_dynamic_modifier = { modifier = ENG_uq_fortress_state }
+				one_state_anti_air = yes
+			}
+			SPR = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_gibraltar_defiance_opinion } }
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+			custom_effect_tooltip = ENG_uq_spain_may_escalate_TT
+			hidden_effect = {
+				SPR = { country_event = { id = ENG_uq.225 days = 2 } }
+			}
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				factor = 0
+				has_active_mission = bankruptcy_incoming_collapse
+			}
+		}
+	}
+
+	focus = {
+		id = ENG_the_fragrant_harbour
+		icon = british_isles
+
+		x = 1
+		y = 2
+		relative_position_id = ENG_the_outposts_of_empire
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_outposts_of_empire }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			country_exists = HKG
+			HKG = {
+				is_subject = no
+				NOT = { has_war_with = ROOT }
+			}
+			NOT = { has_war_with = CHI }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_fragrant_harbour"
+			custom_effect_tooltip = ENG_the_fragrant_harbour_TT
+			set_temp_variable = { percent_change = 5 }
+			set_temp_variable = { influence_target = HKG }
+			change_influence_percentage = yes
+			HKG = {
+				hidden_effect = { ENG_uq_align_target = yes }
+			}
+			custom_effect_tooltip = ENG_uq_hong_kong_cap_TT
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			hidden_effect = {
+				if = {
+					limit = {
+						country_exists = CHI
+						NOT = { has_war_with = CHI }
+					}
+					CHI = { country_event = { id = ENG_uq.230 days = 2 } }
+				}
+			}
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_crowns_of_the_mediterranean
+		icon = british_isles
+
+		x = 2
+		y = 1
+		relative_position_id = ENG_the_outposts_of_empire
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_the_outposts_of_empire }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = MLT
+				country_exists = CYP
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = MLT }
+			NOT = { country_exists = CYP }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_crowns_of_the_mediterranean"
+			custom_effect_tooltip = ENG_crowns_of_the_mediterranean_TT
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = MLT
+						original_tag = CYP
+					}
+					is_subject = no
+					NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+				}
+				hidden_effect = { ENG_uq_align_target = yes }
+			}
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_monarchists
+			custom_effect_tooltip = ENG_uq_med_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	# Tier 4: wider empire (Nationalist)
+
+	focus = {
+		id = ENG_the_imperial_mission
+		icon = british_isles
+
+		x = -8
+		y = 1
+		relative_position_id = ENG_dominions_of_the_crown
+
+		cost = 5.72
+
+		prerequisite = { focus = ENG_dominions_of_the_crown }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			ENG_uq_realms_done = yes
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_imperial_mission"
+			custom_effect_tooltip = ENG_the_imperial_mission_TT
+			set_temp_variable = { ENG_imperial_tension_change = 3 }
+			ENG_change_imperial_tension = yes
+			add_war_support = 0.02
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_west_african_protectorates
+		icon = british_isles
+
+		x = -3
+		y = 1
+		relative_position_id = ENG_the_imperial_mission
+
+		cost = 10
+
+		prerequisite = { focus = ENG_the_imperial_mission }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = SIE
+				country_exists = GAM
+				country_exists = GAH
+				country_exists = NIG
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = SIE }
+			NOT = { country_exists = GAM }
+			NOT = { country_exists = GAH }
+			NOT = { country_exists = NIG }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_west_african_protectorates"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_west_africa = yes }
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_east_african_protectorates
+		icon = british_isles
+
+		x = -2
+		y = 2
+		relative_position_id = ENG_the_imperial_mission
+
+		cost = 10
+
+		prerequisite = { focus = ENG_the_imperial_mission }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = KEN
+				country_exists = UGA
+				country_exists = TNZ
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = KEN }
+			NOT = { country_exists = UGA }
+			NOT = { country_exists = TNZ }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_east_african_protectorates"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_east_africa = yes }
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_southern_african_protectorates
+		icon = british_isles
+
+		x = -1
+		y = 1
+		relative_position_id = ENG_the_imperial_mission
+
+		cost = 10
+
+		prerequisite = { focus = ENG_the_imperial_mission }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = ZAM
+				country_exists = ZIM
+				country_exists = MLW
+				country_exists = BOT
+				country_exists = SWA
+				country_exists = LES
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = ZAM }
+			NOT = { country_exists = ZIM }
+			NOT = { country_exists = MLW }
+			NOT = { country_exists = BOT }
+			NOT = { country_exists = SWA }
+			NOT = { country_exists = LES }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_southern_african_protectorates"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_southern_africa = yes }
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_gulf_protectorates
+		icon = british_isles
+
+		x = 1
+		y = 1
+		relative_position_id = ENG_the_imperial_mission
+
+		cost = 10
+
+		prerequisite = { focus = ENG_the_imperial_mission }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = KUW
+				country_exists = QAT
+				country_exists = BHR
+				country_exists = UAE
+				country_exists = OMA
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = KUW }
+			NOT = { country_exists = QAT }
+			NOT = { country_exists = BHR }
+			NOT = { country_exists = UAE }
+			NOT = { country_exists = OMA }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_gulf_protectorates"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_gulf = yes }
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_asian_protectorates
+		icon = british_isles
+
+		x = 2
+		y = 2
+		relative_position_id = ENG_the_imperial_mission
+
+		cost = 10
+
+		prerequisite = { focus = ENG_the_imperial_mission }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = MAY
+				country_exists = SIN
+				country_exists = BRU
+				country_exists = SRI
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = MAY }
+			NOT = { country_exists = SIN }
+			NOT = { country_exists = BRU }
+			NOT = { country_exists = SRI }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_asian_protectorates"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_asia = yes }
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
+	focus = {
+		id = ENG_the_pacific_protectorates
+		icon = british_isles
+
+		x = 3
+		y = 1
+		relative_position_id = ENG_the_imperial_mission
+
+		cost = 10
+
+		prerequisite = { focus = ENG_the_imperial_mission }
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available = {
+			nationalist_monarchists_are_in_power = yes
+			OR = {
+				country_exists = FIJ
+				country_exists = SOL
+				country_exists = VAN
+				country_exists = TON
+				country_exists = SAM
+			}
+		}
+
+		bypass = {
+			NOT = { country_exists = FIJ }
+			NOT = { country_exists = SOL }
+			NOT = { country_exists = VAN }
+			NOT = { country_exists = TON }
+			NOT = { country_exists = SAM }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_pacific_protectorates"
+			custom_effect_tooltip = ENG_uq_open_region_TT
+			hidden_effect = { ENG_uq_open_pacific = yes }
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
+			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
 		}
 
 		ai_will_do = { base = 0 }

@@ -4,6 +4,7 @@ ENG_constituent_state_check = {
 		original_tag = NIR
 		original_tag = SCO
 		original_tag = WAS
+		ENG = { check_variable = { ENG_integration_stage@PREV > 2 } }
 	}
 }
 
@@ -73,6 +74,125 @@ ENG_settlement_region_lost = {
 	}
 }
 
+# Hard mode: the party that called the settlement referendum has lost office
+ENG_settlement_government_fell = {
+	has_completed_focus = ENG_one_nation
+	NOT = { check_variable = { ruling_party = ENG_settlement_ruling_party } }
+}
+
+ENG_two_home_nations_integrated = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_two_home_nations_integrated_TT
+		OR = {
+			AND = {
+				has_country_flag = ENG_scottish_integrated
+				has_country_flag = ENG_welsh_integrated
+			}
+			AND = {
+				has_country_flag = ENG_scottish_integrated
+				has_country_flag = ENG_north_irish_integrated
+			}
+			AND = {
+				has_country_flag = ENG_welsh_integrated
+				has_country_flag = ENG_north_irish_integrated
+			}
+		}
+	}
+}
+
+# Suspension: the region is still ours and still devolved
+ENG_uq_scotland_suspended = {
+	has_country_flag = ENG_uq_assemblies_suspended
+	NOT = { has_country_flag = ENG_scottish_integrated }
+	NOT = { country_exists = SCO }
+	ENG_holds_scotland = yes
+}
+
+ENG_uq_scotland_under_direct_rule = {
+	ENG_uq_scotland_suspended = yes
+	has_idea = ENG_direct_rule_idea
+	NOT = { has_country_flag = ENG_scottish_pacified }
+}
+
+ENG_uq_scotland_calm = {
+	check_variable = { var = ENG_scottish_pressure value = ENG_pacification_pressure_cap compare = less_than }
+	NOT = {
+		any_owned_state = {
+			is_core_of = SCO
+			has_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+			check_variable = { ENG_resistance_tier > 1 }
+		}
+	}
+}
+
+ENG_uq_north_ireland_suspended = {
+	has_country_flag = ENG_uq_assemblies_suspended
+	NOT = { has_country_flag = ENG_north_irish_integrated }
+	NOT = { country_exists = NIR }
+	ENG_holds_north_ireland = yes
+}
+
+ENG_uq_north_ireland_under_direct_rule = {
+	ENG_uq_north_ireland_suspended = yes
+	has_idea = ENG_direct_rule_idea
+	NOT = { has_country_flag = ENG_north_irish_pacified }
+}
+
+ENG_uq_north_ireland_calm = {
+	check_variable = { var = ENG_north_irish_pressure value = ENG_pacification_pressure_cap compare = less_than }
+	NOT = {
+		17 = {
+			has_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+			check_variable = { ENG_resistance_tier > 1 }
+		}
+	}
+}
+
+ENG_uq_wales_suspended = {
+	has_country_flag = ENG_uq_assemblies_suspended
+	NOT = { has_country_flag = ENG_welsh_integrated }
+	NOT = { country_exists = WAS }
+	ENG_holds_wales = yes
+}
+
+ENG_uq_wales_under_direct_rule = {
+	ENG_uq_wales_suspended = yes
+	has_idea = ENG_direct_rule_idea
+	NOT = { has_country_flag = ENG_welsh_pacified }
+}
+
+ENG_uq_wales_calm = {
+	check_variable = { var = ENG_wales_pressure value = ENG_pacification_pressure_cap compare = less_than }
+	NOT = {
+		any_owned_state = {
+			is_core_of = WAS
+			has_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+			check_variable = { ENG_resistance_tier > 1 }
+		}
+	}
+}
+
+ENG_uq_home_nations_pacified = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_home_nations_pacified_TT
+		OR = {
+			has_country_flag = ENG_scottish_pacified
+			has_country_flag = ENG_scottish_integrated
+			NOT = { any_state = { is_core_of = SCO } }
+		}
+		OR = {
+			has_country_flag = ENG_welsh_pacified
+			has_country_flag = ENG_welsh_integrated
+			NOT = { any_state = { is_core_of = WAS } }
+		}
+		OR = {
+			has_country_flag = ENG_north_irish_pacified
+			has_country_flag = ENG_north_irish_integrated
+			NOT = { any_state = { is_core_of = NIR } }
+		}
+	}
+}
+
 ENG_inner_circle_is_ascension_cd_over = {
 	NOT = {
 		has_country_flag = {
@@ -117,6 +237,13 @@ ENG_uq_ireland_done = {
 	}
 }
 
+ENG_uq_caribbean_opened = {
+	OR = {
+		has_completed_focus = ENG_the_realms_beyond_the_seas
+		has_completed_focus = ENG_dominions_of_the_crown
+	}
+}
+
 ENG_uq_realms_done = {
 	custom_trigger_tooltip = {
 		tooltip = ENG_uq_realms_done_TT
@@ -125,5 +252,290 @@ ENG_uq_realms_done = {
 			is_in_array = { array = global.commonwealth_member value = THIS }
 			ROOT = { check_variable = { ENG_integration_stage@PREV > 1 } }
 		}
+	}
+}
+
+# FROM = the ladder target
+ENG_uq_can_transition = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_strain_allows_transition_TT
+		check_variable = { ENG_union_strain < 61 }
+	}
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_not_at_war_TT
+		OR = {
+			has_war = no
+			has_completed_focus = ENG_the_crown_imperial
+		}
+	}
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_not_locked_TT
+		NOT = { has_country_flag = ENG_uq_lock@FROM }
+	}
+}
+
+# Target scope with ROOT = ENG. influence_higher_50 plus the La Resistance network branch the foreign-ops focuses use.
+ENG_uq_high_influence = {
+	if = {
+		limit = { has_dlc = "La Resistance" }
+		ENG = { network_strength = { target = PREV value > 50 } }
+	}
+	else = {
+		check_variable = { influence_array^0 = ENG }
+		check_variable = { influence_array_val^0 > 49.999 }
+	}
+}
+
+# Target scope with ROOT = ENG. influence_higher_30 plus the La Resistance network branch the foreign-ops focuses use.
+ENG_uq_medium_influence = {
+	if = {
+		limit = { has_dlc = "La Resistance" }
+		ENG = { network_strength = { target = PREV value > 30 } }
+	}
+	else = {
+		any_of = {
+			array = influence_array
+			value = v
+			index = i
+			var:v = { tag = ENG }
+			check_variable = { influence_array_val^i > 29.999 }
+		}
+	}
+}
+
+# Target scope. Ireland and single-state possessions are taken outright; realms and the old empire are puppeted.
+ENG_uq_annexation_target = {
+	OR = {
+		original_tag = IRE
+		num_of_controlled_states < 3
+	}
+}
+
+# FROM = the ladder target. True while every state it holds a core on is quiet under British rule.
+ENG_uq_states_pacified = {
+	NOT = {
+		any_state = {
+			is_core_of = FROM
+			OR = {
+				compliance < 70
+				resistance > 20
+			}
+		}
+	}
+}
+
+# ENG scope. Ireland's three states are quiet under the stricter Irish pacification bar.
+ENG_uq_irish_states_pacified = {
+	27 = { compliance > 75 resistance < 15 }
+	28 = { compliance > 75 resistance < 15 }
+	29 = { compliance > 75 resistance < 15 }
+}
+
+# Target scope with ROOT = ENG. Every state it holds a core on is under British rule.
+ENG_uq_all_cores_held = {
+	any_state = { is_core_of = PREV }
+	NOT = {
+		any_state = {
+			is_core_of = PREV
+			NOT = {
+				OR = {
+					is_controlled_by = ROOT
+					controller = { is_subject_of = ROOT }
+				}
+			}
+		}
+	}
+}
+
+# Target scope with ROOT = ENG. Occupied, or pacified but not yet a protectorate.
+ENG_uq_occupation_active = {
+	OR = {
+		check_variable = { ROOT.ENG_coercion@THIS = 5 }
+		AND = {
+			check_variable = { ROOT.ENG_coercion@THIS = 6 }
+			check_variable = { ROOT.ENG_integration_stage@THIS < 2 }
+		}
+	}
+}
+
+# ENG scope. A coercion step or an occupation is under way, so Imperial Tension does not decay.
+ENG_uq_coercion_active = {
+	OR = {
+		has_idea = ENG_uq_embargo
+		has_idea = ENG_uq_occupation_burden
+		any_of_scopes = {
+			array = ENG_integration_targets
+			check_variable = { ROOT.ENG_coercion@THIS = 4 }
+		}
+	}
+}
+
+# ENG scope. Ireland is being pulled into the Union beyond alignment, which the EU treats as a breach.
+ENG_uq_ireland_targeted = {
+	OR = {
+		check_variable = { ENG_integration_stage@IRE > 1 }
+		check_variable = { ENG_coercion@IRE > 0 }
+	}
+}
+
+# Country scope. The Commonwealth realms that keep the British monarch as head of state.
+ENG_uq_is_crown_realm = {
+	OR = {
+		original_tag = CAN
+		original_tag = AST
+		original_tag = NZL
+		original_tag = JAM
+		original_tag = BAH
+		original_tag = BAR
+		original_tag = BLZ
+		original_tag = ANT
+		original_tag = GRA
+		original_tag = STK
+		original_tag = STL
+		original_tag = STV
+		original_tag = PAP
+		original_tag = SOL
+		original_tag = TUL
+	}
+}
+
+# Country scope. The Caribbean realms that share the Realms tier's group decisions.
+ENG_uq_is_caribbean_realm = {
+	OR = {
+		original_tag = JAM
+		original_tag = BAH
+		original_tag = BLZ
+		original_tag = ANT
+		original_tag = GRA
+		original_tag = BAR
+		original_tag = STK
+		original_tag = STL
+		original_tag = STV
+	}
+}
+
+# Target scope. A wider-empire target opened by a tier 4 region focus.
+ENG_uq_is_ex_empire = {
+	check_variable = { ROOT.ENG_uq_region@THIS > 0 }
+}
+
+# Target scope. Hong Kong and the wider empire are permanently capped short of full integration; Malta and Cyprus are capped until the Crown is restored there.
+ENG_uq_stage_capped = {
+	OR = {
+		ENG_uq_is_ex_empire = yes
+		original_tag = HKG
+		AND = {
+			OR = {
+				original_tag = MLT
+				original_tag = CYP
+			}
+			NOT = { has_country_flag = ENG_uq_monarchy_restored }
+		}
+	}
+}
+
+# ENG scope. Cyprus is settled: either the island has one government controlling both its cores, or the Cypriot side is at peace.
+ENG_uq_cyprus_settled = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_cyprus_settled_TT
+		OR = {
+			NOT = { country_exists = NCY }
+			NOT = { country_exists = CYP }
+			146 = { owner = { owns_state = 145 } }
+		}
+	}
+	OR = {
+		NOT = { country_exists = CYP }
+		CYP = { has_war = no }
+	}
+}
+
+# ENG scope. Washington is distracted by domestic crisis and cannot press back over the Chagos.
+ENG_uq_usa_distracted = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_usa_distracted_TT
+		USA = {
+			OR = {
+				has_war = yes
+				has_stability < 0.4
+				has_civil_war = yes
+				has_idea = us_public_disorder
+				has_idea = us_public_disorder_two
+				has_idea = us_public_disorder_three
+				has_country_flag = collapsed_nation
+			}
+		}
+	}
+}
+
+# ENG scope. Washington is open to reopening the Chagos question.
+ENG_uq_chagos_gate = {
+	USA = { has_opinion = { target = ROOT value > 70 } }
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_usa_medium_influence_TT
+		USA = { influence_higher_20 = yes }
+	}
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_chagos_opening_TT
+		OR = {
+			USA = { has_war = yes }
+			USA = { NOT = { check_variable = { ruling_party = 1 } } }
+			has_country_flag = ENG_uq_chagos_ruling
+		}
+	}
+}
+
+# ENG scope. Canada, Australia and New Zealand have each reached full integration or ceased to exist as a separate realm.
+ENG_uq_canzuk_integrated = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_canzuk_integrated_TT
+		OR = {
+			check_variable = { ENG_integration_stage@CAN > 3 }
+			NOT = { country_exists = CAN }
+		}
+		OR = {
+			check_variable = { ENG_integration_stage@AST > 3 }
+			NOT = { country_exists = AST }
+		}
+		OR = {
+			check_variable = { ENG_integration_stage@NZL > 3 }
+			NOT = { country_exists = NZL }
+		}
+	}
+}
+
+# FROM = the ladder target. A guarantee by any third country blocks the Nationalist wargoal.
+ENG_uq_not_foreign_guaranteed = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_not_foreign_guaranteed_TT
+		NOT = {
+			any_country = {
+				NOT = { tag = ROOT }
+				has_guaranteed = FROM
+			}
+		}
+	}
+}
+
+# Commonwealth of Nations institution. Membership is the MD dynamic modifier; MD's is_commonwealth_member tests ROOT and is wrong inside loops.
+ENG_cmw_is_member = {
+	has_dynamic_modifier = { modifier = Commonwealth_member_modifier }
+}
+
+ENG_cmw_violates_harare_principles = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_cmw_violates_harare_principles_TT
+		OR = {
+			nationalist_military_junta_are_in_power = yes
+			jihadist_government = yes
+			has_civil_war = yes
+		}
+	}
+}
+
+ENG_cmw_cohesion_greater_60 = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_cmw_cohesion_greater_60_tt
+		check_variable = { global.commonwealth_cohesion > 59.999 }
 	}
 }

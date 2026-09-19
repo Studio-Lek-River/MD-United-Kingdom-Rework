@@ -1,5 +1,11 @@
 # Validation Pipeline — Pre-commit vs CI
 
+> **This submod:** `.github/workflows/validation.yml` runs MD's suite through
+> `tools/validate_with_md.py`, which overlays the owned files on MD at the commit in
+> `tools/md_base_ref.txt`, runs MD's three validator batches from that checkout, and keeps findings
+> in owned files plus anything new against a pristine-MD baseline. Everything below describes MD's
+> own pipeline, whose validators and report tooling are what that script runs.
+
 Pre-commit and CI do not run the same hook set. Things that pass locally can still fail CI, and vice versa. Read this before wiring, judging, or debugging any validator.
 
 ## The validator test suite is a hard gate

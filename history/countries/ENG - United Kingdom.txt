@@ -1299,6 +1299,12 @@ capital = 13
 	set_variable = { ENG_wales_agitation = 0 } # Anger of the Welsh people
 	set_variable = { ENG_wales_nationalists = 17 } # Number of Nationalism in Wales
 	set_variable = { ENG_wales_dependency = 100 } # The dependancy of the Welsh on the British
+	# Union settlement thresholds; ENG_one_nation tightens them
+	set_variable = { ENG_settlement_cost = 200 }
+	set_variable = { ENG_settlement_pressure_cap = 20 }
+	set_variable = { ENG_settlement_nationalists_cap = 25 }
+	# Pacification threshold; ENG_the_kings_men loosens it
+	set_variable = { ENG_pacification_pressure_cap = 25 }
 	# Inner Circle
 	set_variable = { ENG_ascended_advisor_1 = 0 }
 	set_variable = { ENG_ascended_advisor_2 = 0 }

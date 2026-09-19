@@ -26,6 +26,8 @@ add_namespace = ENG_inner_circle_anne
 add_namespace = ENG_inner_circle_edward
 add_namespace = ENG_inner_circle_philip
 add_namespace = ENG_inner_circle_william
+add_namespace = ENG_uq
+add_namespace = ENG_cmw
 
 ########################## Moon And Space Event Chain #########################
 #Moon Outpost
@@ -693,6 +695,54 @@ news_event = {
 
 	option = { name = United_Kingdom_News.5.a }
 }
+
+news_event = {
+	id = United_Kingdom_News.6
+	title = United_Kingdom_News.6.t
+	desc = United_Kingdom_News.6.d
+	picture = GFX_UN_emergency_meeting
+	is_triggered_only = yes
+	major = yes
+
+	option = {
+		name = United_Kingdom_News.6.a
+		trigger = { original_tag = ENG }
+	}
+
+	option = {
+		name = United_Kingdom_News.6.b
+		trigger = { NOT = { original_tag = ENG } }
+	}
+}
+
+news_event = {
+	id = United_Kingdom_News.7
+	title = United_Kingdom_News.7.t
+	desc = {
+		text = United_Kingdom_News.7.d
+		trigger = { var:ENG_uq_event_target = { NOT = { has_country_flag = ENG_uq_republic } } }
+	}
+	desc = {
+		text = United_Kingdom_News.7.d2
+		trigger = { var:ENG_uq_event_target = { has_country_flag = ENG_uq_republic } }
+	}
+	picture = GFX_news_leave_commonwealth
+	is_triggered_only = yes
+
+	option = { name = United_Kingdom_News.7.a }
+}
+
+news_event = {
+	id = United_Kingdom_News.8
+	title = United_Kingdom_News.8.t
+	desc = United_Kingdom_News.8.d
+	picture = GFX_ENG_canzuk_alliance
+	is_triggered_only = yes
+	major = yes
+
+	option = { name = United_Kingdom_News.8.a }
+}
+
 ########################## Political #########################
 
 ########################## Economy #########################
@@ -2452,9 +2502,10 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: devolution.5.b executed"
 		set_country_flag = ENG_scottish_rejected
 		add_stability = -0.10
+		set_temp_variable = { ENG_resistance_tier_change = 2 }
 		every_owned_state = {
 			limit = { is_core_of = SCO }
-			add_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+			ENG_apply_resistance_against_westminster = yes
 		}
 		ai_chance = {
 			base = 20
@@ -2504,7 +2555,8 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: devolution.6.b executed"
 		set_country_flag = ENG_irish_rejected
 		add_stability = -0.10
-		17 = { add_dynamic_modifier = { modifier = ENG_resistance_against_westminster } }
+		set_temp_variable = { ENG_resistance_tier_change = 2 }
+		17 = { ENG_apply_resistance_against_westminster = yes }
 		ai_chance = {
 			base = 20
 			modifier = {
@@ -2553,9 +2605,10 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: devolution.7.b executed"
 		set_country_flag = ENG_welsh_rejected
 		add_stability = -0.10
+		set_temp_variable = { ENG_resistance_tier_change = 2 }
 		every_owned_state = {
 			limit = { is_core_of = WAS }
-			add_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+			ENG_apply_resistance_against_westminster = yes
 		}
 		ai_chance = {
 			base = 20
@@ -2693,6 +2746,23 @@ country_event = {
 			if = {
 				limit = { check_variable = { ENG_referendum_leave_vote > 49 } }
 				set_temp_variable = { ENG_nationalists_change = 10 }
+				ENG_change_wales_nationalists = yes
+			}
+		}
+		# Hard mode: a defeat emboldens the other nationalist movements
+		if = {
+			limit = { has_completed_focus = ENG_one_nation }
+			set_temp_variable = { ENG_nationalists_change = 10 }
+			if = {
+				limit = { NOT = { check_variable = { ENG_referendum_target = 1 } } }
+				ENG_change_scottish_nationalists = yes
+			}
+			if = {
+				limit = { NOT = { check_variable = { ENG_referendum_target = 2 } } }
+				ENG_change_north_irish_nationalists = yes
+			}
+			if = {
+				limit = { NOT = { check_variable = { ENG_referendum_target = 3 } } }
 				ENG_change_wales_nationalists = yes
 			}
 		}
@@ -3284,6 +3354,7 @@ country_event = {
 		else_if = {
 			limit = { check_variable = { ENG_north_irish_nationalists > 49 } }
 			set_country_flag = { flag = ENG_border_poll_cooldown days = 1825 value = 1 }
+			set_country_flag = { flag = ENG_border_poll_lost days = 3650 value = 1 }
 			set_temp_variable = { ENG_nationalists_change = -5 }
 			ENG_change_north_irish_nationalists = yes
 			set_temp_variable = { ENG_agitation_change = 5 }
@@ -3380,6 +3451,7 @@ country_event = {
 		name = devolution.26.a
 		log = "[GetDateText]: [This.GetName]: devolution.26.a executed"
 		set_country_flag = { flag = ENG_border_poll_cooldown days = 1825 value = 1 }
+		set_country_flag = { flag = ENG_border_poll_lost days = 3650 value = 1 }
 		set_temp_variable = { ENG_agitation_change = 10 }
 		ENG_change_north_irish_agitation = yes
 	}
@@ -3415,6 +3487,21 @@ country_event = {
 			}
 			IRE = { country_event = { id = devolution.28 days = 3 } }
 		}
+	}
+}
+
+# The Government Falls, the Settlement With It
+country_event = {
+	id = devolution.29
+	title = devolution.29.t
+	desc = devolution.29.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = devolution.29.a
+		log = "[GetDateText]: [This.GetName]: devolution.29.a executed"
+		add_stability = -0.03
 	}
 }
 
@@ -5864,161 +5951,6 @@ country_event = {
 }
 
 country_event = {
-	id = britain_md.35
-	title = britain_md.35.t
-	desc = britain_md.35.d
-	picture = GFX_treaty
-	is_triggered_only = yes
-
-	option = {
-		name = britain_md.35.a
-		log = "[GetDateText]: [This.GetName]: britain_md.35.a executed"
-		ENG = {
-			country_event = {
-				id = britain_md.36
-				days = 2
-			}
-		}
-		ai_chance = {
-			base = 1
-			modifier = {
-				has_opinion = {
-					target = ENG
-					value > 50
-				}
-				add = 10
-			}
-			modifier = {
-				ENG = { has_war = no }
-				add = 10
-			}
-		}
-	}
-
-	option = {
-		name = britain_md.35.b
-		log = "[GetDateText]: [This.GetName]: britain_md.35.b executed"
-		ENG = {
-			country_event = {
-				id = britain_md.37
-				days = 2
-			}
-		}
-		ai_chance = {
-			base = 1
-			modifier = {
-				has_opinion = {
-					target = ENG
-					value < 50
-				}
-				add = 10
-			}
-			modifier = {
-				ENG = { has_war = yes }
-				add = 10
-			}
-		}
-	}
-}
-
-country_event = {
-	id = britain_md.36
-	title = britain_md.36.t
-	desc = britain_md.36.d
-	picture = GFX_treaty
-	is_triggered_only = yes
-
-	option = {
-		name = britain_md.36.a
-		log = "[GetDateText]: [This.GetName]: britain_md.36.a executed"
-		if = {
-			limit = { FROM = { is_subject = no } }
-			set_autonomy = {
-				target = FROM
-				autonomy_state = autonomy_constituent_country_very_low_devolution
-			}
-		}
-		ai_chance = { base = 1 }
-	}
-}
-
-country_event = {
-	id = britain_md.37
-	title = britain_md.37.t
-	desc = britain_md.37.d
-	picture = GFX_treaty
-	is_triggered_only = yes
-
-	option = {
-		name = britain_md.37.a
-		log = "[GetDateText]: [This.GetName]: britain_md.37.a executed"
-		custom_effect_tooltip = ENG_still_can_TT
-		ai_chance = { base = 1 }
-	}
-}
-
-country_event = {
-	id = britain_md.39
-	title = britain_md.39.t
-	desc = britain_md.39.d
-	is_triggered_only = yes
-
-	option = {
-		name = britain_md.39.a
-		log = "[GetDateText]: [This.GetName]: britain_md.39.a executed"
-		create_country_leader = {
-			name = "Nigel Farage "
-			picture = "Nigel_Farage.dds"
-			ideology = Nat_Autocracy
-			traits = {
-				nationalist_Nat_Populism
-				businessman
-				puppet_ruler
-				rash
-				stubborn
-				emotional
-			}
-		}
-		ai_chance = { base = 1 }
-	}
-
-	option = {
-		name = britain_md.39.b
-		log = "[GetDateText]: [This.GetName]: britain_md.39.b executed"
-		create_country_leader = {
-			name = "Nick Griffin "
-			picture = "Nick_Griffin.dds"
-			ideology = Nat_Autocracy
-			traits = {
-				nationalist_Nat_Fascism
-				puppet_ruler
-			}
-		}
-		ai_chance = { base = 1 }
-	}
-
-	option = {
-		name = britain_md.39.c
-		log = "[GetDateText]: [This.GetName]: britain_md.39.c executed"
-		create_country_leader = {
-			name = "Michael Holmes "
-			picture = "Michael_Holmes.dds"
-			ideology = Nat_Autocracy
-			traits = {
-				nationalist_Nat_Populism
-				puppet_ruler
-			}
-		}
-		ai_chance = { base = 1 }
-	}
-
-	option = {
-		name = britain_md.39.d1
-		ai_chance = { base = 1 }
-	}
-}
-
-country_event = {
 	id = britain_md.40
 	title = britain_md.40.t
 	desc = britain_md.40.d
@@ -7566,5 +7498,2865 @@ country_event = {
 				set_leader = yes
 			}
 		}
+	}
+}
+
+# The Union Question: consent
+
+# Sovereignty Movement forms once consent first crosses 50; Ireland's lasts five years
+country_event = {
+	id = ENG_uq.10
+	title = ENG_uq.10.t
+	desc = ENG_uq.10.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.10.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.10.a executed"
+		if = {
+			limit = { original_tag = IRE }
+			add_timed_idea = { idea = ENG_uq_sovereignty_movement days = 1825 }
+		}
+		else = {
+			add_timed_idea = { idea = ENG_uq_sovereignty_movement days = 1095 }
+		}
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.11 days = 1 } }
+		}
+	}
+}
+
+country_event = {
+	id = ENG_uq.11
+	title = ENG_uq.11.t
+	desc = ENG_uq.11.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.11.a }
+}
+
+# Association Offer (stage 1) or Integration Act (stage 3)
+country_event = {
+	id = ENG_uq.20
+	title = {
+		text = ENG_uq.20.t
+		trigger = { FROM = { check_variable = { ENG_integration_stage@ROOT = 1 } } }
+	}
+	title = {
+		text = ENG_uq.30.t
+		trigger = { FROM = { check_variable = { ENG_integration_stage@ROOT = 3 } } }
+	}
+	desc = {
+		text = ENG_uq.20.d
+		trigger = { FROM = { check_variable = { ENG_integration_stage@ROOT = 1 } } }
+	}
+	desc = {
+		text = ENG_uq.30.d
+		trigger = { FROM = { check_variable = { ENG_integration_stage@ROOT = 3 } } }
+	}
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	immediate = { ENG_uq_set_accept_weight = yes }
+
+	option = {
+		name = ENG_uq.20.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.20.a executed"
+		custom_effect_tooltip = ENG_uq_we_accept_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.21 days = 1 } }
+		}
+		ai_chance = {
+			base = 0
+			modifier = { add = ENG_uq_accept_weight }
+		}
+	}
+
+	option = {
+		name = ENG_uq.20.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.20.b executed"
+		custom_effect_tooltip = ENG_uq_we_decline_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.22 days = 1 } }
+		}
+		ai_chance = { base = 40 }
+	}
+}
+
+country_event = {
+	id = ENG_uq.21
+	title = ENG_uq.21.t
+	desc = {
+		text = ENG_uq.21.d
+		trigger = { check_variable = { ENG_integration_stage@FROM = 1 } }
+	}
+	desc = {
+		text = ENG_uq.21.d2
+		trigger = { check_variable = { ENG_integration_stage@FROM = 3 } }
+	}
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.21.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.21.a executed"
+		if = {
+			limit = { check_variable = { ENG_integration_stage@FROM = 1 } }
+			ENG_uq_enter_stage_2 = yes
+		}
+		else_if = {
+			limit = {
+				check_variable = { ENG_integration_stage@FROM = 3 }
+				FROM = {
+					OR = {
+						original_tag = CAN
+						original_tag = AST
+						original_tag = NZL
+					}
+				}
+			}
+			FROM = {
+				ENG = { country_event = { id = ENG_uq.124 days = 1 } }
+			}
+		}
+		else = {
+			ENG_uq_enter_stage_4 = yes
+		}
+	}
+}
+
+country_event = {
+	id = ENG_uq.22
+	title = ENG_uq.22.t
+	desc = {
+		text = ENG_uq.22.d
+		trigger = { check_variable = { ENG_integration_stage@FROM = 1 } }
+	}
+	desc = {
+		text = ENG_uq.22.d2
+		trigger = { check_variable = { ENG_integration_stage@FROM = 3 } }
+	}
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.22.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.22.a executed"
+		ENG_uq_fail_transition = yes
+	}
+}
+
+# Referendum
+country_event = {
+	id = ENG_uq.23
+	title = ENG_uq.23.t
+	desc = ENG_uq.23.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	immediate = { ENG_uq_set_accept_weight = yes }
+
+	option = {
+		name = ENG_uq.23.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.23.a executed"
+		custom_effect_tooltip = ENG_uq_referendum_scheduled_TT
+		country_event = { id = ENG_uq.25 days = 60 }
+		ai_chance = {
+			base = 0
+			modifier = { add = ENG_uq_accept_weight }
+		}
+	}
+
+	option = {
+		name = ENG_uq.23.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.23.b executed"
+		custom_effect_tooltip = ENG_uq_we_decline_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.24 days = 1 } }
+		}
+		ai_chance = { base = 40 }
+	}
+}
+
+country_event = {
+	id = ENG_uq.24
+	title = ENG_uq.24.t
+	desc = ENG_uq.24.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.24.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.24.a executed"
+		ENG_uq_fail_transition = yes
+	}
+}
+
+# Referendum Result
+country_event = {
+	id = ENG_uq.25
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		ENG = { set_variable = { PREV.ENG_uq_referendum_yes = ENG_consent@PREV } }
+		set_variable = { ENG_uq_referendum_no = 100 }
+		subtract_from_variable = { ENG_uq_referendum_no = ENG_uq_referendum_yes }
+		random_list = {
+			ENG_uq_referendum_yes = {
+				country_event = ENG_uq.26
+				ENG = {
+					country_event = ENG_uq.27
+				}
+			}
+			ENG_uq_referendum_no = {
+				country_event = ENG_uq.28
+				ENG = {
+					country_event = ENG_uq.29
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ENG_uq.26
+	title = ENG_uq.26.t
+	desc = ENG_uq.26.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.26.a }
+}
+
+country_event = {
+	id = ENG_uq.27
+	title = ENG_uq.27.t
+	desc = ENG_uq.27.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.27.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.27.a executed"
+		ENG_uq_enter_stage_3 = yes
+	}
+}
+
+country_event = {
+	id = ENG_uq.28
+	title = ENG_uq.28.t
+	desc = ENG_uq.28.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.28.a }
+}
+
+country_event = {
+	id = ENG_uq.29
+	title = ENG_uq.29.t
+	desc = ENG_uq.29.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.29.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.29.a executed"
+		ENG_uq_fail_transition = yes
+	}
+}
+
+# Ultimatum
+country_event = {
+	id = ENG_uq.40
+	title = ENG_uq.40.t
+	desc = ENG_uq.40.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.40.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.40.a executed"
+		custom_effect_tooltip = ENG_uq_ultimatum_we_accept_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.41 days = 1 } }
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				NOT = { original_tag = IRE }
+				OR = {
+					AND = {
+						has_idea = ENG_uq_loyalist_movement
+						is_in_faction = no
+						NOT = { has_idea = NATO_member }
+						FROM = { strength_ratio = { tag = ROOT ratio > 4 } }
+					}
+					FROM = { check_variable = { ENG_consent@ROOT > 60 } }
+				}
+			}
+			modifier = {
+				add = 100
+				original_tag = IRE
+				NOT = { has_idea = EU_member }
+				NOT = { has_idea = NATO_member }
+				NOT = { has_idea = Major_Non_NATO_Ally }
+				NOT = { is_in_faction_with = USA }
+				FROM = { strength_ratio = { tag = ROOT ratio > 5 } }
+			}
+			modifier = {
+				add = 100
+				ENG_uq_is_caribbean_realm = yes
+				is_in_faction = no
+				NOT = { is_guaranteed_by = USA }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.40.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.40.b executed"
+		custom_effect_tooltip = ENG_uq_ultimatum_we_reject_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.42 days = 1 } }
+		}
+		ai_chance = {
+			base = 100
+			modifier = {
+				factor = 0
+				NOT = { original_tag = IRE }
+				OR = {
+					AND = {
+						has_idea = ENG_uq_loyalist_movement
+						is_in_faction = no
+						NOT = { has_idea = NATO_member }
+						FROM = { strength_ratio = { tag = ROOT ratio > 4 } }
+					}
+					FROM = { check_variable = { ENG_consent@ROOT > 60 } }
+				}
+			}
+			modifier = {
+				factor = 0
+				original_tag = IRE
+				NOT = { has_idea = EU_member }
+				NOT = { has_idea = NATO_member }
+				NOT = { has_idea = Major_Non_NATO_Ally }
+				NOT = { is_in_faction_with = USA }
+				FROM = { strength_ratio = { tag = ROOT ratio > 5 } }
+			}
+			modifier = {
+				factor = 0
+				ENG_uq_is_caribbean_realm = yes
+				is_in_faction = no
+				NOT = { is_guaranteed_by = USA }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ENG_uq.41
+	title = ENG_uq.41.t
+	desc = ENG_uq.41.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.41.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.41.a executed"
+		set_variable = { ENG_coercion@FROM = 6 }
+		custom_effect_tooltip = ENG_uq_coercion_6_TT
+		FROM = {
+			if = {
+				limit = { has_idea = ENG_uq_loyalist_movement }
+				remove_ideas = ENG_uq_loyalist_movement
+			}
+		}
+		ENG_uq_enter_stage_2 = yes
+	}
+}
+
+country_event = {
+	id = ENG_uq.42
+	title = ENG_uq.42.t
+	desc = ENG_uq.42.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.42.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.42.a executed"
+		set_country_flag = ENG_uq_ultimatum_rejected@FROM
+		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@FROM value = 1 days = 180 }
+		custom_effect_tooltip = ENG_uq_cooldown_started_TT
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+country_event = {
+	id = ENG_uq.43
+	title = ENG_uq.43.t
+	desc = ENG_uq.43.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.43.a }
+}
+
+country_event = {
+	id = ENG_uq.44
+	title = ENG_uq.44.t
+	desc = ENG_uq.44.d
+	picture = GFX_generic_soldiers
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.44.a }
+}
+
+# Occupation: monthly insurgency roll
+country_event = {
+	id = ENG_uq.50
+	title = ENG_uq.50.t
+	desc = ENG_uq.50.d
+	picture = GFX_broken_infrastructure
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.50.a }
+}
+
+country_event = {
+	id = ENG_uq.51
+	title = ENG_uq.51.t
+	desc = ENG_uq.51.d
+	picture = GFX_generic_soldiers
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.51.a }
+}
+
+# Imperial Tension bands
+country_event = {
+	id = ENG_uq.60
+	title = ENG_uq.60.t
+	desc = ENG_uq.60.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.60.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.60.a executed"
+		effect_tooltip = { add_ideas = ENG_uq_eu_trade_penalty }
+	}
+}
+
+country_event = {
+	id = ENG_uq.61
+	title = ENG_uq.61.t
+	desc = ENG_uq.61.d
+	picture = GFX_country_brexit_referendum
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.61.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.61.a executed"
+		effect_tooltip = { remove_ideas = EU_member }
+	}
+}
+
+country_event = {
+	id = ENG_uq.62
+	title = ENG_uq.62.t
+	desc = ENG_uq.62.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.62.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.62.a executed"
+		every_country = {
+			limit = {
+				OR = {
+					tag = USA
+					tag = CAN
+					tag = AST
+					tag = NZL
+				}
+			}
+			set_temp_variable = { percent_change = -10 }
+			set_temp_variable = { tag_index = ENG }
+			change_influence_percentage = yes
+		}
+		USA = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_special_relationship_opinion } }
+	}
+}
+
+country_event = {
+	id = ENG_uq.63
+	title = ENG_uq.63.t
+	desc = {
+		text = ENG_uq.63.d
+		trigger = { NOT = { has_idea = ENG_uq_nato_strain } }
+	}
+	desc = {
+		text = ENG_uq.63.d2
+		trigger = { has_idea = ENG_uq_nato_strain }
+	}
+	picture = GFX_raid_international_sanctions
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.63.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.63.a executed"
+		custom_effect_tooltip = ENG_uq_sanctions_exposure_TT
+		effect_tooltip = {
+			if = {
+				limit = { has_idea = ENG_uq_nato_strain }
+				add_ideas = ENG_uq_nato_strain
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ENG_uq.64
+	title = ENG_uq.64.t
+	desc = ENG_uq.64.d
+	picture = GFX_generic_soldiers
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.64.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.64.a executed"
+		custom_effect_tooltip = ENG_uq_sponsored_resistance_TT
+	}
+}
+
+country_event = {
+	id = ENG_uq.65
+	title = ENG_uq.65.t
+	desc = ENG_uq.65.d
+	picture = GFX_generic_soldiers
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.65.a }
+}
+
+# Patron reaction to a coerced client
+country_event = {
+	id = ENG_uq.66
+	title = ENG_uq.66.t
+	desc = ENG_uq.66.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.66.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.66.a executed"
+		random_list = {
+			60 = {
+				custom_effect_tooltip = ENG_uq_patron_protest_TT
+				var:ENG_uq_patron_var = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_patron_opinion } }
+			}
+			30 = {
+				custom_effect_tooltip = ENG_uq_patron_sanctions_TT
+				var:ENG_uq_patron_var = {
+					add_opinion_modifier = { target = ROOT modifier = ENG_uq_patron_opinion }
+					if = {
+						limit = { has_dlc = "By Blood Alone" }
+						send_embargo = ROOT
+					}
+				}
+			}
+			10 = {
+				custom_effect_tooltip = ENG_uq_patron_claim_TT
+				set_temp_variable = { ENG_uq_claim_target = ENG_uq_event_target }
+				var:ENG_uq_patron_var = {
+					every_state = {
+						limit = {
+							is_core_of = var:ENG_uq_claim_target
+							is_controlled_by = ROOT
+						}
+						add_claim_by = PREV
+					}
+				}
+			}
+		}
+	}
+}
+
+# Dublin protests a Northern Ireland settlement pushed through over its head
+country_event = {
+	id = ENG_uq.67
+	title = ENG_uq.67.t
+	desc = ENG_uq.67.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.67.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.67.a executed"
+		IRE = {
+			set_temp_variable = { ENG_uq_consent_change = -10 }
+			ENG_uq_change_consent = yes
+		}
+	}
+}
+
+# Strikes spread across Scotland while Holyrood is suspended
+country_event = {
+	id = ENG_uq.70
+	title = ENG_uq.70.t
+	desc = ENG_uq.70.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.70.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.70.a executed"
+		every_owned_state = {
+			limit = { is_core_of = SCO }
+			add_dynamic_modifier = { modifier = ENG_uq_strike_dm days = 60 }
+		}
+		set_temp_variable = { ENG_agitation_change = 2 }
+		ENG_change_scottish_agitation = yes
+	}
+}
+
+# Strikes spread across Northern Ireland while Stormont is suspended
+country_event = {
+	id = ENG_uq.71
+	title = ENG_uq.71.t
+	desc = ENG_uq.71.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.71.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.71.a executed"
+		17 = {
+			add_dynamic_modifier = { modifier = ENG_uq_strike_dm days = 60 }
+		}
+		set_temp_variable = { ENG_agitation_change = 2 }
+		ENG_change_north_irish_agitation = yes
+	}
+}
+
+# Strikes spread across Wales while the Senedd is suspended
+country_event = {
+	id = ENG_uq.72
+	title = ENG_uq.72.t
+	desc = ENG_uq.72.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.72.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.72.a executed"
+		every_owned_state = {
+			limit = { is_core_of = WAS }
+			add_dynamic_modifier = { modifier = ENG_uq_strike_dm days = 60 }
+		}
+		set_temp_variable = { ENG_agitation_change = 2 }
+		ENG_change_wales_agitation = yes
+	}
+}
+
+# The Scottish Declaration
+country_event = {
+	id = ENG_uq.73
+	title = ENG_uq.73.t
+	desc = ENG_uq.73.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = { flag = ENG_uq_declaration_cooldown days = 365 value = 1 }
+	}
+
+	option = {
+		name = ENG_uq.73.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.73.a executed"
+		add_stability = -0.10
+		set_temp_variable = { ENG_agitation_change = 10 }
+		ENG_change_scottish_agitation = yes
+		ai_chance = { base = 1 }
+	}
+
+	option = {
+		name = ENG_uq.73.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.73.b executed"
+		clr_country_flag = ENG_scottish_pacified
+		set_variable = { ENG_referendum_target = 1 }
+		ENG_release_referendum_region = yes
+		set_variable = { ENG_referendum_target = 0 }
+		ai_chance = { base = 0 }
+	}
+}
+
+# The Senedd in Exile
+country_event = {
+	id = ENG_uq.74
+	title = ENG_uq.74.t
+	desc = ENG_uq.74.d
+	picture = GFX_political_deal
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = ENG_uq_welsh_exile_assembly
+	}
+
+	option = {
+		name = ENG_uq.74.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.74.a executed"
+		set_temp_variable = { ENG_nationalists_change = 5 }
+		ENG_change_wales_nationalists = yes
+		country_event = { id = ENG_uq.75 days = 90 }
+		ai_chance = { base = 1 }
+	}
+
+	option = {
+		name = ENG_uq.74.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.74.b executed"
+		add_stability = -0.05
+		set_temp_variable = { ENG_agitation_change = 10 }
+		ENG_change_wales_agitation = yes
+		set_temp_variable = { ENG_nationalists_change = -5 }
+		ENG_change_wales_nationalists = yes
+		set_temp_variable = { ENG_imperial_tension_change = 2 }
+		ENG_change_imperial_tension = yes
+		ai_chance = { base = 1 }
+	}
+}
+
+# The Exiles Petition Strasbourg
+country_event = {
+	id = ENG_uq.75
+	title = ENG_uq.75.t
+	desc = ENG_uq.75.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.75.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.75.a executed"
+		set_temp_variable = { ENG_imperial_tension_change = 3 }
+		ENG_change_imperial_tension = yes
+		set_temp_variable = { ENG_nationalists_change = 3 }
+		ENG_change_wales_nationalists = yes
+	}
+}
+
+# Loyalist riots in Scotland
+country_event = {
+	id = ENG_uq.76
+	title = ENG_uq.76.t
+	desc = ENG_uq.76.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.76.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.76.a executed"
+		add_stability = -0.02
+		set_temp_variable = { ENG_nationalists_change = -3 }
+		ENG_change_scottish_nationalists = yes
+		set_temp_variable = { ENG_agitation_change = 5 }
+		ENG_change_scottish_agitation = yes
+	}
+}
+
+# Loyalist riots in Northern Ireland
+country_event = {
+	id = ENG_uq.77
+	title = ENG_uq.77.t
+	desc = ENG_uq.77.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.77.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.77.a executed"
+		add_stability = -0.02
+		set_temp_variable = { ENG_nationalists_change = -3 }
+		ENG_change_north_irish_nationalists = yes
+		set_temp_variable = { ENG_agitation_change = 5 }
+		ENG_change_north_irish_agitation = yes
+	}
+}
+
+# Loyalist riots in Wales
+country_event = {
+	id = ENG_uq.78
+	title = ENG_uq.78.t
+	desc = ENG_uq.78.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.78.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.78.a executed"
+		add_stability = -0.02
+		set_temp_variable = { ENG_nationalists_change = -3 }
+		ENG_change_wales_nationalists = yes
+		set_temp_variable = { ENG_agitation_change = 5 }
+		ENG_change_wales_agitation = yes
+	}
+}
+
+# Scotland Declares Independence
+country_event = {
+	id = ENG_uq.80
+	title = ENG_uq.80.t
+	desc = ENG_uq.80.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.80.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.80.a executed"
+		set_country_flag = { flag = ENG_scottish_rising_cooldown days = 1825 value = 1 }
+		clr_country_flag = ENG_scottish_pacified
+		set_temp_variable = { ENG_agitation_change = -30 }
+		ENG_change_scottish_agitation = yes
+		every_owned_state = {
+			limit = { is_core_of = SCO }
+			ENG_remove_resistance_against_westminster = yes
+		}
+		release = SCO
+		custom_effect_tooltip = ENG_uq_rising_army_TT
+		hidden_effect = {
+			ENG_raise_scottish_rising = yes
+			SCO = { ingame_startup_nations_effect = yes }
+		}
+		declare_war_on = {
+			target = SCO
+			type = annex_everything
+		}
+		add_stability = -0.10
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# Northern Ireland Declares Independence
+country_event = {
+	id = ENG_uq.81
+	title = ENG_uq.81.t
+	desc = ENG_uq.81.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.81.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.81.a executed"
+		set_country_flag = { flag = ENG_north_irish_rising_cooldown days = 1825 value = 1 }
+		clr_country_flag = ENG_north_irish_pacified
+		set_temp_variable = { ENG_agitation_change = -30 }
+		ENG_change_north_irish_agitation = yes
+		17 = {
+			ENG_remove_resistance_against_westminster = yes
+		}
+		release = NIR
+		custom_effect_tooltip = ENG_uq_rising_army_TT
+		hidden_effect = {
+			ENG_raise_north_irish_rising = yes
+			NIR = { ingame_startup_nations_effect = yes }
+		}
+		declare_war_on = {
+			target = NIR
+			type = annex_everything
+		}
+		add_stability = -0.10
+		add_war_support = 0.05
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# Wales Declares Independence
+country_event = {
+	id = ENG_uq.82
+	title = ENG_uq.82.t
+	desc = ENG_uq.82.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.82.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.82.a executed"
+		set_country_flag = { flag = ENG_welsh_rising_cooldown days = 1825 value = 1 }
+		clr_country_flag = ENG_welsh_pacified
+		set_temp_variable = { ENG_agitation_change = -30 }
+		ENG_change_wales_agitation = yes
+		every_owned_state = {
+			limit = { is_core_of = WAS }
+			ENG_remove_resistance_against_westminster = yes
+		}
+		release = WAS
+		custom_effect_tooltip = ENG_uq_rising_army_TT
+		hidden_effect = {
+			ENG_raise_welsh_rising = yes
+			WAS = { ingame_startup_nations_effect = yes }
+		}
+		declare_war_on = {
+			target = WAS
+			type = annex_everything
+		}
+		add_stability = -0.10
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# The Union Question: Ireland (Western path)
+
+# Ireland is invited to rejoin the Commonwealth
+country_event = {
+	id = ENG_uq.90
+	title = ENG_uq.90.t
+	desc = ENG_uq.90.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	immediate = { ENG_uq_set_accept_weight = yes }
+
+	option = {
+		name = ENG_uq.90.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.90.a executed"
+		custom_effect_tooltip = TT_IF_WE_ACCEPT
+		add_dynamic_modifier = { modifier = Commonwealth_member_modifier }
+		add_to_array = { global.commonwealth_member = THIS }
+		set_temp_variable = { ENG_cmw_cohesion_change = 2 }
+		ENG_cmw_change_cohesion = yes
+		set_temp_variable = { ENG_uq_consent_change = 5 }
+		ENG_uq_change_consent = yes
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.91 days = 1 } }
+		}
+		ai_chance = {
+			base = 20
+			modifier = { add = ENG_uq_accept_weight }
+			modifier = {
+				add = 25
+				OR = {
+					western_conservatism_are_in_power = yes
+					western_liberals_are_in_power = yes
+					neutrality_neutral_conservatism_are_in_power = yes
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.90.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.90.b executed"
+		custom_effect_tooltip = ENG_uq_we_decline_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.92 days = 1 } }
+		}
+		ai_chance = { base = 40 }
+	}
+}
+
+# Dublin accepts (ENG)
+country_event = {
+	id = ENG_uq.91
+	title = ENG_uq.91.t
+	desc = ENG_uq.91.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.91.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.91.a executed"
+		custom_effect_tooltip = ENG_uq_ireland_joins_commonwealth_TT
+	}
+}
+
+# Dublin declines (ENG)
+country_event = {
+	id = ENG_uq.92
+	title = ENG_uq.92.t
+	desc = ENG_uq.92.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.92.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.92.a executed"
+		ENG_uq_fail_transition = yes
+	}
+}
+
+# Brussels reacts to the Anglo-Irish economic union (IRE)
+country_event = {
+	id = ENG_uq.93
+	title = ENG_uq.93.t
+	desc = ENG_uq.93.d
+	picture = GFX_eu
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.93.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.93.a executed"
+		random_list = {
+			60 = { custom_effect_tooltip = ENG_uq_brussels_tolerates_TT }
+			40 = {
+				add_timed_idea = { idea = ENG_uq_eu_infringement_idea days = 730 }
+				set_temp_variable = { ENG_uq_consent_change = -5 }
+				ENG_uq_change_consent = yes
+			}
+		}
+	}
+}
+
+# Irexit campaign opens (IRE)
+country_event = {
+	id = ENG_uq.94
+	title = ENG_uq.94.t
+	desc = ENG_uq.94.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.94.a }
+}
+
+# Irexit result roll (IRE, hidden)
+country_event = {
+	id = ENG_uq.95
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		set_variable = { ENG_uq_irexit_leave = ENG.ENG_consent@THIS }
+		add_to_variable = { ENG_uq_irexit_leave = ENG.ENG_uq_irexit_campaign }
+		set_temp_variable = { ENG_uq_europeanism_drag = { value = europeanism multiply = 40 } }
+		subtract_from_variable = { ENG_uq_irexit_leave = ENG_uq_europeanism_drag }
+		if = {
+			limit = { has_idea = ENG_uq_anglo_irish_economic_union_idea }
+			add_to_variable = { ENG_uq_irexit_leave = 10 }
+		}
+		if = {
+			limit = { check_variable = { debt_ratio > 0.9 } }
+			add_to_variable = { ENG_uq_irexit_leave = 10 }
+		}
+		else_if = {
+			limit = { check_variable = { debt_ratio < 0.6 } }
+			subtract_from_variable = { ENG_uq_irexit_leave = 10 }
+		}
+		clamp_variable = { var = ENG_uq_irexit_leave min = 5 max = 95 }
+		set_variable = { ENG_uq_irexit_remain = 100 }
+		subtract_from_variable = { ENG_uq_irexit_remain = ENG_uq_irexit_leave }
+		random_list = {
+			ENG_uq_irexit_leave = {
+				country_event = ENG_uq.96
+				ENG = { country_event = ENG_uq.97 }
+			}
+			ENG_uq_irexit_remain = {
+				country_event = ENG_uq.98
+				ENG = { country_event = ENG_uq.99 }
+			}
+		}
+	}
+}
+
+# Leave wins (IRE)
+country_event = {
+	id = ENG_uq.96
+	title = ENG_uq.96.t
+	desc = ENG_uq.96.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.96.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.96.a executed"
+		leaving_EU = yes
+		add_stability = -0.05
+		hidden_effect = { news_event = EU_news.21 }
+	}
+}
+
+# Leave wins (ENG)
+country_event = {
+	id = ENG_uq.97
+	title = ENG_uq.97.t
+	desc = ENG_uq.97.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.97.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.97.a executed"
+		IRE = {
+			set_temp_variable = { ENG_uq_consent_change = 5 }
+			ENG_uq_change_consent = yes
+		}
+	}
+}
+
+# Remain wins (IRE)
+country_event = {
+	id = ENG_uq.98
+	title = ENG_uq.98.t
+	desc = ENG_uq.98.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.98.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.98.a executed"
+		add_timed_idea = { idea = ENG_uq_sovereignty_movement days = 1825 }
+	}
+}
+
+# Remain wins (ENG): ten-year lock
+country_event = {
+	id = ENG_uq.99
+	title = ENG_uq.99.t
+	desc = ENG_uq.99.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.99.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.99.a executed"
+		custom_effect_tooltip = ENG_uq_irexit_lock_TT
+		hidden_effect = { set_country_flag = { flag = ENG_uq_lock@IRE value = 1 days = 3650 } }
+		IRE = {
+			set_temp_variable = { ENG_uq_consent_change = -20 }
+			ENG_uq_change_consent = yes
+		}
+	}
+}
+
+# Dublin receives Northern Ireland and the Crown (IRE)
+country_event = {
+	id = ENG_uq.100
+	title = ENG_uq.100.t
+	desc = ENG_uq.100.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.100.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.100.a executed"
+		custom_effect_tooltip = ENG_uq_ireland_dominion_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.101 days = 1 } }
+		}
+	}
+}
+
+# Ireland enters the Union as a Crown Dominion (ENG, FROM = IRE)
+country_event = {
+	id = ENG_uq.101
+	title = ENG_uq.101.t
+	desc = ENG_uq.101.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.101.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.101.a executed"
+		ENG_uq_enter_stage_2 = yes
+		hidden_effect = {
+			country_event = { id = ENG_uq.102 days = 7 }
+		}
+	}
+}
+
+# Unionist backlash (ENG)
+country_event = {
+	id = ENG_uq.102
+	title = ENG_uq.102.t
+	desc = ENG_uq.102.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.102.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.102.a executed"
+		add_stability = -0.05
+		set_temp_variable = { ENG_union_strain_change = 10 }
+		ENG_change_union_strain = yes
+		hidden_effect = {
+			IRE = { country_event = { id = ENG_uq.103 days = 3 } }
+		}
+	}
+}
+
+# Loyalists march in Belfast (IRE)
+country_event = {
+	id = ENG_uq.103
+	title = ENG_uq.103.t
+	desc = ENG_uq.103.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.103.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.103.a executed"
+		add_stability = -0.05
+		add_timed_idea = { idea = ENG_uq_loyalist_movement days = 730 }
+	}
+}
+
+# Irish-American lobby protests (ENG)
+country_event = {
+	id = ENG_uq.104
+	title = ENG_uq.104.t
+	desc = ENG_uq.104.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.104.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.104.a executed"
+		USA = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_irish_lobby_opinion } }
+	}
+}
+
+# Irish-American lobby: Washington tables a UN statement (ENG)
+country_event = {
+	id = ENG_uq.105
+	title = ENG_uq.105.t
+	desc = ENG_uq.105.d
+	picture = GFX_UN_emergency_meeting
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.105.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.105.a executed"
+		USA = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_irish_lobby_opinion } }
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# The Union Question: Ireland (Nationalist path)
+
+# Dublin protests the closed border poll (IRE)
+country_event = {
+	id = ENG_uq.110
+	title = ENG_uq.110.t
+	desc = ENG_uq.110.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.110.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.110.a executed"
+		add_opinion_modifier = { target = ENG modifier = medium_decrease }
+		set_temp_variable = { ENG_uq_consent_change = -10 }
+		ENG_uq_change_consent = yes
+	}
+}
+
+# The world reacts to the Irish war (ENG)
+country_event = {
+	id = ENG_uq.111
+	title = ENG_uq.111.t
+	desc = ENG_uq.111.d
+	picture = GFX_UN_emergency_meeting
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.111.a }
+}
+
+# Ulster lost in the peace (ENG)
+country_event = {
+	id = ENG_uq.112
+	title = ENG_uq.112.t
+	desc = ENG_uq.112.d
+	picture = GFX_event_ENG_ulster_nationalism
+	is_triggered_only = yes
+
+	option = { name = ENG_uq.112.a }
+}
+
+# The Union Question: the Realms (Western path)
+
+# Parliament in [This.GetName] votes on association with the Crown (target)
+country_event = {
+	id = ENG_uq.120
+	title = ENG_uq.120.t
+	desc = ENG_uq.120.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	immediate = { ENG_uq_set_accept_weight = yes }
+
+	option = {
+		name = ENG_uq.120.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.120.a executed"
+		custom_effect_tooltip = ENG_uq_we_accept_TT
+		country_event = { id = ENG_uq.121 days = 30 }
+		ai_chance = {
+			base = 20
+			modifier = { add = ENG_uq_accept_weight }
+		}
+	}
+
+	option = {
+		name = ENG_uq.120.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.120.b executed"
+		custom_effect_tooltip = ENG_uq_we_decline_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.22 days = 1 } }
+		}
+		ai_chance = { base = 30 }
+	}
+}
+
+# Vote result roll (target, hidden)
+country_event = {
+	id = ENG_uq.121
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		ENG = { set_variable = { PREV.ENG_uq_referendum_yes = ENG_consent@PREV } }
+		set_variable = { ENG_uq_referendum_no = 100 }
+		subtract_from_variable = { ENG_uq_referendum_no = ENG_uq_referendum_yes }
+		clamp_variable = { var = ENG_uq_referendum_yes min = 5 max = 95 }
+		clamp_variable = { var = ENG_uq_referendum_no min = 5 max = 95 }
+		random_list = {
+			ENG_uq_referendum_yes = {
+				country_event = ENG_uq.122
+				ENG = {
+					country_event = ENG_uq.21
+				}
+			}
+			ENG_uq_referendum_no = {
+				country_event = ENG_uq.123
+				ENG = {
+					country_event = ENG_uq.22
+				}
+			}
+		}
+	}
+}
+
+# The vote passes (target)
+country_event = {
+	id = ENG_uq.122
+	title = ENG_uq.122.t
+	desc = ENG_uq.122.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.122.a }
+}
+
+# The vote fails (target)
+country_event = {
+	id = ENG_uq.123
+	title = ENG_uq.123.t
+	desc = ENG_uq.123.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.123.a }
+}
+
+# Westminster votes on the Integration Act for a CANZUK dominion (ENG, FROM = realm)
+country_event = {
+	id = ENG_uq.124
+	title = ENG_uq.124.t
+	desc = ENG_uq.124.d
+	picture = GFX_political_deal
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.124.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.124.a executed"
+		random_list = {
+			100 = {
+				ENG_uq_enter_stage_4 = yes
+			}
+			0 = {
+				modifier = {
+					add = 50
+					has_stability < 0.6
+				}
+				ENG_uq_fail_transition = yes
+				add_stability = -0.03
+			}
+		}
+	}
+}
+
+# Stage advance dispatcher (ENG, FROM = target, hidden)
+country_event = {
+	id = ENG_uq.129
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = { check_variable = { ENG_integration_stage@FROM = 1 } }
+			ENG_uq_enter_stage_2 = yes
+		}
+		else_if = {
+			limit = { check_variable = { ENG_integration_stage@FROM = 2 } }
+			ENG_uq_enter_stage_3 = yes
+		}
+		else_if = {
+			limit = { check_variable = { ENG_integration_stage@FROM = 3 } }
+			ENG_uq_enter_stage_4 = yes
+		}
+	}
+}
+
+# Washington reacts: Canada becomes a Crown Dominion (USA)
+country_event = {
+	id = ENG_uq.130
+	title = ENG_uq.130.t
+	desc = ENG_uq.130.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.130.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.130.a executed"
+		add_opinion_modifier = { target = ENG modifier = ENG_uq_monroe_opinion }
+	}
+}
+
+# Washington reacts: Canada becomes a constituent country (USA)
+country_event = {
+	id = ENG_uq.131
+	title = ENG_uq.131.t
+	desc = ENG_uq.131.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.131.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.131.a executed"
+		add_opinion_modifier = { target = ENG modifier = ENG_uq_monroe_opinion }
+		ENG = { add_timed_idea = { idea = ENG_uq_us_trade_war days = 730 } }
+		ai_chance = { base = 40 }
+	}
+
+	option = {
+		name = ENG_uq.131.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.131.b executed"
+		add_opinion_modifier = { target = ENG modifier = ENG_uq_monroe_opinion }
+		if = {
+			limit = {
+				country_exists = CAN
+				NOT = { country_exists = QUE }
+			}
+			CAN = { set_country_flag = ENG_uq_quebec_sponsored }
+		}
+		ai_chance = { base = 30 }
+	}
+
+	option = {
+		name = ENG_uq.131.c
+		log = "[GetDateText]: [This.GetName]: ENG_uq.131.c executed"
+		add_opinion_modifier = { target = ENG modifier = ENG_uq_monroe_opinion }
+		ai_chance = { base = 30 }
+	}
+}
+
+# Washington reacts: Canada is integrated into the Union (USA)
+country_event = {
+	id = ENG_uq.132
+	title = ENG_uq.132.t
+	desc = ENG_uq.132.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.132.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.132.a executed"
+		add_opinion_modifier = { target = ENG modifier = ENG_uq_monroe_opinion }
+	}
+}
+
+# The Monroe Doctrine: a Caribbean realm becomes a Crown Dominion (USA)
+country_event = {
+	id = ENG_uq.133
+	title = ENG_uq.133.t
+	desc = ENG_uq.133.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.133.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.133.a executed"
+		add_opinion_modifier = { target = ENG modifier = ENG_uq_monroe_opinion }
+		ai_chance = { base = 70 }
+	}
+
+	option = {
+		name = ENG_uq.133.b
+		ai_chance = {
+			base = 30
+			modifier = {
+				add = 30
+				has_opinion = { target = ENG value > 50 }
+			}
+		}
+	}
+}
+
+# Canberra calls a referendum on the Crown (AST)
+country_event = {
+	id = ENG_uq.140
+	title = ENG_uq.140.t
+	desc = ENG_uq.140.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.140.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.140.a executed"
+		country_event = { id = ENG_uq.141 days = 90 }
+	}
+}
+
+# Referendum result roll (AST, hidden)
+country_event = {
+	id = ENG_uq.141
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		ENG = { set_variable = { PREV.ENG_uq_referendum_yes = ENG_consent@PREV } }
+		if = {
+			limit = { ENG = { has_completed_focus = ENG_a_shared_crown } }
+			add_to_variable = { ENG_uq_referendum_yes = 20 }
+		}
+		set_variable = { ENG_uq_referendum_no = 100 }
+		subtract_from_variable = { ENG_uq_referendum_no = ENG_uq_referendum_yes }
+		set_temp_variable = { ENG_uq_rep_bonus = ast_republic_support }
+		multiply_temp_variable = { ENG_uq_rep_bonus = 10 }
+		add_to_variable = { ENG_uq_referendum_no = ENG_uq_rep_bonus }
+		clamp_variable = { var = ENG_uq_referendum_yes min = 5 max = 95 }
+		clamp_variable = { var = ENG_uq_referendum_no min = 5 max = 95 }
+		random_list = {
+			ENG_uq_referendum_yes = {
+				country_event = ENG_uq.142
+				ENG = {
+					country_event = ENG_uq.143
+				}
+			}
+			ENG_uq_referendum_no = {
+				country_event = ENG_uq.144
+				ENG = {
+					country_event = ENG_uq.145
+				}
+			}
+		}
+	}
+}
+
+# The monarchy is retained (AST)
+country_event = {
+	id = ENG_uq.142
+	title = ENG_uq.142.t
+	desc = ENG_uq.142.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.142.a }
+}
+
+# Canberra votes to keep the Crown (ENG, FROM = AST)
+country_event = {
+	id = ENG_uq.143
+	title = ENG_uq.143.t
+	desc = ENG_uq.143.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.143.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.143.a executed"
+		FROM = {
+			set_temp_variable = { ENG_uq_consent_change = 5 }
+			ENG_uq_change_consent = yes
+		}
+	}
+}
+
+# Australia votes to become a republic (AST)
+country_event = {
+	id = ENG_uq.144
+	title = ENG_uq.144.t
+	desc = ENG_uq.144.d
+	picture = GFX_election_day
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.144.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.144.a executed"
+		ENG_uq_realm_republic = yes
+	}
+}
+
+# Canberra becomes a republic (ENG, FROM = AST)
+country_event = {
+	id = ENG_uq.145
+	title = ENG_uq.145.t
+	desc = ENG_uq.145.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.145.a }
+}
+
+# A Quebec sovereignty movement forms (CAN)
+country_event = {
+	id = ENG_uq.150
+	title = ENG_uq.150.t
+	desc = ENG_uq.150.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.150.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.150.a executed"
+		country_event = { id = ENG_uq.151 days = 365 }
+	}
+}
+
+# Quebec sovereignty referendum roll (CAN, hidden)
+country_event = {
+	id = ENG_uq.151
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = {
+				NOT = { country_exists = QUE }
+				owns_state = 762
+			}
+			ENG = { set_variable = { PREV.ENG_uq_referendum_yes = ENG_consent@PREV } }
+			set_variable = { ENG_uq_quebec_leave = 100 }
+			subtract_from_variable = { ENG_uq_quebec_leave = ENG_uq_referendum_yes }
+			divide_variable = { ENG_uq_quebec_leave = 2 }
+			add_to_variable = { ENG_uq_quebec_leave = 30 }
+			if = {
+				limit = { has_country_flag = ENG_uq_quebec_sponsored }
+				multiply_variable = { ENG_uq_quebec_leave = 2 }
+			}
+			set_variable = { ENG_uq_quebec_stay = 100 }
+			clamp_variable = { var = ENG_uq_quebec_leave min = 5 max = 95 }
+			clamp_variable = { var = ENG_uq_quebec_stay min = 5 max = 95 }
+			random_list = {
+				ENG_uq_quebec_leave = {
+					country_event = ENG_uq.153
+				}
+				ENG_uq_quebec_stay = {
+					country_event = ENG_uq.152
+				}
+			}
+		}
+	}
+}
+
+# Quebec votes to stay (CAN)
+country_event = {
+	id = ENG_uq.152
+	title = ENG_uq.152.t
+	desc = ENG_uq.152.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.152.a }
+}
+
+# Quebec votes to leave (CAN)
+country_event = {
+	id = ENG_uq.153
+	title = ENG_uq.153.t
+	desc = ENG_uq.153.d
+	picture = GFX_broken_infrastructure
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.153.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.153.a executed"
+		release = QUE
+		set_temp_variable = { ENG_uq_consent_change = -30 }
+		ENG_uq_change_consent = yes
+		clr_country_flag = ENG_uq_quebec_sponsored
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.154 days = 1 } }
+		}
+	}
+}
+
+# Quebec leaves Canada (ENG, FROM = CAN)
+country_event = {
+	id = ENG_uq.154
+	title = ENG_uq.154.t
+	desc = ENG_uq.154.d
+	picture = GFX_broken_infrastructure
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.154.a }
+}
+
+# A hurricane strikes a Caribbean realm (ENG)
+country_event = {
+	id = ENG_uq.160
+	title = ENG_uq.160.t
+	desc = ENG_uq.160.d
+	picture = GFX_broken_infrastructure
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.160.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.160.a executed"
+		small_expenditure = yes
+	}
+}
+
+# The drug trade unsettles a Caribbean realm (ENG)
+country_event = {
+	id = ENG_uq.161
+	title = ENG_uq.161.t
+	desc = ENG_uq.161.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.161.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.161.a executed"
+		small_expenditure = yes
+		add_stability = -0.01
+	}
+}
+
+# An independence crisis grips a realm (ENG, FROM = realm)
+country_event = {
+	id = ENG_uq.170
+	title = ENG_uq.170.t
+	desc = ENG_uq.170.d
+	picture = GFX_generic_soldiers
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.170.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.170.a executed"
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_free
+		}
+		set_variable = { ENG_integration_stage@FROM = 0 }
+		remove_from_array = { ENG_integration_targets = FROM }
+		set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1825 }
+		set_temp_variable = { ENG_union_strain_change = -5 }
+		ENG_change_union_strain = yes
+		ai_chance = { base = 30 }
+	}
+
+	option = {
+		name = ENG_uq.170.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.170.b executed"
+		add_stability = -0.05
+		set_temp_variable = { ENG_imperial_tension_change = 3 }
+		ENG_change_imperial_tension = yes
+		FROM = {
+			set_temp_variable = { ENG_uq_consent_change = -15 }
+			ENG_uq_change_consent = yes
+			if = {
+				limit = { NOT = { has_idea = ENG_uq_sovereignty_movement } }
+				add_timed_idea = { idea = ENG_uq_sovereignty_movement days = 1095 }
+			}
+		}
+		ai_chance = { base = 70 }
+	}
+}
+
+# The Union Question: the Realms (Nationalist path)
+# Washington considers guaranteeing a Crown realm (USA, FROM = ENG)
+country_event = {
+	id = ENG_uq.134
+	title = ENG_uq.134.t
+	desc = ENG_uq.134.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.134.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.134.a executed"
+		every_country = {
+			limit = { has_country_flag = ENG_uq_us_guarantee_candidate }
+			ROOT = { give_guarantee = PREV }
+		}
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.135 days = 1 } }
+		}
+		ai_chance = {
+			base = 50
+			modifier = {
+				add = 30
+				has_opinion = { target = ENG value < 0 }
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = ENG
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.134.b
+		ai_chance = { base = 50 }
+	}
+}
+
+# Washington guarantees the realm (ENG)
+country_event = {
+	id = ENG_uq.135
+	title = ENG_uq.135.t
+	desc = ENG_uq.135.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.135.a }
+}
+
+# The Governor-General dismisses the loyalist government (realm, FROM = ENG)
+country_event = {
+	id = ENG_uq.180
+	title = ENG_uq.180.t
+	desc = ENG_uq.180.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.180.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.180.a executed"
+		custom_effect_tooltip = ENG_uq_ultimatum_we_accept_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.41 days = 1 } }
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				is_in_faction = no
+				NOT = { has_idea = NATO_member }
+				FROM = { strength_ratio = { tag = ROOT ratio > 3 } }
+			}
+			modifier = {
+				add = 40
+				FROM = { has_completed_focus = ENG_the_statute_of_westminster_repealed }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.180.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.180.b executed"
+		custom_effect_tooltip = ENG_uq_dismissal_we_refuse_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.181 days = 1 } }
+		}
+		ai_chance = {
+			base = 100
+			modifier = {
+				factor = 0
+				is_in_faction = no
+				NOT = { has_idea = NATO_member }
+				FROM = { strength_ratio = { tag = ROOT ratio > 3 } }
+			}
+		}
+	}
+}
+
+# The realm declares a republic and leaves the Commonwealth (ENG, FROM = realm)
+country_event = {
+	id = ENG_uq.181
+	title = ENG_uq.181.t
+	desc = ENG_uq.181.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.181.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.181.a executed"
+		FROM = {
+			if = {
+				limit = { ENG_cmw_is_member = yes }
+				ENG_uq_commonwealth_leave = yes
+			}
+			ENG_uq_realm_republic = yes
+		}
+		set_variable = { ENG_coercion@FROM = 3 }
+		set_country_flag = ENG_uq_ultimatum_rejected@FROM
+		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@FROM value = 1 days = 180 }
+		custom_effect_tooltip = ENG_uq_cooldown_started_TT
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# Sponsorship of loyalists is exposed in Australia (ENG, FROM = AST)
+country_event = {
+	id = ENG_uq.190
+	title = ENG_uq.190.t
+	desc = ENG_uq.190.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.190.a }
+}
+
+# The Union Question: lost possessions
+
+# Washington is asked to hand back the Chagos Archipelago (USA, FROM = ENG)
+country_event = {
+	id = ENG_uq.200
+	title = ENG_uq.200.t
+	desc = ENG_uq.200.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.200.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.200.a executed"
+		ENG = { country_event = { id = ENG_uq.201 days = 1 } }
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 50
+				has_opinion = { target = FROM value > 80 }
+			}
+			modifier = {
+				add = 30
+				has_war = yes
+			}
+			modifier = {
+				add = 30
+				FROM = { has_country_flag = ENG_uq_chagos_ruling }
+			}
+			modifier = {
+				add = 20
+				NOT = { check_variable = { ruling_party = 1 } }
+			}
+			modifier = {
+				factor = 0
+				has_war_with = FROM
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.200.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.200.b executed"
+		ENG = { country_event = { id = ENG_uq.202 days = 1 } }
+		ai_chance = { base = 40 }
+	}
+}
+
+# Diego Garcia returns to the Crown (ENG)
+country_event = {
+	id = ENG_uq.201
+	title = ENG_uq.201.t
+	desc = ENG_uq.201.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.201.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.201.a executed"
+		ENG_uq_chagos_settled = yes
+		add_ideas = ENG_uq_diego_garcia_joint_basing
+		give_military_access = USA
+		set_temp_variable = { ENG_imperial_tension_change = 2 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# Washington declines to discuss the Chagos (ENG)
+country_event = {
+	id = ENG_uq.202
+	title = ENG_uq.202.t
+	desc = ENG_uq.202.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.202.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.202.a executed"
+		set_country_flag = { flag = ENG_uq_chagos_lock value = 1 days = 3650 }
+		custom_effect_tooltip = ENG_uq_chagos_locked_TT
+		unlock_decision_tooltip = ENG_uq_reopen_chagos_talks
+	}
+}
+
+# The Hague rules for Britain (ENG)
+country_event = {
+	id = ENG_uq.204
+	title = ENG_uq.204.t
+	desc = ENG_uq.204.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.204.a }
+}
+
+# The Hague rules against Britain (ENG)
+country_event = {
+	id = ENG_uq.205
+	title = ENG_uq.205.t
+	desc = ENG_uq.205.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.205.a }
+}
+
+# Buenos Aires reacts to a reinforced South Atlantic Command (ARG, FROM = ENG)
+country_event = {
+	id = ENG_uq.210
+	title = ENG_uq.210.t
+	desc = ENG_uq.210.d
+	picture = GFX_falkland_islands
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.210.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.210.a executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_south_atlantic_opinion }
+		ai_chance = {
+			base = 50
+			modifier = {
+				factor = 0
+				has_government = nationalist
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.210.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.210.b executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_south_atlantic_opinion }
+		add_war_support = 0.05
+		ai_chance = {
+			base = 20
+			modifier = {
+				factor = 3
+				has_government = nationalist
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.210.c
+		ai_chance = {
+			base = 30
+			modifier = {
+				factor = 0
+				has_government = nationalist
+			}
+			modifier = {
+				factor = 0
+				has_opinion = { target = FROM value < 0 }
+			}
+		}
+	}
+}
+
+# Madrid weighs a settlement over the Rock (SPR, FROM = ENG)
+country_event = {
+	id = ENG_uq.220
+	title = ENG_uq.220.t
+	desc = ENG_uq.220.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.220.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.220.a executed"
+		ENG = { country_event = { id = ENG_uq.221 days = 1 } }
+		ai_chance = {
+			base = 50
+			modifier = {
+				add = 30
+				has_idea = EU_member
+				FROM = { has_idea = EU_member }
+			}
+			modifier = {
+				factor = 0.3
+				has_government = nationalist
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.220.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.220.b executed"
+		ENG = { country_event = { id = ENG_uq.223 days = 1 } }
+		ai_chance = {
+			base = 20
+			modifier = {
+				factor = 3
+				has_government = nationalist
+			}
+		}
+	}
+}
+
+# Terms from Madrid on Gibraltar (ENG, FROM = SPR)
+country_event = {
+	id = ENG_uq.221
+	title = ENG_uq.221.t
+	desc = ENG_uq.221.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.221.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.221.a executed"
+		large_expenditure = yes
+		19 = { remove_claim_by = SPR }
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_treaty_opinion }
+		reverse_add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_treaty_opinion }
+		ai_chance = { base = 40 }
+	}
+
+	option = {
+		name = ENG_uq.221.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.221.b executed"
+		small_expenditure = yes
+		custom_effect_tooltip = {
+			localization_key = modifies_dynamic_modifier_tt
+			MODIFIER = ENG_union_question_dm
+		}
+		add_to_variable = { ENG_uq_bonus_political_power_factor = -0.02 tooltip = political_power_factor_tt }
+		add_to_variable = { ENG_uq_stability_factor = -0.01 tooltip = stability_factor_tt }
+		hidden_effect = { ENG_uq_update_dm = yes }
+		19 = { remove_claim_by = SPR }
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_treaty_opinion }
+		reverse_add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_treaty_opinion }
+		ai_chance = { base = 40 }
+	}
+
+	option = {
+		name = ENG_uq.221.c
+		log = "[GetDateText]: [This.GetName]: ENG_uq.221.c executed"
+		set_country_flag = { flag = ENG_uq_gibraltar_lock value = 1 days = 1825 }
+		custom_effect_tooltip = ENG_uq_gibraltar_locked_TT
+		ai_chance = { base = 20 }
+	}
+}
+
+# Madrid refuses to discuss Gibraltar (ENG, FROM = SPR)
+country_event = {
+	id = ENG_uq.223
+	title = ENG_uq.223.t
+	desc = ENG_uq.223.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.223.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.223.a executed"
+		set_country_flag = { flag = ENG_uq_gibraltar_lock value = 1 days = 1825 }
+		custom_effect_tooltip = ENG_uq_gibraltar_locked_TT
+		unlock_decision_tooltip = ENG_uq_gibraltar_talks
+	}
+}
+
+# Beijing reacts to British courting of Hong Kong (CHI, FROM = ENG)
+country_event = {
+	id = ENG_uq.230
+	title = ENG_uq.230.t
+	desc = ENG_uq.230.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.230.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.230.a executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_hong_kong_opinion }
+		ai_chance = { base = 70 }
+	}
+
+	option = {
+		name = ENG_uq.230.b
+		ai_chance = {
+			base = 30
+			modifier = {
+				factor = 0
+				has_opinion = { target = FROM value < 30 }
+			}
+		}
+	}
+}
+
+# Beijing reacts to Hong Kong's alignment with the Crown (CHI, FROM = ENG)
+country_event = {
+	id = ENG_uq.231
+	title = ENG_uq.231.t
+	desc = ENG_uq.231.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.231.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.231.a executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_hong_kong_opinion }
+		ai_chance = { base = 50 }
+	}
+
+	option = {
+		name = ENG_uq.231.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.231.b executed"
+		if = {
+			limit = { has_dlc = "By Blood Alone" }
+			send_embargo = FROM
+		}
+		FROM = {
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+		}
+		ai_chance = {
+			base = 30
+			modifier = {
+				add = 20
+				FROM = { has_completed_focus = ENG_the_crown_imperial }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.231.c
+		trigger = { country_exists = HKG }
+		log = "[GetDateText]: [This.GetName]: ENG_uq.231.c executed"
+		add_named_threat = { threat = 5 name = ENG_uq_hong_kong_threat }
+		create_wargoal = {
+			type = annex_everything
+			target = HKG
+			expire = 365
+		}
+		FROM = { country_event = { id = ENG_uq.232 days = 1 } }
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 30
+				FROM = { has_completed_focus = ENG_the_crown_imperial }
+			}
+			modifier = {
+				factor = 0
+				has_war = yes
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = FROM
+			}
+			modifier = {
+				factor = 0
+				strength_ratio = { tag = FROM ratio < 1 }
+			}
+		}
+	}
+}
+
+# Beijing prepares to retake Hong Kong (ENG, FROM = CHI)
+country_event = {
+	id = ENG_uq.232
+	title = ENG_uq.232.t
+	desc = ENG_uq.232.d
+	picture = GFX_generic_soldiers
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.232.a }
+}
+
+# Britain demands the Chagos (USA, FROM = ENG)
+country_event = {
+	id = ENG_uq.206
+	title = ENG_uq.206.t
+	desc = ENG_uq.206.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.206.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.206.a executed"
+		ENG = { country_event = { id = ENG_uq.207 days = 1 } }
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 40
+				has_opinion = { target = FROM value > 80 }
+			}
+			modifier = {
+				add = 30
+				has_war = yes
+			}
+			modifier = {
+				factor = 0
+				has_war_with = FROM
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.206.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.206.b executed"
+		ENG = { country_event = { id = ENG_uq.208 days = 1 } }
+		ai_chance = { base = 60 }
+	}
+}
+
+# Washington yields on the Chagos (ENG)
+country_event = {
+	id = ENG_uq.207
+	title = ENG_uq.207.t
+	desc = ENG_uq.207.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.207.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.207.a executed"
+		ENG_uq_chagos_settled = yes
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# The Chagos crisis (ENG)
+country_event = {
+	id = ENG_uq.208
+	title = ENG_uq.208.t
+	desc = ENG_uq.208.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.208.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.208.a executed"
+		set_temp_variable = { ENG_imperial_tension_change = 15 }
+		ENG_change_imperial_tension = yes
+		USA = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_chagos_crisis_opinion } }
+		if = {
+			limit = { USA = { has_opinion_modifier = ENG_monarch_outreach } }
+			USA = { remove_opinion_modifier = { target = ROOT modifier = ENG_monarch_outreach } }
+		}
+		if = {
+			limit = { has_opinion_modifier = ENG_monarch_outreach }
+			remove_opinion_modifier = { target = USA modifier = ENG_monarch_outreach }
+		}
+		set_country_flag = ENG_uq_chagos_crisis
+		unlock_decision_tooltip = ENG_uq_seize_diego_garcia
+	}
+}
+
+# Fortress Gibraltar (SPR, FROM = ENG)
+country_event = {
+	id = ENG_uq.225
+	title = ENG_uq.225.t
+	desc = ENG_uq.225.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.225.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.225.a executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_defiance_opinion }
+		ai_chance = { base = 50 }
+	}
+
+	option = {
+		name = ENG_uq.225.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.225.b executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_gibraltar_defiance_opinion }
+		if = {
+			limit = { has_dlc = "By Blood Alone" }
+			send_embargo = FROM
+		}
+		FROM = {
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+			country_event = { id = ENG_uq.226 days = 1 }
+		}
+		ai_chance = {
+			base = 30
+			modifier = {
+				factor = 2
+				has_government = nationalist
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = FROM
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.225.c
+		ai_chance = {
+			base = 20
+			modifier = {
+				factor = 0
+				has_opinion = { target = FROM value < 0 }
+			}
+		}
+	}
+}
+
+# Madrid closes the frontier (ENG, FROM = SPR)
+country_event = {
+	id = ENG_uq.226
+	title = ENG_uq.226.t
+	desc = ENG_uq.226.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.226.a }
+}
+
+# The Crown's friends (MLT/CYP, FROM = ENG)
+country_event = {
+	id = ENG_uq.240
+	title = ENG_uq.240.t
+	desc = ENG_uq.240.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.240.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.240.a executed"
+		hidden_effect = {
+			set_temp_variable = { rul_party_temp = 23 }
+			set_temp_variable = { disable_elections = 1 }
+			change_ruling_party_effect = yes
+			set_temp_variable = { party_index = 23 }
+			set_temp_variable = { party_popularity_increase = 0.15 }
+			change_relative_party_popularity = yes
+		}
+		custom_effect_tooltip = ENG_uq_monarchy_restored_TT
+		set_country_flag = ENG_uq_monarchy_restored
+		clr_country_flag = ENG_uq_republic
+		if = {
+			limit = { NOT = { has_idea = ENG_crown_realm_status } }
+			add_ideas = ENG_crown_realm_status
+		}
+		add_stability = -0.05
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.241 days = 1 } }
+		}
+		ai_chance = {
+			base = 20
+			modifier = {
+				add = 40
+				has_idea = ENG_uq_loyalist_movement
+			}
+			modifier = {
+				add = 20
+				FROM = { check_variable = { ENG_consent@ROOT > 40 } }
+			}
+			modifier = {
+				factor = 0
+				has_war_with = FROM
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.240.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.240.b executed"
+		set_temp_variable = { ENG_uq_consent_change = -10 }
+		ENG_uq_change_consent = yes
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.242 days = 1 } }
+		}
+		ai_chance = { base = 60 }
+	}
+}
+
+# A crown restored (ENG, FROM = target)
+country_event = {
+	id = ENG_uq.241
+	title = ENG_uq.241.t
+	desc = ENG_uq.241.d
+	picture = GFX_ENG_generic
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.241.a }
+}
+
+# Republicans hold (ENG, FROM = target)
+country_event = {
+	id = ENG_uq.242
+	title = ENG_uq.242.t
+	desc = ENG_uq.242.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.242.a }
+}
+
+########################## Wider empire #########################
+# Regional rival reacts to a new British subject in its sphere (rival, FROM = ENG). ENG.ENG_uq_event_target = the subject.
+country_event = {
+	id = ENG_uq.250
+	title = ENG_uq.250.t
+	desc = ENG_uq.250.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.250.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.250.a executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_patron_opinion }
+		ai_chance = { base = 50 }
+	}
+
+	option = {
+		name = ENG_uq.250.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.250.b executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_patron_opinion }
+		set_temp_variable = { ENG_uq_sponsor_target = FROM.ENG_uq_event_target }
+		var:ENG_uq_sponsor_target = {
+			set_temp_variable = { ENG_uq_consent_change = -15 }
+			ENG_uq_change_consent = yes
+			if = {
+				limit = { NOT = { has_idea = ENG_uq_sovereignty_movement } }
+				add_timed_idea = { idea = ENG_uq_sovereignty_movement days = 730 }
+			}
+		}
+		FROM = {
+			set_temp_variable = { ENG_imperial_tension_change = 3 }
+			ENG_change_imperial_tension = yes
+			country_event = { id = ENG_uq.251 days = 1 }
+		}
+		ai_chance = {
+			base = 30
+			modifier = {
+				add = 20
+				FROM = { has_completed_focus = ENG_the_crown_imperial }
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = FROM
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.250.c
+		trigger = { FROM = { check_variable = { ENG_imperial_tension > 60 } } }
+		log = "[GetDateText]: [This.GetName]: ENG_uq.250.c executed"
+		add_opinion_modifier = { target = FROM modifier = ENG_uq_patron_opinion }
+		set_temp_variable = { ENG_uq_sponsor_target = FROM.ENG_uq_event_target }
+		var:ENG_uq_sponsor_target = {
+			FROM = { set_temp_variable = { ENG_uq_region_tmp = ENG_uq_region@PREV } }
+		}
+		every_country = {
+			limit = {
+				is_subject = no
+				NOT = { tag = ROOT }
+				NOT = { has_war_with = ROOT }
+				FROM = {
+					check_variable = { ENG_uq_region@PREV = ENG_uq_region_tmp }
+					check_variable = { ENG_integration_stage@PREV < 2 }
+				}
+			}
+			PREV = { give_guarantee = PREV }
+		}
+		FROM = { country_event = { id = ENG_uq.253 days = 1 } }
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 40
+				FROM = { check_variable = { ENG_imperial_tension > 60 } }
+			}
+			modifier = {
+				factor = 0
+				has_war = yes
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = FROM
+			}
+		}
+	}
+}
+
+# Rival sponsors unrest in the new subject (ENG, FROM = rival)
+country_event = {
+	id = ENG_uq.251
+	title = ENG_uq.251.t
+	desc = ENG_uq.251.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.251.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.251.a executed"
+		custom_effect_tooltip = ENG_uq_rival_unrest_TT
+		ai_chance = { base = 100 }
+	}
+}
+
+# Rising in a wider-empire subject while British stability is low (ENG, FROM = subject)
+country_event = {
+	id = ENG_uq.252
+	title = ENG_uq.252.t
+	desc = ENG_uq.252.d
+	picture = GFX_generic_soldiers
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.252.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.252.a executed"
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_free
+		}
+		set_variable = { ENG_integration_stage@FROM = 0 }
+		remove_from_array = { ENG_integration_targets = FROM }
+		set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1825 }
+		set_temp_variable = { ENG_union_strain_change = 5 }
+		ENG_change_union_strain = yes
+		ai_chance = { base = 40 }
+	}
+
+	option = {
+		name = ENG_uq.252.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.252.b executed"
+		add_stability = -0.05
+		set_temp_variable = { ENG_imperial_tension_change = 3 }
+		ENG_change_imperial_tension = yes
+		set_temp_variable = { treasury_change = { value = gdp_total multiply = -0.005 } }
+		modify_treasury_effect = yes
+		FROM = {
+			set_temp_variable = { ENG_uq_consent_change = -15 }
+			ENG_uq_change_consent = yes
+			if = {
+				limit = { NOT = { has_idea = ENG_uq_sovereignty_movement } }
+				add_timed_idea = { idea = ENG_uq_sovereignty_movement days = 1095 }
+			}
+		}
+		ai_chance = { base = 60 }
+	}
+}
+
+# Rival guarantees the rest of the region (ENG, FROM = rival)
+country_event = {
+	id = ENG_uq.253
+	title = ENG_uq.253.t
+	desc = ENG_uq.253.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.253.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.253.a executed"
+		custom_effect_tooltip = ENG_uq_rival_guarantee_TT
+		ai_chance = { base = 100 }
+	}
+}
+
+########################## Commonwealth of Nations #########################
+# Commonwealth Games held
+news_event = {
+	id = ENG_cmw.1
+	title = ENG_cmw.1.t
+	desc = ENG_cmw.1.d
+	picture = GFX_event_olympics
+	is_triggered_only = yes
+
+	option = { name = ENG_cmw.1.a }
+}
+
+# CHOGM opens in the host country
+country_event = {
+	id = ENG_cmw.10
+	title = ENG_cmw.10.t
+	desc = ENG_cmw.10.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_cmw.10.a
+		log = "[GetDateText]: [This.GetName]: ENG_cmw.10.a executed"
+		every_other_country = {
+			limit = { ENG_cmw_is_member = yes }
+			add_opinion_modifier = { target = ROOT modifier = ENG_cmw_chogm_host_opinion }
+			set_temp_variable = { percent_change = 1 }
+			set_temp_variable = { tag_index = ROOT.id }
+			change_influence_percentage = yes
+		}
+	}
+}
+
+# CHOGM communique endorses British conduct
+country_event = {
+	id = ENG_cmw.11
+	title = ENG_cmw.11.t
+	desc = ENG_cmw.11.d
+	picture = GFX_handshake_black
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_cmw.11.a
+		log = "[GetDateText]: [This.GetName]: ENG_cmw.11.a executed"
+		set_temp_variable = { ENG_cmw_cohesion_change = 3 }
+		ENG_cmw_change_cohesion = yes
+		for_each_scope_loop = {
+			array = ENG_integration_targets
+			set_temp_variable = { ENG_uq_consent_change = 3 }
+			ENG_uq_change_consent = yes
+		}
+	}
+}
+
+# CHOGM censures Britain
+country_event = {
+	id = ENG_cmw.12
+	title = ENG_cmw.12.t
+	desc = ENG_cmw.12.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_cmw.12.a
+		log = "[GetDateText]: [This.GetName]: ENG_cmw.12.a executed"
+		set_temp_variable = { ENG_cmw_cohesion_change = -5 }
+		ENG_cmw_change_cohesion = yes
+		every_other_country = {
+			limit = { ENG_cmw_is_member = yes }
+			add_opinion_modifier = { target = ROOT modifier = ENG_cmw_censure_opinion }
+		}
+	}
+}
+
+# CHOGM ends without judgement
+country_event = {
+	id = ENG_cmw.13
+	title = ENG_cmw.13.t
+	desc = ENG_cmw.13.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_cmw.13.a }
+}
+
+# Members hear the outcome
+country_event = {
+	id = ENG_cmw.14
+	title = ENG_cmw.14.t
+	desc = {
+		text = ENG_cmw.14.d
+		trigger = { check_variable = { global.ENG_cmw_chogm_result = 1 } }
+	}
+	desc = {
+		text = ENG_cmw.14.d2
+		trigger = { check_variable = { global.ENG_cmw_chogm_result = -1 } }
+	}
+	desc = {
+		text = ENG_cmw.14.d3
+		trigger = { check_variable = { global.ENG_cmw_chogm_result = 0 } }
+	}
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_cmw.14.a }
+}
+
+# Suspended from the Commonwealth
+country_event = {
+	id = ENG_cmw.20
+	title = ENG_cmw.20.t
+	desc = ENG_cmw.20.d
+	picture = GFX_news_leave_commonwealth
+	is_triggered_only = yes
+
+	option = { name = ENG_cmw.20.a }
+}
+
+# Readmitted to the Commonwealth
+country_event = {
+	id = ENG_cmw.21
+	title = ENG_cmw.21.t
+	desc = ENG_cmw.21.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_cmw.21.a }
+}
+
+# Commonwealth Defence Pact invitation to a realm
+country_event = {
+	id = ENG_cmw.30
+	title = ENG_cmw.30.t
+	desc = ENG_cmw.30.d
+	picture = GFX_ENG_canzuk_alliance
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_cmw.30.a
+		log = "[GetDateText]: [This.GetName]: ENG_cmw.30.a executed"
+		ai_chance = {
+			base = 40
+			modifier = {
+				add = 30
+				has_opinion = { target = ENG value > 50 }
+			}
+			modifier = {
+				factor = 0.3
+				has_opinion = { target = ENG value < 0 }
+			}
+			modifier = {
+				factor = 0
+				ENG = { has_war = yes }
+			}
+		}
+		ENG = { add_to_faction = ROOT }
+		set_temp_variable = { ENG_cmw_cohesion_change = 2 }
+		ENG_cmw_change_cohesion = yes
+	}
+
+	option = {
+		name = ENG_cmw.30.b
+		ai_chance = { base = 60 }
 	}
 }

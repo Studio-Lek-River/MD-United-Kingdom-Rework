@@ -1,0 +1,13 @@
+faction_template_eng_commonwealth = {
+	name = ENG_cmw_defence_pact_name
+	icon = GFX_faction_icon_commonwealth
+	manifest = faction_manifest_strength_in_unity
+	can_leader_join_other_factions = no
+	visible = {
+		always = no
+	}
+
+	default_rules = {
+		joining_rule_commonwealth_nation_only
+	}
+}
