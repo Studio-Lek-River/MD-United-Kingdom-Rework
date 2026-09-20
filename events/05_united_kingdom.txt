@@ -9403,7 +9403,6 @@ country_event = {
 	}
 }
 
-# Sponsorship of loyalists is exposed in Australia (ENG, FROM = AST)
 country_event = {
 	id = ENG_uq.190
 	title = ENG_uq.190.t
@@ -9415,9 +9414,7 @@ country_event = {
 	option = { name = ENG_uq.190.a }
 }
 
-# The Union Question: lost possessions
 
-# Washington is asked to hand back the Chagos Archipelago (USA, FROM = ENG)
 country_event = {
 	id = ENG_uq.200
 	title = ENG_uq.200.t
@@ -9462,7 +9459,6 @@ country_event = {
 	}
 }
 
-# Diego Garcia returns to the Crown (ENG)
 country_event = {
 	id = ENG_uq.201
 	title = ENG_uq.201.t
@@ -9492,7 +9488,7 @@ country_event = {
 	option = {
 		name = ENG_uq.202.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.202.a executed"
-		set_country_flag = { flag = ENG_uq_chagos_lock value = 1 days = 3650 }
+		set_country_flag = { flag = ENG_uq_chagos_lock value = 1 days = 1850 }
 		custom_effect_tooltip = ENG_uq_chagos_locked_TT
 		unlock_decision_tooltip = ENG_uq_reopen_chagos_talks
 	}

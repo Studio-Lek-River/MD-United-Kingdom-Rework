@@ -3372,7 +3372,7 @@ ENG_devolved_matters = {
 		fixed_random_seed = no
 
 		cancel_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision ENG_union_settlement_referendum"
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_scottish_union_settlement_referendum"
 			if = {
 				limit = { ENG_settlement_government_fell = yes }
 				country_event = devolution.29

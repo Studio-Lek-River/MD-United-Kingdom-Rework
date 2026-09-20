@@ -19,7 +19,6 @@ focus_tree = {
 			original_tag = ENG
 		}
 	}
-	# Continuous Focus Position
 	continuous_focus_position = { x = 6900 y = 1800 }
 
 	inlay_window = {
@@ -43,7 +42,6 @@ focus_tree = {
 		scroll_wheel_factor = 0.6
 	}
 
-	# Military
 	focus = {
 		id = ENG_strategic_defence_review
 		icon = iwo_britannia
@@ -3068,7 +3066,7 @@ focus_tree = {
 				name = ENG_utility_vehicle_modernisation
 				bonus = 0.25
 				uses = 1
-				technology = util_vehicle_4 #2005
+				technology = util_vehicle_4
 			}
 			newline = yes
 			set_temp_variable = { temp_opinion = 5 }
@@ -4106,7 +4104,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_challenger_3"
-			# TODO: no legacy equivalent for mbt_tech_3, so non-NSB players get no bonus here
 			if = {
 				limit = { has_dlc = "No Step Back" }
 				add_tech_bonus = {
@@ -12487,7 +12484,6 @@ focus_tree = {
 		}
 	}
 
-	# Britain Forward, Not Back - Agenda
 	focus = {
 		id = ENG_britain_forward_not_back
 		icon = ENG_labour1
@@ -12537,8 +12533,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_codify_key_of_convetions"
-			# custom_effect_tooltip = ENG_codification_tt
-			# newline = yes
 			custom_effect_tooltip = {
 				localization_key = modifies_dynamic_modifier_tt
 				MODIFIER = ENG_economy_modifier
@@ -13430,8 +13424,6 @@ focus_tree = {
 		}
 	}
 
-	# A Future Fair For All - Agenda
-
 	focus = {
 		id = ENG_a_future_fair_for_all
 		icon = ENG_labour2
@@ -14027,7 +14019,6 @@ focus_tree = {
 		}
 	}
 
-	# Common Sense - Agenda
 	focus = {
 		id = ENG_time_for_common_sense
 		icon = ENG_conservative
@@ -14841,8 +14832,6 @@ focus_tree = {
 		}
 	}
 
-	# I'm not thinking what they're thinking - Agenda
-
 	focus = {
 		id = ENG_are_you_thinking_what_were_thinking
 		icon = ENG_conservative_1
@@ -15538,8 +15527,6 @@ focus_tree = {
 			modifier = { factor = 0 ENG_ai_not_western_path = yes }
 		}
 	}
-
-	# Invitation to the Government of Britain - Agenda
 
 	focus = {
 		id = ENG_invitation_to_the_government_of_britain
@@ -16363,7 +16350,6 @@ focus_tree = {
 		}
 	}
 
-	# Monarchism
 	focus = {
 		id = ENG_triumph_of_the_crown
 		icon = british_monarchy
@@ -17411,7 +17397,6 @@ focus_tree = {
 		}
 	}
 
-	# Monarchism — Military Branch
 	focus = {
 		id = ENG_royal_armed_forces_review
 		icon = army_reform
@@ -17623,7 +17608,6 @@ focus_tree = {
 		}
 	}
 
-	# Monarchism — Influence Branch
 	focus = {
 		id = ENG_global_anglosphere_initiative
 		icon = align_to_commonwealth
@@ -17840,8 +17824,6 @@ focus_tree = {
 		}
 	}
 
-	##### Inner Circle
-
 	focus = {
 		id = ENG_the_queens_family
 		icon = ENG_queen_elizabeth
@@ -17888,7 +17870,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				hidden_trigger = {
-					NOT = { has_country_flag = ENG_charles_was_ascended_flag } #Flag to prevent AI from taking the focus again after advisor has been replaced
+					NOT = { has_country_flag = ENG_charles_was_ascended_flag } 
 				}
 			}
 			has_country_flag = ENG_elizabeth_ruling_monarch
@@ -17910,7 +17892,7 @@ focus_tree = {
 			}
 		}
 
-		#Focus will need to pause while events are pending
+		
 		cancel_if_invalid = no
 
 		completion_reward = {
@@ -17931,7 +17913,7 @@ focus_tree = {
 				localization_key = ENG_ascension_of_character_focus_tt
 				CHARACTER = ENG_prince_charles
 			}
-			if = { #Just to make it easy to debug stuff for development
+			if = {
 				limit = {
 					OR = {
 						check_variable = { ENG_ascended_advisor_1 = 1 }
@@ -17942,7 +17924,7 @@ focus_tree = {
 				log = "Advisor was already there. STOP CHEATING!"
 				unlock_decision_tooltip = ENG_charles_charities_network_decision
 			}
-			else_if = { # ASCENDED ADVISORS FULL - NEED TO REPLACE SOMEONE
+			else_if = { 
 				limit = {
 					check_variable = { ENG_ascended_advisor_1 = 0 compare = not_equals }
 					check_variable = { ENG_ascended_advisor_2 = 0 compare = not_equals }
@@ -17992,15 +17974,15 @@ focus_tree = {
 				country_event = { id = ENG_inner_circle_charles.07 days = 120 random_days = 40 }
 				clr_country_flag = ENG_charles_ascension_flag
 				ENG_inner_circle_set_ascension_cd = yes
-				set_country_flag = { #Flag to prevent AI from taking the focus again after advisor has been replaced
+				set_country_flag = { 
 					flag = ENG_charles_was_ascended_flag
-					days = 1500 # Clear after ~4 years
+					days = 1500 
 					value = 1
 				}
 			}
 		}
 
-		select_effect = { #Necessary to prevent AI from getting stuck if the focus is paused due to available trigger returning false
+		select_effect = { 
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_the_prince_trust"
 			set_country_flag = ENG_charles_ascension_flag
 		}
@@ -18024,11 +18006,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_harmony_doctrine_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18038,7 +18020,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18098,11 +18080,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_climate_alarm_bell_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18112,7 +18094,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18169,11 +18151,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL FOCUS_FILTER_EXPENDITURE }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_duchy_originals_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18183,7 +18165,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18259,11 +18241,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_heir_of_the_realm_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18273,7 +18255,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18317,7 +18299,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				hidden_trigger = {
-					NOT = { has_country_flag = ENG_andrew_ascension_flag } #Flag to prevent AI from taking the focus again after advisor has been replaced
+					NOT = { has_country_flag = ENG_andrew_ascension_flag } 
 				}
 			}
 			NOT = { has_country_flag = ENG_andrew_epstein_punishment }
@@ -18340,7 +18322,7 @@ focus_tree = {
 			}
 		}
 
-		#Focus will need to pause while events are pending
+		
 		cancel_if_invalid = no
 
 		completion_reward = {
@@ -18362,7 +18344,7 @@ focus_tree = {
 				localization_key = ENG_ascension_of_character_focus_tt
 				CHARACTER = ENG_prince_andrew
 			}
-			if = { #Just to make it easy to debug stuff for development
+			if = {
 				limit = {
 					OR = {
 						check_variable = { ENG_ascended_advisor_1 = 2 }
@@ -18373,7 +18355,7 @@ focus_tree = {
 				log = "Advisor was already there. STOP CHEATING!"
 				unlock_decision_tooltip = ENG_andrew_naval_haritage_decision
 			}
-			else_if = { # ASCENDED ADVISORS FULL - NEED TO REPLACE SOMEONE
+			else_if = { 
 				limit = {
 					check_variable = { ENG_ascended_advisor_1 = 0 compare = not_equals }
 					check_variable = { ENG_ascended_advisor_2 = 0 compare = not_equals }
@@ -18418,15 +18400,15 @@ focus_tree = {
 				country_event = { id = ENG_inner_circle_andrew.03 days = 5 random_days = 2 }
 				clr_country_flag = ENG_andrew_ascension_flag
 				ENG_inner_circle_set_ascension_cd = yes
-				set_country_flag = { #Flag to prevent AI from taking the focus again after advisor has been replaced
+				set_country_flag = { 
 						flag = ENG_andrew_ascension_flag
-						days = 1500 # Clear after ~4 years
+						days = 1500 
 						value = 1
 					}
 			}
 		}
 
-		select_effect = { #Necessary to prevent AI from getting stuck if the focus is paused due to available trigger returning false
+		select_effect = { 
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_naval_prince"
 			set_country_flag = ENG_andrew_ascension_flag
 		}
@@ -18450,11 +18432,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_appoint_trade_representative_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18464,7 +18446,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18523,11 +18505,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_emerging_markets_circuit_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18537,7 +18519,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18590,11 +18572,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_digital_enterprise_patronage_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18604,7 +18586,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18660,11 +18642,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_duty_of_the_crown_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18674,7 +18656,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18773,7 +18755,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				hidden_trigger = {
-					NOT = { has_country_flag = ENG_anne_was_ascended_flag } #Flag to prevent AI from taking the focus again after advisor has been replaced
+					NOT = { has_country_flag = ENG_anne_was_ascended_flag } 
 				}
 			}
 			has_country_flag = ENG_elizabeth_ruling_monarch
@@ -18795,7 +18777,7 @@ focus_tree = {
 			}
 		}
 
-		#Focus will need to pause while events are pending
+		
 		cancel_if_invalid = no
 
 		completion_reward = {
@@ -18809,7 +18791,7 @@ focus_tree = {
 				localization_key = ENG_ascension_of_character_focus_tt
 				CHARACTER = ENG_princess_anne
 			}
-			if = { #Just to make it easy to debug stuff for development
+			if = {
 				limit = {
 					OR = {
 						check_variable = { ENG_ascended_advisor_1 = 3 }
@@ -18820,7 +18802,7 @@ focus_tree = {
 				log = "Advisor was already there. STOP CHEATING!"
 				unlock_decision_tooltip = ENG_anne_national_charity_decision
 			}
-			else_if = { # ASCENDED ADVISORS FULL - NEED TO REPLACE SOMEONE
+			else_if = { 
 				limit = {
 					check_variable = { ENG_ascended_advisor_1 = 0 compare = not_equals }
 					check_variable = { ENG_ascended_advisor_2 = 0 compare = not_equals }
@@ -18865,15 +18847,15 @@ focus_tree = {
 				country_event = { id = ENG_inner_circle_anne.03 days = 120 random_days = 40 }
 				clr_country_flag = ENG_anne_ascension_flag
 				ENG_inner_circle_set_ascension_cd = yes
-				set_country_flag = { #Flag to prevent AI from taking the focus again after advisor has been replaced
+				set_country_flag = { 
 					flag = ENG_anne_was_ascended_flag
-					days = 1500 # Clear after ~4 years
+					days = 1500 
 					value = 1
 				}
 			}
 		}
 
-		select_effect = { #Necessary to prevent AI from getting stuck if the focus is paused due to available trigger returning false
+		select_effect = { 
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_workhorse_of_the_crown"
 			set_country_flag = ENG_anne_ascension_flag
 		}
@@ -18897,11 +18879,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_carers_recognition_campaign_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18911,7 +18893,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18956,11 +18938,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_discipline_service_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18970,7 +18952,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19050,11 +19032,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_princess_admiral_royal_navy_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19064,7 +19046,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19136,11 +19118,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_colonel_of_horse_logistics_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19150,7 +19132,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19200,11 +19182,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_quiet_professionalism_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19214,7 +19196,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19295,7 +19277,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				hidden_trigger = {
-					NOT = { has_country_flag = ENG_edward_was_ascended_flag } #Flag to prevent AI from taking the focus again after advisor has been replaced
+					NOT = { has_country_flag = ENG_edward_was_ascended_flag } 
 				}
 			}
 			has_country_flag = ENG_elizabeth_ruling_monarch
@@ -19317,7 +19299,7 @@ focus_tree = {
 			}
 		}
 
-		#Focus will need to pause while events are pending
+		
 		cancel_if_invalid = no
 
 		completion_reward = {
@@ -19335,7 +19317,7 @@ focus_tree = {
 				localization_key = ENG_ascension_of_character_focus_tt
 				CHARACTER = ENG_prince_edward
 			}
-			if = { #Just to make it easy to debug stuff for development
+			if = {
 				limit = {
 					OR = {
 						check_variable = { ENG_ascended_advisor_1 = 4 }
@@ -19346,7 +19328,7 @@ focus_tree = {
 				log = "Advisor was already there. STOP CHEATING!"
 				unlock_decision_tooltip = ENG_edward_beach_youth_decision
 			}
-			else_if = { # ASCENDED ADVISORS FULL - NEED TO REPLACE SOMEONE
+			else_if = { 
 				limit = {
 					check_variable = { ENG_ascended_advisor_1 = 0 compare = not_equals }
 					check_variable = { ENG_ascended_advisor_2 = 0 compare = not_equals }
@@ -19391,15 +19373,15 @@ focus_tree = {
 				country_event = { id = ENG_inner_circle_edward.03 days = 120 random_days = 40 }
 				clr_country_flag = ENG_edward_ascension_flag
 				ENG_inner_circle_set_ascension_cd = yes
-				set_country_flag = { #Flag to prevent AI from taking the focus again after advisor has been replaced
+				set_country_flag = { 
 					flag = ENG_edward_was_ascended_flag
-					days = 1500 # Clear after ~4 years
+					days = 1500 
 					value = 1
 				}
 			}
 		}
 
-		select_effect = { #Necessary to prevent AI from getting stuck if the focus is paused due to available trigger returning false
+		select_effect = { 
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_chairman_international_award"
 			set_country_flag = ENG_edward_ascension_flag
 		}
@@ -19423,11 +19405,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_trustee_network_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19437,7 +19419,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19492,11 +19474,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_commonwealth_youth_outreach_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19506,7 +19488,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19559,11 +19541,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_production_guild_patronage_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19573,7 +19555,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19652,11 +19634,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_steady_hand_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19666,7 +19648,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19771,7 +19753,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				hidden_trigger = {
-					NOT = { has_country_flag = ENG_philip_was_ascended_flag } #Flag to prevent AI from taking the focus again after advisor has been replaced
+					NOT = { has_country_flag = ENG_philip_was_ascended_flag } 
 				}
 			}
 			has_country_flag = ENG_elizabeth_ruling_monarch
@@ -19793,7 +19775,7 @@ focus_tree = {
 			}
 		}
 
-		#Focus will need to pause while events are pending
+		
 		cancel_if_invalid = no
 
 		completion_reward = {
@@ -19812,7 +19794,7 @@ focus_tree = {
 				localization_key = ENG_ascension_of_character_focus_tt
 				CHARACTER = ENG_prince_phillip
 			}
-			if = { #Just to make it easy to debug stuff for development
+			if = {
 				limit = {
 					OR = {
 						check_variable = { ENG_ascended_advisor_1 = 5 }
@@ -19823,7 +19805,7 @@ focus_tree = {
 				log = "Advisor was already there. STOP CHEATING!"
 				unlock_decision_tooltip = ENG_philip_trust_funds_grants_decision
 			}
-			else_if = { # ASCENDED ADVISORS FULL - NEED TO REPLACE SOMEONE
+			else_if = { 
 				limit = {
 					check_variable = { ENG_ascended_advisor_1 = 0 compare = not_equals }
 					check_variable = { ENG_ascended_advisor_2 = 0 compare = not_equals }
@@ -19868,15 +19850,15 @@ focus_tree = {
 				country_event = { id = ENG_inner_circle_philip.03 days = 120 random_days = 40 }
 				clr_country_flag = ENG_philip_ascension_flag
 				ENG_inner_circle_set_ascension_cd = yes
-				set_country_flag = { #Flag to prevent AI from taking the focus again after advisor has been replaced
+				set_country_flag = { 
 					flag = ENG_philip_was_ascended_flag
-					days = 1500 # Clear after ~4 years
+					days = 1500 
 					value = 1
 				}
 			}
 		}
 
-		select_effect = { #Necessary to prevent AI from getting stuck if the focus is paused due to available trigger returning false
+		select_effect = { 
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_duke_charities"
 			set_country_flag = ENG_philip_ascension_flag
 		}
@@ -19900,11 +19882,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_international_award_conference_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19914,7 +19896,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19964,11 +19946,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_wwf_president_emeritus_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19978,7 +19960,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -20034,11 +20016,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_prince_phillip_medal_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -20048,7 +20030,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -20110,11 +20092,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_strength_and_stay_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -20124,7 +20106,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -20185,7 +20167,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				hidden_trigger = {
-					NOT = { has_country_flag = ENG_william_was_ascended_flag } #Flag to prevent AI from taking the focus again after advisor has been replaced
+					NOT = { has_country_flag = ENG_william_was_ascended_flag } 
 				}
 			}
 			has_country_flag = ENG_elizabeth_ruling_monarch
@@ -20207,7 +20189,7 @@ focus_tree = {
 			}
 		}
 
-		#Focus will need to pause while events are pending
+		
 		cancel_if_invalid = no
 
 		completion_reward = {
@@ -20231,7 +20213,7 @@ focus_tree = {
 				show_effect_tooltip = yes
 				show_modifiers = yes
 			}
-			if = { #Just to make it easy to debug stuff for development
+			if = {
 				limit = {
 					OR = {
 						check_variable = { ENG_ascended_advisor_1 = 6 }
@@ -20242,7 +20224,7 @@ focus_tree = {
 				log = "Advisor was already there. STOP CHEATING!"
 				unlock_decision_tooltip = ENG_william_air_ambulance_decision
 			}
-			else_if = { # ASCENDED ADVISORS FULL - NEED TO REPLACE SOMEONE
+			else_if = { 
 				limit = {
 					check_variable = { ENG_ascended_advisor_1 = 0 compare = not_equals }
 					check_variable = { ENG_ascended_advisor_2 = 0 compare = not_equals }
@@ -20287,15 +20269,15 @@ focus_tree = {
 				country_event = { id = ENG_inner_circle_william.03 days = 120 random_days = 40 }
 				clr_country_flag = ENG_william_ascension_flag
 				ENG_inner_circle_set_ascension_cd = yes
-				set_country_flag = { #Flag to prevent AI from taking the focus again after advisor has been replaced
+				set_country_flag = { 
 					flag = ENG_william_was_ascended_flag
-					days = 1500 # Clear after ~4 years
+					days = 1500 
 					value = 1
 				}
 			}
 		}
 
-		select_effect = { #Necessary to prevent AI from getting stuck if the focus is paused due to available trigger returning false
+		select_effect = { 
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_from_sandhurst_to_service"
 			set_country_flag = ENG_william_ascension_flag
 		}
@@ -20319,11 +20301,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_royal_foundation_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -20333,7 +20315,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -20399,11 +20381,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_heads_together_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -20413,7 +20395,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -20471,11 +20453,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = { 
 				limit = {
 					has_country_flag = ENG_veteran_armed_forces_support_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -20485,7 +20467,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = { 
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -20541,11 +20523,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+			if = {
 				limit = {
 					has_country_flag = ENG_bridge_to_the_future_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } #The constant uses focus cost which is in weeks, so convert to days
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -20555,7 +20537,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -20640,8 +20622,6 @@ focus_tree = {
 		ai_will_do = { base = 1 }
 	}
 
-	# Foreign Policy Branch
-
 	focus = {
 		id = ENG_the_sun_which_never_set
 		icon = Generic_British_Soldier_Flag
@@ -20674,7 +20654,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_operation_barras # Sierra Leone
+		id = ENG_operation_barras
 		icon = british_africa
 		overlay = GFX_focus_overlay_uk_flag
 
@@ -20857,7 +20837,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_operation_dagger # Oman (taking Musandam)
+		id = ENG_operation_dagger
 		icon = musandam
 		overlay = GFX_focus_overlay_uk_flag
 
@@ -20937,7 +20917,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_operation_coastal_star # Gambia
+		id = ENG_operation_coastal_star
 		icon = ultimatum
 		overlay = GFX_focus_overlay_uk_flag
 
@@ -21022,7 +21002,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_operation_east_divide # Egypt
+		id = ENG_operation_east_divide
 		icon = attack_egypt
 		overlay = GFX_focus_overlay_uk_flag
 
@@ -21160,7 +21140,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_operation_resolute_banner # Kosovo
+		id = ENG_operation_resolute_banner
 		icon = align_to_kosovo
 		overlay = GFX_focus_overlay_uk_flag
 
@@ -21210,7 +21190,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_operation_delta_guard # Nigeria (take they oil)
+		id = ENG_operation_delta_guard
 		icon = attack_nigeria
 		overlay = GFX_focus_overlay_uk_flag
 
@@ -21258,13 +21238,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_union_question
-		icon = british_isles
+		icon = british_global_defense
 
 		x = 0
 		y = 7
 		relative_position_id = ENG_the_sun_which_never_set
 
-		cost = 10
+		cost = 5
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -21282,13 +21262,10 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_union_question"
-			hidden_effect = {
-				add_dynamic_modifier = { modifier = ENG_union_question_dm }
-				news_event = {
-					id = United_Kingdom_News.5
-					hours = 6
-				}
-			}
+			news_event = { id = United_Kingdom_News.5 hours = 6 }
+			newline = yes
+			add_political_power = 100
+			hidden_effect = { add_dynamic_modifier = { modifier = ENG_union_question_dm } }
 		}
 
 		ai_will_do = { base = 0 }
@@ -21369,7 +21346,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_one_nation
-		icon = british_isles
+		icon = british_cooperation
 
 		x = 0
 		y = 1
@@ -21388,8 +21365,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_one_nation"
-			custom_effect_tooltip = ENG_uq_settlement_hard_mode_tt
-			newline = yes
 			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_union_question_dm }
 			add_to_variable = { ENG_uq_stability_factor = 0.05 tooltip = stability_factor_tt }
 			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
@@ -21418,7 +21393,28 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_EXPENDITURE }
 
-		available = { has_government = democratic }
+		available = {
+			has_government = democratic
+			any_owned_state = {
+				OR = {
+					is_core_of = SCO
+					is_core_of = WAS
+					is_core_of = NIR
+				}
+			}
+		}
+
+		bypass = {
+			NOT = {
+				any_owned_state = {
+					OR = {
+						is_core_of = SCO
+						is_core_of = WAS
+						is_core_of = NIR
+					}
+				}
+			}
+		}
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_union_dividend"
@@ -21452,7 +21448,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_a_british_curriculum
-		icon = british_isles
+		icon = chefs_best_cooks
 
 		x = 0
 		y = 2
@@ -21474,7 +21470,8 @@ focus_tree = {
 			ENG_change_scottish_nationalists = yes
 			ENG_change_north_irish_nationalists = yes
 			ENG_change_wales_nationalists = yes
-			set_temp_variable = { ENG_agitation_change = 5 }
+			newline = yes
+			set_temp_variable = { ENG_agitation_change = 10 }
 			ENG_change_scottish_agitation = yes
 			ENG_change_north_irish_agitation = yes
 			ENG_change_wales_agitation = yes
@@ -21511,10 +21508,12 @@ focus_tree = {
 			ENG_change_scottish_dependency = yes
 			ENG_change_north_irish_dependency = yes
 			ENG_change_wales_dependency = yes
+			newline = yes
 			set_temp_variable = { ENG_agitation_change = -5 }
 			ENG_change_scottish_agitation = yes
 			ENG_change_north_irish_agitation = yes
 			ENG_change_wales_agitation = yes
+			newline = yes
 			set_temp_variable = { ENG_nationalists_change = 3 }
 			ENG_change_scottish_nationalists = yes
 			ENG_change_north_irish_nationalists = yes
@@ -21526,7 +21525,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_westminster_first
-		icon = british_isles
+		icon = big_ben_gay
 
 		x = 0
 		y = 3
@@ -21564,7 +21563,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_act_of_union
-		icon = british_isles
+		icon = british_nationalism
 
 		x = 2
 		y = 3
@@ -21599,8 +21598,8 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_council_of_the_isles
-		icon = british_isles
+		id = ENG_council_of_the_isles #Should be an event with a 3 way question for IReland to accept or not. On refusal, sends a decision to try again
+		icon = british_cabinet
 
 		x = -2
 		y = 3
@@ -21648,7 +21647,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_dublin_question
-		icon = british_isles
+		icon = irish_government
 
 		x = 0
 		y = 4
@@ -21686,8 +21685,8 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_anglo_irish_economic_union
-		icon = british_isles
+		id = ENG_anglo_irish_economic_union #Should be an event with a 3 way question for IReland to accept or not. On refusal, sends a decision to try again
+		icon = ireland_arrows
 
 		x = 1
 		y = 5
@@ -21713,25 +21712,23 @@ focus_tree = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_anglo_irish_economic_union"
 			IRE = {
 				add_ideas = ENG_uq_anglo_irish_economic_union_idea
+				newline = yes
 				set_temp_variable = { ENG_uq_consent_change = 5 }
 				ENG_uq_change_consent = yes
 			}
 			if = {
 				limit = { IRE = { has_idea = EU_member } }
-				custom_effect_tooltip = ENG_anglo_irish_economic_union_TT
-				hidden_effect = {
-					for_each_scope_loop = {
-						array = global.EU_member
-						if = {
-							limit = {
-								NOT = { tag = ROOT }
-								NOT = { tag = IRE }
-							}
-							add_opinion_modifier = { target = ROOT modifier = ENG_uq_brussels_displeasure_opinion }
+				for_each_scope_loop = {
+					array = global.EU_member
+					if = {
+						limit = {
+							NOT = { tag = ROOT }
+							NOT = { tag = IRE }
 						}
+						add_opinion_modifier = { target = ROOT modifier = ENG_uq_brussels_displeasure_opinion }
 					}
-					IRE = { country_event = { id = ENG_uq.93 days = 30 } }
 				}
+				hidden_effect = { IRE = { country_event = { id = ENG_uq.93 days = 30 } } }
 			}
 		}
 
@@ -21739,8 +21736,8 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_common_travel_area_plus
-		icon = british_isles
+		id = ENG_common_travel_area_plus #Should be an event with a 3 way question for IReland to accept or not. On refusal, sends a decision to try again
+		icon = ireland_map_noglow
 
 		x = -1
 		y = 5
@@ -21777,7 +21774,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_irexit_question
-		icon = british_isles
+		icon = irish_referendum
 
 		x = 0
 		y = 6
@@ -21821,7 +21818,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_an_ireland_united_under_the_crown
-		icon = british_isles
+		icon = United_ireland
 
 		x = 0
 		y = 7
@@ -21882,8 +21879,10 @@ focus_tree = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_an_ireland_united_under_the_crown"
 			IRE = {
 				transfer_state = 17
+				newline = yes
 				add_opinion_modifier = { target = ROOT modifier = large_increase }
 			}
+			newline = yes
 			custom_effect_tooltip = ENG_an_ireland_united_under_the_crown_TT
 			hidden_effect = {
 				ENG_settle_northern_ireland_question = yes
@@ -21896,7 +21895,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_home_rule_in_reverse
-		icon = british_isles
+		icon = Rule_Britannia
 
 		x = 0
 		y = 8
@@ -21923,17 +21922,14 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_home_rule_in_reverse"
-			custom_effect_tooltip = {
-				localization_key = modifies_dynamic_modifier_tt
-				MODIFIER = ENG_union_question_dm
-			}
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_union_question_dm }
 			add_to_variable = { ENG_uq_stability_factor = 0.03 tooltip = stability_factor_tt }
 			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
 			add_to_variable = { ENG_uq_trade_opinion_factor = 0.05 tooltip = trade_opinion_factor_tt }
-			hidden_effect = { ENG_uq_update_dm = yes }
+			newline = yes
 			set_temp_variable = { ENG_union_strain_change = -10 }
 			ENG_change_union_strain = yes
-			custom_effect_tooltip = ENG_home_rule_in_reverse_TT
+			hidden_effect = { ENG_uq_update_dm = yes }
 		}
 
 		ai_will_do = { base = 0 }
@@ -22544,7 +22540,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_realms_beyond_the_seas
-		icon = british_isles
+		icon = united_anglosphere
 
 		x = -16
 		y = 9
@@ -22558,22 +22554,18 @@ focus_tree = {
 
 		available = {
 			has_government = democratic
-			OR = {
-				ENG_uq_ireland_done = yes
-				NOT = { country_exists = IRE }
-			}
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_realms_beyond_the_seas"
 			custom_effect_tooltip = ENG_the_realms_beyond_the_seas_TT
+			newline = yes
 			set_temp_variable = { ENG_cmw_cohesion_change = 3 }
 			ENG_cmw_change_cohesion = yes
+			newline = yes
 			unlock_decision_tooltip = ENG_uq_caribbean_development_programme
-			custom_effect_tooltip = {
-				localization_key = modifies_dynamic_modifier_tt
-				MODIFIER = ENG_political_modifier
-			}
+			newline = yes
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_political_modifier }
 			add_to_variable = { ENG_foreign_influence_modifier = 0.05 tooltip = foreign_influence_modifier_tt }
 			hidden_effect = {
 				ENG_uq_align_realms = yes
@@ -22584,8 +22576,8 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_ottawa_accord
-		icon = british_isles
+		id = ENG_ottawa_accord #Should be an event with a 3 way question for IReland to accept or not. On refusal, sends a decision to try again
+		icon = generic_canadian_flag
 
 		x = -3
 		y = 1
@@ -22616,16 +22608,19 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_ottawa_accord"
-			custom_effect_tooltip = ENG_ottawa_accord_TT
 			set_temp_variable = { percent_change = 5 }
 			set_temp_variable = { influence_target = CAN }
 			change_influence_percentage = yes
+			newline = yes
 			CAN = {
 				add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
 				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+				newline = yes
 				set_temp_variable = { ENG_uq_consent_change = 10 }
 				ENG_uq_change_consent = yes
 			}
+			newline = yes
+			custom_effect_tooltip = ENG_ottawa_accord_TT
 		}
 
 		ai_will_do = { base = 0 }
@@ -22633,7 +22628,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_canberra_accord
-		icon = british_isles
+		icon = australian_flag_horn
 
 		x = -1
 		y = 1
@@ -22664,10 +22659,10 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_canberra_accord"
-			custom_effect_tooltip = ENG_canberra_accord_TT
 			set_temp_variable = { percent_change = 5 }
 			set_temp_variable = { influence_target = AST }
 			change_influence_percentage = yes
+			newline = yes
 			AST = {
 				add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
 				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
@@ -22681,7 +22676,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_wellington_accord
-		icon = british_isles
+		icon = align_to_new_zealand
 
 		x = 1
 		y = 1
@@ -22715,6 +22710,7 @@ focus_tree = {
 			set_temp_variable = { percent_change = 5 }
 			set_temp_variable = { influence_target = NZL }
 			change_influence_percentage = yes
+			newline = yes
 			NZL = {
 				add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
 				reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
@@ -22728,7 +22724,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_caribbean_partnership
-		icon = british_isles
+		icon = caribic_expedition
 
 		x = 3
 		y = 1
@@ -22765,8 +22761,10 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_caribbean_partnership"
 			custom_effect_tooltip = ENG_caribbean_partnership_TT
+			newline = yes
 			set_temp_variable = { ENG_cmw_cohesion_change = 2 }
 			ENG_cmw_change_cohesion = yes
+			newline = yes
 			unlock_decision_tooltip = ENG_uq_caribbean_association
 			unlock_decision_tooltip = ENG_uq_caribbean_constituent
 			unlock_decision_tooltip = ENG_uq_caribbean_integration_act
@@ -22787,8 +22785,8 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_a_shared_crown
-		icon = british_isles
+		id = ENG_a_shared_crown #Should be if any country doesn't have the british monarch as head of state, gain an event to accept it
+		icon = british_monarchy
 
 		x = -1
 		y = 2
@@ -22831,7 +22829,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_a_commonwealth_of_equals
-		icon = british_isles
+		icon = CANZUK
 
 		x = 1
 		y = 2
@@ -22875,7 +22873,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_crown_realms_united
-		icon = british_isles
+		icon = british_nationalism
 
 		x = 0
 		y = 3
@@ -22898,13 +22896,12 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crown_realms_united"
 			set_cosmetic_tag = ENG_commonwealth_federation
-			custom_effect_tooltip = {
-				localization_key = modifies_dynamic_modifier_tt
-				MODIFIER = ENG_union_question_dm
-			}
+			newline = yes
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_union_question_dm }
 			add_to_variable = { ENG_uq_stability_factor = 0.03 tooltip = stability_factor_tt }
 			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
 			add_to_variable = { ENG_uq_opinion_gain_monthly_factor = 0.10 tooltip = opinion_gain_monthly_factor_tt }
+			newline = yes
 			hidden_effect = { ENG_uq_update_dm = yes }
 			set_temp_variable = { ENG_union_strain_change = -10 }
 			ENG_change_union_strain = yes
@@ -23286,11 +23283,9 @@ focus_tree = {
 		ai_will_do = { base = 0 }
 	}
 
-	# Tier 3b: lost possessions (Western)
-
 	focus = {
 		id = ENG_the_overseas_settlements
-		icon = british_isles
+		icon = Oxford_Uni
 
 		x = -7
 		y = 1
@@ -23318,7 +23313,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_chagos_settlement
-		icon = british_isles
+		icon = uk_raff
 
 		x = -1
 		y = 2
@@ -23342,12 +23337,22 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_chagos_settlement"
-			custom_effect_tooltip = ENG_the_chagos_settlement_TT
 			USA = { country_event = { id = ENG_uq.200 days = 1 } }
+			newline = yes
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
-			effect_tooltip = { custom_effect_tooltip = ENG_uq_chagos_accept_TT }
+			effect_tooltip = {
+				ENG_uq_chagos_settled = yes
+				add_ideas = ENG_uq_diego_garcia_joint_basing
+				give_military_access = USA
+				set_temp_variable = { ENG_imperial_tension_change = 2 }
+				ENG_change_imperial_tension = yes
+			}
+			newline = yes
 			custom_effect_tooltip = TT_IF_THEY_REJECT
-			effect_tooltip = { custom_effect_tooltip = ENG_uq_chagos_reject_TT }
+			effect_tooltip = {
+				custom_effect_tooltip = ENG_uq_chagos_locked_TT
+				unlock_decision_tooltip = ENG_uq_reopen_chagos_talks
+			}
 		}
 
 		ai_will_do = { base = 0 }
@@ -23355,7 +23360,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_south_atlantic_command
-		icon = british_isles
+		icon = Falklands
 
 		x = -2
 		y = 1
@@ -23378,11 +23383,22 @@ focus_tree = {
 
 		bypass = { NOT = { owns_state = 26 } }
 
+		will_lead_to_war_with = ARG
+
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_south_atlantic_command"
-			custom_effect_tooltip = ENG_south_atlantic_command_TT
 			26 = { add_core_of = ROOT }
 			22 = { add_core_of = ROOT }
+			newline = yes
+			if = {
+				limit = {
+					ARG = {
+						country_exists = ARG
+						NOT = { has_war_with = ARG }
+					}
+				}
+				custom_effect_tooltip = ENG_south_atlantic_command_TT
+			}
 			hidden_effect = {
 				if = {
 					limit = {
@@ -23399,7 +23415,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_rock_settled
-		icon = british_isles
+		icon = Gibralter
 
 		x = 0
 		y = 1
@@ -23429,8 +23445,10 @@ focus_tree = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_rock_settled"
 			custom_effect_tooltip = ENG_the_rock_settled_TT
 			SPR = { country_event = { id = ENG_uq.220 days = 1 } }
+			newline = yes
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = { custom_effect_tooltip = ENG_uq_gibraltar_accept_TT }
+			newline = yes
 			custom_effect_tooltip = TT_IF_THEY_REJECT
 			effect_tooltip = { custom_effect_tooltip = ENG_uq_gibraltar_reject_TT }
 		}
@@ -23440,7 +23458,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_pearl_river_accord
-		icon = british_isles
+		icon = hong_kong_british_flag
 
 		x = 1
 		y = 2
@@ -23462,9 +23480,12 @@ focus_tree = {
 			NOT = { has_war_with = CHI }
 		}
 
+		will_lead_to_war_with = CHI
+
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_pearl_river_accord"
 			custom_effect_tooltip = ENG_the_pearl_river_accord_TT
+			newline = yes
 			set_temp_variable = { percent_change = 5 }
 			set_temp_variable = { influence_target = HKG }
 			change_influence_percentage = yes
@@ -23473,7 +23494,16 @@ focus_tree = {
 				set_temp_variable = { ENG_uq_consent_change = 15 }
 				ENG_uq_change_consent = yes
 			}
-			custom_effect_tooltip = ENG_uq_hong_kong_cap_TT
+			newline = yes
+			if = {
+				limit = {
+					CHI = {
+						exists = yes
+						NOT = { has_war_with = ENG }
+					}
+				}
+				custom_effect_tooltip = ENG_china_might_react_TT
+			}
 			hidden_effect = {
 				if = {
 					limit = {
@@ -23490,7 +23520,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_mediterranean_partners
-		icon = british_isles
+		icon = crusader_maltese
 
 		x = 2
 		y = 1
@@ -23525,43 +23555,41 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_mediterranean_partners"
 			custom_effect_tooltip = ENG_the_mediterranean_partners_TT
-			every_country = {
-				limit = {
-					OR = {
-						original_tag = MLT
-						original_tag = CYP
-					}
-					ENG_cmw_is_member = yes
-				}
-				hidden_effect = { ENG_uq_align_realm = yes }
-				set_temp_variable = { ENG_uq_consent_change = 10 }
-				ENG_uq_change_consent = yes
-			}
+			newline = yes
 			if = {
 				limit = { country_exists = MLT }
 				set_temp_variable = { percent_change = 5 }
 				set_temp_variable = { influence_target = MLT }
 				change_influence_percentage = yes
+				MLT = {
+					hidden_effect = { ENG_uq_align_realm = yes }
+					set_temp_variable = { ENG_uq_consent_change = 10 }
+					ENG_uq_change_consent = yes
+				}
+				newline = yes
 			}
 			if = {
 				limit = { country_exists = CYP }
 				set_temp_variable = { percent_change = 5 }
 				set_temp_variable = { influence_target = CYP }
 				change_influence_percentage = yes
+				CYP = {
+					hidden_effect = { ENG_uq_align_realm = yes }
+					set_temp_variable = { ENG_uq_consent_change = 10 }
+					ENG_uq_change_consent = yes
+				}
+				newline = yes
 			}
 			set_temp_variable = { ENG_cmw_cohesion_change = 2 }
 			ENG_cmw_change_cohesion = yes
-			custom_effect_tooltip = ENG_uq_med_cap_TT
 		}
 
 		ai_will_do = { base = 0 }
 	}
 
-	# Tier 4: wider empire (Western)
-
 	focus = {
 		id = ENG_commonwealth_development_partnership
-		icon = british_isles
+		icon = British_Industry
 
 		x = 7
 		y = 1
@@ -23580,9 +23608,11 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_commonwealth_development_partnership"
-			custom_effect_tooltip = ENG_commonwealth_development_partnership_TT
+			custom_effect_tooltip = ENG_commonwealth_development_partnership_TT #This tooltip should be changed. Why informing this? Whats the bonus? NEeds to be more simpler
+			newline = yes
 			set_temp_variable = { ENG_cmw_cohesion_change = 3 }
 			ENG_cmw_change_cohesion = yes
+			newline = yes
 			unlock_decision_tooltip = ENG_uq_regional_development_programme
 		}
 
@@ -23591,7 +23621,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_west_african_partnership
-		icon = british_isles
+		icon = western_africa
 
 		x = -3
 		y = 1
@@ -23626,8 +23656,8 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_west_african_partnership"
-			custom_effect_tooltip = ENG_uq_open_region_TT
-			hidden_effect = { ENG_uq_open_west_africa = yes }
+			custom_effect_tooltip = ENG_uq_following_countries_regional_rival_TT
+			custom_effect_tooltip = ENG_uq_west_african_partnership_TT
 			every_country = {
 				limit = {
 					ENG_uq_is_ex_empire = yes
@@ -23636,10 +23666,11 @@ focus_tree = {
 				set_temp_variable = { ENG_uq_consent_change = 5 }
 				ENG_uq_change_consent = yes
 			}
+			newline = yes
 			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
 			ENG_cmw_change_cohesion = yes
 			unlock_decision_tooltip = ENG_uq_regional_association
-			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+			hidden_effect = { ENG_uq_open_west_africa = yes }
 		}
 
 		ai_will_do = { base = 0 }
@@ -23647,7 +23678,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_east_african_partnership
-		icon = british_isles
+		icon = flag_tanzania
 
 		x = -2
 		y = 2
@@ -23680,8 +23711,9 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_east_african_partnership"
-			custom_effect_tooltip = ENG_uq_open_region_TT
-			hidden_effect = { ENG_uq_open_east_africa = yes }
+			custom_effect_tooltip = ENG_uq_following_countries_regional_rival_TT
+			custom_effect_tooltip = ENG_east_african_partnership_TT
+			newline = yes
 			every_country = {
 				limit = {
 					ENG_uq_is_ex_empire = yes
@@ -23690,10 +23722,11 @@ focus_tree = {
 				set_temp_variable = { ENG_uq_consent_change = 5 }
 				ENG_uq_change_consent = yes
 			}
+			newline = yes
 			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
 			ENG_cmw_change_cohesion = yes
 			unlock_decision_tooltip = ENG_uq_regional_association
-			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+			hidden_effect = { ENG_uq_open_east_africa = yes }
 		}
 
 		ai_will_do = { base = 0 }
@@ -23701,7 +23734,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_southern_african_partnership
-		icon = british_isles
+		icon = southern_africa
 
 		x = -1
 		y = 1
@@ -23740,8 +23773,9 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_southern_african_partnership"
-			custom_effect_tooltip = ENG_uq_open_region_TT
-			hidden_effect = { ENG_uq_open_southern_africa = yes }
+			custom_effect_tooltip = ENG_uq_following_countries_regional_rival_TT
+			custom_effect_tooltip = ENG_southern_african_partnership_TT
+			newline = yes
 			every_country = {
 				limit = {
 					ENG_uq_is_ex_empire = yes
@@ -23749,11 +23783,12 @@ focus_tree = {
 				}
 				set_temp_variable = { ENG_uq_consent_change = 5 }
 				ENG_uq_change_consent = yes
+				newline = yes
 			}
 			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
 			ENG_cmw_change_cohesion = yes
 			unlock_decision_tooltip = ENG_uq_regional_association
-			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+			hidden_effect = { ENG_uq_open_southern_africa = yes }
 		}
 
 		ai_will_do = { base = 0 }
@@ -23761,7 +23796,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_gulf_partnership
-		icon = british_isles
+		icon = focus_IRQ_protector_of_the_gulf
 
 		x = 1
 		y = 1
@@ -23798,8 +23833,9 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_gulf_partnership"
-			custom_effect_tooltip = ENG_uq_open_region_TT
-			hidden_effect = { ENG_uq_open_gulf = yes }
+			custom_effect_tooltip = ENG_uq_following_countries_regional_rival_TT
+			custom_effect_tooltip = ENG_gulf_partnership_TT
+			newline = yes
 			every_country = {
 				limit = {
 					ENG_uq_is_ex_empire = yes
@@ -23811,7 +23847,7 @@ focus_tree = {
 			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
 			ENG_cmw_change_cohesion = yes
 			unlock_decision_tooltip = ENG_uq_regional_association
-			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
+			hidden_effect = { ENG_uq_open_gulf = yes }
 		}
 
 		ai_will_do = { base = 0 }
@@ -23819,7 +23855,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_asian_partnership
-		icon = british_isles
+		icon = focus_generic_western_pacific_agreement
 
 		x = 2
 		y = 2
@@ -23854,7 +23890,9 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_asian_partnership"
-			custom_effect_tooltip = ENG_uq_open_region_TT
+			custom_effect_tooltip = ENG_uq_following_countries_regional_rival_TT
+			custom_effect_tooltip = ENG_asian_partnership_TT
+			newline = yes
 			hidden_effect = { ENG_uq_open_asia = yes }
 			every_country = {
 				limit = {
@@ -23867,7 +23905,6 @@ focus_tree = {
 			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
 			ENG_cmw_change_cohesion = yes
 			unlock_decision_tooltip = ENG_uq_regional_association
-			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
 		}
 
 		ai_will_do = { base = 0 }
@@ -23875,7 +23912,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_pacific_partnership
-		icon = british_isles
+		icon = focus_GER_sentinels_of_the_pacific
 
 		x = 3
 		y = 1
@@ -23912,7 +23949,9 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_pacific_partnership"
-			custom_effect_tooltip = ENG_uq_open_region_TT
+			custom_effect_tooltip = ENG_uq_following_countries_regional_rival_TT
+			custom_effect_tooltip = ENG_pacific_partnership_TT
+			newline = yes
 			hidden_effect = { ENG_uq_open_pacific = yes }
 			every_country = {
 				limit = {
@@ -23925,13 +23964,10 @@ focus_tree = {
 			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
 			ENG_cmw_change_cohesion = yes
 			unlock_decision_tooltip = ENG_uq_regional_association
-			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
 		}
 
 		ai_will_do = { base = 0 }
 	}
-
-	# Tier 3b: lost possessions (Nationalist)
 
 	focus = {
 		id = ENG_the_outposts_of_empire
@@ -23999,7 +24035,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_fortress_falklands
-		icon = british_isles
+		icon = Falklands
 
 		x = -1
 		y = 2
@@ -24024,12 +24060,28 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_fortress_falklands"
-			custom_effect_tooltip = ENG_fortress_falklands_TT
-			26 = { add_core_of = ROOT }
-			22 = { add_core_of = ROOT }
-			26 = { add_dynamic_modifier = { modifier = ENG_uq_fortress_state } }
+			26 = {
+				add_core_of = ENG
+				add_dynamic_modifier = { modifier = ENG_uq_fortress_state }
+			}
+			newline = yes
+			22 = {
+				add_core_of = ENG
+				add_dynamic_modifier = { modifier = ENG_uq_fortress_state }
+			}
+			newline = yes
 			set_temp_variable = { ENG_imperial_tension_change = 3 }
 			ENG_change_imperial_tension = yes
+			if = {
+				limit = {
+					ARG = {
+						country_exists = ARG
+						NOT = { has_war_with = ARG }
+					}
+				}
+				newline = yes
+				custom_effect_tooltip = ENG_south_atlantic_command_TT
+			}
 			hidden_effect = {
 				if = {
 					limit = {
@@ -24191,8 +24243,6 @@ focus_tree = {
 
 		ai_will_do = { base = 0 }
 	}
-
-	# Tier 4: wider empire (Nationalist)
 
 	focus = {
 		id = ENG_the_imperial_mission
@@ -24494,632 +24544,6 @@ focus_tree = {
 		ai_will_do = { base = 0 }
 	}
 
-	# Junta Tree
-
-	# focus = {
-	# 	id = ENG_a_state_of_emergency
-	# 	icon = PB_ENG_It_Happened_Here
-
-	# 	x = 55
-	# 	y = 8
-
-	# 	cost = 1
-
-	# 	allow_branch = {
-	# 		always = no
-	# 	}
-
-	# 	search_filters = { FOCUS_FILTER_POLITICAL }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_sun_which_never_set"
-	# 		add_political_power = 100
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_destroy_westminster_regim
-	# 	icon = align_to_kosovo
-
-	# 	x = -1
-	# 	y = 1
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	mutually_exclusive = {
-	# 		focus = ENG_utilize_the_westminster_regime
-	# 	}
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_a_state_of_emergency }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_operation_resolute_banner"
-	# 		country_event = britain_md.38
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_utilize_the_westminster_regime
-	# 	icon = align_to_kosovo
-
-	# 	x = 1
-	# 	y = 1
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	mutually_exclusive = {
-	# 		focus = ENG_destroy_westminster_regim
-	# 	}
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_a_state_of_emergency }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_utilize_the_westminster_regime"
-	# 		country_event = britain_md.39
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_men_of_great_ranks
-	# 	icon = align_to_kosovo
-
-	# 	x = -2
-	# 	y = 2
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_destroy_westminster_regim }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_men_of_great_ranks"
-	# 		set_temp_variable = { party_index = 22 }
-	# 		set_temp_variable = { party_popularity_increase = 0.055 }
-	# 		set_temp_variable = { temp_outlook_increase = 0.045 }
-	# 		change_relative_party_popularity = yes
-	# 		newline = yes
-	# 		add_country_leader_trait = commander_of_great_men
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_rebuilding_britain
-	# 	icon = align_to_kosovo
-
-	# 	x = 0
-	# 	y = 2
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_destroy_westminster_regim focus = ENG_utilize_the_westminster_regime }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_rebuilding_britain"
-	# 		add_stability = 0.05
-	# 		newline = yes
-	# 		set_temp_variable = { needed_money = 0 }
-	# 		if = {
-	# 			limit = {
-	# 				15 = { is_owned_and_controlled_by = ENG }
-	# 				15 = { infrastructure < 5 }
-	# 			}
-	# 			15 = {
-	# 				add_extra_state_shared_building_slots = 1
-	# 				add_building_construction = {
-	# 					type = infrastructure
-	# 					level = 1
-	# 					instant_build = yes
-	# 				}
-	# 			}
-	# 			subtract_from_temp_variable = { needed_money = 4.5 }
-	# 			newline = yes
-	# 		}
-	# 		if = {
-	# 			limit = {
-	# 				973 = { is_owned_and_controlled_by = ENG }
-	# 				973 = { infrastructure < 5 }
-	# 			}
-	# 			973 = {
-	# 				add_extra_state_shared_building_slots = 1
-	# 				add_building_construction = {
-	# 					type = infrastructure
-	# 					level = 1
-	# 					instant_build = yes
-	# 				}
-	# 			}
-	# 			subtract_from_temp_variable = { needed_money = 4.5 }
-	# 			newline = yes
-	# 		}
-	# 		if = {
-	# 			limit = {
-	# 				1191 = { is_owned_and_controlled_by = ENG }
-	# 				1191 = { infrastructure < 5 }
-	# 			}
-	# 			1191 = {
-	# 				add_extra_state_shared_building_slots = 1
-	# 				add_building_construction = {
-	# 					type = infrastructure
-	# 					level = 1
-	# 					instant_build = yes
-	# 				}
-	# 			}
-	# 			subtract_from_temp_variable = { needed_money = 4.5 }
-	# 			newline = yes
-	# 		}
-	# 		if = {
-	# 			limit = {
-	# 				1192 = { is_owned_and_controlled_by = ENG }
-	# 				1192 = { infrastructure < 5 }
-	# 			}
-	# 			1192 = {
-	# 				add_extra_state_shared_building_slots = 1
-	# 				add_building_construction = {
-	# 					type = infrastructure
-	# 					level = 1
-	# 					instant_build = yes
-	# 				}
-	# 			}
-	# 			subtract_from_temp_variable = { needed_money = 4.5 }
-	# 			newline = yes
-	# 		}
-	# 		set_temp_variable = { treasury_change = needed_money }
-	# 		modify_treasury_effect = yes
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_men_of_pen
-	# 	icon = align_to_kosovo
-
-	# 	x = 2
-	# 	y = 2
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_utilize_the_westminster_regime }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_rebuilding_britain"
-	# 		custom_effect_tooltip = {
-	# 			localization_key = modifies_dynamic_modifier_tt
-	# 			MODIFIER = ENG_political_modifier
-	# 		}
-	# 		add_to_variable = { ENG_political_power_factor = 0.05 tooltip = political_power_factor_tt }
-	# 		add_to_variable = { ENG_centralization_cost = -0.05 tooltip = bureaucracy_cost_multiplier_modifier_tt }
-	# 		newline = yes
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_a_martial_society
-	# 	icon = align_to_kosovo
-
-	# 	x = -1
-	# 	y = 3
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_rebuilding_britain }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_martial_society"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_a_grand_step_forward
-	# 	icon = align_to_kosovo
-
-	# 	x = 1
-	# 	y = 3
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_rebuilding_britain }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_a_grand_step_forward"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_security_at_all_times
-	# 	icon = align_to_kosovo
-
-	# 	x = -2
-	# 	y = 4
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_a_martial_society }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_security_at_all_times"
-	# 		custom_effect_tooltip = {
-	# 			localization_key = modifies_dynamic_modifier_tt
-	# 			MODIFIER = ENG_economy_modifier
-	# 		}
-	# 		add_to_variable = { ENG_production_speed_internet_station_factor = 0.10 tooltip = production_speed_internet_station_factor_tt }
-	# 		add_stability = 0.03
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_step_up_surveillance
-	# 	icon = align_to_kosovo
-
-	# 	x = -3
-	# 	y = 5
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_security_at_all_times }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus NG_step_up_surveillanc"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_halting_migration
-	# 	icon = align_to_kosovo
-
-	# 	x = -2
-	# 	y = 6
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_security_at_all_times }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus NG_step_up_surveillanc"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_the_decade_of_progress
-	# 	icon = align_to_kosovo
-
-	# 	x = 0
-	# 	y = 4
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_a_martial_society }
-	# 	prerequisite = { focus = ENG_a_grand_step_forward }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_decade_of_progress"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_emphasis_on_the_army
-	# 	icon = align_to_kosovo
-
-	# 	x = -1
-	# 	y = 5
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	mutually_exclusive = {
-	# 		focus = ENG_emphasis_on_the_people
-	# 	}
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_the_decade_of_progress }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_emphasis_on_the_army"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_emphasis_on_the_people
-	# 	icon = align_to_kosovo
-
-	# 	x = 1
-	# 	y = 5
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	mutually_exclusive = {
-	# 		focus = ENG_emphasis_on_the_army
-	# 	}
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_the_decade_of_progress }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_emphasis_on_the_people"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_rebuildng_safety_nets
-	# 	icon = align_to_kosovo
-
-	# 	x = 0
-	# 	y = 6
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_emphasis_on_the_army focus = ENG_emphasis_on_the_people }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_emphasis_on_the_people"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_invite_corporate_influence
-	# 	icon = align_to_kosovo
-
-	# 	x = 2
-	# 	y = 4
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_a_grand_step_forward }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_invite_corporate_influence"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_chips_tanks_jets
-	# 	icon = align_to_kosovo
-
-	# 	x = 3
-	# 	y = 5
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_invite_corporate_influence }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_chips_tanks_jets"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_military_industrial_above_all
-	# 	icon = align_to_kosovo
-
-	# 	x = 2
-	# 	y = 6
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_invite_corporate_influence }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_chips_tanks_jets"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_establishing_fuel_mafia
-	# 	icon = align_to_kosovo
-
-	# 	x = -1
-	# 	y = 7
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_halting_migration }
-	# 	prerequisite = { focus = ENG_rebuildng_safety_nets }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_establishing_fuel_mafia"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_sturdy_pensions_unbreakable_loyalty
-	# 	icon = align_to_kosovo
-
-	# 	x = 1
-	# 	y = 7
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_military_industrial_above_all }
-	# 	prerequisite = { focus = ENG_rebuildng_safety_nets }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_sturdy_pensions_unbreakable_loyalty"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = ENG_bloodied_with_resolve
-	# 	icon = align_to_kosovo
-
-	# 	x = 0
-	# 	y = 8
-
-	# 	relative_position_id = ENG_a_state_of_emergency
-
-	# 	cost = 10
-
-	# 	prerequisite = { focus = ENG_establishing_fuel_mafia }
-	# 	prerequisite = { focus = ENG_sturdy_pensions_unbreakable_loyalty }
-
-	# 	search_filters = { FOCUS_FILTER_ECONOMY }
-
-	# 	completion_reward = {
-	# 		log = "[GetDateText]: [THIS.GetName]: Focus ENG_sturdy_pensions_unbreakable_loyalty"
-	# 	}
-
-	# 	ai_will_do = {
-	# 		base = 1
-	# 	}
-	# }
-
-	##############################
-	###	Start of EU Focus Tree ###	x = 15 y = 18
-	##############################
-
 	shared_focus = USoE001
 	shared_focus = POTEF001
-
-	############################
-	### End of EU Focus Tree ###
-	############################
-
 }

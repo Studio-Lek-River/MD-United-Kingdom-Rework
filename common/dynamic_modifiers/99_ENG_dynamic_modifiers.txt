@@ -35,9 +35,9 @@ ENG_overseas_territory = {
 ENG_uq_fortress_state = {
 	icon = GFX_idea_westminster_system
 
-	state_production_speed_bunker_factor = 0.5
-	state_production_speed_coastal_bunker_factor = 0.5
-	state_production_speed_anti_air_building_factor = 0.5
+	state_production_speed_bunker_factor = 0.20
+	state_production_speed_coastal_bunker_factor = 0.20
+	state_production_speed_anti_air_building_factor = 0.20
 }
 
 ENG_resistance_against_westminster = {
