@@ -21275,7 +21275,7 @@ focus_tree = {
 		id = ENG_a_family_of_nations
 		icon = align_to_commonwealth
 
-		x = -4
+		x = -3
 		y = 1
 		relative_position_id = ENG_the_union_question
 
@@ -21308,7 +21308,7 @@ focus_tree = {
 		id = ENG_the_crown_imperial
 		icon = british_imperialism
 
-		x = 2
+		x = 3
 		y = 1
 		relative_position_id = ENG_the_union_question
 
@@ -22456,7 +22456,7 @@ focus_tree = {
 		id = ENG_the_pacification_of_ireland #Should be happening when IReland becomes part of the UK in the previous focus
 		icon = british_isles
 
-		x = 0
+		x = 10
 		y = 5
 		relative_position_id = ENG_crown_union
 
@@ -22495,7 +22495,7 @@ focus_tree = {
 		id = ENG_the_isles_under_one_crown #Not really sure what we want with this. Like the player should solve the uprisings via decisions and missions and then have this focus as a reward that goes to the next stage. COmbine this focus with ENG_the_crown_realms_united
 		icon = british_isles
 
-		x = 0
+		x = 16
 		y = 6
 		relative_position_id = ENG_crown_union
 
@@ -22560,13 +22560,13 @@ focus_tree = {
 		id = ENG_the_realms_beyond_the_seas
 		icon = united_anglosphere
 
-		x = -16
-		y = 9
+		x = 3
+		y = 11
 		relative_position_id = ENG_a_family_of_nations
 
 		cost = 10
 
-		prerequisite = { focus = ENG_home_rule_in_reverse }
+		prerequisite = { focus = ENG_home_rule_in_reverse focus = ENG_the_isles_under_one_crown }
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -22966,7 +22966,7 @@ focus_tree = {
 		id = ENG_reserve_powers
 		icon = british_isles
 
-		x = 0
+		x = 12
 		y = 1
 		relative_position_id = ENG_dominions_of_the_crown
 
@@ -23989,7 +23989,7 @@ focus_tree = {
 		id = ENG_the_outposts_of_empire
 		icon = british_isles
 
-		x = 7
+		x = 16
 		y = 1
 		relative_position_id = ENG_dominions_of_the_crown
 
@@ -24262,7 +24262,7 @@ focus_tree = {
 		id = ENG_the_imperial_mission
 		icon = british_isles
 
-		x = -8
+		x = 0
 		y = 1
 		relative_position_id = ENG_dominions_of_the_crown
 
