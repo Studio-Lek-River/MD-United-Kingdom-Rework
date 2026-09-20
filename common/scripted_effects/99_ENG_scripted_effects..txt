@@ -612,7 +612,6 @@ ENG_uq_enter_stage_4 = {
 	}
 }
 
-# Declined offer, refused or lost referendum. Call with ROOT = ENG and FROM = target.
 ENG_uq_fail_transition = {
 	custom_effect_tooltip = ENG_uq_fail_transition_TT
 	hidden_effect = {
@@ -630,8 +629,6 @@ ENG_uq_fail_transition = {
 	}
 }
 
-# Parameters:
-# - ENG_uq_consent_change: signed amount. Call in the target's scope. Without medium ENG influence consent cannot climb past 40.
 ENG_uq_change_consent = {
 	custom_effect_tooltip = ENG_uq_consent_change_tt
 	hidden_effect = {
@@ -648,7 +645,6 @@ ENG_uq_change_consent = {
 	}
 }
 
-# Monthly consent step for one ladder target. Call in the target's scope with ROOT = ENG; the Nationalist path ticks at half rate.
 ENG_uq_update_consent = {
 	set_temp_variable = { ENG_uq_consent_change = 0 }
 	if = {
@@ -2533,7 +2529,6 @@ ENG_uq_update_direct_rule = {
 	}
 }
 
-# Unrest while the assemblies are suspended, one roll per region per month
 ENG_uq_scottish_unrest = {
 	random_list = {
 		60 = { country_event = ENG_uq.70 }

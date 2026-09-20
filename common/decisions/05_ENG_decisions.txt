@@ -5648,6 +5648,10 @@ ENG_union_question_decisions = {
 			ENG_change_north_irish_agitation = yes
 			ENG_change_wales_agitation = yes
 		}
+
+		modifier = {
+			tax_gain_multiplier_modifier = -0.05
+		}
 	}
 
 	ENG_renew_the_union_dividend = {

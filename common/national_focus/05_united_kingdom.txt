@@ -21306,7 +21306,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_crown_imperial
-		icon = british_isles
+		icon = british_imperialism
 
 		x = 2
 		y = 1
@@ -21539,7 +21539,7 @@ focus_tree = {
 
 		available = {
 			has_government = democratic
-			ENG_two_home_nations_integrated = yes
+			ENG_two_home_nations_integrated = yes #Can just be a count trigger with the country flags 
 		}
 
 		completion_reward = {
@@ -21616,6 +21616,13 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
+		bypass = {
+			OR = {
+				exists = no
+				is_subject_of = ENG
+			}
+		}
+
 		available = {
 			has_government = democratic
 			country_exists = IRE
@@ -21666,7 +21673,12 @@ focus_tree = {
 			NOT = { has_war_with = IRE }
 		}
 
-		bypass = { NOT = { country_exists = IRE } }
+		bypass = {
+			OR = {
+				exists = no
+				is_subject_of = ENG
+			}
+		}
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_dublin_question"
@@ -21706,7 +21718,12 @@ focus_tree = {
 			NOT = { has_war_with = IRE }
 		}
 
-		bypass = { NOT = { country_exists = IRE } }
+		bypass = {
+			OR = {
+				exists = no
+				is_subject_of = ENG
+			}
+		}
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_anglo_irish_economic_union"
@@ -21751,13 +21768,18 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
+		bypass = {
+			OR = {
+				exists = no
+				is_subject_of = ENG
+			}
+		}
+
 		available = {
 			has_government = democratic
 			country_exists = IRE
 			NOT = { has_war_with = IRE }
 		}
-
-		bypass = { NOT = { country_exists = IRE } }
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_common_travel_area_plus"
@@ -21802,8 +21824,9 @@ focus_tree = {
 
 		bypass = {
 			OR = {
-				NOT = { country_exists = IRE }
-				IRE = { NOT = { has_idea = EU_member } }
+				exists = no
+				is_subject_of = ENG
+				NOT = { has_idea = EU_member }
 			}
 		}
 
@@ -21817,7 +21840,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_an_ireland_united_under_the_crown
+		id = ENG_an_ireland_united_under_the_crown #$Its weird it needs to be the subject before it becomes a crown dominion. That needs to be like integrated? Because its always the subject system anyway
 		icon = United_ireland
 
 		x = 0
@@ -21873,7 +21896,12 @@ focus_tree = {
 			}
 		}
 
-		bypass = { NOT = { country_exists = IRE } }
+		bypass = {
+			IRE = {
+				exists = no
+				owns_state = 17
+			}
+		}
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_an_ireland_united_under_the_crown"
@@ -21936,7 +21964,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_the_crowns_peace
+		id = ENG_the_crowns_peace #There should be a treshold and a mission where the UK needs to send the military to calm down the masses. Otherwise a civil war breaks out if the countries weren't happy enough to join
 		icon = british_isles
 
 		x = 0
@@ -21999,16 +22027,16 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_direct_rule_from_london"
-			custom_effect_tooltip = ENG_direct_rule_TT
 			add_ideas = ENG_direct_rule_idea
-			hidden_effect = { ENG_uq_update_direct_rule = yes }
+			newline = yes
+			ENG_uq_update_direct_rule = yes
 		}
 
 		ai_will_do = { base = 0 }
 	}
 
 	focus = {
-		id = ENG_ulster_settled_by_the_crown
+		id = ENG_ulster_settled_by_the_crown #Should also give involvement of a civil war or even ireland
 		icon = british_isles
 
 		x = 2
@@ -22039,24 +22067,20 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_ulster_settled_by_the_crown"
-			custom_effect_tooltip = ENG_ulster_crown_settlement_TT
-			hidden_effect = {
+			if = {
+				limit = { has_idea = ENG_the_dissident_campaign }
+				remove_ideas = ENG_the_dissident_campaign
+			}
+			if = {
+				limit = { has_idea = ENG_the_dissident_campaign_hidden_idea }
+				remove_ideas = ENG_the_dissident_campaign_hidden_idea
+			}
+			17 = {
 				if = {
-					limit = { has_idea = ENG_the_dissident_campaign }
-					remove_ideas = ENG_the_dissident_campaign
-				}
-				if = {
-					limit = { has_idea = ENG_the_dissident_campaign_hidden_idea }
-					remove_ideas = ENG_the_dissident_campaign_hidden_idea
-				}
-				17 = {
-					if = {
-						limit = { has_dynamic_modifier = { modifier = ENG_State_17_Paramilitary_Activity } }
-						remove_dynamic_modifier = { modifier = ENG_State_17_Paramilitary_Activity }
-					}
+					limit = { has_dynamic_modifier = { modifier = ENG_State_17_Paramilitary_Activity } }
+					remove_dynamic_modifier = { modifier = ENG_State_17_Paramilitary_Activity }
 				}
 			}
-			add_stability = -0.10
 			set_temp_variable = { ENG_agitation_change = -15 }
 			ENG_change_north_irish_agitation = yes
 			set_temp_variable = { ENG_nationalists_change = -10 }
@@ -22068,7 +22092,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_unionist_ascendancy
-		icon = british_isles
+		icon = focus_RAJ_kingmaker
 
 		x = -1
 		y = 3
@@ -22088,7 +22112,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_unionist_ascendancy"
-			custom_effect_tooltip = ENG_uq_loyalists_funded_TT
 			set_country_flag = ENG_uq_loyalists_funded
 			set_temp_variable = { ENG_nationalists_change = -10 }
 			ENG_change_scottish_nationalists = yes
@@ -22105,7 +22128,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_kings_men
-		icon = british_isles
+		icon = god_save_the_king
 
 		x = 1
 		y = 3
@@ -22125,16 +22148,15 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_kings_men"
-			custom_effect_tooltip = {
-				localization_key = modifies_dynamic_modifier_tt
-				MODIFIER = ENG_union_question_dm
-			}
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_union_question_dm }
 			add_to_variable = { ENG_uq_required_garrison_factor = -0.15 tooltip = required_garrison_factor_tt }
 			add_to_variable = { ENG_uq_war_support_factor = -0.05 tooltip = war_support_factor_tt }
+			newline = yes
 			custom_effect_tooltip = ENG_kings_men_pacification_TT
-			hidden_effect = { set_variable = { ENG_pacification_pressure_cap = 35 } }
+			newline = yes
 			set_temp_variable = { ENG_union_strain_change = 10 }
 			ENG_change_union_strain = yes
+			hidden_effect = { set_variable = { ENG_pacification_pressure_cap = 35 } }
 		}
 
 		ai_will_do = { base = 0 }
@@ -22142,7 +22164,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_loyal_ulster_regiments
-		icon = british_isles
+		icon = army_mobilisation
 
 		x = 3
 		y = 3
@@ -22167,10 +22189,7 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_loyal_ulster_regiments"
-			custom_effect_tooltip = {
-				localization_key = modifies_dynamic_modifier_tt
-				MODIFIER = ENG_union_question_dm
-			}
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_union_question_dm }
 			add_to_variable = { ENG_uq_conscription_factor = 0.03 tooltip = conscription_factor_tt }
 			add_to_variable = { ENG_uq_army_morale_factor = 0.03 tooltip = army_morale_factor_tt }
 		}
@@ -22180,7 +22199,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_crown_union
-		icon = british_isles
+		icon = focus_RAJ_the_crown_and_the_world
 
 		x = 0
 		y = 4
@@ -22202,38 +22221,35 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_crown_union"
-			custom_effect_tooltip = ENG_crown_union_TT
+			if = {
+				limit = { ENG_uq_scotland_suspended = yes }
+				set_variable = { ENG_referendum_target = 1 }
+				ENG_integrate_referendum_region = yes
+			}
+			if = {
+				limit = { ENG_uq_north_ireland_suspended = yes }
+				set_variable = { ENG_referendum_target = 2 }
+				ENG_integrate_referendum_region = yes
+			}
+			if = {
+				limit = { ENG_uq_wales_suspended = yes }
+				set_variable = { ENG_referendum_target = 3 }
+				ENG_integrate_referendum_region = yes
+			}
+			if = {
+				limit = { has_idea = ENG_direct_rule_idea }
+				remove_ideas = ENG_direct_rule_idea
+			}
 			hidden_effect = {
-				if = {
-					limit = { ENG_uq_scotland_suspended = yes }
-					set_variable = { ENG_referendum_target = 1 }
-					ENG_integrate_referendum_region = yes
-				}
-				if = {
-					limit = { ENG_uq_north_ireland_suspended = yes }
-					set_variable = { ENG_referendum_target = 2 }
-					ENG_integrate_referendum_region = yes
-				}
-				if = {
-					limit = { ENG_uq_wales_suspended = yes }
-					set_variable = { ENG_referendum_target = 3 }
-					ENG_integrate_referendum_region = yes
-				}
 				set_variable = { ENG_referendum_target = 0 }
 				clr_country_flag = ENG_uq_assemblies_suspended
 				clr_country_flag = ENG_uq_loyalists_funded
-				if = {
-					limit = { has_idea = ENG_direct_rule_idea }
-					remove_ideas = ENG_direct_rule_idea
-				}
 				update_eng_devolution_dirty_variable = yes
 			}
 			set_temp_variable = { ENG_union_strain_change = 30 }
 			ENG_change_union_strain = yes
-			custom_effect_tooltip = {
-				localization_key = modifies_dynamic_modifier_tt
-				MODIFIER = ENG_union_question_dm
-			}
+			newline = yes
+			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_union_question_dm }
 			add_to_variable = { ENG_uq_war_support_factor = 0.05 tooltip = war_support_factor_tt }
 			add_to_variable = { ENG_uq_bonus_democratic_drift = -0.03 tooltip = democratic_drift_tt }
 			add_to_variable = { ENG_uq_stability_factor = -0.05 tooltip = stability_factor_tt }
@@ -22280,7 +22296,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_no_border_poll
+		id = ENG_no_border_poll #Can be removed because its already a decision. At the solving of the this as a trigger to ENG_ultimatum_to_dublin
 		icon = british_isles
 
 		x = -1
@@ -22360,7 +22376,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_close_the_irish_sea
+		id = ENG_close_the_irish_sea #This should be made a lil bit different. A blockade doesn't force Ireland to leave the EU. It should start a mission where England needs to blockade Ireland with its navy and if it keeps it that for 180 days, Ireland surrenders
 		icon = british_isles
 
 		x = 1
@@ -22387,8 +22403,10 @@ focus_tree = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_close_the_irish_sea"
 			add_timed_idea = { idea = ENG_uq_irish_sea_blockade days = 365 }
 			IRE = { add_timed_idea = { idea = ENG_uq_irish_sea_blockaded days = 365 } }
+			newline = yes
 			set_temp_variable = { ENG_imperial_tension_change = 5 }
 			ENG_change_imperial_tension = yes
+			newline = yes
 			if = {
 				limit = { has_idea = EU_member }
 				custom_effect_tooltip = ENG_close_the_irish_sea_eu_TT
@@ -22402,7 +22420,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_ultimatum_to_dublin
+		id = ENG_ultimatum_to_dublin #Make this an event automaticly send in a three way form as always. On rejection, it unlocks a decision to retry
 		icon = british_isles
 
 		x = 0
@@ -22435,7 +22453,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_the_pacification_of_ireland
+		id = ENG_the_pacification_of_ireland #Should be happening when IReland becomes part of the UK in the previous focus
 		icon = british_isles
 
 		x = 0
@@ -22474,7 +22492,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_the_isles_under_one_crown
+		id = ENG_the_isles_under_one_crown #Not really sure what we want with this. Like the player should solve the uprisings via decisions and missions and then have this focus as a reward that goes to the next stage. COmbine this focus with ENG_the_crown_realms_united
 		icon = british_isles
 
 		x = 0
@@ -22895,8 +22913,6 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crown_realms_united"
-			set_cosmetic_tag = ENG_commonwealth_federation
-			newline = yes
 			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_union_question_dm }
 			add_to_variable = { ENG_uq_stability_factor = 0.03 tooltip = stability_factor_tt }
 			add_to_variable = { ENG_uq_bonus_political_power_factor = 0.05 tooltip = political_power_factor_tt }
