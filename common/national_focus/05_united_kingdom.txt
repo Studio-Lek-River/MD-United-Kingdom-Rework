@@ -24192,7 +24192,6 @@ focus_tree = {
 			HKG = {
 				hidden_effect = { ENG_uq_align_target = yes }
 			}
-			custom_effect_tooltip = ENG_uq_hong_kong_cap_TT
 			set_temp_variable = { ENG_imperial_tension_change = 2 }
 			ENG_change_imperial_tension = yes
 			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
@@ -24254,7 +24253,6 @@ focus_tree = {
 			set_temp_variable = { ENG_imperial_tension_change = 2 }
 			ENG_change_imperial_tension = yes
 			unlock_decision_tooltip = ENG_uq_sponsor_monarchists
-			custom_effect_tooltip = ENG_uq_med_cap_TT
 		}
 
 		ai_will_do = { base = 0 }
@@ -24323,12 +24321,10 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_west_african_protectorates"
-			custom_effect_tooltip = ENG_uq_open_region_TT
 			hidden_effect = { ENG_uq_open_west_africa = yes }
 			set_temp_variable = { ENG_imperial_tension_change = 2 }
 			ENG_change_imperial_tension = yes
 			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
-			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
 		}
 
 		ai_will_do = { base = 0 }
@@ -24365,12 +24361,10 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_east_african_protectorates"
-			custom_effect_tooltip = ENG_uq_open_region_TT
 			hidden_effect = { ENG_uq_open_east_africa = yes }
 			set_temp_variable = { ENG_imperial_tension_change = 2 }
 			ENG_change_imperial_tension = yes
 			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
-			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
 		}
 
 		ai_will_do = { base = 0 }
@@ -24413,12 +24407,10 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_southern_african_protectorates"
-			custom_effect_tooltip = ENG_uq_open_region_TT
 			hidden_effect = { ENG_uq_open_southern_africa = yes }
 			set_temp_variable = { ENG_imperial_tension_change = 2 }
 			ENG_change_imperial_tension = yes
 			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
-			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
 		}
 
 		ai_will_do = { base = 0 }
@@ -24459,12 +24451,10 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_gulf_protectorates"
-			custom_effect_tooltip = ENG_uq_open_region_TT
 			hidden_effect = { ENG_uq_open_gulf = yes }
 			set_temp_variable = { ENG_imperial_tension_change = 2 }
 			ENG_change_imperial_tension = yes
 			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
-			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
 		}
 
 		ai_will_do = { base = 0 }
@@ -24503,12 +24493,10 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_asian_protectorates"
-			custom_effect_tooltip = ENG_uq_open_region_TT
 			hidden_effect = { ENG_uq_open_asia = yes }
 			set_temp_variable = { ENG_imperial_tension_change = 2 }
 			ENG_change_imperial_tension = yes
 			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
-			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
 		}
 
 		ai_will_do = { base = 0 }
@@ -24549,12 +24537,10 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_pacific_protectorates"
-			custom_effect_tooltip = ENG_uq_open_region_TT
 			hidden_effect = { ENG_uq_open_pacific = yes }
 			set_temp_variable = { ENG_imperial_tension_change = 2 }
 			ENG_change_imperial_tension = yes
 			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
-			custom_effect_tooltip = ENG_uq_ex_empire_cap_TT
 		}
 
 		ai_will_do = { base = 0 }
