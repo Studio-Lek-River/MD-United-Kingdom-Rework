@@ -6093,8 +6093,9 @@ ENG_union_question_decisions = {
 		days_re_enable = 730
 
 		available = {
-			check_variable = {
-				ENG_union_strain > 10
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strain_above_10_TT
+				check_variable = { ENG_union_strain > 10 }
 			}
 		}
 
@@ -6129,8 +6130,9 @@ ENG_union_question_decisions = {
 		days_re_enable = 730
 
 		available = {
-			check_variable = {
-				ENG_union_strain > 15
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strain_above_15_TT
+				check_variable = { ENG_union_strain > 15 }
 			}
 		}
 
@@ -6197,8 +6199,9 @@ ENG_union_question_decisions = {
 		days_re_enable = 365
 
 		available = {
-			check_variable = {
-				ENG_union_strain > 10
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strain_above_10_TT
+				check_variable = { ENG_union_strain > 10 }
 			}
 		}
 
@@ -6563,8 +6566,10 @@ ENG_union_question_decisions = {
 						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
 						ENG_uq_stage_1 = yes
-						ROOT = { NOT = { has_country_flag = ENG_uq_lock@PREV } }
-						ROOT = { NOT = { has_country_flag = ENG_uq_offer_pending@PREV } }
+						ROOT = {
+							NOT = { has_country_flag = ENG_uq_lock@PREV }
+							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
+						}
 						NOT = { has_country_flag = ENG_uq_republic }
 					}
 				}
@@ -6576,8 +6581,10 @@ ENG_union_question_decisions = {
 						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
 						ENG_uq_stage_1 = yes
-						ROOT = { has_country_flag = ENG_uq_pacified@PREV }
-						ROOT = { NOT = { has_country_flag = ENG_uq_offer_pending@PREV } }
+						ROOT = {
+							has_country_flag = ENG_uq_pacified@PREV
+							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
+						}
 					}
 				}
 			}
@@ -6592,8 +6599,10 @@ ENG_union_question_decisions = {
 						ENG_uq_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
 						ENG_uq_stage_1 = yes
-						ROOT = { NOT = { has_country_flag = ENG_uq_lock@PREV } }
-						ROOT = { NOT = { has_country_flag = ENG_uq_offer_pending@PREV } }
+						ROOT = {
+							NOT = { has_country_flag = ENG_uq_lock@PREV }
+							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
+						}
 						NOT = { has_country_flag = ENG_uq_republic }
 					}
 					ROOT = { set_country_flag = { flag = ENG_uq_offer_pending@PREV value = 1 days = 90 } }
@@ -6606,8 +6615,10 @@ ENG_union_question_decisions = {
 						ENG_uq_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
 						ENG_uq_stage_1 = yes
-						ROOT = { has_country_flag = ENG_uq_pacified@PREV }
-						ROOT = { NOT = { has_country_flag = ENG_uq_offer_pending@PREV } }
+						ROOT = {
+							has_country_flag = ENG_uq_pacified@PREV
+							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
+						}
 					}
 					ROOT = { set_country_flag = { flag = ENG_uq_offer_pending@PREV value = 1 days = 90 } }
 					ENG = { country_event = { id = ENG_uq.129 days = 1 } }
@@ -6648,8 +6659,10 @@ ENG_union_question_decisions = {
 						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
 						ENG_uq_stage_2 = yes
-						ROOT = { NOT = { has_country_flag = ENG_uq_lock@PREV } }
-						ROOT = { NOT = { has_country_flag = ENG_uq_offer_pending@PREV } }
+						ROOT = {
+							NOT = { has_country_flag = ENG_uq_lock@PREV }
+							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
+						}
 						NOT = { has_country_flag = ENG_uq_republic }
 					}
 				}
@@ -6661,8 +6674,10 @@ ENG_union_question_decisions = {
 						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
 						ENG_uq_stage_2 = yes
-						ROOT = { has_country_flag = ENG_uq_pacified@PREV }
-						ROOT = { NOT = { has_country_flag = ENG_uq_offer_pending@PREV } }
+						ROOT = {
+							has_country_flag = ENG_uq_pacified@PREV
+							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
+						}
 					}
 				}
 			}
@@ -6677,8 +6692,10 @@ ENG_union_question_decisions = {
 						ENG_uq_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
 						ENG_uq_stage_2 = yes
-						ROOT = { NOT = { has_country_flag = ENG_uq_lock@PREV } }
-						ROOT = { NOT = { has_country_flag = ENG_uq_offer_pending@PREV } }
+						ROOT = {
+							NOT = { has_country_flag = ENG_uq_lock@PREV }
+							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
+						}
 						NOT = { has_country_flag = ENG_uq_republic }
 					}
 					ROOT = { set_country_flag = { flag = ENG_uq_offer_pending@PREV value = 1 days = 90 } }
@@ -6691,8 +6708,10 @@ ENG_union_question_decisions = {
 						ENG_uq_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
 						ENG_uq_stage_2 = yes
-						ROOT = { has_country_flag = ENG_uq_pacified@PREV }
-						ROOT = { NOT = { has_country_flag = ENG_uq_offer_pending@PREV } }
+						ROOT = {
+							has_country_flag = ENG_uq_pacified@PREV
+							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
+						}
 					}
 					ROOT = { set_country_flag = { flag = ENG_uq_offer_pending@PREV value = 1 days = 90 } }
 					ENG = { country_event = { id = ENG_uq.129 days = 1 } }
@@ -6737,8 +6756,10 @@ ENG_union_question_decisions = {
 						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
 						ENG_uq_stage_3 = yes
-						ROOT = { NOT = { has_country_flag = ENG_uq_lock@PREV } }
-						ROOT = { NOT = { has_country_flag = ENG_uq_offer_pending@PREV } }
+						ROOT = {
+							NOT = { has_country_flag = ENG_uq_lock@PREV }
+							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
+						}
 						NOT = { has_country_flag = ENG_uq_republic }
 					}
 				}
@@ -6750,8 +6771,10 @@ ENG_union_question_decisions = {
 						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
 						ENG_uq_stage_3 = yes
-						ROOT = { has_country_flag = ENG_uq_pacified@PREV }
-						ROOT = { NOT = { has_country_flag = ENG_uq_offer_pending@PREV } }
+						ROOT = {
+							has_country_flag = ENG_uq_pacified@PREV
+							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
+						}
 					}
 				}
 			}
@@ -6768,8 +6791,10 @@ ENG_union_question_decisions = {
 						ENG_uq_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
 						ENG_uq_stage_3 = yes
-						ROOT = { NOT = { has_country_flag = ENG_uq_lock@PREV } }
-						ROOT = { NOT = { has_country_flag = ENG_uq_offer_pending@PREV } }
+						ROOT = {
+							NOT = { has_country_flag = ENG_uq_lock@PREV }
+							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
+						}
 						NOT = { has_country_flag = ENG_uq_republic }
 					}
 					ROOT = { set_country_flag = { flag = ENG_uq_offer_pending@PREV value = 1 days = 90 } }
@@ -6782,8 +6807,10 @@ ENG_union_question_decisions = {
 						ENG_uq_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
 						ENG_uq_stage_3 = yes
-						ROOT = { has_country_flag = ENG_uq_pacified@PREV }
-						ROOT = { NOT = { has_country_flag = ENG_uq_offer_pending@PREV } }
+						ROOT = {
+							has_country_flag = ENG_uq_pacified@PREV
+							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
+						}
 					}
 					ROOT = { set_country_flag = { flag = ENG_uq_offer_pending@PREV value = 1 days = 90 } }
 					ENG = { country_event = { id = ENG_uq.129 days = 1 } }

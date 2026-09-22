@@ -1049,6 +1049,8 @@
  ENG_uq_ireland_done_TT: "[IRE.GetFlag] Ireland has reached §Yconstituent§! status in the Union"
  ENG_uq_realms_done_TT: "At least §Y3§! Commonwealth realms have reached §Yassociated§! status in the Union"
  ENG_uq_strain_allows_transition_TT: "Union Strain is §Y60§! or lower (currently §Y[?ENG_union_strain|0]§!)"
+ ENG_uq_strain_above_10_TT: "Union Strain is above §Y10§! (currently §Y[?ENG_union_strain|0]§!)"
+ ENG_uq_strain_above_15_TT: "Union Strain is above §Y15§! (currently §Y[?ENG_union_strain|0]§!)"
  ENG_raid_enalbed_TT: "§HUnlocks New Raid§!: Operation Delta Guard\n - We will be able to move in and seize [NIG.GetFlag] Nigerian oil fields surrounding the Delta\n £text_icon_kaldanger If [NIG.GetFlag] Nigeria retaliates, we may have a prolonged war on our hand"
  ENG_raid_enabled_2_TT: "§HUnlocks New Raid§!: Operation Safeguard\n - [ENG.GetFlag] British special forces units will be able to move in and oust the dictator of [ZIM.GetFlag] Zimbabwe, replacing him with a [ENG.GetFlag] British-backed strongman, giving us influence in [ZIM.GetName]"
  ENG_raid_enabled_3_TT: "§HUnlocks New Raid§!: Operation Eastern Divide\n - [ENG.GetFlag] British special forces units will be able to move in and capture the vital area in the [EGY.GetFlag] Sinai, allowing for easier British port access in the area.\n - Raid will be available on the Sinai"
