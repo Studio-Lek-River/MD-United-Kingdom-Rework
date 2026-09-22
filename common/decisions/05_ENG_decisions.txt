@@ -4677,6 +4677,7 @@ ENG_union_question_decisions = {
 			check_variable = { ENG_coercion@FROM = 2 }
 			NOT = { has_country_flag = ENG_uq_ultimatum_rejected@FROM }
 			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
+			NOT = { FROM = { original_tag = IRE } }
 			FROM = { exists = yes }
 		}
 
@@ -4917,7 +4918,7 @@ ENG_union_question_decisions = {
 		fire_only_once = no
 
 		activation = {
-			has_completed_focus = ENG_the_pacification_of_ireland
+			has_completed_focus = ENG_ultimatum_to_dublin
 			check_variable = { ENG_coercion@IRE = 5 }
 			ENG_uq_irish_states_pacified = yes
 		}
@@ -4940,6 +4941,159 @@ ENG_union_question_decisions = {
 		}
 
 		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_scottish_martial_law = {
+		icon = GFX_decision_generic_police_action
+		highlight_states = { highlight_state_targets = { state = 9 } }
+		activation = { always = no }
+
+		available = {
+			ENG_uq_scottish_garrisoned = yes
+			check_variable = {
+				tooltip = ENG_uq_scottish_martial_law_calm_TT
+				var = ENG_scottish_agitation
+				value = 40
+				compare = less_than
+			}
+		}
+
+		cancel_trigger = {
+			OR = {
+				has_country_flag = ENG_scottish_integrated
+				NOT = { any_owned_state = { is_core_of = SCO } }
+			}
+		}
+		days_mission_timeout = 180
+		is_good = no
+		selectable_mission = no
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_scottish_martial_law"
+			set_temp_variable = { ENG_nationalists_change = -5 }
+			ENG_change_scottish_nationalists = yes
+			set_temp_variable = { ENG_union_strain_change = -2 }
+			ENG_change_union_strain = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_scottish_martial_law"
+			country_event = ENG_uq.80
+		}
+	}
+
+	ENG_uq_north_irish_martial_law = {
+		icon = GFX_decision_generic_police_action
+		highlight_states = { highlight_state_targets = { state = 17 } }
+		activation = { always = no }
+
+		available = {
+			ENG_uq_north_irish_garrisoned = yes
+			check_variable = {
+				tooltip = ENG_uq_north_irish_martial_law_calm_TT
+				var = ENG_north_irish_agitation
+				value = 40
+				compare = less_than
+			}
+		}
+
+		cancel_trigger = {
+			OR = {
+				has_country_flag = ENG_north_irish_integrated
+				NOT = { any_owned_state = { is_core_of = NIR } }
+			}
+		}
+		days_mission_timeout = 180
+		is_good = no
+		selectable_mission = no
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_north_irish_martial_law"
+			set_temp_variable = { ENG_nationalists_change = -5 }
+			ENG_change_north_irish_nationalists = yes
+			set_temp_variable = { ENG_union_strain_change = -2 }
+			ENG_change_union_strain = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_north_irish_martial_law"
+			country_event = ENG_uq.81
+		}
+	}
+
+	ENG_uq_welsh_martial_law = {
+		icon = GFX_decision_generic_police_action
+		highlight_states = { highlight_state_targets = { state = 16 } }
+		activation = { always = no }
+
+		available = {
+			ENG_uq_welsh_garrisoned = yes
+			check_variable = {
+				tooltip = ENG_uq_welsh_martial_law_calm_TT
+				var = ENG_wales_agitation
+				value = 40
+				compare = less_than
+			}
+		}
+
+		cancel_trigger = {
+			OR = {
+				has_country_flag = ENG_welsh_integrated
+				NOT = { any_owned_state = { is_core_of = WAS } }
+			}
+		}
+		days_mission_timeout = 180
+		is_good = no
+		selectable_mission = no
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_welsh_martial_law"
+			set_temp_variable = { ENG_nationalists_change = -5 }
+			ENG_change_wales_nationalists = yes
+			set_temp_variable = { ENG_union_strain_change = -2 }
+			ENG_change_union_strain = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_welsh_martial_law"
+			country_event = ENG_uq.82
+		}
+	}
+
+	ENG_uq_blockade_of_ireland = {
+		icon = GFX_decision_generic_naval
+		activation = { always = no }
+
+		available = { always = no }
+
+		cancel_trigger = {
+			OR = {
+				NOT = { country_exists = IRE }
+				has_war_with = IRE
+				NOT = { ENG_uq_irish_sea_blockade_held = yes }
+			}
+		}
+		days_mission_timeout = 180
+		is_good = yes
+		selectable_mission = no
+
+		cancel_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision cancel ENG_uq_blockade_of_ireland"
+			ENG_uq_lift_irish_sea_blockade = yes
+			set_temp_variable = { ENG_imperial_tension_change = -2 }
+			ENG_change_imperial_tension = yes
+		}
+
+		timeout_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_blockade_of_ireland"
+			set_country_flag = ENG_uq_irish_sea_surrender
+			custom_effect_tooltip = ENG_uq_irish_sea_surrender_TT
+			ENG_uq_lift_irish_sea_blockade = yes
+			hidden_effect = {
+				IRE = { country_event = { id = ENG_uq.280 days = 1 } }
+				country_event = { id = ENG_uq.281 days = 2 }
+			}
+		}
 	}
 
 	ENG_scottish_pacification = {
@@ -5545,6 +5699,179 @@ ENG_union_question_decisions = {
 		ai_will_do = { base = 5 }
 	}
 
+	ENG_uq_retry_council_of_the_isles = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = {
+			has_completed_focus = ENG_council_of_the_isles
+			has_country_flag = ENG_uq_council_of_the_isles_refused
+			country_exists = IRE
+		}
+
+		available = {
+			NOT = { has_war_with = IRE }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_offer_cooldown_TT
+				NOT = { has_country_flag = ENG_uq_council_of_the_isles_cooldown }
+			}
+		}
+
+		cost = 75
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_retry_council_of_the_isles"
+			clr_country_flag = ENG_uq_council_of_the_isles_refused
+			IRE = { country_event = { id = ENG_uq.260 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { ENG_uq_apply_council_of_the_isles = yes }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_council_of_the_isles_refused_TT }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_retry_anglo_irish_economic_union = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = {
+			has_completed_focus = ENG_anglo_irish_economic_union
+			has_country_flag = ENG_uq_anglo_irish_economic_union_refused
+			country_exists = IRE
+		}
+
+		available = {
+			NOT = { has_war_with = IRE }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_offer_cooldown_TT
+				NOT = { has_country_flag = ENG_uq_anglo_irish_economic_union_cooldown }
+			}
+		}
+
+		cost = 75
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_retry_anglo_irish_economic_union"
+			clr_country_flag = ENG_uq_anglo_irish_economic_union_refused
+			IRE = { country_event = { id = ENG_uq.263 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { ENG_uq_apply_anglo_irish_economic_union = yes }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_anglo_irish_economic_union_refused_TT }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_retry_common_travel_area_plus = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = {
+			has_completed_focus = ENG_common_travel_area_plus
+			has_country_flag = ENG_uq_common_travel_area_plus_refused
+			country_exists = IRE
+		}
+
+		available = {
+			NOT = { has_war_with = IRE }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_offer_cooldown_TT
+				NOT = { has_country_flag = ENG_uq_common_travel_area_plus_cooldown }
+			}
+		}
+
+		cost = 75
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_retry_common_travel_area_plus"
+			clr_country_flag = ENG_uq_common_travel_area_plus_refused
+			IRE = { country_event = { id = ENG_uq.266 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { ENG_uq_apply_common_travel_area_plus = yes }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_common_travel_area_plus_refused_TT }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_retry_realm_accord = {
+		icon = GFX_decision_generic_political_discourse
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_completed_focus = ENG_a_family_of_nations }
+		target_trigger = {
+			has_country_flag = ENG_uq_accord_refused@FROM
+			FROM = {
+				OR = {
+					original_tag = CAN
+					original_tag = AST
+					original_tag = NZL
+				}
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_offer_cooldown_TT
+				NOT = { has_country_flag = ENG_uq_accord_cooldown@FROM }
+			}
+		}
+
+		cost = 75
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_retry_realm_accord"
+			clr_country_flag = ENG_uq_accord_refused@FROM
+			FROM = { country_event = { id = ENG_uq.270 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { FROM = { ENG_uq_apply_realm_accord = yes } }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_realm_accord_refused_TT }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_renew_ultimatum_to_dublin = {
+		icon = GFX_decision_generic_nationalism
+
+		visible = {
+			has_completed_focus = ENG_ultimatum_to_dublin
+			has_country_flag = ENG_uq_ultimatum_rejected@IRE
+			check_variable = { ENG_coercion@IRE = 3 }
+			country_exists = IRE
+		}
+
+		available = {
+			NOT = { has_war_with = IRE }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_offer_cooldown_TT
+				NOT = { has_country_flag = ENG_uq_ultimatum_cooldown@IRE }
+			}
+		}
+
+		cost = 100
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_renew_ultimatum_to_dublin"
+			clr_country_flag = ENG_uq_ultimatum_rejected@IRE
+			IRE = { country_event = { id = ENG_uq.40 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = {
+				custom_effect_tooltip = ENG_uq_irish_coercion_6_TT
+				custom_effect_tooltip = ENG_uq_ireland_protectorate_TT
+			}
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = {
+				unlock_decision_tooltip = ENG_uq_enforce_ultimatum
+				unlock_decision_tooltip = ENG_uq_renew_ultimatum_to_dublin
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
 	ENG_uq_irexit_referendum = {
 		icon = GFX_decision_generic_nationalism
 
@@ -5951,12 +6278,6 @@ ENG_union_question_decisions = {
 					is_subject_of = ROOT
 				}
 			}
-			NOT = {
-				AND = {
-					has_completed_focus = ENG_a_family_of_nations
-					FROM = { original_tag = IRE }
-				}
-			}
 			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
 			NOT = { FROM = { ENG_uq_is_ex_empire = yes } }
 		}
@@ -5978,6 +6299,20 @@ ENG_union_question_decisions = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_not_republic_TT
 					FROM = { NOT = { has_country_flag = ENG_uq_republic } }
+				}
+				if = {
+					limit = { FROM = { original_tag = IRE } }
+					has_completed_focus = ENG_the_irexit_question
+					IRE = {
+						custom_trigger_tooltip = {
+							tooltip = ENG_uq_ireland_outside_eu_TT
+							NOT = { has_idea = EU_member }
+						}
+						custom_trigger_tooltip = {
+							tooltip = ENG_uq_ireland_in_commonwealth_TT
+							ENG_cmw_is_member = yes
+						}
+					}
 				}
 			}
 			else = {

@@ -818,6 +818,65 @@ ENG_uq_align_realms = {
 	}
 }
 
+# ENG scope. Dublin accepts the Council of the Isles.
+ENG_uq_apply_council_of_the_isles = {
+	custom_effect_tooltip = ENG_council_of_the_isles_TT
+	IRE = {
+		add_ideas = ENG_uq_council_of_the_isles_idea
+		add_opinion_modifier = { target = ROOT modifier = ENG_uq_council_of_the_isles_opinion }
+		reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_council_of_the_isles_opinion }
+		hidden_effect = { ENG_uq_align_target = yes }
+	}
+}
+
+# ENG scope. Dublin accepts the Anglo-Irish Economic Union.
+ENG_uq_apply_anglo_irish_economic_union = {
+	IRE = {
+		add_ideas = ENG_uq_anglo_irish_economic_union_idea
+		newline = yes
+		set_temp_variable = { ENG_uq_consent_change = 5 }
+		ENG_uq_change_consent = yes
+	}
+	if = {
+		limit = { IRE = { has_idea = EU_member } }
+		for_each_scope_loop = {
+			array = global.EU_member
+			if = {
+				limit = {
+					NOT = { tag = ROOT }
+					NOT = { tag = IRE }
+				}
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_brussels_displeasure_opinion }
+			}
+		}
+		hidden_effect = { IRE = { country_event = { id = ENG_uq.93 days = 30 } } }
+	}
+}
+
+# ENG scope. Dublin accepts Common Travel Area Plus.
+ENG_uq_apply_common_travel_area_plus = {
+	IRE = {
+		add_opinion_modifier = { target = ROOT modifier = ENG_uq_common_travel_area_opinion }
+		reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_common_travel_area_opinion }
+		set_temp_variable = { ENG_uq_consent_change = 10 }
+		ENG_uq_change_consent = yes
+	}
+}
+
+# Call in the realm's scope with ROOT = ENG. The realm accepts its Realm Accord.
+ENG_uq_apply_realm_accord = {
+	add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+	reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+	if = {
+		limit = { original_tag = NZL }
+		set_temp_variable = { ENG_uq_consent_change = 15 }
+	}
+	else = {
+		set_temp_variable = { ENG_uq_consent_change = 10 }
+	}
+	ENG_uq_change_consent = yes
+}
+
 # ENG scope. Average consent across Caribbean realms still on the ladder, for the group decisions' consent gate.
 ENG_uq_update_caribbean_consent = {
 	set_temp_variable = { ENG_uq_caribbean_consent_sum = 0 }
@@ -1313,31 +1372,63 @@ ENG_uq_reset_irish_tier = {
 			remove_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm }
 		}
 	}
+	ENG_uq_lift_irish_sea_blockade = yes
+	clr_country_flag = ENG_uq_irish_sea_surrender
 	if = {
-		limit = { has_idea = ENG_uq_irish_sea_blockade }
-		remove_ideas = ENG_uq_irish_sea_blockade
+		limit = { has_active_mission = ENG_uq_blockade_of_ireland }
+		remove_mission = ENG_uq_blockade_of_ireland
 	}
 	IRE = {
 		if = {
 			limit = { has_idea = ENG_uq_loyalist_movement }
 			remove_ideas = ENG_uq_loyalist_movement
 		}
-		if = {
-			limit = { has_idea = ENG_uq_irish_sea_blockaded }
-			remove_ideas = ENG_uq_irish_sea_blockaded
-		}
 	}
 	uncomplete_national_focus = { focus = ENG_the_irish_question_reopened refund_political_power = no }
-	uncomplete_national_focus = { focus = ENG_no_border_poll refund_political_power = no }
 	uncomplete_national_focus = { focus = ENG_sponsor_the_unionist_lobby_in_dublin refund_political_power = no }
 	uncomplete_national_focus = { focus = ENG_close_the_irish_sea refund_political_power = no }
 	uncomplete_national_focus = { focus = ENG_ultimatum_to_dublin refund_political_power = no }
-	uncomplete_national_focus = { focus = ENG_the_pacification_of_ireland refund_political_power = no }
 	ENG_settle_northern_ireland_question = yes
 	set_temp_variable = { ENG_union_strain_change = 10 }
 	ENG_change_union_strain = yes
 	add_stability = -0.05
 	country_event = { id = ENG_uq.112 days = 1 }
+}
+
+# ENG scope. Ends the Irish Sea blockade on both sides.
+ENG_uq_lift_irish_sea_blockade = {
+	if = {
+		limit = { has_idea = ENG_uq_irish_sea_blockade }
+		remove_ideas = ENG_uq_irish_sea_blockade
+	}
+	IRE = {
+		if = {
+			limit = { has_idea = ENG_uq_irish_sea_blockaded }
+			remove_ideas = ENG_uq_irish_sea_blockaded
+		}
+	}
+}
+
+# ENG scope. Ireland comes under the Crown by force: the dissident campaign spreads south as Irish Partisans.
+ENG_uq_apply_irish_pacification = {
+	if = {
+		limit = { NOT = { has_idea = ENG_the_dissident_campaign } }
+		add_ideas = ENG_the_dissident_campaign
+	}
+	custom_effect_tooltip = ENG_uq_irish_partisans_TT
+	hidden_effect = {
+		every_state = {
+			limit = {
+				OR = {
+					state = 27
+					state = 28
+					state = 29
+				}
+				NOT = { has_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm } }
+			}
+			add_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm }
+		}
+	}
 }
 
 # Parameters:
@@ -1415,6 +1506,10 @@ ENG_uq_begin_occupation = {
 		if = {
 			limit = { NOT = { has_idea = ENG_uq_occupation_burden } }
 			add_ideas = ENG_uq_occupation_burden
+		}
+		if = {
+			limit = { PREV = { original_tag = IRE } }
+			ENG_uq_apply_irish_pacification = yes
 		}
 		country_event = { id = ENG_uq.44 days = 1 }
 	}
@@ -1978,7 +2073,7 @@ ENG_cmw_monthly = {
 	ENG_cmw_schedule_chogm = yes
 }
 
-# ENG scope. Repeals the Good Friday Agreement: the decision and ENG_no_border_poll share it.
+# ENG scope. Repeals the Good Friday Agreement.
 ENG_repeal_good_friday_agreement_effect = {
 	custom_effect_tooltip = ENG_repeal_gfa_remove_TT
 	hidden_effect = { remove_ideas = ENG_good_friday_agreement }
@@ -1996,6 +2091,15 @@ ENG_repeal_good_friday_agreement_effect = {
 	newline = yes
 	activate_mission = ENG_ulster_on_the_brink
 	custom_effect_tooltip = ENG_ulster_on_the_brink_activated_TT
+	if = {
+		limit = {
+			country_exists = IRE
+			NOT = { IRE = { is_subject_of = ROOT } }
+		}
+		newline = yes
+		custom_effect_tooltip = ENG_repeal_gfa_dublin_TT
+		hidden_effect = { IRE = { country_event = { id = ENG_uq.110 days = 2 } } }
+	}
 }
 
 ENG_settle_northern_ireland_question = {
@@ -2575,6 +2679,30 @@ ENG_uq_welsh_unrest = {
 
 ENG_uq_suspension_monthly = {
 	ENG_uq_update_direct_rule = yes
+	if = {
+		limit = {
+			has_active_mission = ENG_uq_scottish_martial_law
+			ENG_uq_scottish_garrisoned = yes
+		}
+		set_temp_variable = { ENG_agitation_change = -5 }
+		ENG_change_scottish_agitation = yes
+	}
+	if = {
+		limit = {
+			has_active_mission = ENG_uq_north_irish_martial_law
+			ENG_uq_north_irish_garrisoned = yes
+		}
+		set_temp_variable = { ENG_agitation_change = -5 }
+		ENG_change_north_irish_agitation = yes
+	}
+	if = {
+		limit = {
+			has_active_mission = ENG_uq_welsh_martial_law
+			ENG_uq_welsh_garrisoned = yes
+		}
+		set_temp_variable = { ENG_agitation_change = -5 }
+		ENG_change_wales_agitation = yes
+	}
 	if = {
 		limit = { ENG_uq_scotland_suspended = yes }
 		if = {

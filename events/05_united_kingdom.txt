@@ -7793,6 +7793,11 @@ country_event = {
 			}
 			modifier = {
 				add = 100
+				original_tag = IRE
+				FROM = { has_country_flag = ENG_uq_irish_sea_surrender }
+			}
+			modifier = {
+				add = 100
 				ENG_uq_is_caribbean_realm = yes
 				is_in_faction = no
 				NOT = { is_guaranteed_by = USA }
@@ -7833,6 +7838,11 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
+				original_tag = IRE
+				FROM = { has_country_flag = ENG_uq_irish_sea_surrender }
+			}
+			modifier = {
+				factor = 0
 				ENG_uq_is_caribbean_realm = yes
 				is_in_faction = no
 				NOT = { is_guaranteed_by = USA }
@@ -7860,6 +7870,10 @@ country_event = {
 			}
 		}
 		ENG_uq_enter_stage_2 = yes
+		if = {
+			limit = { FROM = { original_tag = IRE } }
+			ENG_uq_apply_irish_pacification = yes
+		}
 	}
 }
 
@@ -8624,7 +8638,7 @@ country_event = {
 	}
 }
 
-# Dublin receives Northern Ireland and the Crown (IRE)
+# The Crown Dominion of Ireland receives Northern Ireland (IRE)
 country_event = {
 	id = ENG_uq.100
 	title = ENG_uq.100.t
@@ -8637,25 +8651,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_uq.100.a executed"
 		custom_effect_tooltip = ENG_uq_ireland_dominion_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_uq.101 days = 1 } }
-		}
-	}
-}
-
-# Ireland enters the Union as a Crown Dominion (ENG, FROM = IRE)
-country_event = {
-	id = ENG_uq.101
-	title = ENG_uq.101.t
-	desc = ENG_uq.101.d
-	picture = GFX_treaty
-	is_triggered_only = yes
-
-	option = {
-		name = ENG_uq.101.a
-		log = "[GetDateText]: [This.GetName]: ENG_uq.101.a executed"
-		ENG_uq_enter_stage_2 = yes
-		hidden_effect = {
-			country_event = { id = ENG_uq.102 days = 7 }
+			ENG = { country_event = { id = ENG_uq.102 days = 7 } }
 		}
 	}
 }
@@ -10174,6 +10170,494 @@ country_event = {
 		custom_effect_tooltip = ENG_uq_rival_guarantee_TT
 		ai_chance = { base = 100 }
 	}
+}
+
+# The Union Question: offers to Dublin and the realms
+
+# Council of the Isles offer (IRE, FROM = ENG)
+country_event = {
+	id = ENG_uq.260
+	title = ENG_uq.260.t
+	desc = ENG_uq.260.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.260.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.260.a executed"
+		custom_effect_tooltip = ENG_uq_we_accept_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.261 days = 1 } }
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				has_opinion = { target = ENG value > 40 }
+				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.260.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.260.b executed"
+		custom_effect_tooltip = ENG_uq_we_decline_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.262 days = 1 } }
+		}
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				has_opinion = { target = ENG value > 40 }
+				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+		}
+	}
+}
+
+# Accepted (ENG, FROM = IRE)
+country_event = {
+	id = ENG_uq.261
+	title = ENG_uq.261.t
+	desc = ENG_uq.261.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.261.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.261.a executed"
+		ENG_uq_apply_council_of_the_isles = yes
+	}
+}
+
+# Refused (ENG, FROM = IRE)
+country_event = {
+	id = ENG_uq.262
+	title = ENG_uq.262.t
+	desc = ENG_uq.262.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.262.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.262.a executed"
+		set_country_flag = ENG_uq_council_of_the_isles_refused
+		set_country_flag = { flag = ENG_uq_council_of_the_isles_cooldown value = 1 days = 180 }
+		custom_effect_tooltip = ENG_uq_offer_cooldown_started_TT
+		IRE = {
+			set_temp_variable = { ENG_uq_consent_change = -5 }
+			ENG_uq_change_consent = yes
+		}
+		unlock_decision_tooltip = ENG_uq_retry_council_of_the_isles
+	}
+}
+
+# Anglo-Irish Economic Union offer (IRE, FROM = ENG)
+country_event = {
+	id = ENG_uq.263
+	title = ENG_uq.263.t
+	desc = ENG_uq.263.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.263.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.263.a executed"
+		custom_effect_tooltip = ENG_uq_we_accept_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.264 days = 1 } }
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				has_opinion = { target = ENG value > 40 }
+				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.263.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.263.b executed"
+		custom_effect_tooltip = ENG_uq_we_decline_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.265 days = 1 } }
+		}
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				has_opinion = { target = ENG value > 40 }
+				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+		}
+	}
+}
+
+# Accepted (ENG, FROM = IRE)
+country_event = {
+	id = ENG_uq.264
+	title = ENG_uq.264.t
+	desc = ENG_uq.264.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.264.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.264.a executed"
+		ENG_uq_apply_anglo_irish_economic_union = yes
+	}
+}
+
+# Refused (ENG, FROM = IRE)
+country_event = {
+	id = ENG_uq.265
+	title = ENG_uq.265.t
+	desc = ENG_uq.265.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.265.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.265.a executed"
+		set_country_flag = ENG_uq_anglo_irish_economic_union_refused
+		set_country_flag = { flag = ENG_uq_anglo_irish_economic_union_cooldown value = 1 days = 180 }
+		custom_effect_tooltip = ENG_uq_offer_cooldown_started_TT
+		IRE = {
+			set_temp_variable = { ENG_uq_consent_change = -5 }
+			ENG_uq_change_consent = yes
+		}
+		unlock_decision_tooltip = ENG_uq_retry_anglo_irish_economic_union
+	}
+}
+
+# Common Travel Area Plus offer (IRE, FROM = ENG)
+country_event = {
+	id = ENG_uq.266
+	title = ENG_uq.266.t
+	desc = ENG_uq.266.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.266.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.266.a executed"
+		custom_effect_tooltip = ENG_uq_we_accept_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.267 days = 1 } }
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				has_opinion = { target = ENG value > 40 }
+				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.266.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.266.b executed"
+		custom_effect_tooltip = ENG_uq_we_decline_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.268 days = 1 } }
+		}
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				has_opinion = { target = ENG value > 40 }
+				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+		}
+	}
+}
+
+# Accepted (ENG, FROM = IRE)
+country_event = {
+	id = ENG_uq.267
+	title = ENG_uq.267.t
+	desc = ENG_uq.267.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.267.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.267.a executed"
+		ENG_uq_apply_common_travel_area_plus = yes
+	}
+}
+
+# Refused (ENG, FROM = IRE)
+country_event = {
+	id = ENG_uq.268
+	title = ENG_uq.268.t
+	desc = ENG_uq.268.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.268.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.268.a executed"
+		set_country_flag = ENG_uq_common_travel_area_plus_refused
+		set_country_flag = { flag = ENG_uq_common_travel_area_plus_cooldown value = 1 days = 180 }
+		custom_effect_tooltip = ENG_uq_offer_cooldown_started_TT
+		IRE = {
+			set_temp_variable = { ENG_uq_consent_change = -5 }
+			ENG_uq_change_consent = yes
+		}
+		unlock_decision_tooltip = ENG_uq_retry_common_travel_area_plus
+	}
+}
+
+# Realm Accord offer (realm, FROM = ENG)
+country_event = {
+	id = ENG_uq.270
+	title = ENG_uq.270.t
+	desc = ENG_uq.270.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.270.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.270.a executed"
+		custom_effect_tooltip = ENG_uq_we_accept_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.271 days = 1 } }
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				ENG = { check_variable = { ENG_consent@PREV > 40 } }
+				NOT = { has_country_flag = ENG_uq_republic }
+				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.270.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.270.b executed"
+		custom_effect_tooltip = ENG_uq_we_decline_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.272 days = 1 } }
+		}
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				ENG = { check_variable = { ENG_consent@PREV > 40 } }
+				NOT = { has_country_flag = ENG_uq_republic }
+				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+		}
+	}
+}
+
+# Accepted (ENG, FROM = realm)
+country_event = {
+	id = ENG_uq.271
+	title = ENG_uq.271.t
+	desc = ENG_uq.271.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.271.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.271.a executed"
+		FROM = { ENG_uq_apply_realm_accord = yes }
+	}
+}
+
+# Refused (ENG, FROM = realm)
+country_event = {
+	id = ENG_uq.272
+	title = ENG_uq.272.t
+	desc = ENG_uq.272.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.272.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.272.a executed"
+		set_country_flag = ENG_uq_accord_refused@FROM
+		set_country_flag = { flag = ENG_uq_accord_cooldown@FROM value = 1 days = 180 }
+		custom_effect_tooltip = ENG_uq_offer_cooldown_started_TT
+		FROM = {
+			set_temp_variable = { ENG_uq_consent_change = -5 }
+			ENG_uq_change_consent = yes
+		}
+		unlock_decision_tooltip = ENG_uq_retry_realm_accord
+	}
+}
+
+# Dublin answers the Ulster settlement (IRE, FROM = ENG)
+country_event = {
+	id = ENG_uq.275
+	title = ENG_uq.275.t
+	desc = ENG_uq.275.d
+	picture = GFX_politics_protest
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.275.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.275.a executed"
+		add_opinion_modifier = { target = ENG modifier = medium_decrease }
+		set_temp_variable = { ENG_uq_consent_change = -10 }
+		ENG_uq_change_consent = yes
+		ai_chance = { base = 60 }
+	}
+
+	option = {
+		name = ENG_uq.275.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.275.b executed"
+		custom_effect_tooltip = ENG_uq_dublin_backs_dissidents_TT
+		ENG = {
+			if = {
+				limit = { NOT = { has_idea = ENG_the_dissident_campaign } }
+				add_ideas = ENG_the_dissident_campaign
+			}
+			set_temp_variable = { ENG_agitation_change = 10 }
+			ENG_change_north_irish_agitation = yes
+			set_temp_variable = { ENG_nationalists_change = 5 }
+			ENG_change_north_irish_nationalists = yes
+			set_temp_variable = { ENG_imperial_tension_change = 2 }
+			ENG_change_imperial_tension = yes
+		}
+		ai_chance = {
+			base = 20
+			modifier = {
+				factor = 3
+				has_opinion = { target = ENG value < 0 }
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					is_in_faction_with = ENG
+					has_opinion = { target = ENG value > 50 }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.275.c
+		ai_chance = {
+			base = 20
+			modifier = {
+				factor = 3
+				has_opinion = { target = ENG value > 50 }
+			}
+		}
+	}
+}
+
+# The Republic yields to the blockade (IRE, FROM = ENG)
+country_event = {
+	id = ENG_uq.280
+	title = ENG_uq.280.t
+	desc = ENG_uq.280.d
+	picture = GFX_corvette
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.280.a }
+}
+
+# Dublin can no longer hold out (ENG)
+country_event = {
+	id = ENG_uq.281
+	title = ENG_uq.281.t
+	desc = ENG_uq.281.d
+	picture = GFX_corvette
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.281.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.281.a executed"
+		custom_effect_tooltip = ENG_uq_irish_sea_surrender_TT
+	}
+}
+
+# An invitation to share the Crown (member, FROM = ENG)
+country_event = {
+	id = ENG_uq.290
+	title = ENG_uq.290.t
+	desc = ENG_uq.290.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.290.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.290.a executed"
+		custom_effect_tooltip = ENG_uq_crown_accepted_TT
+		set_country_flag = ENG_uq_crown_accepted
+		clr_country_flag = ENG_uq_republic
+		if = {
+			limit = { NOT = { has_idea = ENG_crown_realm_status } }
+			add_ideas = ENG_crown_realm_status
+		}
+		set_temp_variable = { ENG_uq_consent_change = 10 }
+		ENG_uq_change_consent = yes
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.291 days = 1 } }
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				ENG = { check_variable = { ENG_consent@PREV > 50 } }
+				has_opinion = { target = ENG value > 50 }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.290.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.290.b executed"
+		set_temp_variable = { ENG_uq_consent_change = -5 }
+		ENG_uq_change_consent = yes
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.292 days = 1 } }
+		}
+		ai_chance = {
+			base = 100
+			modifier = {
+				factor = 0
+				ENG = { check_variable = { ENG_consent@PREV > 50 } }
+				has_opinion = { target = ENG value > 50 }
+			}
+		}
+	}
+}
+
+# A new realm takes the Crown (ENG, FROM = member)
+country_event = {
+	id = ENG_uq.291
+	title = ENG_uq.291.t
+	desc = ENG_uq.291.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.291.a }
+}
+
+# The Crown is declined (ENG, FROM = member)
+country_event = {
+	id = ENG_uq.292
+	title = ENG_uq.292.t
+	desc = ENG_uq.292.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.292.a }
 }
 
 ########################## Commonwealth of Nations #########################

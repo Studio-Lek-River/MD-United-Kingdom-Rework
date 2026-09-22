@@ -56,24 +56,25 @@ ENG_settlement_government_fell = {
 	NOT = { check_variable = { ruling_party = ENG_settlement_ruling_party } }
 }
 
-ENG_two_home_nations_integrated = {
-	custom_trigger_tooltip = {
-		tooltip = ENG_two_home_nations_integrated_TT
-		OR = {
-			AND = {
-				has_country_flag = ENG_scottish_integrated
-				has_country_flag = ENG_welsh_integrated
-			}
-			AND = {
-				has_country_flag = ENG_scottish_integrated
-				has_country_flag = ENG_north_irish_integrated
-			}
-			AND = {
-				has_country_flag = ENG_welsh_integrated
-				has_country_flag = ENG_north_irish_integrated
-			}
-		}
-	}
+# Country scope. Enough divisions stand in the region to enforce martial law.
+ENG_uq_scottish_garrisoned = {
+	divisions_in_state = { state = 9 size > 2 }
+	divisions_in_state = { state = 437 size > 0 }
+}
+
+ENG_uq_north_irish_garrisoned = {
+	divisions_in_state = { state = 17 size > 2 }
+}
+
+ENG_uq_welsh_garrisoned = {
+	divisions_in_state = { state = 16 size > 2 }
+	divisions_in_state = { state = 1192 size > 0 }
+}
+
+# Country scope. The Royal Navy keeps the Irish Sea closed.
+ENG_uq_irish_sea_blockade_held = {
+	has_idea = ENG_uq_irish_sea_blockade
+	has_navy_size = { size > 11 }
 }
 
 # Suspension: the region is still ours and still devolved
@@ -364,9 +365,10 @@ ENG_uq_ireland_targeted = {
 	}
 }
 
-# Country scope. The Commonwealth realms that keep the British monarch as head of state.
+# Country scope. The Commonwealth realms that keep the British monarch as head of state, plus any member that accepted the Crown under A Shared Crown.
 ENG_uq_is_crown_realm = {
 	OR = {
+		has_country_flag = ENG_uq_crown_accepted
 		original_tag = CAN
 		original_tag = AST
 		original_tag = NZL
