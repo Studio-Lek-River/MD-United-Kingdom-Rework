@@ -1,10 +1,5 @@
 spriteTypes = {
 	spritetype = {
-		name = "GFX_ENG_devolution_map"
-		texturefile = "gfx/interface/scripted_gui/eng/ENG_devolution_graphic.dds"
-	}
-
-	spritetype = {
 		name = "GFX_ENG_england_map"
 		texturefile = "gfx/interface/scripted_gui/eng/ENG_england_gfx.dds"
 	}
@@ -46,15 +41,5 @@ spriteTypes = {
 	spritetype = {
 		name = "GFX_ENG_back"
 		texturefile = "gfx/interface/scripted_gui/eng/ENG_back_gfx.dds"
-	}
-
-	spritetype = {
-		name = "ENG_devolution_button_gfx"
-		texturefile = "gfx/interface/scripted_gui/eng/ENG_devolution_button_gfx.dds"
-	}
-
-	spritetype = {
-		name = "ENG_devolution_button_shine_gfx"
-		texturefile = "gfx/interface/scripted_gui/eng/ENG_devolution_button_shine_gfx.dds"
 	}
 }

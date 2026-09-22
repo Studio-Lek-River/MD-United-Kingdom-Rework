@@ -23,10 +23,13 @@ ENG_monarchy_decision_category = {
 }
 
 ENG_devolved_matters = {
+	icon = GFX_decision_category_generic_formable_nations
+
 	allowed = { original_tag = ENG }
 
-	icon = GFX_decision_category_generic_formable_nations
 	priority = 1000
+	scripted_gui = ENG_devolution_gui_window
+	visible_when_empty = yes
 
 	visible = { NOT = { has_country_flag = ENG_devolution_purged } }
 }
