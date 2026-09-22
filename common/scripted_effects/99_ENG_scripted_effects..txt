@@ -2678,6 +2678,21 @@ ENG_uq_welsh_unrest = {
 }
 
 ENG_uq_suspension_monthly = {
+	if = {
+		limit = { ENG_uq_scotland_under_direct_rule = yes }
+		set_temp_variable = { ENG_agitation_change = -2 }
+		ENG_change_scottish_agitation = yes
+	}
+	if = {
+		limit = { ENG_uq_north_ireland_under_direct_rule = yes }
+		set_temp_variable = { ENG_agitation_change = -2 }
+		ENG_change_north_irish_agitation = yes
+	}
+	if = {
+		limit = { ENG_uq_wales_under_direct_rule = yes }
+		set_temp_variable = { ENG_agitation_change = -2 }
+		ENG_change_wales_agitation = yes
+	}
 	ENG_uq_update_direct_rule = yes
 	if = {
 		limit = {

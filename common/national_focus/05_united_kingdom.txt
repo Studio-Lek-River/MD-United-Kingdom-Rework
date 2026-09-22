@@ -21913,7 +21913,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_crowns_peace
-		icon = british_isles
+		icon = reclaim_crown_jewel
 
 		x = 0
 		y = 1
@@ -21932,15 +21932,18 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_crowns_peace"
 			custom_effect_tooltip = ENG_uq_assemblies_suspended_TT
+			newline = yes
 			set_country_flag = ENG_uq_assemblies_suspended
 			set_temp_variable = { ENG_agitation_change = 15 }
 			ENG_change_scottish_agitation = yes
 			ENG_change_north_irish_agitation = yes
 			ENG_change_wales_agitation = yes
+			newline = yes
 			set_temp_variable = { ENG_nationalists_change = 10 }
 			ENG_change_scottish_nationalists = yes
 			ENG_change_north_irish_nationalists = yes
 			ENG_change_wales_nationalists = yes
+			newline = yes
 			set_temp_variable = { ENG_imperial_tension_change = 5 }
 			ENG_change_imperial_tension = yes
 			hidden_effect = { update_eng_devolution_dirty_variable = yes }
@@ -21982,7 +21985,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_direct_rule_from_london
-		icon = british_isles
+		icon = annex_country_2
 
 		x = 0
 		y = 2
@@ -22002,6 +22005,12 @@ focus_tree = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_direct_rule_from_london"
 			add_ideas = ENG_direct_rule_idea
 			newline = yes
+			custom_effect_tooltip = ENG_direct_rule_agitation_TT
+			newline = yes
+			unlock_decision_tooltip = ENG_scottish_pacification
+			unlock_decision_tooltip = ENG_north_irish_pacification
+			unlock_decision_tooltip = ENG_welsh_pacification
+			newline = yes
 			ENG_uq_update_direct_rule = yes
 		}
 
@@ -22010,7 +22019,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_ulster_settled_by_the_crown
-		icon = british_isles
+		icon = ultimatum
 
 		x = 2
 		y = 2
@@ -22248,7 +22257,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_irish_question_reopened
-		icon = british_isles
+		icon = demand_territory3
 
 		x = 0
 		y = 1
@@ -22284,7 +22293,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_sponsor_the_unionist_lobby_in_dublin
-		icon = british_isles
+		icon = ENG_british_nats
 
 		x = 0
 		y = 2
@@ -22319,8 +22328,8 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_close_the_irish_sea
-		icon = british_isles
+		id = ENG_close_the_irish_sea #Move this availability and the mission to has_naval_control
+		icon = embargo
 
 		x = 0
 		y = 3
@@ -22351,7 +22360,6 @@ focus_tree = {
 			ENG_change_imperial_tension = yes
 			newline = yes
 			activate_mission = ENG_uq_blockade_of_ireland
-			custom_effect_tooltip = ENG_uq_blockade_of_ireland_TT
 		}
 
 		ai_will_do = { base = 0 }
@@ -22359,7 +22367,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_ultimatum_to_dublin
-		icon = british_isles
+		icon = ireland_north_and_south
 
 		x = 0
 		y = 4
@@ -22389,15 +22397,18 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_ultimatum_to_dublin"
 			custom_effect_tooltip = ENG_ultimatum_to_dublin_TT
-			add_war_support = 0.05
+			newline = yes
 			set_variable = { ENG_coercion@IRE = 3 }
 			custom_effect_tooltip = ENG_uq_irish_coercion_3_set_TT
+			newline = yes
 			IRE = { country_event = { id = ENG_uq.40 days = 1 } }
+			newline = yes
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = {
 				custom_effect_tooltip = ENG_uq_irish_coercion_6_TT
 				custom_effect_tooltip = ENG_uq_ireland_protectorate_TT
 			}
+			newline = yes
 			custom_effect_tooltip = TT_IF_THEY_REJECT
 			effect_tooltip = {
 				unlock_decision_tooltip = ENG_uq_enforce_ultimatum
@@ -22465,7 +22476,7 @@ focus_tree = {
 
 	focus = {
 		id = ENG_reserve_powers
-		icon = british_isles
+		icon = brit_navy
 
 		x = 5
 		y = 1
