@@ -353,25 +353,14 @@ ENG_uq_ireland_targeted = {
 	}
 }
 
-# Country scope. The Commonwealth realms that keep the British monarch as head of state, plus any member that accepted the Crown under A Shared Crown.
-ENG_uq_is_crown_realm = {
+# ENG scope. The Commonwealth development fund is paying out, either through the fund idea or permanently under The Crown Imperial.
+ENG_uq_commonwealth_fund_running = {
 	OR = {
-		has_country_flag = ENG_uq_crown_accepted
-		original_tag = CAN
-		original_tag = AST
-		original_tag = NZL
-		original_tag = JAM
-		original_tag = BAH
-		original_tag = BAR
-		original_tag = BLZ
-		original_tag = ANT
-		original_tag = GRA
-		original_tag = STK
-		original_tag = STL
-		original_tag = STV
-		original_tag = PAP
-		original_tag = SOL
-		original_tag = TUL
+		has_completed_focus = ENG_the_crown_imperial
+		custom_trigger_tooltip = {
+			tooltip = ENG_uq_fund_running_TT
+			has_idea = ENG_cmw_development_fund_idea
+		}
 	}
 }
 
@@ -387,6 +376,20 @@ ENG_uq_is_caribbean_realm = {
 		original_tag = STK
 		original_tag = STL
 		original_tag = STV
+	}
+}
+
+# Country scope. The Commonwealth realms that keep the British monarch as head of state, plus any member that accepted the Crown under A Shared Crown.
+ENG_uq_is_crown_realm = {
+	OR = {
+		has_country_flag = ENG_uq_crown_accepted
+		ENG_uq_is_caribbean_realm = yes
+		original_tag = CAN
+		original_tag = AST
+		original_tag = NZL
+		original_tag = PAP
+		original_tag = SOL
+		original_tag = TUL
 	}
 }
 
@@ -571,4 +574,68 @@ ENG_ai_not_rule_britannia_path = {
 ENG_ai_not_imperial_path = {
 	NOT = { has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH }
 	has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+}
+
+# Union Question decision cost tiers. Each pairs a share of GDP against the treasury with the decision's political power price; the name matches the decision's custom_cost_text.
+ENG_uq_cost_small_pp25 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.002
+		less_than = { value = treasury }
+	}
+	has_political_power > 24.999
+}
+
+ENG_uq_cost_small_pp75 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.002
+		less_than = { value = treasury }
+	}
+	has_political_power > 74.999
+}
+
+ENG_uq_cost_small_pp100 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.002
+		less_than = { value = treasury }
+	}
+	has_political_power > 99.999
+}
+
+ENG_uq_cost_medium_pp50 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.004
+		less_than = { value = treasury }
+	}
+	has_political_power > 49.999
+}
+
+ENG_uq_cost_medium_pp75 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.004
+		less_than = { value = treasury }
+	}
+	has_political_power > 74.999
+}
+
+ENG_uq_cost_medium_pp150 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.004
+		less_than = { value = treasury }
+	}
+	has_political_power > 149.999
+}
+
+ENG_uq_cost_large_pp300 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.006
+		less_than = { value = treasury }
+	}
+	has_political_power > 299.999
 }

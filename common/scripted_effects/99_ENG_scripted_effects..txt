@@ -651,6 +651,12 @@ ENG_uq_change_consent = {
 	}
 }
 
+# Call in the target's scope. The programme is spun badly at home and consent slips.
+ENG_uq_press_scandal = {
+	set_temp_variable = { ENG_uq_consent_change = -5 }
+	ENG_uq_change_consent = yes
+}
+
 ENG_uq_update_consent = {
 	set_temp_variable = { ENG_uq_consent_change = 0 }
 	if = {
@@ -1710,15 +1716,15 @@ ENG_uq_update_imperial_tension = {
 		clr_country_flag = ENG_uq_tension_band_80
 	}
 	if = {
-		limit = { has_country_flag = ENG_uq_tension_band_60 }
+		limit = { check_variable = { ENG_imperial_tension > 59 } }
 		ENG_uq_patron_reactions = yes
 	}
 	if = {
-		limit = { has_country_flag = ENG_uq_tension_band_80 }
+		limit = { check_variable = { ENG_imperial_tension > 79 } }
 		ENG_uq_sponsored_resistance = yes
 	}
 	if = {
-		limit = { has_country_flag = ENG_uq_tension_band_40 }
+		limit = { check_variable = { ENG_imperial_tension > 39 } }
 		ENG_uq_commonwealth_exodus = yes
 	}
 }
@@ -1887,13 +1893,14 @@ ENG_uq_patron_reactions = {
 ENG_uq_commonwealth_exodus = {
 	set_temp_variable = { ENG_uq_leave_chance = { value = ENG_imperial_tension subtract = 40 multiply = 0.1 } }
 	if = {
-		limit = { has_country_flag = ENG_uq_tension_band_80 }
+		limit = { check_variable = { ENG_imperial_tension > 79 } }
 		multiply_temp_variable = { ENG_uq_leave_chance = 2 }
 	}
 	if = {
 		limit = { check_variable = { global.commonwealth_cohesion < 30 } }
 		multiply_temp_variable = { ENG_uq_leave_chance = 2 }
 	}
+	# Iterates countries, not global.commonwealth_member, because a leaver removes itself from that array mid-loop.
 	every_other_country = {
 		limit = {
 			is_in_array = { array = global.commonwealth_member value = THIS }
@@ -1928,12 +1935,12 @@ ENG_uq_commonwealth_leave = {
 		set_variable = { ENG_uq_event_target = PREV }
 		news_event = { id = United_Kingdom_News.7 hours = 6 }
 	}
-	every_other_country = {
-		limit = {
-			is_in_array = { array = global.commonwealth_member value = THIS }
-			NOT = { tag = ROOT }
+	for_each_scope_loop = {
+		array = global.commonwealth_member
+		if = {
+			limit = { NOT = { tag = ROOT } }
+			country_event = CMW_Leaving.1
 		}
-		country_event = CMW_Leaving.1
 	}
 }
 

@@ -4565,14 +4565,7 @@ ENG_union_question_decisions = {
 		}
 
 		cost = 100
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.002
-				less_than = { value = treasury }
-			}
-			has_political_power > 99.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_small_pp100 = yes }
 		custom_cost_text = ENG_cost_small_expenditure_pp100
 		ai_hint_pp_cost = 100
 		days_remove = 180
@@ -4831,9 +4824,9 @@ ENG_union_question_decisions = {
 		available = {
 			custom_trigger_tooltip = {
 				tooltip = ENG_uq_caribbean_member_uncoerced_TT
-				any_country = {
+				any_of_scopes = {
+					array = ENG_integration_targets
 					ENG_uq_is_caribbean_realm = yes
-					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
 					ROOT = {
 						check_variable = { ENG_integration_stage@PREV = 1 }
 						check_variable = { ENG_coercion@PREV < 3 }
@@ -5287,14 +5280,7 @@ ENG_union_question_decisions = {
 		}
 
 		cost = 100
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.002
-				less_than = { value = treasury }
-			}
-			has_political_power > 99.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_small_pp100 = yes }
 		custom_cost_text = ENG_cost_small_expenditure_pp100
 		ai_hint_pp_cost = 100
 		days_remove = 365
@@ -5328,14 +5314,7 @@ ENG_union_question_decisions = {
 		target_trigger = { NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } } }
 
 		cost = 75
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.002
-				less_than = { value = treasury }
-			}
-			has_political_power > 74.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_small_pp75 = yes }
 		custom_cost_text = ENG_cost_small_expenditure_pp75
 		ai_hint_pp_cost = 75
 		days_re_enable = 365
@@ -5356,10 +5335,7 @@ ENG_union_question_decisions = {
 				}
 				20 = {
 					custom_effect_tooltip = ENG_uq_press_scandal_TT
-					FROM = {
-						set_temp_variable = { ENG_uq_consent_change = -5 }
-						ENG_uq_change_consent = yes
-					}
+					FROM = { ENG_uq_press_scandal = yes }
 				}
 			}
 		}
@@ -5375,14 +5351,7 @@ ENG_union_question_decisions = {
 		target_trigger = { NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } } }
 
 		cost = 75
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.004
-				less_than = { value = treasury }
-			}
-			has_political_power > 74.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_medium_pp75 = yes }
 		custom_cost_text = cost_medium_expenditure_pp75
 		ai_hint_pp_cost = 75
 		days_re_enable = 365
@@ -5402,10 +5371,7 @@ ENG_union_question_decisions = {
 				}
 				20 = {
 					custom_effect_tooltip = ENG_uq_press_scandal_TT
-					FROM = {
-						set_temp_variable = { ENG_uq_consent_change = -5 }
-						ENG_uq_change_consent = yes
-					}
+					FROM = { ENG_uq_press_scandal = yes }
 				}
 			}
 		}
@@ -5421,14 +5387,7 @@ ENG_union_question_decisions = {
 		target_trigger = { NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } } }
 
 		cost = 75
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.002
-				less_than = { value = treasury }
-			}
-			has_political_power > 74.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_small_pp75 = yes }
 		custom_cost_text = ENG_cost_small_expenditure_pp75
 		ai_hint_pp_cost = 75
 		days_re_enable = 365
@@ -5447,10 +5406,7 @@ ENG_union_question_decisions = {
 				}
 				20 = {
 					custom_effect_tooltip = ENG_uq_press_scandal_TT
-					FROM = {
-						set_temp_variable = { ENG_uq_consent_change = -5 }
-						ENG_uq_change_consent = yes
-					}
+					FROM = { ENG_uq_press_scandal = yes }
 				}
 			}
 		}
@@ -5481,10 +5437,7 @@ ENG_union_question_decisions = {
 				}
 				20 = {
 					custom_effect_tooltip = ENG_uq_press_scandal_TT
-					FROM = {
-						set_temp_variable = { ENG_uq_consent_change = -5 }
-						ENG_uq_change_consent = yes
-					}
+					FROM = { ENG_uq_press_scandal = yes }
 				}
 			}
 		}
@@ -5501,14 +5454,7 @@ ENG_union_question_decisions = {
 		}
 
 		cost = 75
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.004
-				less_than = { value = treasury }
-			}
-			has_political_power > 74.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_medium_pp75 = yes }
 		custom_cost_text = cost_medium_expenditure_pp75
 		ai_hint_pp_cost = 75
 		days_re_enable = 365
@@ -5531,8 +5477,7 @@ ENG_union_question_decisions = {
 					}
 					20 = {
 						custom_effect_tooltip = ENG_uq_press_scandal_TT
-						set_temp_variable = { ENG_uq_consent_change = -5 }
-						ENG_uq_change_consent = yes
+						ENG_uq_press_scandal = yes
 					}
 				}
 			}
@@ -5550,14 +5495,7 @@ ENG_union_question_decisions = {
 		}
 
 		cost = 75
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.002
-				less_than = { value = treasury }
-			}
-			has_political_power > 74.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_small_pp75 = yes }
 		custom_cost_text = ENG_cost_small_expenditure_pp75
 		ai_hint_pp_cost = 75
 		days_re_enable = 365
@@ -5581,8 +5519,7 @@ ENG_union_question_decisions = {
 					}
 					20 = {
 						custom_effect_tooltip = ENG_uq_press_scandal_TT
-						set_temp_variable = { ENG_uq_consent_change = -5 }
-						ENG_uq_change_consent = yes
+						ENG_uq_press_scandal = yes
 					}
 				}
 			}
@@ -5649,10 +5586,7 @@ ENG_union_question_decisions = {
 				}
 				20 = {
 					custom_effect_tooltip = ENG_uq_press_scandal_TT
-					FROM = {
-						set_temp_variable = { ENG_uq_consent_change = -5 }
-						ENG_uq_change_consent = yes
-					}
+					FROM = { ENG_uq_press_scandal = yes }
 				}
 			}
 			set_temp_variable = { ENG_cmw_cohesion_change = 1 }
@@ -5941,14 +5875,7 @@ ENG_union_question_decisions = {
 		}
 
 		cost = 25
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.002
-				less_than = { value = treasury }
-			}
-			has_political_power > 24.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_small_pp25 = yes }
 		custom_cost_text = ENG_cost_small_expenditure_pp25
 		ai_hint_pp_cost = 25
 		days_re_enable = 60
@@ -6146,14 +6073,7 @@ ENG_union_question_decisions = {
 		icon = GFX_decision_generic_civil_support
 
 		cost = 150
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.004
-				less_than = { value = treasury }
-			}
-			has_political_power > 149.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_medium_pp150 = yes }
 		custom_cost_text = ENG_cost_medium_expenditure_pp150
 		ai_hint_pp_cost = 150
 		days_remove = 180
@@ -6444,14 +6364,7 @@ ENG_union_question_decisions = {
 		}
 
 		cost = 300
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.006
-				less_than = { value = treasury }
-			}
-			has_political_power > 299.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_large_pp300 = yes }
 		custom_cost_text = ENG_cost_large_expenditure_pp300
 		ai_hint_pp_cost = 300
 
@@ -6607,9 +6520,9 @@ ENG_union_question_decisions = {
 				}
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_caribbean_member_ready_TT
-					any_country = {
+					any_of_scopes = {
+						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
-						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
 						ROOT = {
 							check_variable = { ENG_integration_stage@PREV = 1 }
 							NOT = { has_country_flag = ENG_uq_lock@PREV }
@@ -6621,9 +6534,9 @@ ENG_union_question_decisions = {
 			else = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_caribbean_member_coerced_TT
-					any_country = {
+					any_of_scopes = {
+						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
-						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
 						ROOT = { check_variable = { ENG_integration_stage@PREV = 1 } }
 						check_variable = { ROOT.ENG_coercion@THIS > 5 }
 					}
@@ -6690,9 +6603,9 @@ ENG_union_question_decisions = {
 				}
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_caribbean_member_ready_TT
-					any_country = {
+					any_of_scopes = {
+						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
-						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
 						ROOT = {
 							check_variable = { ENG_integration_stage@PREV = 2 }
 							NOT = { has_country_flag = ENG_uq_lock@PREV }
@@ -6704,9 +6617,9 @@ ENG_union_question_decisions = {
 			else = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_caribbean_member_coerced_TT
-					any_country = {
+					any_of_scopes = {
+						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
-						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
 						ROOT = { check_variable = { ENG_integration_stage@PREV = 2 } }
 						check_variable = { ROOT.ENG_coercion@THIS > 5 }
 					}
@@ -6759,14 +6672,7 @@ ENG_union_question_decisions = {
 		visible = { ENG_uq_caribbean_opened = yes }
 
 		cost = 300
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.006
-				less_than = { value = treasury }
-			}
-			has_political_power > 299.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_large_pp300 = yes }
 		custom_cost_text = ENG_cost_large_expenditure_pp300
 		ai_hint_pp_cost = 300
 
@@ -6784,9 +6690,9 @@ ENG_union_question_decisions = {
 				}
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_caribbean_member_ready_TT
-					any_country = {
+					any_of_scopes = {
+						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
-						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
 						ROOT = {
 							check_variable = { ENG_integration_stage@PREV = 3 }
 							NOT = { has_country_flag = ENG_uq_lock@PREV }
@@ -6798,9 +6704,9 @@ ENG_union_question_decisions = {
 			else = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_caribbean_member_coerced_TT
-					any_country = {
+					any_of_scopes = {
+						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
-						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
 						ROOT = { check_variable = { ENG_integration_stage@PREV = 3 } }
 						check_variable = { ROOT.ENG_coercion@THIS > 5 }
 					}
@@ -7219,14 +7125,7 @@ ENG_commonwealth_decisions = {
 		}
 
 		cost = 50
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.004
-				less_than = { value = treasury }
-			}
-			has_political_power > 49.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_medium_pp50 = yes }
 		custom_cost_text = ENG_cost_medium_expenditure_pp50
 		ai_hint_pp_cost = 50
 		days_remove = 365
@@ -7263,14 +7162,7 @@ ENG_commonwealth_decisions = {
 		}
 
 		cost = 25
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.002
-				less_than = { value = treasury }
-			}
-			has_political_power > 24.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_small_pp25 = yes }
 		custom_cost_text = ENG_cost_small_expenditure_pp25
 		ai_hint_pp_cost = 25
 
@@ -7298,14 +7190,7 @@ ENG_commonwealth_decisions = {
 		}
 
 		cost = 25
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.002
-				less_than = { value = treasury }
-			}
-			has_political_power > 24.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_small_pp25 = yes }
 		custom_cost_text = ENG_cost_small_expenditure_pp25
 		ai_hint_pp_cost = 25
 		days_re_enable = 365
@@ -7339,14 +7224,7 @@ ENG_commonwealth_decisions = {
 		icon = GFX_decision_generic_research
 
 		cost = 25
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.002
-				less_than = { value = treasury }
-			}
-			has_political_power > 24.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_small_pp25 = yes }
 		custom_cost_text = ENG_cost_small_expenditure_pp25
 		ai_hint_pp_cost = 25
 		days_re_enable = 730
@@ -7415,14 +7293,7 @@ ENG_commonwealth_decisions = {
 		visible = { has_completed_focus = ENG_a_family_of_nations }
 
 		cost = 75
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.004
-				less_than = { value = treasury }
-			}
-			has_political_power > 74.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_medium_pp75 = yes }
 		custom_cost_text = cost_medium_expenditure_pp75
 		ai_hint_pp_cost = 75
 		days_re_enable = 730
@@ -7456,14 +7327,7 @@ ENG_commonwealth_decisions = {
 		}
 
 		cost = 75
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.004
-				less_than = { value = treasury }
-			}
-			has_political_power > 74.999
-		}
+		custom_cost_trigger = { ENG_uq_cost_medium_pp75 = yes }
 		custom_cost_text = cost_medium_expenditure_pp75
 		ai_hint_pp_cost = 75
 		days_re_enable = 365

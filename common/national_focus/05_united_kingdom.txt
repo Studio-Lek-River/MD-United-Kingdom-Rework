@@ -23426,13 +23426,7 @@ focus_tree = {
 
 		available = {
 			ENG_uq_path_in_power = yes
-			OR = {
-				has_completed_focus = ENG_the_crown_imperial
-				custom_trigger_tooltip = {
-					tooltip = ENG_uq_fund_running_TT
-					has_idea = ENG_cmw_development_fund_idea
-				}
-			}
+			ENG_uq_commonwealth_fund_running = yes
 			OR = {
 				country_exists = SIE
 				country_exists = GAM
@@ -23494,13 +23488,7 @@ focus_tree = {
 
 		available = {
 			ENG_uq_path_in_power = yes
-			OR = {
-				has_completed_focus = ENG_the_crown_imperial
-				custom_trigger_tooltip = {
-					tooltip = ENG_uq_fund_running_TT
-					has_idea = ENG_cmw_development_fund_idea
-				}
-			}
+			ENG_uq_commonwealth_fund_running = yes
 			OR = {
 				country_exists = KEN
 				country_exists = UGA
@@ -23561,13 +23549,7 @@ focus_tree = {
 
 		available = {
 			ENG_uq_path_in_power = yes
-			OR = {
-				has_completed_focus = ENG_the_crown_imperial
-				custom_trigger_tooltip = {
-					tooltip = ENG_uq_fund_running_TT
-					has_idea = ENG_cmw_development_fund_idea
-				}
-			}
+			ENG_uq_commonwealth_fund_running = yes
 			OR = {
 				country_exists = ZAM
 				country_exists = ZIM
@@ -23634,13 +23616,7 @@ focus_tree = {
 
 		available = {
 			ENG_uq_path_in_power = yes
-			OR = {
-				has_completed_focus = ENG_the_crown_imperial
-				custom_trigger_tooltip = {
-					tooltip = ENG_uq_fund_running_TT
-					has_idea = ENG_cmw_development_fund_idea
-				}
-			}
+			ENG_uq_commonwealth_fund_running = yes
 			OR = {
 				country_exists = KUW
 				country_exists = QAT
@@ -23704,13 +23680,7 @@ focus_tree = {
 
 		available = {
 			ENG_uq_path_in_power = yes
-			OR = {
-				has_completed_focus = ENG_the_crown_imperial
-				custom_trigger_tooltip = {
-					tooltip = ENG_uq_fund_running_TT
-					has_idea = ENG_cmw_development_fund_idea
-				}
-			}
+			ENG_uq_commonwealth_fund_running = yes
 			OR = {
 				country_exists = MAY
 				country_exists = SIN
@@ -23772,13 +23742,7 @@ focus_tree = {
 
 		available = {
 			ENG_uq_path_in_power = yes
-			OR = {
-				has_completed_focus = ENG_the_crown_imperial
-				custom_trigger_tooltip = {
-					tooltip = ENG_uq_fund_running_TT
-					has_idea = ENG_cmw_development_fund_idea
-				}
-			}
+			ENG_uq_commonwealth_fund_running = yes
 			OR = {
 				country_exists = FIJ
 				country_exists = SOL
