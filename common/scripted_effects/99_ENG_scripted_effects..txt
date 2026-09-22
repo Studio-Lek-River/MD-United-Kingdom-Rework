@@ -542,6 +542,12 @@ ENG_uq_enter_stage_2 = {
 	FROM = {
 		set_temp_variable = { ENG_union_strain_stage = 2 }
 		ENG_add_union_strain_for_target = yes
+		if = {
+			limit = { exists = yes }
+			set_temp_variable = { percent_change = 10 }
+			set_temp_variable = { tag_index = ENG }
+			change_influence_percentage = yes
+		}
 	}
 	ENG_uq_irish_lobby_reaction = yes
 	ENG_uq_realm_stage_reaction = yes
@@ -762,6 +768,32 @@ ENG_uq_set_accept_weight = {
 	}
 }
 
+# Target scope. Saves the strongest eligible foreign influencer as event_target:ENG_uq_patron.
+ENG_uq_pick_patron = {
+	set_temp_variable = { ENG_uq_patron_found = 0 }
+	for_each_loop = {
+		array = influence_array
+		value = v
+		index = i
+		if = {
+			limit = {
+				check_variable = { ENG_uq_patron_found = 0 }
+				check_variable = { influence_array_val^i > 29.999 }
+				var:v = {
+					NOT = { tag = ENG }
+					NOT = { is_subject_of = ENG }
+					NOT = { is_in_faction_with = ENG }
+					has_war = no
+				}
+			}
+			var:v = { save_event_target_as = ENG_uq_patron }
+			set_temp_variable = { ENG_uq_patron_found = 1 }
+			set_temp_variable = { break = 1 }
+		}
+	}
+	set_temp_variable = { break = 0 }
+}
+
 # USA reaction to each Irish stage transition. Call with ROOT = ENG and FROM = target; only Ireland triggers it.
 ENG_uq_irish_lobby_reaction = {
 	if = {
@@ -914,6 +946,9 @@ ENG_uq_realm_republic = {
 	ENG = { set_country_flag = { flag = ENG_uq_lock@PREV value = 1 days = 3650 } }
 	set_temp_variable = { ENG_uq_consent_change = -30 }
 	ENG_uq_change_consent = yes
+	set_temp_variable = { percent_change = -20 }
+	set_temp_variable = { tag_index = ENG }
+	change_influence_percentage = yes
 }
 
 # USA/Canada/Australia/Caribbean reactions to a realm's stage transition. Call with ROOT = ENG and FROM = target, right after ENG_uq_irish_lobby_reaction inside ENG_uq_enter_stage_2/3/4.

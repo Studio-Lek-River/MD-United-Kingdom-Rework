@@ -10660,6 +10660,106 @@ country_event = {
 	option = { name = ENG_uq.292.a }
 }
 
+# The Union Question: a coerced target seeks a guarantor
+# A coerced target asks for protection (patron, FROM = target)
+country_event = {
+	id = ENG_uq.300
+	title = ENG_uq.300.t
+	desc = ENG_uq.300.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.300.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.300.a executed"
+		give_guarantee = FROM
+		custom_effect_tooltip = ENG_uq_patron_guarantee_TT
+		hidden_effect = {
+			FROM = { country_event = { id = ENG_uq.302 days = 730 } }
+			ENG = {
+				set_variable = { ENG_uq_event_target = FROM }
+				country_event = { id = ENG_uq.301 days = 1 }
+			}
+		}
+		ai_chance = {
+			base = 40
+			modifier = {
+				add = 30
+				has_opinion = { target = ENG value < 0 }
+			}
+			modifier = {
+				add = 20
+				is_major = yes
+			}
+			modifier = {
+				factor = 0.5
+				strength_ratio = { tag = ENG ratio < 1 }
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = ENG
+			}
+			modifier = {
+				factor = 0
+				has_war = yes
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.300.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.300.b executed"
+		hidden_effect = {
+			FROM = { country_event = { id = ENG_uq.303 days = 1 } }
+		}
+		ai_chance = { base = 60 }
+	}
+}
+
+# A foreign power guarantees the target (ENG, FROM = patron)
+country_event = {
+	id = ENG_uq.301
+	title = ENG_uq.301.t
+	desc = ENG_uq.301.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.301.a }
+}
+
+# The guarantee lapses after two years (target, FROM = patron, hidden)
+country_event = {
+	id = ENG_uq.302
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		FROM = {
+			if = {
+				limit = { has_guaranteed = ROOT }
+				diplomatic_relation = {
+					country = ROOT
+					relation = guarantee
+					active = no
+				}
+			}
+		}
+	}
+}
+
+# The patron declines (target, FROM = patron)
+country_event = {
+	id = ENG_uq.303
+	title = ENG_uq.303.t
+	desc = ENG_uq.303.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.303.a }
+}
+
 ########################## Commonwealth of Nations #########################
 # Commonwealth Games held
 news_event = {

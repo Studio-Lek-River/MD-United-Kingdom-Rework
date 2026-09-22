@@ -4646,6 +4646,9 @@ ENG_union_question_decisions = {
 			FROM = {
 				add_timed_idea = { idea = ENG_uq_embargoed days = 180 }
 				add_opinion_modifier = { target = ROOT modifier = ENG_uq_economic_pressure_opinion }
+				set_temp_variable = { percent_change = -10 }
+				set_temp_variable = { tag_index = ENG }
+				change_influence_percentage = yes
 			}
 			if = {
 				limit = { has_dlc = "By Blood Alone" }
@@ -6297,6 +6300,10 @@ ENG_union_question_decisions = {
 					check_variable = { ENG_consent@FROM > 60 }
 				}
 				custom_trigger_tooltip = {
+					tooltip = ENG_uq_medium_influence_TT
+					FROM = { ENG_uq_medium_influence = yes }
+				}
+				custom_trigger_tooltip = {
 					tooltip = ENG_uq_not_republic_TT
 					FROM = { NOT = { has_country_flag = ENG_uq_republic } }
 				}
@@ -6387,6 +6394,10 @@ ENG_union_question_decisions = {
 					check_variable = { ENG_consent@FROM > 75 }
 				}
 				custom_trigger_tooltip = {
+					tooltip = ENG_uq_high_influence_TT
+					FROM = { ENG_uq_high_influence = yes }
+				}
+				custom_trigger_tooltip = {
 					tooltip = ENG_uq_not_republic_TT
 					FROM = { NOT = { has_country_flag = ENG_uq_republic } }
 				}
@@ -6452,6 +6463,10 @@ ENG_union_question_decisions = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_consent_85_TT
 					check_variable = { ENG_consent@FROM > 85 }
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_high_influence_TT
+					FROM = { ENG_uq_high_influence = yes }
 				}
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_not_republic_TT
@@ -6526,6 +6541,10 @@ ENG_union_question_decisions = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_region_consent_50_TT
 					check_variable = { ENG_uq_region_consent@FROM > 50 }
+				}
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_medium_influence_TT
+					FROM = { ENG_uq_medium_influence = yes }
 				}
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_fund_running_TT
@@ -6826,6 +6845,92 @@ ENG_union_question_decisions = {
 			modifier = {
 				factor = 0
 				check_variable = { ENG_union_strain > 40 }
+			}
+		}
+	}
+}
+
+ENG_uq_target_decisions = {
+	ENG_uq_reassert_sovereignty = {
+		icon = GFX_decision_generic_nationalism
+
+		cost = 75
+		days_re_enable = 365
+
+		available = {
+			NOT = { has_war_with = ENG }
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_reassert_sovereignty"
+			set_temp_variable = { ENG_uq_consent_change = -15 }
+			ENG_uq_change_consent = yes
+			set_temp_variable = { percent_change = -10 }
+			set_temp_variable = { tag_index = ENG }
+			change_influence_percentage = yes
+			add_stability = 0.02
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 5
+				has_idea = ENG_uq_sovereignty_movement
+			}
+			modifier = {
+				add = 3
+				check_variable = { ENG.ENG_consent@THIS < 40 }
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = ENG
+			}
+			modifier = {
+				factor = 0
+				has_opinion = { target = ENG value > 60 }
+			}
+		}
+	}
+
+	ENG_uq_seek_guarantor = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = {
+			ENG = { has_completed_focus = ENG_the_crown_imperial }
+			check_variable = { ENG.ENG_coercion@THIS > 1 }
+			check_variable = { ENG.ENG_coercion@THIS < 4 }
+		}
+
+		cost = 150
+		days_re_enable = 730
+
+		available = {
+			has_war = no
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_no_guarantee_yet_TT
+				NOT = { any_country = { has_guaranteed = ROOT } }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_patron_available_TT
+				ENG_uq_patron_available = yes
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_seek_guarantor"
+			custom_effect_tooltip = ENG_uq_seek_guarantor_TT
+			hidden_effect = {
+				ENG_uq_pick_patron = yes
+				event_target:ENG_uq_patron = { country_event = { id = ENG_uq.300 days = 1 } }
+			}
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				is_in_faction_with = ENG
 			}
 		}
 	}
