@@ -4818,7 +4818,7 @@ ENG_union_question_decisions = {
 
 		visible = {
 			has_completed_focus = ENG_the_crown_imperial
-			has_completed_focus = ENG_gunboats_in_the_caribbean
+			has_completed_focus = ENG_caribbean_partnership
 		}
 
 		cost = 100
@@ -5116,7 +5116,7 @@ ENG_union_question_decisions = {
 		targets = { MLT CYP }
 		target_root_trigger = {
 			has_completed_focus = ENG_the_crown_imperial
-			has_completed_focus = ENG_crowns_of_the_mediterranean
+			has_completed_focus = ENG_the_mediterranean_partners
 		}
 		target_trigger = {
 			FROM = {
@@ -5338,7 +5338,10 @@ ENG_union_question_decisions = {
 	ENG_uq_caribbean_development_programme = {
 		icon = GFX_decision_generic_construction
 
-		visible = { has_completed_focus = ENG_the_realms_beyond_the_seas }
+		visible = {
+			has_completed_focus = ENG_a_family_of_nations
+			has_completed_focus = ENG_the_realms_beyond_the_seas
+		}
 
 		cost = 75
 		custom_cost_trigger = {
@@ -5384,7 +5387,10 @@ ENG_union_question_decisions = {
 	ENG_uq_royal_caribbean_tour = {
 		icon = GFX_decision_generic_political_discourse
 
-		visible = { has_completed_focus = ENG_the_realms_beyond_the_seas }
+		visible = {
+			has_completed_focus = ENG_a_family_of_nations
+			has_completed_focus = ENG_the_realms_beyond_the_seas
+		}
 
 		cost = 75
 		custom_cost_trigger = {
@@ -5687,6 +5693,7 @@ ENG_union_question_decisions = {
 		icon = GFX_decision_generic_political_discourse
 
 		visible = {
+			has_completed_focus = ENG_a_family_of_nations
 			has_completed_focus = ENG_the_overseas_settlements
 			USA = { owns_state = 824 }
 			NOT = { has_country_flag = ENG_uq_chagos_ruling }
@@ -5738,6 +5745,7 @@ ENG_union_question_decisions = {
 		icon = GFX_decision_generic_political_discourse
 
 		visible = {
+			has_completed_focus = ENG_a_family_of_nations
 			has_completed_focus = ENG_the_chagos_settlement
 			USA = { owns_state = 824 }
 		}
@@ -5770,6 +5778,7 @@ ENG_union_question_decisions = {
 		icon = GFX_decision_generic_political_discourse
 
 		visible = {
+			has_completed_focus = ENG_a_family_of_nations
 			has_completed_focus = ENG_the_rock_settled
 			19 = { is_claimed_by = SPR }
 			country_exists = SPR

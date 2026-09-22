@@ -214,9 +214,19 @@ ENG_uq_ireland_done = {
 }
 
 ENG_uq_caribbean_opened = {
+	has_completed_focus = ENG_the_realms_beyond_the_seas
+}
+
+ENG_uq_path_in_power = {
 	OR = {
-		has_completed_focus = ENG_the_realms_beyond_the_seas
-		has_completed_focus = ENG_dominions_of_the_crown
+		AND = {
+			has_completed_focus = ENG_a_family_of_nations
+			has_government = democratic
+		}
+		AND = {
+			has_completed_focus = ENG_the_crown_imperial
+			nationalist_monarchists_are_in_power = yes
+		}
 	}
 }
 

@@ -9025,7 +9025,12 @@ country_event = {
 	immediate = {
 		ENG = { set_variable = { PREV.ENG_uq_referendum_yes = ENG_consent@PREV } }
 		if = {
-			limit = { ENG = { has_completed_focus = ENG_a_shared_crown } }
+			limit = {
+				ENG = {
+					has_completed_focus = ENG_a_family_of_nations
+					has_completed_focus = ENG_a_shared_crown
+				}
+			}
 			add_to_variable = { ENG_uq_referendum_yes = 20 }
 		}
 		set_variable = { ENG_uq_referendum_no = 100 }
@@ -9352,7 +9357,10 @@ country_event = {
 			}
 			modifier = {
 				add = 40
-				FROM = { has_completed_focus = ENG_the_statute_of_westminster_repealed }
+				FROM = {
+					has_completed_focus = ENG_the_crown_imperial
+					has_completed_focus = ENG_a_commonwealth_of_equals
+				}
 			}
 		}
 	}
