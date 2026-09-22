@@ -39,7 +39,12 @@ spriteTypes = {
 	}
 
 	spritetype = {
-		name = "GFX_ENG_back"
-		texturefile = "gfx/interface/scripted_gui/eng/ENG_back_gfx.dds"
+		name = "GFX_autonomy_crown_dominion_icon"
+		texturefile = "gfx/interface/autonomy/autonomy_constituent.dds"
+	}
+
+	spritetype = {
+		name = "GFX_autonomy_crown_protectorate_icon"
+		texturefile = "gfx/interface/autonomy/autonomy_constituent.dds"
 	}
 }

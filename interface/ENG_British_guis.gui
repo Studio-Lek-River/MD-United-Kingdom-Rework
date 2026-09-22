@@ -7,7 +7,7 @@ guiTypes = {
 		instantTextBoxType = {
 			name = "ENG_mechanic_menu_explanation"
 			position = { x = 10 y = 6 }
-			font = "hoi_30header"
+			font = "hoi_24header"
 			text = "ENG_mechanic_menu_explanation"
 			format = left
 			maxHeight = 5
@@ -94,178 +94,170 @@ guiTypes = {
 		# Scotland
 		instantTextBoxType = {
 			name = "ENG_scotland_menu_parliament"
-			position = { x = 88 y = 166 }
-			font = "hoi_30header"
+			position = { x = 84 y = 168 }
+			font = "hoi_18mbs"
 			text = "ENG_scotland_menu_parliament"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_scotland_parliament_VAR"
-			position = { x = 88 y = 198 }
-			font = "hoi_30header"
+			position = { x = 84 y = 188 }
+			font = "hoi_18mbs"
 			text = "ENG_scotland_parliament_VAR"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_scotland_menu_agitation"
-			position = { x = 88 y = 250 }
-			font = "hoi_30header"
+			position = { x = 84 y = 252 }
+			font = "hoi_18mbs"
 			text = "ENG_scotland_menu_agitation"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_scottish_agitation_VAR"
-			position = { x = 88 y = 282 }
-			font = "hoi_30header"
+			position = { x = 84 y = 272 }
+			font = "hoi_18mbs"
 			text = "ENG_scottish_agitation_VAR"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_scotland_menu_dependency"
-			position = { x = 88 y = 334 }
-			font = "hoi_30header"
+			position = { x = 84 y = 340 }
+			font = "hoi_18mbs"
 			text = "ENG_scotland_menu_dependency"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_scotland_dependency_VAR"
-			position = { x = 88 y = 366 }
-			font = "hoi_30header"
+			position = { x = 84 y = 360 }
+			font = "hoi_18mbs"
 			text = "ENG_scotland_dependency_VAR"
 			pdx_tooltip = ENG_dependency_gui_tooltip2
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		# Wales
 		instantTextBoxType = {
 			name = "ENG_wales_menu_parliament"
-			position = { x = 88 y = 166 }
-			font = "hoi_30header"
+			position = { x = 84 y = 168 }
+			font = "hoi_18mbs"
 			text = "ENG_wales_menu_parliament"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_wales_parliament_VAR"
-			position = { x = 88 y = 198 }
-			font = "hoi_30header"
+			position = { x = 84 y = 188 }
+			font = "hoi_18mbs"
 			text = "ENG_wales_parliament_VAR"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_wales_menu_agitation"
-			position = { x = 88 y = 250 }
-			font = "hoi_30header"
+			position = { x = 84 y = 252 }
+			font = "hoi_18mbs"
 			text = "ENG_wales_menu_agitation"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_wales_agitation_VAR"
-			position = { x = 88 y = 282 }
-			font = "hoi_30header"
+			position = { x = 84 y = 272 }
+			font = "hoi_18mbs"
 			text = "ENG_wales_agitation_VAR"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_wales_menu_dependency"
-			position = { x = 88 y = 334 }
-			font = "hoi_30header"
+			position = { x = 84 y = 340 }
+			font = "hoi_18mbs"
 			text = "ENG_wales_menu_dependency"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_wales_dependency_VAR"
-			position = { x = 88 y = 366 }
-			font = "hoi_30header"
+			position = { x = 84 y = 360 }
+			font = "hoi_18mbs"
 			text = "ENG_wales_dependency_VAR"
 			pdx_tooltip = ENG_dependency_gui_tooltip2
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		# North Ireland
 		instantTextBoxType = {
 			name = "ENG_north_ireland_menu_parliament"
-			position = { x = 88 y = 166 }
-			font = "hoi_30header"
+			position = { x = 84 y = 168 }
+			font = "hoi_18mbs"
 			text = "ENG_north_ireland_menu_parliament"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_north_ireland_parliament_VAR"
-			position = { x = 88 y = 198 }
-			font = "hoi_30header"
+			position = { x = 84 y = 188 }
+			font = "hoi_18mbs"
 			text = "ENG_north_ireland_parliament_VAR"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_north_ireland_menu_agitation"
-			position = { x = 88 y = 250 }
-			font = "hoi_30header"
+			position = { x = 84 y = 252 }
+			font = "hoi_18mbs"
 			text = "ENG_north_ireland_menu_agitation"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_north_ireland_agitation_VAR"
-			position = { x = 88 y = 282 }
-			font = "hoi_30header"
+			position = { x = 84 y = 272 }
+			font = "hoi_18mbs"
 			text = "ENG_north_ireland_agitation_VAR"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_north_ireland_menu_dependency"
-			position = { x = 88 y = 334 }
-			font = "hoi_30header"
+			position = { x = 84 y = 340 }
+			font = "hoi_18mbs"
 			text = "ENG_north_ireland_menu_dependency"
 			format = left
-			maxHeight = 5
-			maxWidth = 170
+			maxHeight = 20
+			maxWidth = 182
 		}
 		instantTextBoxType = {
 			name = "ENG_north_ireland_dependency_VAR"
-			position = { x = 88 y = 366 }
-			font = "hoi_30header"
+			position = { x = 84 y = 360 }
+			font = "hoi_18mbs"
 			text = "ENG_north_ireland_dependency_VAR"
 			pdx_tooltip = ENG_dependency_gui_tooltip2
 			format = left
-			maxHeight = 5
-			maxWidth = 170
-		}
-		#
-		buttonType = {
-			name = "GFX_ENG_back_button"
-			spriteType = "GFX_ENG_back"
-			position = { x = 12 y = 420 }
-			Orientation = "UPPER_LEFT"
-			pdx_tooltip = ENG_back_tooltip
+			maxHeight = 20
+			maxWidth = 182
 		}
 	}
 
@@ -273,110 +265,156 @@ guiTypes = {
 
 	containerWindowType = {
 		name = "ENG_uq_ladder_ui_window"
-		size = { width = 420 height = 490 }
-		position = { x = 0 y = 40 }
+		size = { width = 420 height = 34 }
+		position = { x = 0 y = 6 }
+		buttonType = {
+			name = "ENG_uq_open_btn"
+			position = { x = 10 y = 0 }
+			spriteType = "GFX_sort_up_down_button_83x29"
+			buttonText = "ENG_uq_open_btn"
+			buttonFont = "hoi_16mbs"
+			clicksound = click_default
+			frame = 1
+		}
+	}
+
+	containerWindowType = {
+		name = "ENG_uq_panel_window"
+		position = { x = 0 y = 0 }
+		show_position = { x = 551 y = 0 }
+		show_animation_type = decelerated
+		hide_animation_type = accelerated
+		size = { width = 460 height = 667 }
+		animation_time = 300
+		show_sound = open_sub_window
+		click_to_front = yes
+		clipping = yes
+
+		background = {
+			name = "Background"
+			spriteType = "GFX_tiled_plain_bg"
+		}
+
 		instantTextBoxType = {
-			name = "ENG_uq_dbg_strain"
-			text = "ENG_uq_dbg_strain"
-			position = { x = 10 y = 6 }
+			name = "ENG_uq_panel_title"
+			text = "ENG_uq_panel_title"
+			position = { x = 0 y = 4 }
+			font = "hoi_24header"
+			format = center
+			maxwidth = 420
+			maxheight = 28
+		}
+		buttonType = {
+			name = "ENG_uq_panel_close_btn"
+			position = { x = -38 y = 4 }
+			quadTextureSprite = "GFX_closebutton"
+			shortcut = "ESCAPE"
+			Orientation = "UPPER_RIGHT"
+			clicksound = click_close
+			pdx_tooltip = "CLOSE"
+		}
+
+		# National meters
+		instantTextBoxType = {
+			name = "ENG_uq_meter_strain"
+			text = "ENG_uq_meter_strain"
+			position = { x = 12 y = 38 }
 			font = "hoi_16mbs"
 			format = left
-			maxwidth = 200
+			maxwidth = 210
 			maxheight = 18
 			pdx_tooltip = ENG_union_strain_ui_TT
 		}
 		instantTextBoxType = {
-			name = "ENG_uq_dbg_cohesion"
-			text = "ENG_uq_dbg_cohesion"
-			position = { x = 215 y = 6 }
+			name = "ENG_uq_meter_tension"
+			text = "ENG_uq_meter_tension"
+			position = { x = 232 y = 38 }
 			font = "hoi_16mbs"
 			format = left
-			maxwidth = 200
+			maxwidth = 210
+			maxheight = 18
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_meter_cohesion"
+			text = "ENG_uq_meter_cohesion"
+			position = { x = 12 y = 58 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 210
 			maxheight = 18
 			pdx_tooltip = ENG_cmw_cohesion_ui_TT
 		}
 		instantTextBoxType = {
-			name = "ENG_uq_dbg_carib"
-			text = "ENG_uq_dbg_carib"
-			position = { x = 10 y = 24 }
+			name = "ENG_uq_meter_caribbean"
+			text = "ENG_uq_meter_caribbean"
+			position = { x = 232 y = 58 }
 			font = "hoi_16mbs"
 			format = left
-			maxwidth = 400
+			maxwidth = 210
 			maxheight = 18
 		}
+
+		# Integration ladder
 		instantTextBoxType = {
-			name = "ENG_uq_dbg_home_hdr"
-			text = "ENG_uq_dbg_home_hdr"
-			position = { x = 10 y = 46 }
+			name = "ENG_uq_ladder_header"
+			text = "ENG_uq_ladder_header"
+			position = { x = 12 y = 86 }
 			font = "hoi_16mbs"
 			format = left
-			maxwidth = 400
-			maxheight = 18
-			text_color_code = Y
-		}
-		instantTextBoxType = {
-			name = "ENG_uq_dbg_sco"
-			text = "ENG_uq_dbg_sco"
-			position = { x = 10 y = 64 }
-			font = "hoi_16mbs"
-			format = left
-			maxwidth = 400
-			maxheight = 18
-		}
-		instantTextBoxType = {
-			name = "ENG_uq_dbg_nir"
-			text = "ENG_uq_dbg_nir"
-			position = { x = 10 y = 82 }
-			font = "hoi_16mbs"
-			format = left
-			maxwidth = 400
-			maxheight = 18
-		}
-		instantTextBoxType = {
-			name = "ENG_uq_dbg_was"
-			text = "ENG_uq_dbg_was"
-			position = { x = 10 y = 100 }
-			font = "hoi_16mbs"
-			format = left
-			maxwidth = 400
-			maxheight = 18
-		}
-		instantTextBoxType = {
-			name = "ENG_uq_dbg_caps1"
-			text = "ENG_uq_dbg_caps1"
-			position = { x = 10 y = 122 }
-			font = "hoi_16mbs"
-			format = left
-			maxwidth = 400
-			maxheight = 18
-		}
-		instantTextBoxType = {
-			name = "ENG_uq_dbg_caps2"
-			text = "ENG_uq_dbg_caps2"
-			position = { x = 10 y = 140 }
-			font = "hoi_16mbs"
-			format = left
-			maxwidth = 400
-			maxheight = 18
-		}
-		instantTextBoxType = {
-			name = "ENG_uq_dbg_ladder_hdr"
-			text = "ENG_uq_dbg_ladder_hdr"
-			position = { x = 10 y = 162 }
-			font = "hoi_16mbs"
-			format = left
-			maxwidth = 400
+			maxwidth = 430
 			maxheight = 18
 			text_color_code = Y
 			pdx_tooltip = ENG_uq_ladder_ui_TT
 		}
-		gridboxType = {
-			name = "ENG_uq_ladder_grid"
-			position = { x = 0 y = 182 }
-			size = { width = 420 height = 308 }
-			slotsize = { width = 420 height = 22 }
-			format = "UPPER_LEFT"
-			max_slots_horizontal = 1
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_col_nation"
+			text = "ENG_uq_ladder_col_nation"
+			position = { x = 16 y = 106 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 150
+			maxheight = 18
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_col_stage"
+			text = "ENG_uq_ladder_col_stage"
+			position = { x = 198 y = 106 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 100
+			maxheight = 18
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_col_consent"
+			text = "ENG_uq_ladder_col_consent"
+			position = { x = 304 y = 106 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 90
+			maxheight = 18
+		}
+		containerWindowType = {
+			name = "ENG_uq_ladder_list"
+			position = { x = 8 y = 126 }
+			size = { width = 444 height = -12 }
+			verticalScrollbar = "right_vertical_slider"
+			margin = { top = 4 bottom = 8 }
+			scroll_wheel_factor = 98
+			smooth_scrolling = yes
+
+			background = {
+				name = "Background"
+				spriteType = "GFX_tiled_window2_1b_border"
+			}
+
+			gridboxType = {
+				name = "ENG_uq_ladder_grid"
+				position = { x = 0 y = 4 }
+				size = { width = 428 height = 100%% }
+				slotsize = { width = 428 height = 28 }
+				format = "UPPER_LEFT"
+				max_slots_horizontal = 1
+			}
 		}
 	}
 
@@ -384,25 +422,64 @@ guiTypes = {
 		name = "ENG_uq_ladder_entry"
 		position = { x = 0 y = 0 }
 		instantTextBoxType = {
-			name = "ENG_uq_ladder_entry_row"
-			text = "ENG_uq_dbg_entry"
-			position = { x = 10 y = 0 }
+			name = "ENG_uq_ladder_entry_name"
+			text = "ENG_uq_ladder_entry_name"
+			position = { x = 8 y = 4 }
 			font = "hoi_16mbs"
 			format = left
-			maxwidth = 365
+			maxwidth = 150
+			maxheight = 20
+			fixedsize = yes
+			pdx_tooltip = ENG_uq_ladder_region_TT
+		}
+		iconType = {
+			name = "ENG_uq_stage_icon"
+			spriteType = "GFX_autonomy_free_icon"
+			position = { x = 166 y = 2 }
+			Orientation = "UPPER_LEFT"
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_entry_stage"
+			text = "ENG_uq_ladder_entry_stage"
+			position = { x = 190 y = 4 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 100
+			maxheight = 20
+			fixedsize = yes
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_entry_consent"
+			text = "ENG_uq_ladder_entry_consent"
+			position = { x = 296 y = 4 }
+			font = "hoi_16mbs"
+			format = left
+			maxwidth = 90
 			maxheight = 20
 			fixedsize = yes
 			pdx_tooltip = ENG_uq_ladder_meter_TT
 		}
 		instantTextBoxType = {
 			name = "ENG_uq_ladder_entry_lock"
-			text = "ENG_uq_dbg_lock"
-			position = { x = 375 y = 0 }
+			text = "ENG_uq_ladder_entry_lock"
+			position = { x = 376 y = 4 }
 			font = "hoi_16mbs"
 			format = center
 			maxwidth = 40
 			maxheight = 20
 			fixedsize = yes
+			pdx_tooltip = ENG_uq_ladder_lock_TT
+		}
+		instantTextBoxType = {
+			name = "ENG_uq_ladder_entry_pending"
+			text = "ENG_uq_ladder_entry_pending"
+			position = { x = 376 y = 4 }
+			font = "hoi_16mbs"
+			format = center
+			maxwidth = 40
+			maxheight = 20
+			fixedsize = yes
+			pdx_tooltip = ENG_uq_ladder_pending_TT
 		}
 	}
 }

@@ -265,6 +265,10 @@ ENG_uq_can_transition = {
 		tooltip = ENG_uq_not_locked_TT
 		NOT = { has_country_flag = ENG_uq_lock@FROM }
 	}
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_offer_pending_TT
+		NOT = { has_country_flag = ENG_uq_offer_pending@FROM }
+	}
 }
 
 # Target scope. Some coercive step has been taken against this target.

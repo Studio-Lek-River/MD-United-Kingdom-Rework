@@ -2347,3 +2347,23 @@ defined_text = {
 		localization_key = ENG_uq_stage_aligned
 	}
 }
+
+defined_text = {
+	name = ENG_uq_stage_icon
+
+	text = {
+		trigger = {
+			ENG_uq_stage_3 = yes
+		}
+		localization_key = GFX_autonomy_constituent_country_very_low_devolution_icon
+	}
+	text = {
+		trigger = {
+			ENG_uq_stage_2 = yes
+		}
+		localization_key = GFX_autonomy_associated_state_icon
+	}
+	text = {
+		localization_key = GFX_autonomy_free_icon
+	}
+}

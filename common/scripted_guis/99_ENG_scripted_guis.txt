@@ -32,8 +32,6 @@ scripted_gui = {
 			GFX_ENG_parliament_info_visible = { check_variable = { ENG_devolution_ui_selected > 0 } }
 			GFX_ENG_dependency_info_visible = { check_variable = { ENG_devolution_ui_selected > 0 } }
 			GFX_ENG_irish_tension_info_visible = { check_variable = { ENG_devolution_ui_selected = 2 } }
-			# Back button
-			GFX_ENG_back_button_visible = { check_variable = { ENG_devolution_ui_selected > 0 } }
 
 			ENG_scotland_map_button_right_click_enabled = {
 				NOT = { country_exists = SCO }
@@ -76,7 +74,13 @@ scripted_gui = {
 		}
 		effects = {
 			ENG_scotland_map_button_click = {
-				set_variable = { ENG_devolution_ui_selected = 1 }
+				if = {
+					limit = { check_variable = { ENG_devolution_ui_selected = 1 } }
+					set_variable = { ENG_devolution_ui_selected = 0 }
+				}
+				else = {
+					set_variable = { ENG_devolution_ui_selected = 1 }
+				}
 				update_eng_devolution_dirty_variable = yes
 			}
 			ENG_scotland_map_button_right_click = {
@@ -107,7 +111,13 @@ scripted_gui = {
 			}
 			# North Ireland button
 			ENG_north_ireland_map_button_click = {
-				set_variable = { ENG_devolution_ui_selected = 2 }
+				if = {
+					limit = { check_variable = { ENG_devolution_ui_selected = 2 } }
+					set_variable = { ENG_devolution_ui_selected = 0 }
+				}
+				else = {
+					set_variable = { ENG_devolution_ui_selected = 2 }
+				}
 				update_eng_devolution_dirty_variable = yes
 			}
 			ENG_north_ireland_map_button_right_click = {
@@ -138,7 +148,13 @@ scripted_gui = {
 			}
 			# Wales button
 			ENG_wales_map_button_click = {
-				set_variable = { ENG_devolution_ui_selected = 3 }
+				if = {
+					limit = { check_variable = { ENG_devolution_ui_selected = 3 } }
+					set_variable = { ENG_devolution_ui_selected = 0 }
+				}
+				else = {
+					set_variable = { ENG_devolution_ui_selected = 3 }
+				}
 				update_eng_devolution_dirty_variable = yes
 			}
 			ENG_wales_map_button_right_click = {
@@ -167,16 +183,36 @@ scripted_gui = {
 				}
 				update_eng_devolution_dirty_variable = yes
 			}
-			# Back
-			GFX_ENG_back_button_click = {
-				set_variable = { ENG_devolution_ui_selected = 0 }
+		}
+	}
+	# Opens the Union Question panel from inside the decision category.
+	ENG_uq_ladder_ui = {
+		window_name = "ENG_uq_ladder_ui_window"
+		context_type = decision_category
+
+		effects = {
+			ENG_uq_open_btn_click = {
+				if = {
+					limit = { has_country_flag = ENG_uq_panel_open }
+					clr_country_flag = ENG_uq_panel_open
+				}
+				else = {
+					set_country_flag = ENG_uq_panel_open
+				}
 				update_eng_devolution_dirty_variable = yes
 			}
 		}
 	}
-	ENG_uq_ladder_ui = {
-		window_name = "ENG_uq_ladder_ui_window"
-		context_type = decision_category
+	ENG_uq_panel = {
+		window_name = "ENG_uq_panel_window"
+		context_type = player_context
+		parent_window_token = decision_tab
+
+		dirty = global.ENG_devolution_dirty_update_var
+
+		visible = {
+			has_country_flag = ENG_uq_panel_open
+		}
 
 		dynamic_lists = {
 			ENG_uq_ladder_grid = {
@@ -186,8 +222,29 @@ scripted_gui = {
 			}
 		}
 
+		effects = {
+			ENG_uq_panel_close_btn_click = {
+				clr_country_flag = ENG_uq_panel_open
+				update_eng_devolution_dirty_variable = yes
+			}
+		}
+
 		triggers = {
 			ENG_uq_ladder_entry_lock_visible = { ROOT = { has_country_flag = ENG_uq_lock@PREV } }
+			ENG_uq_ladder_entry_pending_visible = {
+				ROOT = {
+					has_country_flag = ENG_uq_offer_pending@PREV
+					NOT = { has_country_flag = ENG_uq_lock@PREV }
+				}
+			}
 		}
+
+		properties = {
+			ENG_uq_stage_icon = {
+				image = "[ENG_uq_stage_icon]"
+			}
+		}
+
+		ai_enabled = { always = no }
 	}
 }

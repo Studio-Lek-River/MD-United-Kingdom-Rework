@@ -1296,6 +1296,7 @@ capital = 13
 	set_variable = { ENG_north_irish_nationalists = 44 } # North Irish nationalism
 	set_variable = { ENG_north_irish_dependency = 94 } # The dependancy of the North Irish on the British
 	# Wales
+	set_variable = { ENG_wales_agitation = 8 } # Anger of the Welsh people
 	set_variable = { ENG_wales_nationalists = 17 } # Number of Nationalism in Wales
 	set_variable = { ENG_wales_dependency = 100 } # The dependancy of the Welsh on the British
 	# Union settlement thresholds; ENG_one_nation tightens them

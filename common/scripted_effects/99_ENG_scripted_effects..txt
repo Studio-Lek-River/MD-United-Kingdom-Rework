@@ -522,6 +522,7 @@ ENG_uq_align_target = {
 # Stage 1 -> 2. Call with ROOT = ENG and FROM = target (ladder decision or acceptance event).
 ENG_uq_enter_stage_2 = {
 	set_temp_variable = { ENG_uq_stage_reached = 2 }
+	clr_country_flag = ENG_uq_offer_pending@FROM
 	if = {
 		limit = { has_completed_focus = ENG_a_family_of_nations }
 		set_autonomy = {
@@ -562,6 +563,7 @@ ENG_uq_enter_stage_2 = {
 # Stage 2 -> 3. Call with ROOT = ENG and FROM = target. The constituent level refuses an overlord that purged devolution.
 ENG_uq_enter_stage_3 = {
 	set_temp_variable = { ENG_uq_stage_reached = 3 }
+	clr_country_flag = ENG_uq_offer_pending@FROM
 	if = {
 		limit = { NOT = { has_country_flag = ENG_devolution_purged } }
 		set_autonomy = {
@@ -581,6 +583,7 @@ ENG_uq_enter_stage_3 = {
 # Stage 3 -> 4. Call with ROOT = ENG and FROM = target.
 ENG_uq_enter_stage_4 = {
 	set_temp_variable = { ENG_uq_stage_reached = 4 }
+	clr_country_flag = ENG_uq_offer_pending@FROM
 	set_country_flag = ENG_uq_integrated@FROM
 	clr_country_flag = ENG_uq_occupying@FROM
 	clr_country_flag = ENG_uq_pacified@FROM
@@ -620,6 +623,7 @@ ENG_uq_enter_stage_4 = {
 ENG_uq_fail_transition = {
 	custom_effect_tooltip = ENG_uq_fail_transition_TT
 	hidden_effect = {
+		clr_country_flag = ENG_uq_offer_pending@FROM
 		if = {
 			limit = { has_completed_focus = ENG_a_family_of_nations }
 			set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1825 }
@@ -1299,7 +1303,6 @@ ENG_uq_ex_empire_stage_reaction = {
 			FROM = { ENG_uq_is_ex_empire = yes }
 			check_variable = { ENG_uq_rival@FROM > 0 }
 		}
-		set_variable = { ENG_uq_event_target = FROM }
 		set_variable = { ENG_uq_patron_var = ENG_uq_rival@FROM }
 		if = {
 			limit = {
@@ -1308,7 +1311,10 @@ ENG_uq_ex_empire_stage_reaction = {
 					NOT = { has_war_with = ROOT }
 				}
 			}
-			var:ENG_uq_patron_var = { country_event = { id = ENG_uq.250 days = 2 } }
+			var:ENG_uq_patron_var = {
+				set_variable = { ENG_uq_sponsor_target = FROM }
+				country_event = { id = ENG_uq.250 days = 2 }
+			}
 		}
 	}
 }
@@ -1496,15 +1502,20 @@ ENG_uq_update_coercion = {
 		limit = {
 			ENG = { has_country_flag = ENG_uq_claims@PREV }
 			NOT = { has_war_with = ROOT }
+			ENG_uq_all_cores_held = yes
 		}
-		if = {
-			limit = { ENG_uq_all_cores_held = yes }
-			ENG_uq_begin_occupation = yes
+		ENG_uq_begin_occupation = yes
+	}
+	else_if = {
+		limit = {
+			ENG = { NOT = { has_country_flag = ENG_uq_claims@PREV } }
+			NOT = { has_war_with = ROOT }
+			any_state = {
+				is_core_of = PREV
+				is_claimed_by = ROOT
+			}
 		}
-		else_if = {
-			limit = { ROOT = { NOT = { has_country_flag = ENG_uq_claims@PREV } } }
-			ENG_uq_expire_claims = yes
-		}
+		ENG_uq_expire_claims = yes
 	}
 	if = {
 		limit = { ENG = { has_country_flag = ENG_uq_occupying@PREV } }
@@ -1524,7 +1535,6 @@ ENG_uq_begin_occupation = {
 	ROOT = {
 		set_country_flag = ENG_uq_occupying@PREV
 		clr_country_flag = ENG_uq_claims@PREV
-		set_variable = { ENG_uq_event_target = PREV }
 	}
 	set_temp_variable = { ENG_union_strain_stage = 1 }
 	ENG_add_union_strain_for_target = yes
@@ -1584,7 +1594,6 @@ ENG_uq_expire_claims = {
 	ROOT = {
 		set_country_flag = ENG_uq_ultimatum_rejected@PREV
 		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@PREV value = 1 days = 180 }
-		set_variable = { ENG_uq_event_target = PREV }
 		country_event = { id = ENG_uq.43 days = 1 }
 	}
 }
@@ -1599,7 +1608,7 @@ ENG_uq_roll_insurgency = {
 			check_variable = { resistance > ENG_uq_max_resistance }
 		}
 		set_temp_variable = { ENG_uq_max_resistance = resistance }
-		ROOT = { set_variable = { ENG_uq_event_state = PREV } }
+		PREV = { set_variable = { ENG_uq_event_state = PREV } }
 	}
 	set_temp_variable = { ENG_uq_bombing_weight = { value = ENG_uq_max_resistance multiply = 0.6 } }
 	set_temp_variable = { ENG_uq_defection_weight = { value = ENG_uq_max_resistance multiply = 0.4 } }
@@ -1612,30 +1621,27 @@ ENG_uq_roll_insurgency = {
 		multiply_temp_variable = { ENG_uq_bombing_weight = 1.5 }
 		multiply_temp_variable = { ENG_uq_defection_weight = 1.5 }
 	}
-	ROOT = { set_variable = { ENG_uq_event_target = PREV } }
 	random_list = {
 		ENG_uq_bombing_weight = {
-			ROOT = {
-				add_stability = -0.01
-				var:ENG_uq_event_state = {
-					if = {
-						limit = { infrastructure > 0 }
-						damage_building = {
-							type = infrastructure
-							damage = 1
-						}
+			ROOT = { add_stability = -0.01 }
+			var:ENG_uq_event_state = {
+				if = {
+					limit = { infrastructure > 0 }
+					damage_building = {
+						type = infrastructure
+						damage = 1
 					}
 				}
-				country_event = ENG_uq.50
 			}
+			ROOT = { country_event = ENG_uq.50 }
 		}
 		ENG_uq_defection_weight = {
 			ROOT = {
 				add_manpower = -1500
 				add_war_support = -0.01
-				var:ENG_uq_event_state = { add_resistance = 5 }
-				country_event = ENG_uq.51
 			}
+			var:ENG_uq_event_state = { add_resistance = 5 }
+			ROOT = { country_event = ENG_uq.51 }
 		}
 		ENG_uq_quiet_weight = {
 			log = "[GetDateText]: [Root.GetName]: quiet month in [This.GetName]"
@@ -1939,7 +1945,6 @@ ENG_uq_commonwealth_leave = {
 		}
 	}
 	ROOT = {
-		set_variable = { ENG_uq_event_target = PREV }
 		news_event = { id = United_Kingdom_News.7 hours = 6 }
 	}
 	for_each_scope_loop = {
@@ -2743,6 +2748,33 @@ ENG_uq_suspension_monthly = {
 		ENG_change_wales_agitation = yes
 	}
 	ENG_uq_update_direct_rule = yes
+	if = {
+		limit = {
+			NOT = { has_active_mission = ENG_uq_scottish_martial_law }
+			NOT = { has_country_flag = ENG_scottish_integrated }
+			check_variable = { ENG_scottish_agitation > 40 }
+			any_owned_state = { is_core_of = SCO }
+		}
+		activate_mission = ENG_uq_scottish_martial_law
+	}
+	if = {
+		limit = {
+			NOT = { has_active_mission = ENG_uq_north_irish_martial_law }
+			NOT = { has_country_flag = ENG_north_irish_integrated }
+			check_variable = { ENG_north_irish_agitation > 40 }
+			any_owned_state = { is_core_of = NIR }
+		}
+		activate_mission = ENG_uq_north_irish_martial_law
+	}
+	if = {
+		limit = {
+			NOT = { has_active_mission = ENG_uq_welsh_martial_law }
+			NOT = { has_country_flag = ENG_welsh_integrated }
+			check_variable = { ENG_wales_agitation > 40 }
+			any_owned_state = { is_core_of = WAS }
+		}
+		activate_mission = ENG_uq_welsh_martial_law
+	}
 	if = {
 		limit = {
 			has_active_mission = ENG_uq_scottish_martial_law

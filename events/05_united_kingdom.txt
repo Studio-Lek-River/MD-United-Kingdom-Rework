@@ -720,11 +720,11 @@ news_event = {
 	title = United_Kingdom_News.7.t
 	desc = {
 		text = United_Kingdom_News.7.d
-		trigger = { var:ENG.ENG_uq_event_target = { NOT = { has_country_flag = ENG_uq_republic } } }
+		trigger = { FROM = { NOT = { has_country_flag = ENG_uq_republic } } }
 	}
 	desc = {
 		text = United_Kingdom_News.7.d2
-		trigger = { var:ENG.ENG_uq_event_target = { has_country_flag = ENG_uq_republic } }
+		trigger = { FROM = { has_country_flag = ENG_uq_republic } }
 	}
 	picture = GFX_news_leave_commonwealth
 	is_triggered_only = yes
@@ -10014,7 +10014,7 @@ country_event = {
 }
 
 ########################## Wider empire #########################
-# Regional rival reacts to a new British subject in its sphere (rival, FROM = ENG). ENG.ENG_uq_event_target = the subject.
+# Regional rival reacts to a new British subject in its sphere (rival, FROM = ENG). ENG_uq_sponsor_target = the subject.
 country_event = {
 	id = ENG_uq.250
 	title = ENG_uq.250.t
@@ -10033,7 +10033,6 @@ country_event = {
 		name = ENG_uq.250.b
 		log = "[GetDateText]: [This.GetName]: ENG_uq.250.b executed"
 		add_opinion_modifier = { target = FROM modifier = ENG_uq_patron_opinion }
-		set_temp_variable = { ENG_uq_sponsor_target = FROM.ENG_uq_event_target }
 		var:ENG_uq_sponsor_target = {
 			set_temp_variable = { ENG_uq_consent_change = -15 }
 			ENG_uq_change_consent = yes
@@ -10065,7 +10064,6 @@ country_event = {
 		trigger = { FROM = { check_variable = { ENG_imperial_tension > 60 } } }
 		log = "[GetDateText]: [This.GetName]: ENG_uq.250.c executed"
 		add_opinion_modifier = { target = FROM modifier = ENG_uq_patron_opinion }
-		set_temp_variable = { ENG_uq_sponsor_target = FROM.ENG_uq_event_target }
 		var:ENG_uq_sponsor_target = {
 			FROM = { set_temp_variable = { ENG_uq_region_tmp = ENG_uq_region@PREV } }
 		}
@@ -10679,7 +10677,7 @@ country_event = {
 		hidden_effect = {
 			FROM = { country_event = { id = ENG_uq.302 days = 730 } }
 			ENG = {
-				set_variable = { ENG_uq_event_target = FROM }
+				set_variable = { ENG_uq_patron_client = FROM }
 				country_event = { id = ENG_uq.301 days = 1 }
 			}
 		}

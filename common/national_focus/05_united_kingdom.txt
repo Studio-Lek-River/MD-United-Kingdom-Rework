@@ -21800,7 +21800,7 @@ focus_tree = {
 		bypass = {
 			OR = {
 				NOT = { country_exists = IRE }
-				NOT = { has_idea = EU_member }
+				IRE = { NOT = { has_idea = EU_member } }
 			}
 		}
 
@@ -21959,29 +21959,6 @@ focus_tree = {
 			hidden_effect = { update_eng_devolution_dirty_variable = yes }
 			newline = yes
 			custom_effect_tooltip = ENG_uq_crowns_peace_missions_TT
-			hidden_effect = {
-				if = {
-					limit = {
-						check_variable = { ENG_scottish_agitation > 40 }
-						any_owned_state = { is_core_of = SCO }
-					}
-					activate_mission = ENG_uq_scottish_martial_law
-				}
-				if = {
-					limit = {
-						check_variable = { ENG_north_irish_agitation > 40 }
-						any_owned_state = { is_core_of = NIR }
-					}
-					activate_mission = ENG_uq_north_irish_martial_law
-				}
-				if = {
-					limit = {
-						check_variable = { ENG_wales_agitation > 40 }
-						any_owned_state = { is_core_of = WAS }
-					}
-					activate_mission = ENG_uq_welsh_martial_law
-				}
-			}
 			newline = yes
 			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_economy_modifier }
 			add_to_variable = { ENG_foreign_influence_defense_modifier = 0.05 tooltip = foreign_influence_defense_modifier_tt }
