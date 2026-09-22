@@ -516,13 +516,12 @@ ENG_uq_align_target = {
 			limit = { NOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
 			add_to_array = { ENG_integration_targets = PREV }
 		}
-		set_variable = { ENG_integration_stage@PREV = 1 }
 	}
 }
 
 # Stage 1 -> 2. Call with ROOT = ENG and FROM = target (ladder decision or acceptance event).
 ENG_uq_enter_stage_2 = {
-	set_variable = { ENG_integration_stage@FROM = 2 }
+	set_temp_variable = { ENG_uq_stage_reached = 2 }
 	if = {
 		limit = { has_completed_focus = ENG_a_family_of_nations }
 		set_autonomy = {
@@ -530,15 +529,20 @@ ENG_uq_enter_stage_2 = {
 			autonomy_state = autonomy_crown_dominion
 		}
 	}
-	else = {
-		if = {
-			limit = { FROM = { exists = yes } }
-			set_autonomy = {
-				target = FROM
-				autonomy_state = autonomy_crown_protectorate
-			}
+	else_if = {
+		limit = { FROM = { exists = no } }
+		release_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_crown_protectorate
 		}
 	}
+	else = {
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_crown_protectorate
+		}
+	}
+	clr_country_flag = ENG_uq_occupying@FROM
 	FROM = {
 		set_temp_variable = { ENG_union_strain_stage = 2 }
 		ENG_add_union_strain_for_target = yes
@@ -555,17 +559,9 @@ ENG_uq_enter_stage_2 = {
 	ENG_uq_ex_empire_stage_reaction = yes
 }
 
-# Stage 2 -> 3. Call with ROOT = ENG and FROM = target. A non-existing target is an annexed Nationalist occupation and is released first.
-# The stage is set first because the constituent level's allowed reads it; that level also refuses an overlord that purged devolution.
+# Stage 2 -> 3. Call with ROOT = ENG and FROM = target. The constituent level refuses an overlord that purged devolution.
 ENG_uq_enter_stage_3 = {
-	set_variable = { ENG_integration_stage@FROM = 3 }
-	if = {
-		limit = { FROM = { exists = no } }
-		release_autonomy = {
-			target = FROM
-			autonomy_state = autonomy_crown_protectorate
-		}
-	}
+	set_temp_variable = { ENG_uq_stage_reached = 3 }
 	if = {
 		limit = { NOT = { has_country_flag = ENG_devolution_purged } }
 		set_autonomy = {
@@ -584,7 +580,10 @@ ENG_uq_enter_stage_3 = {
 
 # Stage 3 -> 4. Call with ROOT = ENG and FROM = target.
 ENG_uq_enter_stage_4 = {
-	set_variable = { ENG_integration_stage@FROM = 4 }
+	set_temp_variable = { ENG_uq_stage_reached = 4 }
+	set_country_flag = ENG_uq_integrated@FROM
+	clr_country_flag = ENG_uq_occupying@FROM
+	clr_country_flag = ENG_uq_pacified@FROM
 	FROM = {
 		set_temp_variable = { ENG_union_strain_stage = 4 }
 		ENG_add_union_strain_for_target = yes
@@ -820,15 +819,18 @@ ENG_uq_irish_lobby_reaction = {
 # Bring one Commonwealth realm onto the ladder at the stage its existing status already implies. Call in the target's scope with ROOT = ENG.
 ENG_uq_align_realm = {
 	if = {
-		limit = { NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } } }
+		limit = { NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } } }
 		if = {
 			limit = { is_subject_of = ROOT }
 			ROOT = {
+				add_to_array = { ENG_integration_targets = PREV }
 				if = {
-					limit = { NOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
-					add_to_array = { ENG_integration_targets = PREV }
+					limit = { NOT = { has_country_flag = ENG_devolution_purged } }
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_constituent_country_very_low_devolution
+					}
 				}
-				set_variable = { ENG_integration_stage@PREV = 3 }
 			}
 		}
 		else_if = {
@@ -924,7 +926,7 @@ ENG_uq_update_caribbean_consent = {
 		if = {
 			limit = {
 				ENG_uq_is_caribbean_realm = yes
-				check_variable = { ROOT.ENG_integration_stage@THIS < 4 }
+				ROOT = { NOT = { has_country_flag = ENG_uq_integrated@PREV } }
 			}
 			ROOT = {
 				add_to_temp_variable = { ENG_uq_caribbean_consent_sum = ENG_consent@PREV }
@@ -966,15 +968,15 @@ ENG_uq_realm_stage_reaction = {
 			NOT = { has_war_with = USA }
 		}
 		if = {
-			limit = { check_variable = { ENG_integration_stage@FROM = 2 } }
+			limit = { check_variable = { ENG_uq_stage_reached = 2 } }
 			USA = { country_event = { id = ENG_uq.130 days = 5 } }
 		}
 		else_if = {
-			limit = { check_variable = { ENG_integration_stage@FROM = 3 } }
+			limit = { check_variable = { ENG_uq_stage_reached = 3 } }
 			USA = { country_event = { id = ENG_uq.131 days = 5 } }
 		}
 		else_if = {
-			limit = { check_variable = { ENG_integration_stage@FROM = 4 } }
+			limit = { check_variable = { ENG_uq_stage_reached = 4 } }
 			USA = { country_event = { id = ENG_uq.132 days = 5 } }
 		}
 	}
@@ -987,8 +989,8 @@ ENG_uq_realm_stage_reaction = {
 			}
 			NOT = { country_exists = QUE }
 			OR = {
-				check_variable = { ENG_integration_stage@FROM = 2 }
-				check_variable = { ENG_integration_stage@FROM = 3 }
+				check_variable = { ENG_uq_stage_reached = 2 }
+				check_variable = { ENG_uq_stage_reached = 3 }
 			}
 		}
 		FROM = {
@@ -1004,8 +1006,8 @@ ENG_uq_realm_stage_reaction = {
 				NOT = { has_country_flag = ENG_uq_republic }
 			}
 			OR = {
-				check_variable = { ENG_integration_stage@FROM = 2 }
-				check_variable = { ENG_integration_stage@FROM = 3 }
+				check_variable = { ENG_uq_stage_reached = 2 }
+				check_variable = { ENG_uq_stage_reached = 3 }
 			}
 		}
 		FROM = { country_event = { id = ENG_uq.140 days = 10 } }
@@ -1013,7 +1015,7 @@ ENG_uq_realm_stage_reaction = {
 	if = {
 		limit = {
 			FROM = { ENG_uq_is_caribbean_realm = yes }
-			check_variable = { ENG_integration_stage@FROM = 2 }
+			check_variable = { ENG_uq_stage_reached = 2 }
 			NOT = { has_country_flag = ENG_uq_monroe_reacted }
 		}
 		set_country_flag = ENG_uq_monroe_reacted
@@ -1028,8 +1030,8 @@ ENG_uq_realm_monthly = {
 			ENG_uq_is_crown_realm = yes
 			exists = yes
 			OR = {
-				check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
-				check_variable = { ROOT.ENG_integration_stage@THIS = 3 }
+				ENG_uq_stage_2 = yes
+				ENG_uq_stage_3 = yes
 			}
 			OR = {
 				ROOT = { has_stability < 0.4 }
@@ -1048,8 +1050,8 @@ ENG_uq_realm_monthly = {
 			ENG_uq_is_caribbean_realm = yes
 			exists = yes
 			OR = {
-				check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
-				check_variable = { ROOT.ENG_integration_stage@THIS = 3 }
+				ENG_uq_stage_2 = yes
+				ENG_uq_stage_3 = yes
 			}
 		}
 		random_list = {
@@ -1069,7 +1071,7 @@ ENG_uq_possession_stage_reaction = {
 	if = {
 		limit = {
 			FROM = { original_tag = HKG }
-			check_variable = { ENG_integration_stage@FROM = 2 }
+			check_variable = { ENG_uq_stage_reached = 2 }
 			country_exists = CHI
 			NOT = { has_war_with = CHI }
 		}
@@ -1078,7 +1080,7 @@ ENG_uq_possession_stage_reaction = {
 	if = {
 		limit = {
 			FROM = { original_tag = CYP }
-			check_variable = { ENG_integration_stage@FROM > 1 }
+			check_variable = { ENG_uq_stage_reached > 1 }
 			owns_state = 812
 			NOT = { 812 = { is_core_of = ROOT } }
 		}
@@ -1134,7 +1136,7 @@ ENG_uq_open_west_africa = {
 				is_subject = no
 				is_subject_of = ROOT
 			}
-			NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
 		}
 		ENG_uq_register_ex_empire = yes
 	}
@@ -1160,7 +1162,7 @@ ENG_uq_open_east_africa = {
 				is_subject = no
 				is_subject_of = ROOT
 			}
-			NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
 		}
 		ENG_uq_register_ex_empire = yes
 	}
@@ -1191,7 +1193,7 @@ ENG_uq_open_southern_africa = {
 				is_subject = no
 				is_subject_of = ROOT
 			}
-			NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
 		}
 		ENG_uq_register_ex_empire = yes
 	}
@@ -1223,7 +1225,7 @@ ENG_uq_open_gulf = {
 				is_subject = no
 				is_subject_of = ROOT
 			}
-			NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
 		}
 		ENG_uq_register_ex_empire = yes
 	}
@@ -1252,7 +1254,7 @@ ENG_uq_open_asia = {
 				is_subject = no
 				is_subject_of = ROOT
 			}
-			NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
 		}
 		ENG_uq_register_ex_empire = yes
 	}
@@ -1282,7 +1284,7 @@ ENG_uq_open_pacific = {
 				is_subject = no
 				is_subject_of = ROOT
 			}
-			NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
 		}
 		ENG_uq_register_ex_empire = yes
 	}
@@ -1354,7 +1356,7 @@ ENG_uq_ex_empire_monthly = {
 			ENG_uq_is_ex_empire = yes
 			exists = yes
 			is_subject_of = ROOT
-			check_variable = { ROOT.ENG_integration_stage@THIS = 2 }
+			ENG_uq_stage_2 = yes
 			ROOT = {
 				has_stability < 0.5
 				NOT = { has_country_flag = ENG_uq_realm_crisis@PREV }
@@ -1404,9 +1406,10 @@ ENG_uq_irish_war_reactions = {
 
 # ENG scope. Dublin holds Ulster at peace: the Irish tier resets and the Ulster question is settled Ireland's way.
 ENG_uq_reset_irish_tier = {
-	set_variable = { ENG_coercion@IRE = 0 }
-	set_variable = { ENG_integration_stage@IRE = 0 }
 	remove_from_array = { ENG_integration_targets = IRE }
+	clr_country_flag = ENG_uq_integrated@IRE
+	clr_country_flag = ENG_uq_occupying@IRE
+	clr_country_flag = ENG_uq_pacified@IRE
 	clr_country_flag = ENG_uq_claims@IRE
 	clr_country_flag = ENG_uq_ultimatum_rejected@IRE
 	clr_country_flag = ENG_uq_ultimatum_cooldown@IRE
@@ -1491,7 +1494,7 @@ ENG_change_imperial_tension = {
 ENG_uq_update_coercion = {
 	if = {
 		limit = {
-			check_variable = { ROOT.ENG_coercion@THIS = 4 }
+			ENG = { has_country_flag = ENG_uq_claims@PREV }
 			NOT = { has_war_with = ROOT }
 		}
 		if = {
@@ -1504,7 +1507,7 @@ ENG_uq_update_coercion = {
 		}
 	}
 	if = {
-		limit = { check_variable = { ROOT.ENG_coercion@THIS = 5 } }
+		limit = { ENG = { has_country_flag = ENG_uq_occupying@PREV } }
 		ROOT = {
 			set_temp_variable = { ENG_imperial_tension_change = 1 }
 			ENG_change_imperial_tension = yes
@@ -1519,7 +1522,7 @@ ENG_uq_update_coercion = {
 # Call in the target's scope with ROOT = ENG once the war is over and every core state is held. Lower pre-war consent means a harder occupation.
 ENG_uq_begin_occupation = {
 	ROOT = {
-		set_variable = { ENG_coercion@PREV = 5 }
+		set_country_flag = ENG_uq_occupying@PREV
 		clr_country_flag = ENG_uq_claims@PREV
 		set_variable = { ENG_uq_event_target = PREV }
 	}
@@ -1579,7 +1582,6 @@ ENG_uq_expire_claims = {
 		remove_claim_by = ROOT
 	}
 	ROOT = {
-		set_variable = { ENG_coercion@PREV = 3 }
 		set_country_flag = ENG_uq_ultimatum_rejected@PREV
 		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@PREV value = 1 days = 180 }
 		set_variable = { ENG_uq_event_target = PREV }
@@ -1774,7 +1776,7 @@ ENG_uq_tension_band_60 = {
 			any_of_scopes = {
 				array = ENG_integration_targets
 				has_government = democratic
-				check_variable = { ROOT.ENG_coercion@THIS > 1 }
+				ENG_uq_coerced = yes
 			}
 		}
 		add_ideas = ENG_uq_nato_strain
@@ -1877,7 +1879,10 @@ ENG_uq_patron_reactions = {
 		array = ENG_integration_targets
 		if = {
 			limit = {
-				check_variable = { ROOT.ENG_coercion@THIS > 3 }
+				OR = {
+					has_war_with = ROOT
+					ENG = { has_country_flag = ENG_uq_occupying@PREV }
+				}
 				ROOT = { NOT = { has_country_flag = ENG_uq_patron_reacted@PREV } }
 			}
 			ENG_uq_set_patron = yes

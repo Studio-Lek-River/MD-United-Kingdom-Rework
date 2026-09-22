@@ -4578,11 +4578,11 @@ ENG_union_question_decisions = {
 		target_array = ENG_integration_targets
 		target_root_trigger = { has_completed_focus = ENG_the_crown_imperial }
 		target_trigger = {
-			check_variable = { ENG_integration_stage@FROM = 1 }
-			check_variable = { ENG_coercion@FROM = 0 }
+			NOT = { FROM = { ENG_uq_coerced = yes } }
 			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
 			FROM = {
 				exists = yes
+				ENG_uq_stage_1 = yes
 				NOT = { is_subject_of = ROOT }
 			}
 		}
@@ -4617,8 +4617,6 @@ ENG_union_question_decisions = {
 				random_list = {
 					40 = {
 						FROM = { add_ideas = ENG_uq_loyalist_movement }
-						set_variable = { ENG_coercion@FROM = 1 }
-						custom_effect_tooltip = ENG_uq_coercion_1_TT
 					}
 					60 = {
 						custom_effect_tooltip = ENG_uq_sponsorship_exposed_TT
@@ -4630,8 +4628,6 @@ ENG_union_question_decisions = {
 			}
 			else = {
 				FROM = { add_ideas = ENG_uq_loyalist_movement }
-				set_variable = { ENG_coercion@FROM = 1 }
-				custom_effect_tooltip = ENG_uq_coercion_1_TT
 			}
 		}
 
@@ -4644,11 +4640,12 @@ ENG_union_question_decisions = {
 		target_array = ENG_integration_targets
 		target_root_trigger = { has_completed_focus = ENG_the_crown_imperial }
 		target_trigger = {
-			check_variable = { ENG_integration_stage@FROM = 1 }
-			check_variable = { ENG_coercion@FROM = 1 }
 			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
 			FROM = {
 				exists = yes
+				ENG_uq_stage_1 = yes
+				has_idea = ENG_uq_loyalist_movement
+				NOT = { has_idea = ENG_uq_embargoed }
 				NOT = { is_subject_of = ROOT }
 			}
 		}
@@ -4680,8 +4677,6 @@ ENG_union_question_decisions = {
 				limit = { has_dlc = "By Blood Alone" }
 				break_embargo = FROM
 			}
-			set_variable = { ENG_coercion@FROM = 2 }
-			custom_effect_tooltip = ENG_uq_coercion_2_TT
 		}
 
 		ai_will_do = { base = 5 }
@@ -4693,16 +4688,23 @@ ENG_union_question_decisions = {
 		target_array = ENG_integration_targets
 		target_root_trigger = { has_completed_focus = ENG_the_crown_imperial }
 		target_trigger = {
-			check_variable = { ENG_coercion@FROM = 2 }
 			NOT = { has_country_flag = ENG_uq_ultimatum_rejected@FROM }
 			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
 			NOT = { FROM = { original_tag = IRE } }
-			FROM = { exists = yes }
+			FROM = {
+				exists = yes
+				ENG_uq_stage_1 = yes
+				has_idea = ENG_uq_loyalist_movement
+			}
 		}
 
 		cost = 100
 
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_high_influence_TT
+				FROM = { ENG_uq_high_influence = yes }
+			}
 			custom_trigger_tooltip = {
 				tooltip = ENG_uq_strength_ratio_2_TT
 				strength_ratio = { tag = FROM ratio > 2 }
@@ -4712,7 +4714,6 @@ ENG_union_question_decisions = {
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_deliver_ultimatum"
-			set_variable = { ENG_coercion@FROM = 3 }
 			FROM = { country_event = { id = ENG_uq.40 days = 1 } }
 			if = {
 				limit = {
@@ -4739,12 +4740,10 @@ ENG_union_question_decisions = {
 		target_array = ENG_integration_targets
 		target_root_trigger = { has_completed_focus = ENG_the_crown_imperial has_completed_focus = ENG_reserve_powers }
 		target_trigger = {
-			check_variable = { ENG_integration_stage@FROM = 1 }
-			check_variable = { ENG_coercion@FROM > 0 }
-			check_variable = { ENG_coercion@FROM < 3 }
 			NOT = { has_country_flag = ENG_uq_ultimatum_rejected@FROM }
 			FROM = {
 				exists = yes
+				ENG_uq_stage_1 = yes
 				ENG_uq_is_crown_realm = yes
 				NOT = { ENG_uq_is_caribbean_realm = yes }
 				has_idea = ENG_uq_loyalist_movement
@@ -4759,7 +4758,6 @@ ENG_union_question_decisions = {
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_dismissal"
-			set_variable = { ENG_coercion@FROM = 3 }
 			FROM = { country_event = { id = ENG_uq.180 days = 1 } }
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = { custom_effect_tooltip = ENG_uq_ultimatum_accept_TT }
@@ -4776,7 +4774,6 @@ ENG_union_question_decisions = {
 		target_array = ENG_integration_targets
 		target_root_trigger = { has_completed_focus = ENG_the_crown_imperial }
 		target_trigger = {
-			check_variable = { ENG_coercion@FROM = 3 }
 			has_country_flag = ENG_uq_ultimatum_rejected@FROM
 			FROM = { exists = yes }
 		}
@@ -4796,7 +4793,6 @@ ENG_union_question_decisions = {
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_enforce_ultimatum"
-			set_variable = { ENG_coercion@FROM = 4 }
 			clr_country_flag = ENG_uq_ultimatum_rejected@FROM
 			add_named_threat = { threat = 5 name = ENG_uq_enforce_threat }
 			set_temp_variable = { ENG_imperial_tension_change = 5 }
@@ -4850,9 +4846,8 @@ ENG_union_question_decisions = {
 				any_of_scopes = {
 					array = ENG_integration_targets
 					ENG_uq_is_caribbean_realm = yes
+					ENG_uq_stage_1 = yes
 					ROOT = {
-						check_variable = { ENG_integration_stage@PREV = 1 }
-						check_variable = { ENG_coercion@PREV < 3 }
 						NOT = { has_country_flag = ENG_uq_ultimatum_rejected@PREV }
 					}
 					NOT = { has_war_with = ROOT }
@@ -4867,14 +4862,12 @@ ENG_union_question_decisions = {
 				limit = {
 					ENG_uq_is_caribbean_realm = yes
 					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					ENG_uq_stage_1 = yes
 					ROOT = {
-						check_variable = { ENG_integration_stage@PREV = 1 }
-						check_variable = { ENG_coercion@PREV < 3 }
 						NOT = { has_country_flag = ENG_uq_ultimatum_rejected@PREV }
 					}
 					NOT = { has_war_with = ROOT }
 				}
-				ROOT = { set_variable = { ENG_coercion@PREV = 3 } }
 				set_country_flag = { flag = ENG_uq_us_guarantee_candidate value = 1 days = 30 }
 				country_event = { id = ENG_uq.40 days = 1 }
 			}
@@ -4905,7 +4898,7 @@ ENG_union_question_decisions = {
 		fire_only_once = no
 
 		activation = {
-			check_variable = { ENG_coercion@FROM = 5 }
+			has_country_flag = ENG_uq_occupying@FROM
 			ENG_uq_states_pacified = yes
 		}
 
@@ -4921,7 +4914,8 @@ ENG_union_question_decisions = {
 
 		timeout_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_pacification"
-			set_variable = { ENG_coercion@FROM = 6 }
+			clr_country_flag = ENG_uq_occupying@FROM
+			set_country_flag = ENG_uq_pacified@FROM
 			custom_effect_tooltip = ENG_uq_coercion_6_TT
 			FROM = { ENG_uq_end_occupation = yes }
 		}
@@ -4938,7 +4932,7 @@ ENG_union_question_decisions = {
 
 		activation = {
 			has_completed_focus = ENG_ultimatum_to_dublin
-			check_variable = { ENG_coercion@IRE = 5 }
+			has_country_flag = ENG_uq_occupying@IRE
 			ENG_uq_irish_states_pacified = yes
 		}
 
@@ -4954,7 +4948,8 @@ ENG_union_question_decisions = {
 
 		timeout_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_irish_pacification"
-			set_variable = { ENG_coercion@IRE = 6 }
+			clr_country_flag = ENG_uq_occupying@IRE
+			set_country_flag = ENG_uq_pacified@IRE
 			custom_effect_tooltip = ENG_uq_irish_coercion_6_TT
 			IRE = { ENG_uq_end_occupation = yes }
 		}
@@ -5299,7 +5294,7 @@ ENG_union_question_decisions = {
 				NOT = { has_war_with = ROOT }
 			}
 			is_in_array = { array = ENG_integration_targets value = FROM }
-			check_variable = { ENG_coercion@FROM > 0 }
+			FROM = { ENG_uq_coerced = yes }
 		}
 
 		cost = 100
@@ -5557,8 +5552,10 @@ ENG_union_question_decisions = {
 		target_array = ENG_integration_targets
 		target_root_trigger = { has_completed_focus = ENG_a_family_of_nations }
 		target_trigger = {
-			check_variable = { ENG_integration_stage@FROM = 1 }
-			FROM = { ENG_uq_is_ex_empire = yes }
+			FROM = {
+				ENG_uq_stage_1 = yes
+				ENG_uq_is_ex_empire = yes
+			}
 		}
 
 		cost = 75
@@ -5597,11 +5594,9 @@ ENG_union_question_decisions = {
 					every_country = {
 						limit = {
 							ENG_uq_is_ex_empire = yes
+							ENG_uq_stage_1 = yes
 							NOT = { tag = FROM }
-							ROOT = {
-								check_variable = { ENG_uq_region@PREV = ENG_uq_region@FROM }
-								check_variable = { ENG_integration_stage@PREV = 1 }
-							}
+							ROOT = { check_variable = { ENG_uq_region@PREV = ENG_uq_region@FROM } }
 						}
 						set_temp_variable = { ENG_uq_consent_change = 3 }
 						ENG_uq_change_consent = yes
@@ -5799,7 +5794,6 @@ ENG_union_question_decisions = {
 		visible = {
 			has_completed_focus = ENG_ultimatum_to_dublin
 			has_country_flag = ENG_uq_ultimatum_rejected@IRE
-			check_variable = { ENG_coercion@IRE = 3 }
 			country_exists = IRE
 		}
 
@@ -6213,8 +6207,8 @@ ENG_union_question_decisions = {
 
 		target_array = ENG_integration_targets
 		target_trigger = {
-			check_variable = { ENG_integration_stage@FROM = 1 }
 			FROM = {
+				ENG_uq_stage_1 = yes
 				OR = {
 					is_subject = no
 					is_subject_of = ROOT
@@ -6264,7 +6258,7 @@ ENG_union_question_decisions = {
 			else = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_target_pacified_TT
-					check_variable = { ENG_coercion@FROM > 5 }
+					has_country_flag = ENG_uq_pacified@FROM
 				}
 				if = {
 					limit = { FROM = { original_tag = IRE } }
@@ -6317,7 +6311,7 @@ ENG_union_question_decisions = {
 
 		target_array = ENG_integration_targets
 		target_trigger = {
-			check_variable = { ENG_integration_stage@FROM = 2 }
+			FROM = { ENG_uq_stage_2 = yes }
 			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
 			NOT = { FROM = { ENG_uq_stage_capped = yes } }
 		}
@@ -6344,7 +6338,7 @@ ENG_union_question_decisions = {
 			else = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_target_pacified_TT
-					check_variable = { ENG_coercion@FROM > 5 }
+					has_country_flag = ENG_uq_pacified@FROM
 				}
 			}
 		}
@@ -6378,7 +6372,7 @@ ENG_union_question_decisions = {
 
 		target_array = ENG_integration_targets
 		target_trigger = {
-			check_variable = { ENG_integration_stage@FROM = 3 }
+			FROM = { ENG_uq_stage_3 = yes }
 			NOT = { FROM = { ENG_uq_is_caribbean_realm = yes } }
 		}
 
@@ -6408,7 +6402,7 @@ ENG_union_question_decisions = {
 			else = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_target_pacified_TT
-					check_variable = { ENG_coercion@FROM > 5 }
+					has_country_flag = ENG_uq_pacified@FROM
 				}
 			}
 		}
@@ -6444,8 +6438,8 @@ ENG_union_question_decisions = {
 
 		target_array = ENG_integration_targets
 		target_trigger = {
-			check_variable = { ENG_integration_stage@FROM = 1 }
 			FROM = {
+				ENG_uq_stage_1 = yes
 				ENG_uq_is_ex_empire = yes
 				exists = yes
 				OR = {
@@ -6486,7 +6480,7 @@ ENG_union_question_decisions = {
 			else = {
 				custom_trigger_tooltip = {
 					tooltip = ENG_uq_target_pacified_TT
-					check_variable = { ENG_coercion@FROM > 5 }
+					has_country_flag = ENG_uq_pacified@FROM
 				}
 			}
 		}
@@ -6542,10 +6536,8 @@ ENG_union_question_decisions = {
 					any_of_scopes = {
 						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
-						ROOT = {
-							check_variable = { ENG_integration_stage@PREV = 1 }
-							NOT = { has_country_flag = ENG_uq_lock@PREV }
-						}
+						ENG_uq_stage_1 = yes
+						ROOT = { NOT = { has_country_flag = ENG_uq_lock@PREV } }
 						NOT = { has_country_flag = ENG_uq_republic }
 					}
 				}
@@ -6556,8 +6548,8 @@ ENG_union_question_decisions = {
 					any_of_scopes = {
 						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
-						ROOT = { check_variable = { ENG_integration_stage@PREV = 1 } }
-						check_variable = { ROOT.ENG_coercion@THIS > 5 }
+						ENG_uq_stage_1 = yes
+						ROOT = { has_country_flag = ENG_uq_pacified@PREV }
 					}
 				}
 			}
@@ -6571,10 +6563,8 @@ ENG_union_question_decisions = {
 					limit = {
 						ENG_uq_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
-						ROOT = {
-							check_variable = { ENG_integration_stage@PREV = 1 }
-							NOT = { has_country_flag = ENG_uq_lock@PREV }
-						}
+						ENG_uq_stage_1 = yes
+						ROOT = { NOT = { has_country_flag = ENG_uq_lock@PREV } }
 						NOT = { has_country_flag = ENG_uq_republic }
 					}
 					country_event = { id = ENG_uq.120 days = 1 }
@@ -6585,8 +6575,8 @@ ENG_union_question_decisions = {
 					limit = {
 						ENG_uq_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
-						ROOT = { check_variable = { ENG_integration_stage@PREV = 1 } }
-						check_variable = { ROOT.ENG_coercion@THIS > 5 }
+						ENG_uq_stage_1 = yes
+						ROOT = { has_country_flag = ENG_uq_pacified@PREV }
 					}
 					ENG = { country_event = { id = ENG_uq.129 days = 1 } }
 				}
@@ -6625,10 +6615,8 @@ ENG_union_question_decisions = {
 					any_of_scopes = {
 						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
-						ROOT = {
-							check_variable = { ENG_integration_stage@PREV = 2 }
-							NOT = { has_country_flag = ENG_uq_lock@PREV }
-						}
+						ENG_uq_stage_2 = yes
+						ROOT = { NOT = { has_country_flag = ENG_uq_lock@PREV } }
 						NOT = { has_country_flag = ENG_uq_republic }
 					}
 				}
@@ -6639,8 +6627,8 @@ ENG_union_question_decisions = {
 					any_of_scopes = {
 						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
-						ROOT = { check_variable = { ENG_integration_stage@PREV = 2 } }
-						check_variable = { ROOT.ENG_coercion@THIS > 5 }
+						ENG_uq_stage_2 = yes
+						ROOT = { has_country_flag = ENG_uq_pacified@PREV }
 					}
 				}
 			}
@@ -6654,10 +6642,8 @@ ENG_union_question_decisions = {
 					limit = {
 						ENG_uq_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
-						ROOT = {
-							check_variable = { ENG_integration_stage@PREV = 2 }
-							NOT = { has_country_flag = ENG_uq_lock@PREV }
-						}
+						ENG_uq_stage_2 = yes
+						ROOT = { NOT = { has_country_flag = ENG_uq_lock@PREV } }
 						NOT = { has_country_flag = ENG_uq_republic }
 					}
 					country_event = { id = ENG_uq.23 days = 1 }
@@ -6668,8 +6654,8 @@ ENG_union_question_decisions = {
 					limit = {
 						ENG_uq_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
-						ROOT = { check_variable = { ENG_integration_stage@PREV = 2 } }
-						check_variable = { ROOT.ENG_coercion@THIS > 5 }
+						ENG_uq_stage_2 = yes
+						ROOT = { has_country_flag = ENG_uq_pacified@PREV }
 					}
 					ENG = { country_event = { id = ENG_uq.129 days = 1 } }
 				}
@@ -6712,10 +6698,8 @@ ENG_union_question_decisions = {
 					any_of_scopes = {
 						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
-						ROOT = {
-							check_variable = { ENG_integration_stage@PREV = 3 }
-							NOT = { has_country_flag = ENG_uq_lock@PREV }
-						}
+						ENG_uq_stage_3 = yes
+						ROOT = { NOT = { has_country_flag = ENG_uq_lock@PREV } }
 						NOT = { has_country_flag = ENG_uq_republic }
 					}
 				}
@@ -6726,8 +6710,8 @@ ENG_union_question_decisions = {
 					any_of_scopes = {
 						array = ENG_integration_targets
 						ENG_uq_is_caribbean_realm = yes
-						ROOT = { check_variable = { ENG_integration_stage@PREV = 3 } }
-						check_variable = { ROOT.ENG_coercion@THIS > 5 }
+						ENG_uq_stage_3 = yes
+						ROOT = { has_country_flag = ENG_uq_pacified@PREV }
 					}
 				}
 			}
@@ -6743,10 +6727,8 @@ ENG_union_question_decisions = {
 					limit = {
 						ENG_uq_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
-						ROOT = {
-							check_variable = { ENG_integration_stage@PREV = 3 }
-							NOT = { has_country_flag = ENG_uq_lock@PREV }
-						}
+						ENG_uq_stage_3 = yes
+						ROOT = { NOT = { has_country_flag = ENG_uq_lock@PREV } }
 						NOT = { has_country_flag = ENG_uq_republic }
 					}
 					country_event = { id = ENG_uq.20 days = 1 }
@@ -6757,8 +6739,8 @@ ENG_union_question_decisions = {
 					limit = {
 						ENG_uq_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
-						ROOT = { check_variable = { ENG_integration_stage@PREV = 3 } }
-						check_variable = { ROOT.ENG_coercion@THIS > 5 }
+						ENG_uq_stage_3 = yes
+						ROOT = { has_country_flag = ENG_uq_pacified@PREV }
 					}
 					ENG = { country_event = { id = ENG_uq.129 days = 1 } }
 				}
@@ -6821,9 +6803,11 @@ ENG_uq_target_decisions = {
 		icon = GFX_decision_generic_political_discourse
 
 		visible = {
-			ENG = { has_completed_focus = ENG_the_crown_imperial }
-			check_variable = { ENG.ENG_coercion@THIS > 1 }
-			check_variable = { ENG.ENG_coercion@THIS < 4 }
+			ENG = {
+				has_completed_focus = ENG_the_crown_imperial
+				has_country_flag = ENG_uq_ultimatum_rejected@PREV
+			}
+			NOT = { has_war_with = ENG }
 		}
 
 		cost = 150

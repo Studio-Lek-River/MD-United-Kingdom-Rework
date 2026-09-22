@@ -4,7 +4,7 @@ ENG_constituent_state_check = {
 		original_tag = NIR
 		original_tag = SCO
 		original_tag = WAS
-		ENG = { check_variable = { ENG_integration_stage@PREV > 2 } }
+		ENG = { is_in_array = { array = ENG_integration_targets value = PREV } }
 	}
 }
 
@@ -210,7 +210,10 @@ ENG_uq_home_nations_done = {
 ENG_uq_ireland_done = {
 	custom_trigger_tooltip = {
 		tooltip = ENG_uq_ireland_done_TT
-		check_variable = { ENG_integration_stage@IRE > 2 }
+		OR = {
+			IRE = { ENG_uq_stage_3 = yes }
+			has_country_flag = ENG_uq_integrated@IRE
+		}
 	}
 }
 
@@ -237,7 +240,10 @@ ENG_uq_realms_done = {
 		any_country = {
 			count = 3
 			is_in_array = { array = global.commonwealth_member value = THIS }
-			ROOT = { check_variable = { ENG_integration_stage@PREV > 1 } }
+			OR = {
+				ENG_uq_stage_2 = yes
+				ENG_uq_stage_3 = yes
+			}
 		}
 	}
 }
@@ -259,6 +265,40 @@ ENG_uq_can_transition = {
 		tooltip = ENG_uq_not_locked_TT
 		NOT = { has_country_flag = ENG_uq_lock@FROM }
 	}
+}
+
+# Target scope. Some coercive step has been taken against this target.
+ENG_uq_coerced = {
+	OR = {
+		has_idea = ENG_uq_loyalist_movement
+		has_idea = ENG_uq_embargoed
+		ENG = { has_country_flag = ENG_uq_ultimatum_rejected@PREV }
+		ENG = { has_country_flag = ENG_uq_claims@PREV }
+		ENG = { has_country_flag = ENG_uq_occupying@PREV }
+		ENG = { has_country_flag = ENG_uq_pacified@PREV }
+	}
+}
+
+# Target scope. On the ladder but not yet inside a British autonomy level.
+ENG_uq_stage_1 = {
+	NOT = { has_autonomy_state = autonomy_crown_dominion }
+	NOT = { has_autonomy_state = autonomy_crown_protectorate }
+	NOT = { has_autonomy_state = autonomy_constituent_country_very_low_devolution }
+}
+
+# Target scope. Associated with the Union as a dominion or a protectorate.
+ENG_uq_stage_2 = {
+	is_subject_of = ENG
+	OR = {
+		has_autonomy_state = autonomy_crown_dominion
+		has_autonomy_state = autonomy_crown_protectorate
+	}
+}
+
+# Target scope. A constituent country of the Union.
+ENG_uq_stage_3 = {
+	is_subject_of = ENG
+	has_autonomy_state = autonomy_constituent_country_very_low_devolution
 }
 
 # Target scope. Britain is the top influencer here above 50%.
@@ -322,14 +362,12 @@ ENG_uq_all_cores_held = {
 	}
 }
 
-# Target scope with ROOT = ENG. Occupied, or pacified but not yet a protectorate.
+# Target scope. Occupied, or pacified but not yet a protectorate.
 ENG_uq_occupation_active = {
+	ENG_uq_stage_1 = yes
 	OR = {
-		check_variable = { ROOT.ENG_coercion@THIS = 5 }
-		AND = {
-			check_variable = { ROOT.ENG_coercion@THIS = 6 }
-			check_variable = { ROOT.ENG_integration_stage@THIS < 2 }
-		}
+		ENG = { has_country_flag = ENG_uq_occupying@PREV }
+		ENG = { has_country_flag = ENG_uq_pacified@PREV }
 	}
 }
 
@@ -340,7 +378,7 @@ ENG_uq_coercion_active = {
 		has_idea = ENG_uq_occupation_burden
 		any_of_scopes = {
 			array = ENG_integration_targets
-			check_variable = { ROOT.ENG_coercion@THIS = 4 }
+			ENG = { has_country_flag = ENG_uq_claims@PREV }
 		}
 	}
 }
@@ -348,8 +386,14 @@ ENG_uq_coercion_active = {
 # ENG scope. Ireland is being pulled into the Union beyond alignment, which the EU treats as a breach.
 ENG_uq_ireland_targeted = {
 	OR = {
-		check_variable = { ENG_integration_stage@IRE > 1 }
-		check_variable = { ENG_coercion@IRE > 0 }
+		IRE = {
+			OR = {
+				ENG_uq_stage_2 = yes
+				ENG_uq_stage_3 = yes
+				ENG_uq_coerced = yes
+			}
+		}
+		has_country_flag = ENG_uq_integrated@IRE
 	}
 }
 
@@ -469,15 +513,15 @@ ENG_uq_canzuk_integrated = {
 	custom_trigger_tooltip = {
 		tooltip = ENG_uq_canzuk_integrated_TT
 		OR = {
-			check_variable = { ENG_integration_stage@CAN > 3 }
+			has_country_flag = ENG_uq_integrated@CAN
 			NOT = { country_exists = CAN }
 		}
 		OR = {
-			check_variable = { ENG_integration_stage@AST > 3 }
+			has_country_flag = ENG_uq_integrated@AST
 			NOT = { country_exists = AST }
 		}
 		OR = {
-			check_variable = { ENG_integration_stage@NZL > 3 }
+			has_country_flag = ENG_uq_integrated@NZL
 			NOT = { country_exists = NZL }
 		}
 	}

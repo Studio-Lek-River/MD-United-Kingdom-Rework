@@ -58,7 +58,7 @@ ENG_uq_target_decisions = {
 
 	visible = {
 		country_exists = ENG
-		check_variable = { ENG.ENG_integration_stage@THIS > 0 }
+		ENG = { is_in_array = { array = ENG_integration_targets value = PREV } }
 	}
 }
 

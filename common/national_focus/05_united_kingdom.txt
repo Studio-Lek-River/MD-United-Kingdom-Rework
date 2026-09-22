@@ -21637,7 +21637,12 @@ focus_tree = {
 		bypass = {
 			OR = {
 				NOT = { country_exists = IRE }
-				check_variable = { ENG_integration_stage@IRE > 1 }
+				IRE = {
+					OR = {
+						ENG_uq_stage_2 = yes
+						ENG_uq_stage_3 = yes
+					}
+				}
 			}
 		}
 
@@ -21829,7 +21834,12 @@ focus_tree = {
 			17 = { is_owned_and_controlled_by = ROOT }
 			custom_trigger_tooltip = {
 				tooltip = ENG_uq_ireland_is_dominion_TT
-				check_variable = { ENG_integration_stage@IRE > 1 }
+				IRE = {
+					OR = {
+						ENG_uq_stage_2 = yes
+						ENG_uq_stage_3 = yes
+					}
+				}
 			}
 			IRE = { is_subject_of = ROOT }
 			custom_trigger_tooltip = {
@@ -21887,13 +21897,13 @@ focus_tree = {
 			has_government = democratic
 			custom_trigger_tooltip = {
 				tooltip = ENG_uq_ireland_integrated_TT
-				check_variable = { ENG_integration_stage@IRE > 3 }
+				has_country_flag = ENG_uq_integrated@IRE
 			}
 		}
 
 		bypass = {
 			NOT = { country_exists = IRE }
-			check_variable = { ENG_integration_stage@IRE < 4 }
+			NOT = { has_country_flag = ENG_uq_integrated@IRE }
 		}
 
 		completion_reward = {
@@ -22310,7 +22320,7 @@ focus_tree = {
 			country_exists = IRE
 			custom_trigger_tooltip = {
 				tooltip = ENG_uq_irish_coercion_1_TT
-				check_variable = { ENG_coercion@IRE > 0 }
+				IRE = { has_idea = ENG_uq_loyalist_movement }
 			}
 		}
 
@@ -22346,8 +22356,8 @@ focus_tree = {
 			country_exists = IRE
 			NOT = { has_war_with = IRE }
 			custom_trigger_tooltip = {
-				tooltip = ENG_uq_irish_coercion_2_TT
-				check_variable = { ENG_coercion@IRE > 1 }
+				tooltip = ENG_uq_irish_coercion_1_TT
+				IRE = { has_idea = ENG_uq_loyalist_movement }
 			}
 		}
 
@@ -22388,8 +22398,8 @@ focus_tree = {
 				NOT = { has_idea = ENG_good_friday_agreement }
 			}
 			custom_trigger_tooltip = {
-				tooltip = ENG_uq_irish_coercion_2_TT
-				check_variable = { ENG_coercion@IRE > 1 }
+				tooltip = ENG_uq_irish_coercion_1_TT
+				IRE = { has_idea = ENG_uq_loyalist_movement }
 			}
 			NOT = { has_active_mission = ENG_uq_blockade_of_ireland }
 		}
@@ -22397,9 +22407,6 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_ultimatum_to_dublin"
 			custom_effect_tooltip = ENG_ultimatum_to_dublin_TT
-			newline = yes
-			set_variable = { ENG_coercion@IRE = 3 }
-			custom_effect_tooltip = ENG_uq_irish_coercion_3_set_TT
 			newline = yes
 			IRE = { country_event = { id = ENG_uq.40 days = 1 } }
 			newline = yes
@@ -22522,7 +22529,7 @@ focus_tree = {
 			country_exists = CAN
 			custom_trigger_tooltip = {
 				tooltip = ENG_uq_canada_on_ladder_TT
-				check_variable = { ENG_integration_stage@CAN > 0 }
+				is_in_array = { array = ENG_integration_targets value = CAN }
 			}
 			OR = {
 				has_completed_focus = ENG_the_crown_imperial
@@ -22536,7 +22543,7 @@ focus_tree = {
 		bypass = {
 			OR = {
 				NOT = { country_exists = CAN }
-				check_variable = { ENG_integration_stage@CAN > 3 }
+				has_country_flag = ENG_uq_integrated@CAN
 			}
 		}
 
@@ -22585,7 +22592,7 @@ focus_tree = {
 			country_exists = AST
 			custom_trigger_tooltip = {
 				tooltip = ENG_uq_australia_on_ladder_TT
-				check_variable = { ENG_integration_stage@AST > 0 }
+				is_in_array = { array = ENG_integration_targets value = AST }
 			}
 			OR = {
 				has_completed_focus = ENG_the_crown_imperial
@@ -22599,7 +22606,7 @@ focus_tree = {
 		bypass = {
 			OR = {
 				NOT = { country_exists = AST }
-				check_variable = { ENG_integration_stage@AST > 3 }
+				has_country_flag = ENG_uq_integrated@AST
 			}
 		}
 
@@ -22646,7 +22653,7 @@ focus_tree = {
 			country_exists = NZL
 			custom_trigger_tooltip = {
 				tooltip = ENG_uq_new_zealand_on_ladder_TT
-				check_variable = { ENG_integration_stage@NZL > 0 }
+				is_in_array = { array = ENG_integration_targets value = NZL }
 			}
 			OR = {
 				has_completed_focus = ENG_the_crown_imperial
@@ -22660,7 +22667,7 @@ focus_tree = {
 		bypass = {
 			OR = {
 				NOT = { country_exists = NZL }
-				check_variable = { ENG_integration_stage@NZL > 3 }
+				has_country_flag = ENG_uq_integrated@NZL
 			}
 		}
 
@@ -22708,7 +22715,6 @@ focus_tree = {
 				any_country = {
 					ENG_uq_is_caribbean_realm = yes
 					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
-					check_variable = { ROOT.ENG_integration_stage@THIS > 0 }
 				}
 			}
 		}
@@ -22718,7 +22724,6 @@ focus_tree = {
 				any_country = {
 					ENG_uq_is_caribbean_realm = yes
 					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
-					check_variable = { ROOT.ENG_integration_stage@THIS > 0 }
 				}
 			}
 		}
@@ -22920,7 +22925,7 @@ focus_tree = {
 						NOT = { country_exists = IRE }
 						custom_trigger_tooltip = {
 							tooltip = ENG_uq_ireland_integrated_TT
-							check_variable = { ENG_integration_stage@IRE > 3 }
+							has_country_flag = ENG_uq_integrated@IRE
 						}
 					}
 					NOT = { has_active_mission = ENG_uq_irish_pacification }
@@ -23324,7 +23329,7 @@ focus_tree = {
 							original_tag = CYP
 						}
 						is_subject = no
-						NOT = { check_variable = { ROOT.ENG_integration_stage@THIS > 0 } }
+						NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
 					}
 					hidden_effect = { ENG_uq_align_target = yes }
 				}

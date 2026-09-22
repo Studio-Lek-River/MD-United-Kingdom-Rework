@@ -327,7 +327,7 @@ on_actions = {
 			# The Irish war is lost once Dublin owns Ulster at peace
 			if = {
 				limit = {
-					check_variable = { ENG_coercion@IRE = 4 }
+					has_country_flag = ENG_uq_claims@IRE
 					NOT = { has_war_with = IRE }
 					17 = { is_owned_by = IRE }
 				}

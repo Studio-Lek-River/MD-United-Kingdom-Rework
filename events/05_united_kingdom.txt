@@ -7524,19 +7524,19 @@ country_event = {
 	id = ENG_uq.20
 	title = {
 		text = ENG_uq.20.t
-		trigger = { FROM = { check_variable = { ENG_integration_stage@ROOT = 1 } } }
+		trigger = { ENG_uq_stage_1 = yes }
 	}
 	title = {
 		text = ENG_uq.30.t
-		trigger = { FROM = { check_variable = { ENG_integration_stage@ROOT = 3 } } }
+		trigger = { ENG_uq_stage_3 = yes }
 	}
 	desc = {
 		text = ENG_uq.20.d
-		trigger = { FROM = { check_variable = { ENG_integration_stage@ROOT = 1 } } }
+		trigger = { ENG_uq_stage_1 = yes }
 	}
 	desc = {
 		text = ENG_uq.30.d
-		trigger = { FROM = { check_variable = { ENG_integration_stage@ROOT = 3 } } }
+		trigger = { ENG_uq_stage_3 = yes }
 	}
 	picture = GFX_treaty
 	is_triggered_only = yes
@@ -7572,11 +7572,11 @@ country_event = {
 	title = ENG_uq.21.t
 	desc = {
 		text = ENG_uq.21.d
-		trigger = { check_variable = { ENG_integration_stage@FROM = 1 } }
+		trigger = { FROM = { ENG_uq_stage_1 = yes } }
 	}
 	desc = {
 		text = ENG_uq.21.d2
-		trigger = { check_variable = { ENG_integration_stage@FROM = 3 } }
+		trigger = { FROM = { ENG_uq_stage_3 = yes } }
 	}
 	picture = GFX_treaty
 	is_triggered_only = yes
@@ -7585,13 +7585,13 @@ country_event = {
 		name = ENG_uq.21.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.21.a executed"
 		if = {
-			limit = { check_variable = { ENG_integration_stage@FROM = 1 } }
+			limit = { FROM = { ENG_uq_stage_1 = yes } }
 			ENG_uq_enter_stage_2 = yes
 		}
 		else_if = {
 			limit = {
-				check_variable = { ENG_integration_stage@FROM = 3 }
 				FROM = {
+					ENG_uq_stage_3 = yes
 					OR = {
 						original_tag = CAN
 						original_tag = AST
@@ -7614,11 +7614,11 @@ country_event = {
 	title = ENG_uq.22.t
 	desc = {
 		text = ENG_uq.22.d
-		trigger = { check_variable = { ENG_integration_stage@FROM = 1 } }
+		trigger = { FROM = { ENG_uq_stage_1 = yes } }
 	}
 	desc = {
 		text = ENG_uq.22.d2
-		trigger = { check_variable = { ENG_integration_stage@FROM = 3 } }
+		trigger = { FROM = { ENG_uq_stage_3 = yes } }
 	}
 	picture = GFX_treaty_rejected
 	is_triggered_only = yes
@@ -7862,7 +7862,7 @@ country_event = {
 	option = {
 		name = ENG_uq.41.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.41.a executed"
-		set_variable = { ENG_coercion@FROM = 6 }
+		set_country_flag = ENG_uq_pacified@FROM
 		custom_effect_tooltip = ENG_uq_coercion_6_TT
 		FROM = {
 			if = {
@@ -8890,15 +8890,15 @@ country_event = {
 
 	immediate = {
 		if = {
-			limit = { check_variable = { ENG_integration_stage@FROM = 1 } }
+			limit = { FROM = { ENG_uq_stage_1 = yes } }
 			ENG_uq_enter_stage_2 = yes
 		}
 		else_if = {
-			limit = { check_variable = { ENG_integration_stage@FROM = 2 } }
+			limit = { FROM = { ENG_uq_stage_2 = yes } }
 			ENG_uq_enter_stage_3 = yes
 		}
 		else_if = {
-			limit = { check_variable = { ENG_integration_stage@FROM = 3 } }
+			limit = { FROM = { ENG_uq_stage_3 = yes } }
 			ENG_uq_enter_stage_4 = yes
 		}
 	}
@@ -9255,8 +9255,9 @@ country_event = {
 			target = FROM
 			autonomy_state = autonomy_free
 		}
-		set_variable = { ENG_integration_stage@FROM = 0 }
 		remove_from_array = { ENG_integration_targets = FROM }
+		clr_country_flag = ENG_uq_occupying@FROM
+		clr_country_flag = ENG_uq_pacified@FROM
 		set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1825 }
 		set_temp_variable = { ENG_union_strain_change = -5 }
 		ENG_change_union_strain = yes
@@ -9401,7 +9402,6 @@ country_event = {
 			}
 			ENG_uq_realm_republic = yes
 		}
-		set_variable = { ENG_coercion@FROM = 3 }
 		set_country_flag = ENG_uq_ultimatum_rejected@FROM
 		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@FROM value = 1 days = 180 }
 		custom_effect_tooltip = ENG_uq_cooldown_started_TT
@@ -10074,10 +10074,8 @@ country_event = {
 				is_subject = no
 				NOT = { tag = ROOT }
 				NOT = { has_war_with = ROOT }
-				FROM = {
-					check_variable = { ENG_uq_region@PREV = ENG_uq_region_tmp }
-					check_variable = { ENG_integration_stage@PREV < 2 }
-				}
+				ENG_uq_stage_1 = yes
+				FROM = { check_variable = { ENG_uq_region@PREV = ENG_uq_region_tmp } }
 			}
 			PREV = { give_guarantee = PREV }
 		}
@@ -10131,8 +10129,9 @@ country_event = {
 			target = FROM
 			autonomy_state = autonomy_free
 		}
-		set_variable = { ENG_integration_stage@FROM = 0 }
 		remove_from_array = { ENG_integration_targets = FROM }
+		clr_country_flag = ENG_uq_occupying@FROM
+		clr_country_flag = ENG_uq_pacified@FROM
 		set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1825 }
 		set_temp_variable = { ENG_union_strain_change = 5 }
 		ENG_change_union_strain = yes
