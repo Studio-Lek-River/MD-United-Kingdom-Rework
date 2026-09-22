@@ -3360,8 +3360,9 @@ ENG_devolved_matters = {
 			OR = {
 				country_exists = SCO
 				has_country_flag = ENG_devolution_purged
+				has_country_flag = ENG_scottish_integrated
+				NOT = { ENG_holds_scotland = yes }
 				has_country_flag = ENG_uq_assemblies_suspended
-				ENG_settlement_region_lost = yes
 				ENG_settlement_government_fell = yes
 			}
 		}
@@ -3397,6 +3398,8 @@ ENG_devolved_matters = {
 				has_country_flag = ENG_devolution_purged
 				has_country_flag = ENG_north_irish_integrated
 				NOT = { ENG_holds_north_ireland = yes }
+				has_country_flag = ENG_uq_assemblies_suspended
+				ENG_settlement_government_fell = yes
 			}
 		}
 
@@ -3404,6 +3407,15 @@ ENG_devolved_matters = {
 		is_good = no
 		selectable_mission = no
 		fixed_random_seed = no
+
+		cancel_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_north_irish_union_settlement_referendum"
+			if = {
+				limit = { ENG_settlement_government_fell = yes }
+				country_event = devolution.29
+			}
+			ENG_clear_referendum_campaign = yes
+		}
 
 		timeout_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_north_irish_union_settlement_referendum"
@@ -3422,6 +3434,8 @@ ENG_devolved_matters = {
 				has_country_flag = ENG_devolution_purged
 				has_country_flag = ENG_welsh_integrated
 				NOT = { ENG_holds_wales = yes }
+				has_country_flag = ENG_uq_assemblies_suspended
+				ENG_settlement_government_fell = yes
 			}
 		}
 
@@ -3429,6 +3443,15 @@ ENG_devolved_matters = {
 		is_good = no
 		selectable_mission = no
 		fixed_random_seed = no
+
+		cancel_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_welsh_union_settlement_referendum"
+			if = {
+				limit = { ENG_settlement_government_fell = yes }
+				country_event = devolution.29
+			}
+			ENG_clear_referendum_campaign = yes
+		}
 
 		timeout_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_welsh_union_settlement_referendum"

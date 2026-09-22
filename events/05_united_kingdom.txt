@@ -720,11 +720,11 @@ news_event = {
 	title = United_Kingdom_News.7.t
 	desc = {
 		text = United_Kingdom_News.7.d
-		trigger = { var:ENG_uq_event_target = { NOT = { has_country_flag = ENG_uq_republic } } }
+		trigger = { var:ENG.ENG_uq_event_target = { NOT = { has_country_flag = ENG_uq_republic } } }
 	}
 	desc = {
 		text = United_Kingdom_News.7.d2
-		trigger = { var:ENG_uq_event_target = { has_country_flag = ENG_uq_republic } }
+		trigger = { var:ENG.ENG_uq_event_target = { has_country_flag = ENG_uq_republic } }
 	}
 	picture = GFX_news_leave_commonwealth
 	is_triggered_only = yes
@@ -2691,25 +2691,26 @@ country_event = {
 	option = {
 		name = devolution.14.a
 		log = "[GetDateText]: [This.GetName]: devolution.14.a executed"
+		set_temp_variable = { ENG_resistance_tier_change = 2 }
 		if = {
 			limit = { check_variable = { ENG_referendum_target = 1 } }
 			set_country_flag = { flag = ENG_scottish_settlement_cooldown days = 1825 value = 1 }
 			every_owned_state = {
 				limit = { is_core_of = SCO }
-				add_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+				ENG_apply_resistance_against_westminster = yes
 			}
 		}
 		else_if = {
 			limit = { check_variable = { ENG_referendum_target = 2 } }
 			set_country_flag = { flag = ENG_north_irish_settlement_cooldown days = 1825 value = 1 }
-			17 = { add_dynamic_modifier = { modifier = ENG_resistance_against_westminster } }
+			17 = { ENG_apply_resistance_against_westminster = yes }
 		}
 		else_if = {
 			limit = { check_variable = { ENG_referendum_target = 3 } }
 			set_country_flag = { flag = ENG_welsh_settlement_cooldown days = 1825 value = 1 }
 			every_owned_state = {
 				limit = { is_core_of = WAS }
-				add_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+				ENG_apply_resistance_against_westminster = yes
 			}
 		}
 		# Hard mode: a defeat emboldens the other nationalist movements
@@ -7990,6 +7991,7 @@ country_event = {
 			}
 			set_temp_variable = { percent_change = -10 }
 			set_temp_variable = { tag_index = ENG }
+			set_temp_variable = { influence_target = THIS }
 			change_influence_percentage = yes
 		}
 		USA = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_special_relationship_opinion } }
@@ -8048,7 +8050,7 @@ country_event = {
 	option = { name = ENG_uq.65.a }
 }
 
-# Patron reaction to a coerced client
+# Patron reaction to a coerced client (ENG, FROM = client)
 country_event = {
 	id = ENG_uq.66
 	title = ENG_uq.66.t
@@ -8062,11 +8064,11 @@ country_event = {
 		random_list = {
 			60 = {
 				custom_effect_tooltip = ENG_uq_patron_protest_TT
-				var:ENG_uq_patron_var = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_patron_opinion } }
+				var:FROM.ENG_uq_patron_var = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_patron_opinion } }
 			}
 			30 = {
 				custom_effect_tooltip = ENG_uq_patron_sanctions_TT
-				var:ENG_uq_patron_var = {
+				var:FROM.ENG_uq_patron_var = {
 					add_opinion_modifier = { target = ROOT modifier = ENG_uq_patron_opinion }
 					if = {
 						limit = { has_dlc = "By Blood Alone" }
@@ -8076,8 +8078,8 @@ country_event = {
 			}
 			10 = {
 				custom_effect_tooltip = ENG_uq_patron_claim_TT
-				set_temp_variable = { ENG_uq_claim_target = ENG_uq_event_target }
-				var:ENG_uq_patron_var = {
+				set_temp_variable = { ENG_uq_claim_target = FROM }
+				var:FROM.ENG_uq_patron_var = {
 					every_state = {
 						limit = {
 							is_core_of = var:ENG_uq_claim_target
@@ -9147,6 +9149,7 @@ country_event = {
 				multiply_variable = { ENG_uq_quebec_leave = 2 }
 			}
 			set_variable = { ENG_uq_quebec_stay = 100 }
+			subtract_from_variable = { ENG_uq_quebec_stay = ENG_uq_quebec_leave }
 			clamp_variable = { var = ENG_uq_quebec_leave min = 5 max = 95 }
 			clamp_variable = { var = ENG_uq_quebec_stay min = 5 max = 95 }
 			random_list = {
@@ -9206,7 +9209,7 @@ country_event = {
 	option = { name = ENG_uq.154.a }
 }
 
-# A hurricane strikes a Caribbean realm (ENG)
+# A hurricane strikes a Caribbean realm (ENG, FROM = realm)
 country_event = {
 	id = ENG_uq.160
 	title = ENG_uq.160.t
@@ -9221,7 +9224,7 @@ country_event = {
 	}
 }
 
-# The drug trade unsettles a Caribbean realm (ENG)
+# The drug trade unsettles a Caribbean realm (ENG, FROM = realm)
 country_event = {
 	id = ENG_uq.161
 	title = ENG_uq.161.t
@@ -10788,6 +10791,7 @@ country_event = {
 			add_opinion_modifier = { target = ROOT modifier = ENG_cmw_chogm_host_opinion }
 			set_temp_variable = { percent_change = 1 }
 			set_temp_variable = { tag_index = ROOT.id }
+			set_temp_variable = { influence_target = THIS }
 			change_influence_percentage = yes
 		}
 	}

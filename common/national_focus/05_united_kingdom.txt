@@ -21829,7 +21829,7 @@ focus_tree = {
 			17 = { is_owned_and_controlled_by = ROOT }
 			custom_trigger_tooltip = {
 				tooltip = ENG_uq_ireland_is_dominion_TT
-				check_variable = { ENG_integration_stage@IRE = 2 }
+				check_variable = { ENG_integration_stage@IRE > 1 }
 			}
 			IRE = { is_subject_of = ROOT }
 			custom_trigger_tooltip = {
@@ -23109,10 +23109,8 @@ focus_tree = {
 			}
 			if = {
 				limit = {
-					ARG = {
-						country_exists = ARG
-						NOT = { has_war_with = ARG }
-					}
+					country_exists = ARG
+					NOT = { has_war_with = ARG }
 				}
 				custom_effect_tooltip = ENG_south_atlantic_command_TT
 			}
@@ -23444,6 +23442,7 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_west_african_partnership"
+			hidden_effect = { ENG_uq_open_west_africa = yes }
 			if = {
 				limit = { has_completed_focus = ENG_the_crown_imperial }
 				set_temp_variable = { ENG_imperial_tension_change = 2 }
@@ -23466,7 +23465,6 @@ focus_tree = {
 				ENG_cmw_change_cohesion = yes
 				unlock_decision_tooltip = ENG_uq_regional_association
 			}
-			hidden_effect = { ENG_uq_open_west_africa = yes }
 		}
 
 		ai_will_do = { base = 0 }
@@ -23504,6 +23502,7 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_east_african_partnership"
+			hidden_effect = { ENG_uq_open_east_africa = yes }
 			if = {
 				limit = { has_completed_focus = ENG_the_crown_imperial }
 				set_temp_variable = { ENG_imperial_tension_change = 2 }
@@ -23527,7 +23526,6 @@ focus_tree = {
 				ENG_cmw_change_cohesion = yes
 				unlock_decision_tooltip = ENG_uq_regional_association
 			}
-			hidden_effect = { ENG_uq_open_east_africa = yes }
 		}
 
 		ai_will_do = { base = 0 }
@@ -23571,6 +23569,7 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_southern_african_partnership"
+			hidden_effect = { ENG_uq_open_southern_africa = yes }
 			if = {
 				limit = { has_completed_focus = ENG_the_crown_imperial }
 				set_temp_variable = { ENG_imperial_tension_change = 2 }
@@ -23594,7 +23593,6 @@ focus_tree = {
 				ENG_cmw_change_cohesion = yes
 				unlock_decision_tooltip = ENG_uq_regional_association
 			}
-			hidden_effect = { ENG_uq_open_southern_africa = yes }
 		}
 
 		ai_will_do = { base = 0 }
@@ -23636,6 +23634,7 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_gulf_partnership"
+			hidden_effect = { ENG_uq_open_gulf = yes }
 			if = {
 				limit = { has_completed_focus = ENG_the_crown_imperial }
 				set_temp_variable = { ENG_imperial_tension_change = 2 }
@@ -23658,7 +23657,6 @@ focus_tree = {
 				ENG_cmw_change_cohesion = yes
 				unlock_decision_tooltip = ENG_uq_regional_association
 			}
-			hidden_effect = { ENG_uq_open_gulf = yes }
 		}
 
 		ai_will_do = { base = 0 }
@@ -23698,6 +23696,7 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_asian_partnership"
+			hidden_effect = { ENG_uq_open_asia = yes }
 			if = {
 				limit = { has_completed_focus = ENG_the_crown_imperial }
 				set_temp_variable = { ENG_imperial_tension_change = 2 }
@@ -23720,7 +23719,6 @@ focus_tree = {
 				ENG_cmw_change_cohesion = yes
 				unlock_decision_tooltip = ENG_uq_regional_association
 			}
-			hidden_effect = { ENG_uq_open_asia = yes }
 		}
 
 		ai_will_do = { base = 0 }
@@ -23762,6 +23760,7 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_pacific_partnership"
+			hidden_effect = { ENG_uq_open_pacific = yes }
 			if = {
 				limit = { has_completed_focus = ENG_the_crown_imperial }
 				set_temp_variable = { ENG_imperial_tension_change = 2 }
@@ -23784,7 +23783,6 @@ focus_tree = {
 				ENG_cmw_change_cohesion = yes
 				unlock_decision_tooltip = ENG_uq_regional_association
 			}
-			hidden_effect = { ENG_uq_open_pacific = yes }
 		}
 
 		ai_will_do = { base = 0 }

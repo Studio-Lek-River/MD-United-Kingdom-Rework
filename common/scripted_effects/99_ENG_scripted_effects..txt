@@ -487,7 +487,7 @@ ENG_uq_update_dm = {
 
 # Call in the target's scope with ROOT = ENG.
 # Parameters:
-# - ENG_union_strain_stage: 1 occupation (+5), 2 subject (+3), 3 constituent (half of 4), 4 integrated (8 + 1 per 2M population)
+# - ENG_union_strain_stage: 1 occupation (+7), 2 subject (+6), 3 constituent (half of 4), 4 integrated (8 + 1 per 2M population)
 ENG_add_union_strain_for_target = {
 	if = {
 		limit = { check_variable = { ENG_union_strain_stage < 3 } }
@@ -1052,14 +1052,13 @@ ENG_uq_realm_monthly = {
 				check_variable = { ROOT.ENG_integration_stage@THIS = 3 }
 			}
 		}
-		ROOT = { set_variable = { ENG_uq_event_target = PREV } }
 		random_list = {
 			94 = {}
 			3 = {
-				ROOT = { country_event = { id = ENG_uq.160 days = 1 } }
+				ENG = { country_event = { id = ENG_uq.160 days = 1 } }
 			}
 			3 = {
-				ROOT = { country_event = { id = ENG_uq.161 days = 1 } }
+				ENG = { country_event = { id = ENG_uq.161 days = 1 } }
 			}
 		}
 	}
@@ -1140,6 +1139,7 @@ ENG_uq_open_west_africa = {
 		ENG_uq_register_ex_empire = yes
 	}
 	add_to_variable = { ENG_uq_active_regions = 1 }
+	ENG_uq_update_regions = yes
 }
 
 # ENG scope. Opens East Africa: region 2. The fourth region opened costs roughly three times the first.
@@ -1165,6 +1165,7 @@ ENG_uq_open_east_africa = {
 		ENG_uq_register_ex_empire = yes
 	}
 	add_to_variable = { ENG_uq_active_regions = 1 }
+	ENG_uq_update_regions = yes
 }
 
 # ENG scope. Opens Southern Africa: region 3. The fourth region opened costs roughly three times the first.
@@ -1195,6 +1196,7 @@ ENG_uq_open_southern_africa = {
 		ENG_uq_register_ex_empire = yes
 	}
 	add_to_variable = { ENG_uq_active_regions = 1 }
+	ENG_uq_update_regions = yes
 }
 
 # ENG scope. Opens the Gulf: region 4. The fourth region opened costs roughly three times the first.
@@ -1226,6 +1228,7 @@ ENG_uq_open_gulf = {
 		ENG_uq_register_ex_empire = yes
 	}
 	add_to_variable = { ENG_uq_active_regions = 1 }
+	ENG_uq_update_regions = yes
 }
 
 # ENG scope. Opens Asia: region 5. The fourth region opened costs roughly three times the first.
@@ -1254,6 +1257,7 @@ ENG_uq_open_asia = {
 		ENG_uq_register_ex_empire = yes
 	}
 	add_to_variable = { ENG_uq_active_regions = 1 }
+	ENG_uq_update_regions = yes
 }
 
 # ENG scope. Opens the Pacific: region 6. The fourth region opened costs roughly three times the first.
@@ -1283,6 +1287,7 @@ ENG_uq_open_pacific = {
 		ENG_uq_register_ex_empire = yes
 	}
 	add_to_variable = { ENG_uq_active_regions = 1 }
+	ENG_uq_update_regions = yes
 }
 
 # The regional rival reacts to a wider-empire target becoming a subject. Call with ROOT = ENG and FROM = target inside ENG_uq_enter_stage_2.
@@ -1878,12 +1883,9 @@ ENG_uq_patron_reactions = {
 			ENG_uq_set_patron = yes
 			if = {
 				limit = { check_variable = { ENG_uq_patron > 0 } }
-				ROOT = {
-					set_country_flag = ENG_uq_patron_reacted@PREV
-					set_variable = { ENG_uq_event_target = PREV }
-					set_variable = { ENG_uq_patron_var = ENG_uq_patron }
-					country_event = { id = ENG_uq.66 days = 1 }
-				}
+				ROOT = { set_country_flag = ENG_uq_patron_reacted@PREV }
+				set_variable = { ENG_uq_patron_var = ENG_uq_patron }
+				ENG = { country_event = { id = ENG_uq.66 days = 1 } }
 			}
 		}
 	}
