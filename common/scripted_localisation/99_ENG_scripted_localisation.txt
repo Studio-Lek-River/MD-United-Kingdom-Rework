@@ -2367,3 +2367,48 @@ defined_text = {
 		localization_key = GFX_autonomy_free_icon
 	}
 }
+defined_text = {
+	name = ENG_scotland_map_sprite
+
+	text = {
+		trigger = { has_country_flag = ENG_scottish_integrated }
+		localization_key = GFX_ENG_scotland_map_integrated
+	}
+	text = {
+		trigger = { country_exists = SCO }
+		localization_key = GFX_ENG_scotland_map_independent
+	}
+	text = {
+		localization_key = GFX_ENG_scotland_map
+	}
+}
+defined_text = {
+	name = ENG_north_ireland_map_sprite
+
+	text = {
+		trigger = { has_country_flag = ENG_north_irish_integrated }
+		localization_key = GFX_ENG_north_ireland_map_integrated
+	}
+	text = {
+		trigger = { country_exists = NIR }
+		localization_key = GFX_ENG_north_ireland_map_independent
+	}
+	text = {
+		localization_key = GFX_ENG_north_ireland_map
+	}
+}
+defined_text = {
+	name = ENG_wales_map_sprite
+
+	text = {
+		trigger = { has_country_flag = ENG_welsh_integrated }
+		localization_key = GFX_ENG_wales_map_integrated
+	}
+	text = {
+		trigger = { country_exists = WAS }
+		localization_key = GFX_ENG_wales_map_independent
+	}
+	text = {
+		localization_key = GFX_ENG_wales_map
+	}
+}

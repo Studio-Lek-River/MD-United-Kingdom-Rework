@@ -46,6 +46,12 @@ ENG_PATHS = [
 ENG_SUBMOD_ONLY_PATHS = [
     "common/autonomous_states/99_ENG_autonomies.txt",
     "common/factions/templates/99_ENG_commonwealth.txt",
+    "gfx/interface/scripted_gui/eng/ENG_scotland_integrated_gfx.dds",
+    "gfx/interface/scripted_gui/eng/ENG_scotland_independent_gfx.dds",
+    "gfx/interface/scripted_gui/eng/ENG_wales_integrated_gfx.dds",
+    "gfx/interface/scripted_gui/eng/ENG_wales_independent_gfx.dds",
+    "gfx/interface/scripted_gui/eng/ENG_north_ireland_integrated_gfx.dds",
+    "gfx/interface/scripted_gui/eng/ENG_north_ireland_independent_gfx.dds",
 ]
 
 

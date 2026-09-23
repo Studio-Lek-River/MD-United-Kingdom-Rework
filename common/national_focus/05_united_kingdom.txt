@@ -21540,7 +21540,7 @@ focus_tree = {
 		available = {
 			has_government = democratic
 			count_triggers = {
-				amount = 2
+				amount = 1
 				has_country_flag = ENG_scottish_integrated
 				has_country_flag = ENG_welsh_integrated
 				has_country_flag = ENG_north_irish_integrated
@@ -21582,7 +21582,6 @@ focus_tree = {
 
 		available = {
 			has_government = democratic
-			ENG_uq_home_nations_done = yes
 		}
 
 		completion_reward = {

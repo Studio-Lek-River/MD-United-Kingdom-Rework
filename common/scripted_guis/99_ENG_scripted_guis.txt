@@ -5,6 +5,18 @@ scripted_gui = {
 
 		dirty = global.ENG_devolution_dirty_update_var
 
+		properties = {
+			ENG_scotland_map_button = {
+				image = "[ENG_scotland_map_sprite]"
+			}
+			ENG_north_ireland_map_button = {
+				image = "[ENG_north_ireland_map_sprite]"
+			}
+			ENG_wales_map_button = {
+				image = "[ENG_wales_map_sprite]"
+			}
+		}
+
 		triggers = {
 			# Scotland Info
 			ENG_scotland_menu_agitation_visible = { check_variable = { ENG_devolution_ui_selected = 1 } }

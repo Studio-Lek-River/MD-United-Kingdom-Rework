@@ -2382,6 +2382,7 @@ ENG_integrate_referendum_region = {
 		ENG_apply_integrated_baseline = yes
 	}
 	ENG_centralisation_backlash = yes
+	update_eng_devolution_dirty_variable = yes
 }
 
 # Hard mode: each integration unsettles the regions still devolved
