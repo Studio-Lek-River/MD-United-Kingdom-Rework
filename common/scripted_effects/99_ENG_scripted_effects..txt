@@ -651,6 +651,8 @@ ENG_uq_change_consent = {
 			add_to_variable = { ENG_consent@PREV = ENG_uq_consent_change }
 			clamp_variable = { var = ENG_consent@PREV min = 0 max = ENG_uq_consent_cap }
 		}
+		# Copy for the Union Question panel bar, which reads from the target's scope.
+		set_variable = { ENG_uq_consent_bar = ENG.ENG_consent@THIS }
 	}
 }
 

@@ -2367,6 +2367,54 @@ defined_text = {
 		localization_key = GFX_autonomy_free_icon
 	}
 }
+
+defined_text = {
+	name = ENG_uq_strain_tier
+
+	text = {
+		trigger = { check_variable = { ENG_union_strain > 60 } }
+		localization_key = ENG_uq_strain_tier_blocking
+	}
+	text = {
+		trigger = { check_variable = { ENG_union_strain > 40 } }
+		localization_key = ENG_uq_strain_tier_strained
+	}
+	text = {
+		localization_key = ENG_uq_strain_tier_stable
+	}
+}
+
+defined_text = {
+	name = ENG_uq_tension_tier
+
+	text = {
+		trigger = { check_variable = { ENG_imperial_tension > 60 } }
+		localization_key = ENG_uq_tension_tier_critical
+	}
+	text = {
+		trigger = { check_variable = { ENG_imperial_tension > 20 } }
+		localization_key = ENG_uq_tension_tier_rising
+	}
+	text = {
+		localization_key = ENG_uq_tension_tier_calm
+	}
+}
+
+defined_text = {
+	name = ENG_uq_cohesion_tier
+
+	text = {
+		trigger = { check_variable = { global.commonwealth_cohesion < 30 } }
+		localization_key = ENG_uq_cohesion_tier_fragile
+	}
+	text = {
+		trigger = { check_variable = { global.commonwealth_cohesion > 60 } }
+		localization_key = ENG_uq_cohesion_tier_strong
+	}
+	text = {
+		localization_key = ENG_uq_cohesion_tier_steady
+	}
+}
 defined_text = {
 	name = ENG_scotland_map_sprite
 

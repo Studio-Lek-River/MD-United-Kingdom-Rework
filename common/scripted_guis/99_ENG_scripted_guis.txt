@@ -249,11 +249,45 @@ scripted_gui = {
 					NOT = { has_country_flag = ENG_uq_lock@PREV }
 				}
 			}
+			ENG_uq_ladder_entry_glow_visible = {
+				ROOT = {
+					has_country_flag = ENG_uq_offer_pending@PREV
+					NOT = { has_country_flag = ENG_uq_lock@PREV }
+				}
+			}
+			ENG_uq_ladder_entry_name_visible = {
+				ENG_uq_stage_2 = no
+				ENG_uq_stage_3 = no
+			}
+			ENG_uq_ladder_entry_name_yellow_visible = {
+				OR = {
+					ENG_uq_stage_2 = yes
+					ENG_uq_stage_3 = yes
+				}
+			}
+			ENG_uq_pip_60_on_visible = { check_variable = { ENG_uq_consent_bar > 60 } }
+			ENG_uq_pip_75_on_visible = { check_variable = { ENG_uq_consent_bar > 75 } }
+			ENG_uq_pip_85_on_visible = { check_variable = { ENG_uq_consent_bar > 85 } }
 		}
 
 		properties = {
 			ENG_uq_stage_icon = {
 				image = "[ENG_uq_stage_icon]"
+			}
+			ENG_uq_ladder_entry_bar = {
+				frame = ENG_uq_consent_bar
+			}
+			ENG_uq_strain_bar = {
+				frame = ENG_union_strain
+			}
+			ENG_uq_tension_bar = {
+				frame = ENG_imperial_tension
+			}
+			ENG_uq_cohesion_bar = {
+				frame = global.commonwealth_cohesion
+			}
+			ENG_uq_caribbean_bar = {
+				frame = ENG_uq_caribbean_consent
 			}
 		}
 
