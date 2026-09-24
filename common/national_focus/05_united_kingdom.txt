@@ -23227,7 +23227,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_the_grand_partition
+		id = ENG_the_grand_partition #Needs to become an event chain with the other nations first before making a ultimatum for the USA Also need to think about the other leftover USA states
 		icon = demand_territory3
 
 		x = -4
@@ -23400,7 +23400,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_the_lahore_compact
+		id = ENG_the_lahore_compact #Should be an event chain and also be pretty hard to just do. We don't want to give free war goals. Maybe also make a deal with China?
 		icon = focus_RAJ_kingmaker
 
 		x = 0
@@ -23455,7 +23455,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_restore_the_british_raj
+		id = ENG_restore_the_british_raj #Don't just give a wargoal
 		icon = focus_RAJ_the_crown_and_the_world
 
 		x = 2
@@ -23540,7 +23540,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_the_mandate_restored
+		id = ENG_the_mandate_restored #Shoudn't just be a wargoal. We don't want to give a frew wargoal and be done with it.
 		icon = Generic_Revanchism02
 
 		x = 4
