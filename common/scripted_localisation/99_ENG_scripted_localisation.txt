@@ -2419,11 +2419,21 @@ defined_text = {
 	name = ENG_scotland_map_sprite
 
 	text = {
-		trigger = { has_country_flag = ENG_scottish_integrated }
+		trigger = {
+			OR = {
+				has_country_flag = ENG_scottish_integrated
+				check_variable = { ENG_devolution_debug_map = 1 }
+			}
+		}
 		localization_key = GFX_ENG_scotland_map_integrated
 	}
 	text = {
-		trigger = { country_exists = SCO }
+		trigger = {
+			OR = {
+				country_exists = SCO
+				check_variable = { ENG_devolution_debug_map = 2 }
+			}
+		}
 		localization_key = GFX_ENG_scotland_map_independent
 	}
 	text = {
@@ -2434,11 +2444,21 @@ defined_text = {
 	name = ENG_north_ireland_map_sprite
 
 	text = {
-		trigger = { has_country_flag = ENG_north_irish_integrated }
+		trigger = {
+			OR = {
+				has_country_flag = ENG_north_irish_integrated
+				check_variable = { ENG_devolution_debug_map = 1 }
+			}
+		}
 		localization_key = GFX_ENG_north_ireland_map_integrated
 	}
 	text = {
-		trigger = { country_exists = NIR }
+		trigger = {
+			OR = {
+				country_exists = NIR
+				check_variable = { ENG_devolution_debug_map = 2 }
+			}
+		}
 		localization_key = GFX_ENG_north_ireland_map_independent
 	}
 	text = {
@@ -2449,11 +2469,21 @@ defined_text = {
 	name = ENG_wales_map_sprite
 
 	text = {
-		trigger = { has_country_flag = ENG_welsh_integrated }
+		trigger = {
+			OR = {
+				has_country_flag = ENG_welsh_integrated
+				check_variable = { ENG_devolution_debug_map = 1 }
+			}
+		}
 		localization_key = GFX_ENG_wales_map_integrated
 	}
 	text = {
-		trigger = { country_exists = WAS }
+		trigger = {
+			OR = {
+				country_exists = WAS
+				check_variable = { ENG_devolution_debug_map = 2 }
+			}
+		}
 		localization_key = GFX_ENG_wales_map_independent
 	}
 	text = {

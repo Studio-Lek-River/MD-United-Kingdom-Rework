@@ -3011,6 +3011,54 @@ ENG_monarchy_decision_category = {
 	}
 }
 ENG_devolved_matters = {
+	ENG_devolution_debug_cycle = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = { is_debug = yes }
+
+		cost = 0
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_devolution_debug_cycle"
+			set_variable = { ENG_scottish_agitation = random }
+			multiply_variable = { ENG_scottish_agitation = 100 }
+			round_variable = ENG_scottish_agitation
+			set_variable = { ENG_scottish_nationalists = random }
+			multiply_variable = { ENG_scottish_nationalists = 100 }
+			round_variable = ENG_scottish_nationalists
+			set_variable = { ENG_scottish_dependency = random }
+			multiply_variable = { ENG_scottish_dependency = 100 }
+			round_variable = ENG_scottish_dependency
+			set_variable = { ENG_north_irish_agitation = random }
+			multiply_variable = { ENG_north_irish_agitation = 100 }
+			round_variable = ENG_north_irish_agitation
+			set_variable = { ENG_north_irish_nationalists = random }
+			multiply_variable = { ENG_north_irish_nationalists = 100 }
+			round_variable = ENG_north_irish_nationalists
+			set_variable = { ENG_north_irish_dependency = random }
+			multiply_variable = { ENG_north_irish_dependency = 100 }
+			round_variable = ENG_north_irish_dependency
+			set_variable = { ENG_wales_agitation = random }
+			multiply_variable = { ENG_wales_agitation = 100 }
+			round_variable = ENG_wales_agitation
+			set_variable = { ENG_wales_nationalists = random }
+			multiply_variable = { ENG_wales_nationalists = 100 }
+			round_variable = ENG_wales_nationalists
+			set_variable = { ENG_wales_dependency = random }
+			multiply_variable = { ENG_wales_dependency = 100 }
+			round_variable = ENG_wales_dependency
+			# Map art only: 0 normal, 1 integrated, 2 independent.
+			add_to_variable = { ENG_devolution_debug_map = 1 }
+			if = {
+				limit = { check_variable = { ENG_devolution_debug_map > 2 } }
+				set_variable = { ENG_devolution_debug_map = 0 }
+			}
+			update_eng_devolution_dirty_variable = yes
+		}
+
+		ai_will_do = { base = 0 }
+	}
+
 	ENG_appease_scotland = {
 		visible = { has_decision = ENG_appease_scotland }
 
@@ -4581,6 +4629,7 @@ ENG_union_question_decisions = {
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_debug_fill_ladder"
+			set_temp_variable = { ENG_uq_debug_variant = 0 }
 			every_country = {
 				limit = {
 					OR = {
@@ -4600,6 +4649,42 @@ ENG_union_question_decisions = {
 				round_temp_variable = ENG_uq_debug_consent
 				ROOT = { set_variable = { ENG_consent@PREV = ENG_uq_debug_consent } }
 				set_variable = { ENG_uq_consent_bar = ENG_uq_debug_consent }
+				# Cycle every row state so the panel shows each variant: plain, pending, locked, stage 2, stage 3.
+				ROOT = {
+					clr_country_flag = ENG_uq_offer_pending@PREV
+					clr_country_flag = ENG_uq_lock@PREV
+				}
+				if = {
+					limit = { check_variable = { ENG_uq_debug_variant = 1 } }
+					ROOT = { set_country_flag = { flag = ENG_uq_offer_pending@PREV value = 1 days = 90 } }
+				}
+				else_if = {
+					limit = { check_variable = { ENG_uq_debug_variant = 2 } }
+					ROOT = { set_country_flag = { flag = ENG_uq_lock@PREV value = 1 days = 90 } }
+				}
+				else_if = {
+					limit = { check_variable = { ENG_uq_debug_variant = 3 } }
+					ROOT = {
+						set_autonomy = {
+							target = PREV
+							autonomy_state = autonomy_crown_dominion
+						}
+					}
+				}
+				else_if = {
+					limit = { check_variable = { ENG_uq_debug_variant = 4 } }
+					ROOT = {
+						set_autonomy = {
+							target = PREV
+							autonomy_state = autonomy_constituent_country_very_low_devolution
+						}
+					}
+				}
+				add_to_temp_variable = { ENG_uq_debug_variant = 1 }
+				if = {
+					limit = { check_variable = { ENG_uq_debug_variant > 4 } }
+					set_temp_variable = { ENG_uq_debug_variant = 0 }
+				}
 			}
 			ENG_uq_update_caribbean_consent = yes
 			update_eng_devolution_dirty_variable = yes

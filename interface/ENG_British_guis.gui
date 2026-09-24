@@ -492,11 +492,21 @@ guiTypes = {
 			position = { x = 14 y = 206 }
 			font = "hoi_18mbs"
 			format = left
-			maxWidth = 540
+			maxWidth = 460
 			maxHeight = 22
 			fixedsize = yes
 			text = "ENG_uq_ladder_header"
 			pdx_tooltip = ENG_uq_ladder_ui_TT
+		}
+
+		buttonType = {
+			name = "ENG_uq_consent_help_btn"
+			position = { x = 490 y = 200 }
+			spriteType = "GFX_sort_up_down_button_83x29"
+			buttonText = "ENG_uq_consent_help_btn"
+			buttonFont = "hoi_16mbs"
+			frame = 1
+			pdx_tooltip = ENG_uq_consent_help_TT
 		}
 
 		containerWindowType = {
