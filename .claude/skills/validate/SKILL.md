@@ -12,7 +12,7 @@ Requested arguments: $ARGUMENTS
 Steps:
 
 1. Run from the project root (needs an MD checkout containing the commit in `tools/md_base_ref.txt`,
-   default `D:/secondary-md`; pass `--md <path>` otherwise):
+   default `D:/Documenten/Paradox Interactive/Hearts of Iron IV/mod/Millennium-Dawn`; pass `--md <path>` otherwise):
    ```
    python tools/validate_with_md.py [--batch <batch>]
    ```

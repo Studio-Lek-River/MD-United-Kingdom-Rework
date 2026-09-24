@@ -1,6 +1,6 @@
 """Refresh the md-base branch from a Millennium Dawn checkout and merge it into main.
 
-Usage: python tools/sync_md_base.py [--md D:/secondary-md] [--no-merge]
+Usage: python tools/sync_md_base.py [--md <MD checkout>] [--no-merge]
 """
 
 import argparse
@@ -82,7 +82,7 @@ def copy_paths(md_root):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--md", default="D:/secondary-md", help="Millennium Dawn checkout")
+    parser.add_argument("--md", default="D:/Documenten/Paradox Interactive/Hearts of Iron IV/mod/Millennium-Dawn", help="Millennium Dawn checkout")
     parser.add_argument("--no-merge", action="store_true", help="update md-base only")
     args = parser.parse_args()
 

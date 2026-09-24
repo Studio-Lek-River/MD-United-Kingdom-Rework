@@ -6,7 +6,7 @@ findings are reduced to owned files plus anything new against an optional
 pristine-MD baseline.
 
 Usage:
-  python tools/validate_with_md.py [--md D:/secondary-md] [--batch core]
+  python tools/validate_with_md.py [--md <MD checkout>] [--batch core]
   python tools/validate_with_md.py --workspace md --baseline-dir .validation_baseline
 """
 
@@ -231,7 +231,7 @@ def print_summary(issues):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--md", default="D:/secondary-md", help="Millennium Dawn checkout to build a worktree from")
+    parser.add_argument("--md", default="D:/Documenten/Paradox Interactive/Hearts of Iron IV/mod/Millennium-Dawn", help="Millennium Dawn checkout to build a worktree from")
     parser.add_argument("--ref", default=None, help="MD commit (default: tools/md_base_ref.txt)")
     parser.add_argument("--workspace", type=Path, help="existing MD tree to validate in place (skips the worktree)")
     parser.add_argument("--batch", choices=BATCHES + ("all",), default="all")
