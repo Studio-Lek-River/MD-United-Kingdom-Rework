@@ -1,4 +1,4 @@
-# The Union Question integration ladder, stage 2. Stage 3 reuses autonomy_constituent_country_very_low_devolution.
+# The Union Question integration ladder, stage 2 and the Crown Colony ending. Stage 3 reuses autonomy_constituent_country_very_low_devolution.
 
 autonomy_state = {
 	id = autonomy_crown_dominion
@@ -78,6 +78,63 @@ autonomy_state = {
 		extra_trade_to_overlord_factor = 0.6
 		overlord_trade_cost_factor = -0.6
 		research_sharing_per_country_bonus_factor = -0.6
+	}
+
+	ai_subject_wants_higher = {
+		factor = 0.0
+	}
+
+	ai_overlord_wants_lower = {
+		factor = 0.0
+	}
+
+	ai_overlord_wants_garrison = {
+		always = yes
+	}
+
+	allowed = {
+		is_subject = yes
+		OVERLORD = {
+			original_tag = ENG
+			has_completed_focus = ENG_the_crown_imperial
+		}
+	}
+
+	can_take_level = {
+		always = no
+	}
+
+	can_lose_level = {
+		always = no
+	}
+}
+
+# The Nationalist path's final rung. Resources reach Britain through trade; no engine modifier moves them directly.
+autonomy_state = {
+	id = autonomy_crown_colony
+
+	default = no
+	is_puppet = yes
+	use_overlord_color = yes
+	min_freedom_level = 0
+	manpower_influence = 0.1
+
+	rule = {
+		can_not_declare_war = yes
+		can_decline_call_to_war = no
+		units_deployed_to_overlord = yes
+		can_access_market = no
+		can_join_factions = no
+		can_send_volunteers = no
+	}
+
+	modifier = {
+		cic_to_overlord_factor = 0.90
+		mic_to_overlord_factor = 0.90
+		autonomy_manpower_share = 0.1
+		extra_trade_to_overlord_factor = 0.9
+		overlord_trade_cost_factor = -0.9
+		research_sharing_per_country_bonus_factor = -0.9
 	}
 
 	ai_subject_wants_higher = {

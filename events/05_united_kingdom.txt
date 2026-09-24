@@ -8906,10 +8906,6 @@ country_event = {
 			limit = { FROM = { ENG_uq_stage_2 = yes } }
 			ENG_uq_enter_stage_3 = yes
 		}
-		else_if = {
-			limit = { FROM = { ENG_uq_stage_3 = yes } }
-			ENG_uq_enter_stage_4 = yes
-		}
 	}
 }
 

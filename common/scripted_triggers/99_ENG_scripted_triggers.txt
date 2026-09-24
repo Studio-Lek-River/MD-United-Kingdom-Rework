@@ -212,6 +212,7 @@ ENG_uq_ireland_done = {
 		tooltip = ENG_uq_ireland_done_TT
 		OR = {
 			IRE = { ENG_uq_stage_3 = yes }
+			IRE = { ENG_uq_crown_colony = yes }
 			has_country_flag = ENG_uq_integrated@IRE
 		}
 	}
@@ -243,6 +244,7 @@ ENG_uq_realms_done = {
 			OR = {
 				ENG_uq_stage_2 = yes
 				ENG_uq_stage_3 = yes
+				ENG_uq_crown_colony = yes
 			}
 		}
 	}
@@ -295,6 +297,7 @@ ENG_uq_stage_1 = {
 	NOT = { has_autonomy_state = autonomy_crown_dominion }
 	NOT = { has_autonomy_state = autonomy_crown_protectorate }
 	NOT = { has_autonomy_state = autonomy_constituent_country_very_low_devolution }
+	NOT = { has_autonomy_state = autonomy_crown_colony }
 }
 
 # Target scope. Associated with the Union as a dominion or a protectorate.
@@ -310,6 +313,12 @@ ENG_uq_stage_2 = {
 ENG_uq_stage_3 = {
 	is_subject_of = ENG
 	has_autonomy_state = autonomy_constituent_country_very_low_devolution
+}
+
+# Target scope. A Crown Colony, the Nationalist path's subject ending.
+ENG_uq_crown_colony = {
+	is_subject_of = ENG
+	has_autonomy_state = autonomy_crown_colony
 }
 
 # Target scope. Britain is the top influencer here above 50%.
@@ -401,6 +410,7 @@ ENG_uq_ireland_targeted = {
 			OR = {
 				ENG_uq_stage_2 = yes
 				ENG_uq_stage_3 = yes
+				ENG_uq_crown_colony = yes
 				ENG_uq_coerced = yes
 			}
 		}
@@ -526,14 +536,17 @@ ENG_uq_canzuk_integrated = {
 		OR = {
 			has_country_flag = ENG_uq_integrated@CAN
 			NOT = { country_exists = CAN }
+			CAN = { ENG_uq_crown_colony = yes }
 		}
 		OR = {
 			has_country_flag = ENG_uq_integrated@AST
 			NOT = { country_exists = AST }
+			AST = { ENG_uq_crown_colony = yes }
 		}
 		OR = {
 			has_country_flag = ENG_uq_integrated@NZL
 			NOT = { country_exists = NZL }
+			NZL = { ENG_uq_crown_colony = yes }
 		}
 	}
 }

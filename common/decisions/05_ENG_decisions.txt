@@ -6519,6 +6519,8 @@ ENG_union_question_decisions = {
 	ENG_uq_integration_act = {
 		icon = GFX_decision_generic_form_nation
 
+		visible = { has_completed_focus = ENG_a_family_of_nations }
+
 		target_array = ENG_integration_targets
 		target_trigger = {
 			FROM = { ENG_uq_stage_3 = yes }
@@ -6533,26 +6535,17 @@ ENG_union_question_decisions = {
 		available = {
 			ENG_uq_can_transition = yes
 			has_stability > 0.6
-			if = {
-				limit = { has_completed_focus = ENG_a_family_of_nations }
-				custom_trigger_tooltip = {
-					tooltip = ENG_uq_consent_85_TT
-					check_variable = { ENG_consent@FROM > 85 }
-				}
-				custom_trigger_tooltip = {
-					tooltip = ENG_uq_high_influence_TT
-					FROM = { ENG_uq_high_influence = yes }
-				}
-				custom_trigger_tooltip = {
-					tooltip = ENG_uq_not_republic_TT
-					FROM = { NOT = { has_country_flag = ENG_uq_republic } }
-				}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_consent_85_TT
+				check_variable = { ENG_consent@FROM > 85 }
 			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = ENG_uq_target_pacified_TT
-					has_country_flag = ENG_uq_pacified@FROM
-				}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_high_influence_TT
+				FROM = { ENG_uq_high_influence = yes }
+			}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_not_republic_TT
+				FROM = { NOT = { has_country_flag = ENG_uq_republic } }
 			}
 		}
 
@@ -6560,22 +6553,95 @@ ENG_union_question_decisions = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_integration_act"
 			hidden_effect = { add_political_power = -300 }
 			large_expenditure = yes
-			if = {
-				limit = { has_completed_focus = ENG_a_family_of_nations }
-				set_country_flag = { flag = ENG_uq_offer_pending@FROM value = 1 days = 90 }
-				FROM = { country_event = { id = ENG_uq.20 days = 1 } }
-				custom_effect_tooltip = TT_IF_THEY_ACCEPT
-				effect_tooltip = { custom_effect_tooltip = ENG_uq_stage_4_TT }
-				custom_effect_tooltip = TT_IF_THEY_REJECT
-				effect_tooltip = { ENG_uq_fail_transition = yes }
+			set_country_flag = { flag = ENG_uq_offer_pending@FROM value = 1 days = 90 }
+			FROM = { country_event = { id = ENG_uq.20 days = 1 } }
+			custom_effect_tooltip = TT_IF_THEY_ACCEPT
+			effect_tooltip = { custom_effect_tooltip = ENG_uq_stage_4_TT }
+			custom_effect_tooltip = TT_IF_THEY_REJECT
+			effect_tooltip = { ENG_uq_fail_transition = yes }
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				check_variable = { ENG_union_strain > 40 }
 			}
-			else = {
+		}
+	}
+
+	ENG_uq_crown_colony_status = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = { has_completed_focus = ENG_the_crown_imperial }
+
+		target_array = ENG_integration_targets
+		target_trigger = {
+			FROM = { ENG_uq_stage_3 = yes }
+		}
+
+		cost = 150
+
+		available = {
+			ENG_uq_can_transition = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_target_pacified_TT
+				has_country_flag = ENG_uq_pacified@FROM
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_crown_colony_status"
+			custom_effect_tooltip = ENG_uq_crown_colony_TT
+			hidden_effect = { ENG_uq_enter_crown_colony = yes }
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				check_variable = { ENG_union_strain > 40 }
+			}
+		}
+	}
+
+	ENG_uq_colonial_annexation_act = {
+		icon = GFX_decision_generic_form_nation
+
+		visible = { has_completed_focus = ENG_the_crown_imperial }
+
+		target_array = ENG_integration_targets
+		target_trigger = {
+			FROM = { ENG_uq_stage_3 = yes }
+		}
+
+		cost = 300
+		custom_cost_trigger = { ENG_uq_cost_large_pp300 = yes }
+		custom_cost_text = ENG_cost_large_expenditure_pp300
+		ai_hint_pp_cost = 300
+
+		available = {
+			ENG_uq_can_transition = yes
+			has_stability > 0.6
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_target_pacified_TT
+				has_country_flag = ENG_uq_pacified@FROM
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_colonial_annexation_act"
+			hidden_effect = { add_political_power = -300 }
+			large_expenditure = yes
+			custom_effect_tooltip = ENG_uq_colonial_annexation_TT
+			hidden_effect = {
+				set_temp_variable = { ENG_uq_colonial = 1 }
 				ENG_uq_enter_stage_4 = yes
 			}
 		}
 
 		ai_will_do = {
-			base = 10
+			base = 5
 			modifier = {
 				factor = 0
 				check_variable = { ENG_union_strain > 40 }
@@ -6852,7 +6918,10 @@ ENG_union_question_decisions = {
 	ENG_uq_caribbean_integration_act = {
 		icon = GFX_decision_generic_form_nation
 
-		visible = { ENG_uq_caribbean_opened = yes }
+		visible = {
+			ENG_uq_caribbean_opened = yes
+			has_completed_focus = ENG_a_family_of_nations
+		}
 
 		cost = 300
 		custom_cost_trigger = { ENG_uq_cost_large_pp300 = yes }
@@ -6865,38 +6934,21 @@ ENG_union_question_decisions = {
 				check_variable = { ENG_union_strain < 61 }
 			}
 			has_stability > 0.6
-			if = {
-				limit = { has_completed_focus = ENG_a_family_of_nations }
-				custom_trigger_tooltip = {
-					tooltip = ENG_uq_caribbean_consent_85_TT
-					check_variable = { ENG_uq_caribbean_consent > 85 }
-				}
-				custom_trigger_tooltip = {
-					tooltip = ENG_uq_caribbean_member_ready_TT
-					any_of_scopes = {
-						array = ENG_integration_targets
-						ENG_uq_is_caribbean_realm = yes
-						ENG_uq_stage_3 = yes
-						ROOT = {
-							NOT = { has_country_flag = ENG_uq_lock@PREV }
-							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
-						}
-						NOT = { has_country_flag = ENG_uq_republic }
-					}
-				}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_caribbean_consent_85_TT
+				check_variable = { ENG_uq_caribbean_consent > 85 }
 			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = ENG_uq_caribbean_member_coerced_TT
-					any_of_scopes = {
-						array = ENG_integration_targets
-						ENG_uq_is_caribbean_realm = yes
-						ENG_uq_stage_3 = yes
-						ROOT = {
-							has_country_flag = ENG_uq_pacified@PREV
-							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
-						}
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_caribbean_member_ready_TT
+				any_of_scopes = {
+					array = ENG_integration_targets
+					ENG_uq_is_caribbean_realm = yes
+					ENG_uq_stage_3 = yes
+					ROOT = {
+						NOT = { has_country_flag = ENG_uq_lock@PREV }
+						NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
 					}
+					NOT = { has_country_flag = ENG_uq_republic }
 				}
 			}
 		}
@@ -6905,37 +6957,19 @@ ENG_union_question_decisions = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_caribbean_integration_act"
 			hidden_effect = { add_political_power = -300 }
 			large_expenditure = yes
-			if = {
-				limit = { has_completed_focus = ENG_a_family_of_nations }
-				every_country = {
-					limit = {
-						ENG_uq_is_caribbean_realm = yes
-						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
-						ENG_uq_stage_3 = yes
-						ROOT = {
-							NOT = { has_country_flag = ENG_uq_lock@PREV }
-							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
-						}
-						NOT = { has_country_flag = ENG_uq_republic }
+			every_country = {
+				limit = {
+					ENG_uq_is_caribbean_realm = yes
+					is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
+					ENG_uq_stage_3 = yes
+					ROOT = {
+						NOT = { has_country_flag = ENG_uq_lock@PREV }
+						NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
 					}
-					ROOT = { set_country_flag = { flag = ENG_uq_offer_pending@PREV value = 1 days = 90 } }
-					country_event = { id = ENG_uq.20 days = 1 }
+					NOT = { has_country_flag = ENG_uq_republic }
 				}
-			}
-			else = {
-				every_country = {
-					limit = {
-						ENG_uq_is_caribbean_realm = yes
-						is_in_array = { array = ROOT.ENG_integration_targets value = THIS }
-						ENG_uq_stage_3 = yes
-						ROOT = {
-							has_country_flag = ENG_uq_pacified@PREV
-							NOT = { has_country_flag = ENG_uq_offer_pending@PREV }
-						}
-					}
-					ROOT = { set_country_flag = { flag = ENG_uq_offer_pending@PREV value = 1 days = 90 } }
-					ENG = { country_event = { id = ENG_uq.129 days = 1 } }
-				}
+				ROOT = { set_country_flag = { flag = ENG_uq_offer_pending@PREV value = 1 days = 90 } }
+				country_event = { id = ENG_uq.20 days = 1 }
 			}
 		}
 

@@ -284,7 +284,7 @@ guiTypes = {
 		show_position = { x = 551 y = 0 }
 		show_animation_type = decelerated
 		hide_animation_type = accelerated
-		size = { width = 600 height = 667 }
+		size = { width = 550 height = 667 }
 		animation_time = 300
 		show_sound = open_sub_window
 		click_to_front = yes
@@ -319,7 +319,7 @@ guiTypes = {
 			position = { x = 60 y = 18 }
 			font = "hoi_30header"
 			format = center
-			maxWidth = 480
+			maxWidth = 430
 			maxHeight = 22
 			fixedsize = yes
 			text = "ENG_uq_panel_title"
@@ -330,7 +330,7 @@ guiTypes = {
 			position = { x = 14 y = 44 }
 			font = "hoi_16mbs"
 			format = left
-			maxWidth = 540
+			maxWidth = 490
 			maxHeight = 22
 			fixedsize = yes
 			text = "ENG_uq_panel_header_line"
@@ -340,7 +340,7 @@ guiTypes = {
 		containerWindowType = {
 			name = "ENG_uq_standing_card"
 			position = { x = 12 y = 66 }
-			size = { width = 576 height = 132 }
+			size = { width = 526 height = 132 }
 
 			background = {
 				name = "Background"
@@ -352,7 +352,7 @@ guiTypes = {
 				position = { x = 12 y = 12 }
 				font = "hoi_16mbs"
 				format = left
-				maxWidth = 180
+				maxWidth = 165
 				maxHeight = 22
 				fixedsize = yes
 				text = "ENG_uq_strain_label"
@@ -361,12 +361,12 @@ guiTypes = {
 			iconType = {
 				name = "ENG_uq_strain_bar"
 				spriteType = "GFX_faction_manifest_progress_bar"
-				position = { x = 200 y = 6 }
+				position = { x = 180 y = 6 }
 				pdx_tooltip = ENG_union_strain_ui_TT
 			}
 			instantTextBoxType = {
 				name = "ENG_uq_strain_value"
-				position = { x = 200 y = 12 }
+				position = { x = 180 y = 12 }
 				font = "hoi_16mbs"
 				format = center
 				maxWidth = 256
@@ -376,10 +376,10 @@ guiTypes = {
 			}
 			instantTextBoxType = {
 				name = "ENG_uq_strain_tier"
-				position = { x = 466 y = 12 }
+				position = { x = 446 y = 12 }
 				font = "hoi_16mbs"
 				format = left
-				maxWidth = 104
+				maxWidth = 74
 				maxHeight = 22
 				fixedsize = yes
 				text = "[ENG_uq_strain_tier]"
@@ -390,7 +390,7 @@ guiTypes = {
 				position = { x = 12 y = 42 }
 				font = "hoi_16mbs"
 				format = left
-				maxWidth = 180
+				maxWidth = 165
 				maxHeight = 22
 				fixedsize = yes
 				text = "ENG_uq_tension_label"
@@ -398,11 +398,11 @@ guiTypes = {
 			iconType = {
 				name = "ENG_uq_tension_bar"
 				spriteType = "GFX_faction_manifest_progress_bar"
-				position = { x = 200 y = 36 }
+				position = { x = 180 y = 36 }
 			}
 			instantTextBoxType = {
 				name = "ENG_uq_tension_value"
-				position = { x = 200 y = 42 }
+				position = { x = 180 y = 42 }
 				font = "hoi_16mbs"
 				format = center
 				maxWidth = 256
@@ -412,10 +412,10 @@ guiTypes = {
 			}
 			instantTextBoxType = {
 				name = "ENG_uq_tension_tier"
-				position = { x = 466 y = 42 }
+				position = { x = 446 y = 42 }
 				font = "hoi_16mbs"
 				format = left
-				maxWidth = 104
+				maxWidth = 74
 				maxHeight = 22
 				fixedsize = yes
 				text = "[ENG_uq_tension_tier]"
@@ -426,7 +426,7 @@ guiTypes = {
 				position = { x = 12 y = 72 }
 				font = "hoi_16mbs"
 				format = left
-				maxWidth = 180
+				maxWidth = 165
 				maxHeight = 22
 				fixedsize = yes
 				text = "ENG_uq_cohesion_label"
@@ -435,12 +435,12 @@ guiTypes = {
 			iconType = {
 				name = "ENG_uq_cohesion_bar"
 				spriteType = "GFX_faction_manifest_progress_bar"
-				position = { x = 200 y = 66 }
+				position = { x = 180 y = 66 }
 				pdx_tooltip = ENG_cmw_cohesion_ui_TT
 			}
 			instantTextBoxType = {
 				name = "ENG_uq_cohesion_value"
-				position = { x = 200 y = 72 }
+				position = { x = 180 y = 72 }
 				font = "hoi_16mbs"
 				format = center
 				maxWidth = 256
@@ -450,10 +450,10 @@ guiTypes = {
 			}
 			instantTextBoxType = {
 				name = "ENG_uq_cohesion_tier"
-				position = { x = 466 y = 72 }
+				position = { x = 446 y = 72 }
 				font = "hoi_16mbs"
 				format = left
-				maxWidth = 104
+				maxWidth = 74
 				maxHeight = 22
 				fixedsize = yes
 				text = "[ENG_uq_cohesion_tier]"
@@ -464,7 +464,7 @@ guiTypes = {
 				position = { x = 12 y = 102 }
 				font = "hoi_16mbs"
 				format = left
-				maxWidth = 180
+				maxWidth = 165
 				maxHeight = 22
 				fixedsize = yes
 				text = "ENG_uq_caribbean_label"
@@ -472,11 +472,11 @@ guiTypes = {
 			iconType = {
 				name = "ENG_uq_caribbean_bar"
 				spriteType = "GFX_faction_manifest_progress_bar"
-				position = { x = 200 y = 96 }
+				position = { x = 180 y = 96 }
 			}
 			instantTextBoxType = {
 				name = "ENG_uq_caribbean_value"
-				position = { x = 200 y = 102 }
+				position = { x = 180 y = 102 }
 				font = "hoi_16mbs"
 				format = center
 				maxWidth = 256
@@ -501,7 +501,7 @@ guiTypes = {
 
 		buttonType = {
 			name = "ENG_uq_consent_help_btn"
-			position = { x = 490 y = 200 }
+			position = { x = 440 y = 200 }
 			spriteType = "GFX_sort_up_down_button_83x29"
 			buttonText = "ENG_uq_consent_help_btn"
 			buttonFont = "hoi_16mbs"
@@ -512,7 +512,7 @@ guiTypes = {
 		containerWindowType = {
 			name = "ENG_uq_ladder_list"
 			position = { x = 12 y = 230 }
-			size = { width = 576 height = -12 }
+			size = { width = 526 height = -12 }
 			verticalScrollbar = "right_vertical_slider"
 			scroll_wheel_factor = 40
 			smooth_scrolling = yes
@@ -526,7 +526,7 @@ guiTypes = {
 			gridboxType = {
 				name = "ENG_uq_ladder_grid"
 				position = { x = 0 y = 0 }
-				slotsize = { width = 556 height = 66 }
+				slotsize = { width = 506 height = 66 }
 				format = "UPPER_LEFT"
 				max_slots_horizontal = 1
 			}
@@ -535,7 +535,7 @@ guiTypes = {
 
 	containerWindowType = {
 		name = "ENG_uq_ladder_entry"
-		size = { width = 552 height = 62 }
+		size = { width = 502 height = 62 }
 
 		background = {
 			name = "Background"
@@ -556,6 +556,13 @@ guiTypes = {
 			position = { x = 8 y = 10 }
 			scale = 1.2
 			pdx_tooltip = ENG_uq_stage_icon_TT
+		}
+		iconType = {
+			name = "ENG_uq_ladder_entry_lock"
+			spriteType = "GFX_investments_clock"
+			position = { x = 32 y = 30 }
+			scale = 0.7
+			pdx_tooltip = ENG_uq_ladder_lock_TT
 		}
 
 		instantTextBoxType = {
@@ -664,20 +671,6 @@ guiTypes = {
 			frame = 2
 			position = { x = 442 y = 2 }
 			pdx_tooltip = ENG_uq_pip_85_TT
-		}
-
-		iconType = {
-			name = "ENG_uq_ladder_entry_lock"
-			spriteType = "GFX_locked_icon"
-			position = { x = 502 y = 20 }
-			scale = 0.55
-			pdx_tooltip = ENG_uq_ladder_lock_TT
-		}
-		iconType = {
-			name = "ENG_uq_ladder_entry_pending"
-			spriteType = "GFX_investments_clock"
-			position = { x = 510 y = 17 }
-			pdx_tooltip = ENG_uq_ladder_pending_TT
 		}
 	}
 }

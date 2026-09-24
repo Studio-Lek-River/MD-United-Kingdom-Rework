@@ -513,7 +513,10 @@ ENG_add_union_strain_for_target = {
 ENG_uq_align_target = {
 	ROOT = {
 		if = {
-			limit = { NOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
+			limit = {
+				NOT = { is_in_array = { array = ENG_integration_targets value = PREV } }
+				PREV = { ENG_uq_crown_colony = no }
+			}
 			add_to_array = { ENG_integration_targets = PREV }
 		}
 	}
@@ -581,6 +584,7 @@ ENG_uq_enter_stage_3 = {
 }
 
 # Stage 3 -> 4. Call with ROOT = ENG and FROM = target.
+# Temp in: ENG_uq_colonial = 1 annexes without British cores, leaving colony states like the Falklands.
 ENG_uq_enter_stage_4 = {
 	set_temp_variable = { ENG_uq_stage_reached = 4 }
 	clr_country_flag = ENG_uq_offer_pending@FROM
@@ -593,14 +597,17 @@ ENG_uq_enter_stage_4 = {
 		clear_united_nations_member_state = yes
 		every_unit_leader = { set_nationality = ROOT }
 	}
-	every_state = {
-		limit = {
-			OR = {
-				is_owned_by = FROM
-				is_core_of = FROM
+	if = {
+		limit = { NOT = { check_variable = { ENG_uq_colonial = 1 } } }
+		every_state = {
+			limit = {
+				OR = {
+					is_owned_by = FROM
+					is_core_of = FROM
+				}
 			}
+			add_core_of = ROOT
 		}
-		add_core_of = ROOT
 	}
 	if = {
 		limit = { has_completed_focus = ENG_a_family_of_nations }
@@ -618,6 +625,28 @@ ENG_uq_enter_stage_4 = {
 		target = FROM
 		transfer_troops = yes
 	}
+}
+
+# Stage 3 -> Crown Colony, the Nationalist path's subject ending. Call with ROOT = ENG and FROM = target.
+ENG_uq_enter_crown_colony = {
+	set_temp_variable = { ENG_uq_stage_reached = 4 }
+	clr_country_flag = ENG_uq_offer_pending@FROM
+	clr_country_flag = ENG_uq_occupying@FROM
+	clr_country_flag = ENG_uq_pacified@FROM
+	set_autonomy = {
+		target = FROM
+		autonomy_state = autonomy_crown_colony
+	}
+	FROM = {
+		set_temp_variable = { ENG_union_strain_stage = 4 }
+		ENG_add_union_strain_for_target = yes
+	}
+	set_temp_variable = { ENG_imperial_tension_change = 10 }
+	ENG_change_imperial_tension = yes
+	ENG_uq_irish_lobby_reaction = yes
+	ENG_uq_realm_stage_reaction = yes
+	ENG_uq_possession_stage_reaction = yes
+	remove_from_array = { ENG_integration_targets = FROM }
 }
 
 # Frees the target and takes it off the ladder for five years. Call with ROOT = ENG and FROM = target.
@@ -912,7 +941,10 @@ ENG_uq_irish_lobby_reaction = {
 # Bring one Commonwealth realm onto the ladder at the stage its existing status already implies. Call in the target's scope with ROOT = ENG.
 ENG_uq_align_realm = {
 	if = {
-		limit = { NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } } }
+		limit = {
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
+			ENG_uq_crown_colony = no
+		}
 		if = {
 			limit = { is_subject_of = ROOT }
 			ROOT = {

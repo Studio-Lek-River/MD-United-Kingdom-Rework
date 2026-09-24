@@ -448,7 +448,7 @@ Further anchors:
 - German empires / mandates: `05_germany.txt:21856` (`GER_restore_the_empire` → `germany.218`, latch `events/Germany.txt:4328`, :4338), SWI/AUS/BEL mandates.
 - United Islamic Republics: `PER_reunification` (`05_iran.txt:16230`) → `common/decisions/Iran.txt:3466` (`PER_integrate_*`).
 - Polish-Lithuanian Commonwealth / Visegrad: `05_poland.txt:21362` (`POL_quadruple_alliance`, :21409).
-- Commonwealth Federation: `ENG_uq_enter_stage_4` (`99_ENG_scripted_effects..txt`) cores and annexes each ladder target, Ireland included.
+- Commonwealth Federation: `ENG_uq_enter_stage_4` (`99_ENG_scripted_effects..txt`) cores and annexes each ladder target, Ireland included. On the Nationalist path the last rung is `ENG_uq_crown_colony_status` (`autonomy_crown_colony` subject) or `ENG_uq_colonial_annexation_act` (stage 4 with temp `ENG_uq_colonial = 1`, annex without cores); `ENG_uq_canzuk_integrated` accepts either.
 - Gulf super-state: `05_saudi_arabia.txt:1544` (`SAU_unif_khaleeji_union`, :1599); globals `GCC_gulf_super_state_completed` / `SAU_unif_khaleeji_union_completed`.
 - China SAR integrations / Mongolia: `05_china.txt:28936` (`CHI_MON_reunification_offer`).
 
