@@ -366,17 +366,17 @@ ENG_uq_irish_states_pacified = {
 	29 = { compliance > 75 resistance < 15 }
 }
 
-# Target scope with ROOT = ENG. Every state it holds a core on is under British rule.
+# Target scope with ROOT = ENG. No core state is still held by the target or by a country at war with Britain.
 ENG_uq_all_cores_held = {
 	any_state = { is_core_of = PREV }
 	NOT = {
 		any_state = {
 			is_core_of = PREV
-			NOT = {
-				OR = {
-					is_controlled_by = ROOT
-					controller = { is_subject_of = ROOT }
-				}
+			NOT = { is_controlled_by = ROOT }
+			controller = { NOT = { is_subject_of = ROOT } }
+			OR = {
+				is_controlled_by = PREV
+				controller = { has_war_with = ROOT }
 			}
 		}
 	}
@@ -562,6 +562,13 @@ ENG_uq_not_foreign_guaranteed = {
 			}
 		}
 	}
+}
+
+# Country scope with ROOT = ENG. A free country Britain can bring into its war.
+ENG_uq_war_partner = {
+	exists = yes
+	is_subject = no
+	NOT = { has_war_with = ROOT }
 }
 
 # Target scope. A foreign power other than Britain holds at least 30% influence here and is not tied to London.

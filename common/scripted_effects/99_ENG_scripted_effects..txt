@@ -488,6 +488,7 @@ ENG_uq_update_dm = {
 # Call in the target's scope with ROOT = ENG.
 # Parameters:
 # - ENG_union_strain_stage: 1 occupation (+7), 2 subject (+6), 3 constituent (half of 4), 4 integrated (8 + 1 per 2M population)
+# Conquest targets (ENG_uq_conquest) pay triple.
 ENG_add_union_strain_for_target = {
 	if = {
 		limit = { check_variable = { ENG_union_strain_stage < 3 } }
@@ -505,6 +506,10 @@ ENG_add_union_strain_for_target = {
 			multiply_temp_variable = { ENG_union_strain_change = 0.5 }
 		}
 		round_temp_variable = ENG_union_strain_change
+	}
+	if = {
+		limit = { ROOT = { has_country_flag = ENG_uq_conquest@PREV } }
+		multiply_temp_variable = { ENG_union_strain_change = 3 }
 	}
 	ENG_change_union_strain = yes
 }
@@ -561,6 +566,13 @@ ENG_uq_enter_stage_2 = {
 	ENG_uq_realm_stage_reaction = yes
 	ENG_uq_possession_stage_reaction = yes
 	ENG_uq_ex_empire_stage_reaction = yes
+	if = {
+		limit = {
+			FROM = { original_tag = RAJ }
+			has_completed_focus = ENG_restore_the_british_raj
+		}
+		ENG_uq_proclaim_british_raj = yes
+	}
 }
 
 # Stage 2 -> 3. Call with ROOT = ENG and FROM = target. The constituent level refuses an overlord that purged devolution.
@@ -1728,6 +1740,73 @@ ENG_uq_begin_occupation = {
 		set_variable = { ENG_uq_occupied_target = PREV }
 		country_event = { id = ENG_uq.44 days = 1 }
 	}
+	if = {
+		limit = {
+			original_tag = RAJ
+			ROOT = { has_completed_focus = ENG_the_lahore_compact }
+			country_exists = PAK
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state = 427
+					state = 993
+				}
+				is_owned_by = ROOT
+			}
+			if = {
+				limit = { has_dynamic_modifier = { modifier = ENG_uq_occupation_dm } }
+				remove_dynamic_modifier = { modifier = ENG_uq_occupation_dm }
+			}
+			transfer_state_to = PAK
+		}
+	}
+}
+
+# Target scope with ROOT = ENG. A great-power conquest: the target joins the ladder under a puppet wargoal and every rung costs triple Union Strain.
+ENG_uq_open_conquest = {
+	ENG_uq_align_target = yes
+	ENG_uq_patron_opinion_hit = yes
+	every_state = {
+		limit = { is_core_of = PREV }
+		add_claim_by = ROOT
+	}
+	ROOT = {
+		set_country_flag = ENG_uq_conquest@PREV
+		set_country_flag = { flag = ENG_uq_claims@PREV value = 1 days = 730 }
+		add_opinion_modifier = { target = PREV modifier = imminent_danger_to_national_security }
+		set_temp_variable = { wargoal_on = PREV }
+		add_threat_from_wargoal_effect = yes
+		create_wargoal = {
+			type = puppet_wargoal_focus
+			target = PREV
+		}
+		set_temp_variable = { ENG_imperial_tension_change = 10 }
+		ENG_change_imperial_tension = yes
+		set_temp_variable = { ENG_union_strain_change = 10 }
+		ENG_change_union_strain = yes
+	}
+}
+
+# ENG scope with FROM = India as it becomes a protectorate. Pakistan folds into a restored British Raj.
+ENG_uq_proclaim_british_raj = {
+	if = {
+		limit = {
+			country_exists = PAK
+			PAK = { is_subject_of = ROOT }
+		}
+		FROM = {
+			annex_country = {
+				target = PAK
+				transfer_troops = yes
+			}
+		}
+	}
+	every_owned_state = {
+		limit = { is_core_of = PAK }
+		transfer_state_to = FROM
+	}
+	FROM = { set_cosmetic_tag = RAJ_british_raj }
 }
 
 # Call in the target's scope with ROOT = ENG. Pacification success ends the occupation regime on its states.

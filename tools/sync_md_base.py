@@ -52,6 +52,9 @@ ENG_SUBMOD_ONLY_PATHS = [
     "gfx/interface/scripted_gui/eng/ENG_wales_independent_gfx.dds",
     "gfx/interface/scripted_gui/eng/ENG_north_ireland_integrated_gfx.dds",
     "gfx/interface/scripted_gui/eng/ENG_north_ireland_independent_gfx.dds",
+    "gfx/flags/RAJ_british_raj.tga",
+    "gfx/flags/medium/RAJ_british_raj.tga",
+    "gfx/flags/small/RAJ_british_raj.tga",
 ]
 
 
