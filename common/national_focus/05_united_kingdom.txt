@@ -17863,7 +17863,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				hidden_trigger = {
-					NOT = { has_country_flag = ENG_charles_was_ascended_flag } 
+					NOT = { has_country_flag = ENG_charles_was_ascended_flag }
 				}
 			}
 			has_country_flag = ENG_elizabeth_ruling_monarch
@@ -17885,7 +17885,7 @@ focus_tree = {
 			}
 		}
 
-		
+
 		cancel_if_invalid = no
 
 		completion_reward = {
@@ -17917,7 +17917,7 @@ focus_tree = {
 				log = "Advisor was already there. STOP CHEATING!"
 				unlock_decision_tooltip = ENG_charles_charities_network_decision
 			}
-			else_if = { 
+			else_if = {
 				limit = {
 					check_variable = { ENG_ascended_advisor_1 = 0 compare = not_equals }
 					check_variable = { ENG_ascended_advisor_2 = 0 compare = not_equals }
@@ -17967,15 +17967,15 @@ focus_tree = {
 				country_event = { id = ENG_inner_circle_charles.07 days = 120 random_days = 40 }
 				clr_country_flag = ENG_charles_ascension_flag
 				ENG_inner_circle_set_ascension_cd = yes
-				set_country_flag = { 
+				set_country_flag = {
 					flag = ENG_charles_was_ascended_flag
-					days = 1500 
+					days = 1500
 					value = 1
 				}
 			}
 		}
 
-		select_effect = { 
+		select_effect = {
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_the_prince_trust"
 			set_country_flag = ENG_charles_ascension_flag
 		}
@@ -17999,11 +17999,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_harmony_doctrine_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18013,7 +18013,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18073,11 +18073,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_climate_alarm_bell_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18087,7 +18087,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18144,11 +18144,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL FOCUS_FILTER_EXPENDITURE }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_duchy_originals_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18158,7 +18158,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18234,11 +18234,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_heir_of_the_realm_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18248,7 +18248,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18292,7 +18292,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				hidden_trigger = {
-					NOT = { has_country_flag = ENG_andrew_ascension_flag } 
+					NOT = { has_country_flag = ENG_andrew_ascension_flag }
 				}
 			}
 			NOT = { has_country_flag = ENG_andrew_epstein_punishment }
@@ -18315,7 +18315,7 @@ focus_tree = {
 			}
 		}
 
-		
+
 		cancel_if_invalid = no
 
 		completion_reward = {
@@ -18348,7 +18348,7 @@ focus_tree = {
 				log = "Advisor was already there. STOP CHEATING!"
 				unlock_decision_tooltip = ENG_andrew_naval_haritage_decision
 			}
-			else_if = { 
+			else_if = {
 				limit = {
 					check_variable = { ENG_ascended_advisor_1 = 0 compare = not_equals }
 					check_variable = { ENG_ascended_advisor_2 = 0 compare = not_equals }
@@ -18393,15 +18393,15 @@ focus_tree = {
 				country_event = { id = ENG_inner_circle_andrew.03 days = 5 random_days = 2 }
 				clr_country_flag = ENG_andrew_ascension_flag
 				ENG_inner_circle_set_ascension_cd = yes
-				set_country_flag = { 
+				set_country_flag = {
 						flag = ENG_andrew_ascension_flag
-						days = 1500 
+						days = 1500
 						value = 1
 					}
 			}
 		}
 
-		select_effect = { 
+		select_effect = {
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_naval_prince"
 			set_country_flag = ENG_andrew_ascension_flag
 		}
@@ -18425,11 +18425,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_appoint_trade_representative_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18439,7 +18439,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18498,11 +18498,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_emerging_markets_circuit_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18512,7 +18512,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18565,11 +18565,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_digital_enterprise_patronage_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18579,7 +18579,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18635,11 +18635,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_duty_of_the_crown_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18649,7 +18649,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18748,7 +18748,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				hidden_trigger = {
-					NOT = { has_country_flag = ENG_anne_was_ascended_flag } 
+					NOT = { has_country_flag = ENG_anne_was_ascended_flag }
 				}
 			}
 			has_country_flag = ENG_elizabeth_ruling_monarch
@@ -18770,7 +18770,7 @@ focus_tree = {
 			}
 		}
 
-		
+
 		cancel_if_invalid = no
 
 		completion_reward = {
@@ -18795,7 +18795,7 @@ focus_tree = {
 				log = "Advisor was already there. STOP CHEATING!"
 				unlock_decision_tooltip = ENG_anne_national_charity_decision
 			}
-			else_if = { 
+			else_if = {
 				limit = {
 					check_variable = { ENG_ascended_advisor_1 = 0 compare = not_equals }
 					check_variable = { ENG_ascended_advisor_2 = 0 compare = not_equals }
@@ -18840,15 +18840,15 @@ focus_tree = {
 				country_event = { id = ENG_inner_circle_anne.03 days = 120 random_days = 40 }
 				clr_country_flag = ENG_anne_ascension_flag
 				ENG_inner_circle_set_ascension_cd = yes
-				set_country_flag = { 
+				set_country_flag = {
 					flag = ENG_anne_was_ascended_flag
-					days = 1500 
+					days = 1500
 					value = 1
 				}
 			}
 		}
 
-		select_effect = { 
+		select_effect = {
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_workhorse_of_the_crown"
 			set_country_flag = ENG_anne_ascension_flag
 		}
@@ -18872,11 +18872,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_carers_recognition_campaign_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18886,7 +18886,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -18931,11 +18931,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_discipline_service_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -18945,7 +18945,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19025,11 +19025,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_princess_admiral_royal_navy_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19039,7 +19039,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19111,11 +19111,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_colonel_of_horse_logistics_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19125,7 +19125,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19175,11 +19175,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_quiet_professionalism_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19189,7 +19189,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19270,7 +19270,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				hidden_trigger = {
-					NOT = { has_country_flag = ENG_edward_was_ascended_flag } 
+					NOT = { has_country_flag = ENG_edward_was_ascended_flag }
 				}
 			}
 			has_country_flag = ENG_elizabeth_ruling_monarch
@@ -19292,7 +19292,7 @@ focus_tree = {
 			}
 		}
 
-		
+
 		cancel_if_invalid = no
 
 		completion_reward = {
@@ -19321,7 +19321,7 @@ focus_tree = {
 				log = "Advisor was already there. STOP CHEATING!"
 				unlock_decision_tooltip = ENG_edward_beach_youth_decision
 			}
-			else_if = { 
+			else_if = {
 				limit = {
 					check_variable = { ENG_ascended_advisor_1 = 0 compare = not_equals }
 					check_variable = { ENG_ascended_advisor_2 = 0 compare = not_equals }
@@ -19366,15 +19366,15 @@ focus_tree = {
 				country_event = { id = ENG_inner_circle_edward.03 days = 120 random_days = 40 }
 				clr_country_flag = ENG_edward_ascension_flag
 				ENG_inner_circle_set_ascension_cd = yes
-				set_country_flag = { 
+				set_country_flag = {
 					flag = ENG_edward_was_ascended_flag
-					days = 1500 
+					days = 1500
 					value = 1
 				}
 			}
 		}
 
-		select_effect = { 
+		select_effect = {
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_chairman_international_award"
 			set_country_flag = ENG_edward_ascension_flag
 		}
@@ -19398,11 +19398,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_trustee_network_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19412,7 +19412,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19467,11 +19467,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_commonwealth_youth_outreach_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19481,7 +19481,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19534,11 +19534,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_production_guild_patronage_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19548,7 +19548,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19627,11 +19627,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_steady_hand_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19641,7 +19641,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19746,7 +19746,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				hidden_trigger = {
-					NOT = { has_country_flag = ENG_philip_was_ascended_flag } 
+					NOT = { has_country_flag = ENG_philip_was_ascended_flag }
 				}
 			}
 			has_country_flag = ENG_elizabeth_ruling_monarch
@@ -19768,7 +19768,7 @@ focus_tree = {
 			}
 		}
 
-		
+
 		cancel_if_invalid = no
 
 		completion_reward = {
@@ -19798,7 +19798,7 @@ focus_tree = {
 				log = "Advisor was already there. STOP CHEATING!"
 				unlock_decision_tooltip = ENG_philip_trust_funds_grants_decision
 			}
-			else_if = { 
+			else_if = {
 				limit = {
 					check_variable = { ENG_ascended_advisor_1 = 0 compare = not_equals }
 					check_variable = { ENG_ascended_advisor_2 = 0 compare = not_equals }
@@ -19843,15 +19843,15 @@ focus_tree = {
 				country_event = { id = ENG_inner_circle_philip.03 days = 120 random_days = 40 }
 				clr_country_flag = ENG_philip_ascension_flag
 				ENG_inner_circle_set_ascension_cd = yes
-				set_country_flag = { 
+				set_country_flag = {
 					flag = ENG_philip_was_ascended_flag
-					days = 1500 
+					days = 1500
 					value = 1
 				}
 			}
 		}
 
-		select_effect = { 
+		select_effect = {
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_duke_charities"
 			set_country_flag = ENG_philip_ascension_flag
 		}
@@ -19875,11 +19875,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_international_award_conference_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19889,7 +19889,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -19939,11 +19939,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_wwf_president_emeritus_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -19953,7 +19953,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -20009,11 +20009,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_prince_phillip_medal_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -20023,7 +20023,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -20085,11 +20085,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_strength_and_stay_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_4 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -20099,7 +20099,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -20160,7 +20160,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				hidden_trigger = {
-					NOT = { has_country_flag = ENG_william_was_ascended_flag } 
+					NOT = { has_country_flag = ENG_william_was_ascended_flag }
 				}
 			}
 			has_country_flag = ENG_elizabeth_ruling_monarch
@@ -20182,7 +20182,7 @@ focus_tree = {
 			}
 		}
 
-		
+
 		cancel_if_invalid = no
 
 		completion_reward = {
@@ -20217,7 +20217,7 @@ focus_tree = {
 				log = "Advisor was already there. STOP CHEATING!"
 				unlock_decision_tooltip = ENG_william_air_ambulance_decision
 			}
-			else_if = { 
+			else_if = {
 				limit = {
 					check_variable = { ENG_ascended_advisor_1 = 0 compare = not_equals }
 					check_variable = { ENG_ascended_advisor_2 = 0 compare = not_equals }
@@ -20262,15 +20262,15 @@ focus_tree = {
 				country_event = { id = ENG_inner_circle_william.03 days = 120 random_days = 40 }
 				clr_country_flag = ENG_william_ascension_flag
 				ENG_inner_circle_set_ascension_cd = yes
-				set_country_flag = { 
+				set_country_flag = {
 					flag = ENG_william_was_ascended_flag
-					days = 1500 
+					days = 1500
 					value = 1
 				}
 			}
 		}
 
-		select_effect = { 
+		select_effect = {
 			log = "[GetDateText]: [Root.GetName]: Focus ENG_from_sandhurst_to_service"
 			set_country_flag = ENG_william_ascension_flag
 		}
@@ -20294,11 +20294,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_royal_foundation_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_1 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -20308,7 +20308,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -20374,11 +20374,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_heads_together_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_2 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -20388,7 +20388,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
@@ -20446,11 +20446,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INNER_CIRCLE FOCUS_FILTER_POLITICAL }
 
 		available = {
-			if = { 
+			if = {
 				limit = {
 					has_country_flag = ENG_veteran_armed_forces_support_in_progress_flag
 				}
-				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } } 
+				set_temp_variable = { temp_focus_days = { value = @inner_circle_time_tier_3 multiply = 7 } }
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_inner_circle_focus_in_progress_tt
@@ -20460,7 +20460,7 @@ focus_tree = {
 					always = no
 				}
 			}
-			else = { 
+			else = {
 				custom_override_tooltip = {
 					tooltip = {
 						localization_key = ENG_focus_can_only_be_completed_by_advisor_tt
