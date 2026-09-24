@@ -1223,6 +1223,15 @@ ideas = {
 			}
 		}
 
+		ENG_uq_sovereignty_campaign = {
+			picture = nationalism
+			allowed_civil_war = { always = yes }
+			modifier = {
+				stability_factor = 0.03
+				political_power_factor = -0.10
+			}
+		}
+
 		ENG_uq_trade_preference_idea = {
 			picture = trade
 			allowed_civil_war = { always = yes }

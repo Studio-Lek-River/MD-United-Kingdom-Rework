@@ -306,6 +306,14 @@ guiTypes = {
 			pdx_tooltip = "CLOSE"
 		}
 
+		iconType = {
+			name = "ENG_uq_help_icon"
+			position = { x = 14 y = 14 }
+			spriteType = "GFX_help_button_custom"
+			pdx_tooltip = ENG_uq_help_TT
+			pdx_tooltip_delayed = ENG_uq_help_TT_delayed
+		}
+
 		instantTextBoxType = {
 			name = "ENG_uq_panel_title"
 			position = { x = 0 y = 18 }
@@ -601,6 +609,7 @@ guiTypes = {
 			maxHeight = 22
 			fixedsize = yes
 			text = "ENG_uq_ladder_entry_consent"
+			pdx_tooltip = ENG_uq_ladder_meter_TT
 		}
 
 		# Consent gates at 60, 75 and 85 percent of the bar

@@ -265,9 +265,21 @@ scripted_gui = {
 					ENG_uq_stage_3 = yes
 				}
 			}
-			ENG_uq_pip_60_on_visible = { check_variable = { ENG_uq_consent_bar > 60 } }
-			ENG_uq_pip_75_on_visible = { check_variable = { ENG_uq_consent_bar > 75 } }
-			ENG_uq_pip_85_on_visible = { check_variable = { ENG_uq_consent_bar > 85 } }
+			ENG_uq_pip_60_off_visible = { ROOT = { has_completed_focus = ENG_a_family_of_nations } }
+			ENG_uq_pip_75_off_visible = { ROOT = { has_completed_focus = ENG_a_family_of_nations } }
+			ENG_uq_pip_85_off_visible = { ROOT = { has_completed_focus = ENG_a_family_of_nations } }
+			ENG_uq_pip_60_on_visible = {
+				ROOT = { has_completed_focus = ENG_a_family_of_nations }
+				check_variable = { ENG_uq_consent_bar > 60 }
+			}
+			ENG_uq_pip_75_on_visible = {
+				ROOT = { has_completed_focus = ENG_a_family_of_nations }
+				check_variable = { ENG_uq_consent_bar > 75 }
+			}
+			ENG_uq_pip_85_on_visible = {
+				ROOT = { has_completed_focus = ENG_a_family_of_nations }
+				check_variable = { ENG_uq_consent_bar > 85 }
+			}
 		}
 
 		properties = {

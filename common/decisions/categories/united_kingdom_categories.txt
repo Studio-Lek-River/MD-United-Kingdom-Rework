@@ -45,6 +45,7 @@ ENG_union_question_decisions = {
 
 	visible = {
 		OR = {
+			is_debug = yes
 			has_completed_focus = ENG_a_family_of_nations
 			has_completed_focus = ENG_the_crown_imperial
 		}

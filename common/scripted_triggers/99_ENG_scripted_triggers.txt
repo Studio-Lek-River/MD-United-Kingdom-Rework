@@ -269,6 +269,13 @@ ENG_uq_can_transition = {
 		tooltip = ENG_uq_offer_pending_TT
 		NOT = { has_country_flag = ENG_uq_offer_pending@FROM }
 	}
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_no_campaign_TT
+		OR = {
+			has_completed_focus = ENG_the_crown_imperial
+			FROM = { NOT = { has_idea = ENG_uq_sovereignty_campaign } }
+		}
+	}
 }
 
 # Target scope. Some coercive step has been taken against this target.

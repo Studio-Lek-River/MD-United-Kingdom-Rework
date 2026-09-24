@@ -620,6 +620,42 @@ ENG_uq_enter_stage_4 = {
 	}
 }
 
+# Frees the target and takes it off the ladder for five years. Call with ROOT = ENG and FROM = target.
+ENG_uq_release_target = {
+	set_autonomy = {
+		target = FROM
+		autonomy_state = autonomy_free
+	}
+	remove_from_array = { ENG_integration_targets = FROM }
+	clr_country_flag = ENG_uq_occupying@FROM
+	clr_country_flag = ENG_uq_pacified@FROM
+	set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1825 }
+}
+
+# One rung down: a constituent country becomes a Crown subject again, a Crown subject goes free. Call with ROOT = ENG and FROM = target.
+ENG_uq_step_down = {
+	if = {
+		limit = { FROM = { ENG_uq_stage_3 = yes } }
+		if = {
+			limit = { has_completed_focus = ENG_a_family_of_nations }
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_crown_dominion
+			}
+		}
+		else = {
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_crown_protectorate
+			}
+		}
+		set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1825 }
+	}
+	else = {
+		ENG_uq_release_target = yes
+	}
+}
+
 ENG_uq_fail_transition = {
 	custom_effect_tooltip = ENG_uq_fail_transition_TT
 	hidden_effect = {
@@ -731,6 +767,15 @@ ENG_uq_update_consent = {
 	}
 	if = {
 		limit = {
+			any_country = {
+				NOT = { tag = ENG }
+				has_guaranteed = PREV
+			}
+		}
+		add_to_temp_variable = { ENG_uq_consent_change = -0.5 }
+	}
+	if = {
+		limit = {
 			has_idea = ENG_uq_sovereignty_movement
 			check_variable = { ENG_uq_consent_change > 0 }
 		}
@@ -739,6 +784,11 @@ ENG_uq_update_consent = {
 	if = {
 		limit = { ENG = { has_completed_focus = ENG_the_crown_imperial } }
 		multiply_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	if = {
+		limit = { has_idea = ENG_uq_sovereignty_campaign }
+		clamp_temp_variable = { var = ENG_uq_consent_change max = 0 }
+		add_to_temp_variable = { ENG_uq_consent_change = -1 }
 	}
 	ENG = { set_variable = { ENG_consent_delta@PREV = ENG_uq_consent_change } }
 	ENG_uq_change_consent = yes
@@ -754,8 +804,45 @@ ENG_uq_update_consent = {
 	}
 }
 
-# AI weight for accepting a ladder offer or referendum request. Call in the target's scope with FROM = ENG.
+# AI weights for accepting or declining a ladder offer or referendum request. Call in the target's scope with FROM = ENG.
 ENG_uq_set_accept_weight = {
+	set_variable = { ENG_uq_decline_weight = 40 }
+	if = {
+		limit = {
+			OR = {
+				has_idea = ENG_uq_sovereignty_movement
+				has_idea = ENG_uq_sovereignty_campaign
+			}
+		}
+		add_to_variable = { ENG_uq_decline_weight = 30 }
+	}
+	if = {
+		limit = { has_opinion = { target = FROM value < 50 } }
+		add_to_variable = { ENG_uq_decline_weight = 20 }
+	}
+	if = {
+		limit = {
+			OR = {
+				has_government = nationalist
+				has_government = communism
+			}
+			nationalist_monarchists_are_in_power = no
+		}
+		add_to_variable = { ENG_uq_decline_weight = 20 }
+	}
+	if = {
+		limit = {
+			any_country = {
+				NOT = { tag = ENG }
+				has_guaranteed = PREV
+			}
+		}
+		add_to_variable = { ENG_uq_decline_weight = 15 }
+	}
+	if = {
+		limit = { is_in_faction_with = FROM }
+		subtract_from_variable = { ENG_uq_decline_weight = 20 }
+	}
 	set_temp_variable = { ENG_uq_from_consent = FROM.ENG_consent@THIS }
 	set_variable = { ENG_uq_accept_weight = { value = ENG_uq_from_consent subtract = 50 multiply = 2 } }
 	if = {
