@@ -10010,10 +10010,7 @@ country_event = {
 		custom_effect_tooltip = ENG_uq_monarchy_restored_TT
 		set_country_flag = ENG_uq_monarchy_restored
 		clr_country_flag = ENG_uq_republic
-		if = {
-			limit = { NOT = { has_idea = ENG_crown_realm_status } }
-			add_ideas = ENG_crown_realm_status
-		}
+		ENG_crown_realm_add = yes
 		add_stability = -0.05
 		hidden_effect = {
 			ENG = { country_event = { id = ENG_uq.241 days = 1 } }
@@ -10686,10 +10683,7 @@ country_event = {
 		custom_effect_tooltip = ENG_uq_crown_accepted_TT
 		set_country_flag = ENG_uq_crown_accepted
 		clr_country_flag = ENG_uq_republic
-		if = {
-			limit = { NOT = { has_idea = ENG_crown_realm_status } }
-			add_ideas = ENG_crown_realm_status
-		}
+		ENG_crown_realm_add = yes
 		set_temp_variable = { ENG_uq_consent_change = 10 }
 		ENG_uq_change_consent = yes
 		hidden_effect = {
@@ -11220,4 +11214,84 @@ country_event = {
 		name = ENG_cmw.30.b
 		ai_chance = { base = 60 }
 	}
+}
+
+# Offer of the Crown to a Commonwealth member (FROM = ENG)
+country_event = {
+	id = ENG_cmw.40
+	title = ENG_cmw.40.t
+	desc = ENG_cmw.40.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_cmw.40.a
+		log = "[GetDateText]: [This.GetName]: ENG_cmw.40.a executed"
+		ENG = { clr_country_flag = ENG_cmw_crown_offer_pending@PREV }
+		set_country_flag = ENG_uq_crown_accepted
+		clr_country_flag = ENG_uq_republic
+		ENG_crown_realm_add = yes
+		ENG = { country_event = { id = ENG_cmw.41 days = 1 } }
+		ai_chance = {
+			base = 20
+			modifier = {
+				add = 60
+				has_opinion = { target = ENG value > 50 }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_cmw.40.b
+		log = "[GetDateText]: [This.GetName]: ENG_cmw.40.b executed"
+		ENG = { clr_country_flag = ENG_cmw_crown_offer_pending@PREV }
+		random_list = {
+			50 = {
+				set_country_flag = ENG_uq_crown_accepted
+				clr_country_flag = ENG_uq_republic
+				ENG_crown_realm_add = yes
+				ENG = { country_event = { id = ENG_cmw.41 days = 1 } }
+			}
+			50 = {
+				ENG = {
+					set_country_flag = { flag = ENG_cmw_crown_refused@PREV value = 1 days = 1825 }
+					country_event = { id = ENG_cmw.42 days = 1 }
+				}
+			}
+		}
+		ai_chance = { base = 30 }
+	}
+
+	option = {
+		name = ENG_cmw.40.c
+		log = "[GetDateText]: [This.GetName]: ENG_cmw.40.c executed"
+		ENG = {
+			clr_country_flag = ENG_cmw_crown_offer_pending@PREV
+			set_country_flag = { flag = ENG_cmw_crown_refused@PREV value = 1 days = 1825 }
+			country_event = { id = ENG_cmw.42 days = 1 }
+		}
+		ai_chance = { base = 50 }
+	}
+}
+
+# A Commonwealth member accepts the Crown (ENG, FROM = member)
+country_event = {
+	id = ENG_cmw.41
+	title = ENG_cmw.41.t
+	desc = ENG_cmw.41.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	option = { name = ENG_cmw.41.a }
+}
+
+# A Commonwealth member refuses the Crown (ENG, FROM = member)
+country_event = {
+	id = ENG_cmw.42
+	title = ENG_cmw.42.t
+	desc = ENG_cmw.42.d
+	picture = GFX_ENG_commonwealth
+	is_triggered_only = yes
+
+	option = { name = ENG_cmw.42.a }
 }

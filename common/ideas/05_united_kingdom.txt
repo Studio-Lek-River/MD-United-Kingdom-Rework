@@ -50,6 +50,10 @@ ideas = {
 				trade_opinion_factor = 0.05
 				custom_modifier_tooltip = ENG_crown_realm_monthly_influence_tt
 			}
+			targeted_modifier = {
+				tag = ENG
+				foreign_influence_defense_modifier = -0.10
+			}
 		}
 
 		##################################UK REWORK########################################

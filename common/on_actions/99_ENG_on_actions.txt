@@ -6,6 +6,10 @@ on_actions = {
 				set_variable = { global.commonwealth_cohesion = 50 }
 				set_global_flag = ENG_cmw_initialised
 			}
+			every_country = {
+				limit = { ENG_uq_is_crown_realm = yes }
+				ENG_crown_realm_add = yes
+			}
 		}
 	}
 
