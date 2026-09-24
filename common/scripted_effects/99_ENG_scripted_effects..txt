@@ -2166,24 +2166,31 @@ ENG_cmw_update_cohesion = {
 	ENG_cmw_change_cohesion = yes
 }
 
-# Monthly, ROOT = ENG on the Western path. Cohesion above 25 buys influence in every member outside the Union.
-ENG_cmw_influence_drip = {
-	set_temp_variable = { ENG_cmw_drip = { value = global.commonwealth_cohesion subtract = 25 multiply = 0.02 } }
+# Monthly, ROOT = ENG on the Western path. Cohesion above 25 raises foreign influence; 50 and 75 each add an auto-influence slot.
+ENG_cmw_update_influence_dm = {
+	set_variable = { ENG_cmw_foreign_influence = { value = global.commonwealth_cohesion subtract = 25 multiply = 0.004 } }
 	if = {
 		limit = { has_idea = ENG_cmw_trade_area_idea }
-		multiply_temp_variable = { ENG_cmw_drip = 1.33 }
+		multiply_variable = { ENG_cmw_foreign_influence = 1.33 }
 	}
 	if = {
-		limit = { check_variable = { ENG_cmw_drip > 0 } }
-		every_other_country = {
-			limit = {
-				ENG_cmw_is_member = yes
-				NOT = { is_subject_of = ROOT }
-			}
-			set_temp_variable = { percent_change = ENG_cmw_drip }
-			set_temp_variable = { tag_index = ENG }
-			change_influence_percentage = yes
-		}
+		limit = { check_variable = { global.commonwealth_cohesion > 74.999 } }
+		set_variable = { ENG_cmw_auto_influence_cap = 2 }
+	}
+	else_if = {
+		limit = { check_variable = { global.commonwealth_cohesion > 49.999 } }
+		set_variable = { ENG_cmw_auto_influence_cap = 1 }
+	}
+	else = {
+		set_variable = { ENG_cmw_auto_influence_cap = 0 }
+	}
+	if = {
+		limit = { check_variable = { ENG_cmw_foreign_influence > 0 } }
+		if = { limit = { NOT = { has_dynamic_modifier = { modifier = ENG_cmw_influence_dm } } } add_dynamic_modifier = { modifier = ENG_cmw_influence_dm } }
+	}
+	else_if = {
+		limit = { has_dynamic_modifier = { modifier = ENG_cmw_influence_dm } }
+		remove_dynamic_modifier = { modifier = ENG_cmw_influence_dm }
 	}
 }
 
@@ -2285,7 +2292,11 @@ ENG_cmw_monthly = {
 			has_completed_focus = ENG_a_family_of_nations
 			ENG_cmw_is_member = yes
 		}
-		ENG_cmw_influence_drip = yes
+		ENG_cmw_update_influence_dm = yes
+	}
+	else_if = {
+		limit = { has_dynamic_modifier = { modifier = ENG_cmw_influence_dm } }
+		remove_dynamic_modifier = { modifier = ENG_cmw_influence_dm }
 	}
 	ENG_cmw_schedule_chogm = yes
 }

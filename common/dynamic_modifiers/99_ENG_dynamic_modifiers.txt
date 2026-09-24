@@ -198,6 +198,14 @@ ENG_uq_irish_partisans_dm = {
 	state_productivity_growth_modifier = -0.10
 }
 
+ENG_cmw_influence_dm = {
+	icon = GFX_idea_commonwealth_member
+	custom_modifier_tooltip = ENG_cmw_influence_dm_TT
+
+	foreign_influence_modifier = ENG_cmw_foreign_influence
+	foreign_influence_auto_influence_cap_modifier = ENG_cmw_auto_influence_cap
+}
+
 ENG_invest_northern_ireland = {
 	icon = GFX_idea_economic_road_idea
 
