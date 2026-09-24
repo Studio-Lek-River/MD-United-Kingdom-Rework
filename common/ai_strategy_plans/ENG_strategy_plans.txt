@@ -36,6 +36,26 @@ ENG_FOCUS_RISE_OF_BRITAIN = {
 		ENG_codify_service_economy
 		ENG_national_productivity_commission
 		ENG_critical_minerals_strategy
+		ENG_the_union_question
+		ENG_a_family_of_nations
+		ENG_one_nation
+		ENG_the_union_dividend
+		ENG_a_union_of_equals
+		ENG_act_of_union
+		ENG_council_of_the_isles
+		ENG_the_dublin_question
+		ENG_anglo_irish_economic_union
+		ENG_the_irexit_question
+		ENG_an_ireland_united_under_the_crown
+		ENG_home_rule_in_reverse
+		ENG_the_realms_beyond_the_seas
+		ENG_ottawa_accord
+		ENG_canberra_accord
+		ENG_wellington_accord
+		ENG_caribbean_partnership
+		ENG_a_commonwealth_of_equals
+		ENG_the_crown_realms_united
+		ENG_commonwealth_development_partnership
 	}
 
 	ai_strategy = { type = avoid_starting_wars value = 100 }
@@ -92,6 +112,23 @@ ENG_FOCUS_RULE_BRITANNIA = {
 		ENG_the_crown_imperial
 		ENG_the_crowns_peace
 		ENG_direct_rule_from_london
+		ENG_ulster_settled_by_the_crown
+		ENG_the_kings_men
+		ENG_loyal_ulster_regiments
+		ENG_crown_union
+		ENG_the_irish_question_reopened
+		ENG_sponsor_the_unionist_lobby_in_dublin
+		ENG_close_the_irish_sea
+		ENG_ultimatum_to_dublin
+		ENG_the_realms_beyond_the_seas
+		ENG_reserve_powers
+		ENG_ottawa_accord
+		ENG_canberra_accord
+		ENG_wellington_accord
+		ENG_caribbean_partnership
+		ENG_a_shared_crown
+		ENG_the_crown_realms_united
+		ENG_the_overseas_settlements
 	}
 
 	ai_strategy = { type = area_priority id = africa value = 150 }

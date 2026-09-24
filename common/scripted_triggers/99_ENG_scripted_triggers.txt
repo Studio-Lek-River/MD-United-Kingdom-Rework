@@ -155,17 +155,17 @@ ENG_uq_home_nations_pacified = {
 		OR = {
 			has_country_flag = ENG_scottish_pacified
 			has_country_flag = ENG_scottish_integrated
-			NOT = { any_state = { is_core_of = SCO } }
+			NOT = { any_owned_state = { is_core_of = SCO } }
 		}
 		OR = {
 			has_country_flag = ENG_welsh_pacified
 			has_country_flag = ENG_welsh_integrated
-			NOT = { any_state = { is_core_of = WAS } }
+			NOT = { any_owned_state = { is_core_of = WAS } }
 		}
 		OR = {
 			has_country_flag = ENG_north_irish_pacified
 			has_country_flag = ENG_north_irish_integrated
-			NOT = { any_state = { is_core_of = NIR } }
+			NOT = { any_owned_state = { is_core_of = NIR } }
 		}
 	}
 }
@@ -194,15 +194,15 @@ ENG_uq_home_nations_done = {
 		tooltip = ENG_uq_home_nations_done_TT
 		OR = {
 			has_country_flag = ENG_scottish_integrated
-			NOT = { any_state = { is_core_of = SCO } }
+			NOT = { any_owned_state = { is_core_of = SCO } }
 		}
 		OR = {
 			has_country_flag = ENG_welsh_integrated
-			NOT = { any_state = { is_core_of = WAS } }
+			NOT = { any_owned_state = { is_core_of = WAS } }
 		}
 		OR = {
 			has_country_flag = ENG_north_irish_integrated
-			NOT = { any_state = { is_core_of = NIR } }
+			NOT = { any_owned_state = { is_core_of = NIR } }
 		}
 	}
 }
@@ -642,6 +642,14 @@ ENG_ai_not_rule_britannia_path = {
 ENG_ai_not_imperial_path = {
 	NOT = { has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH }
 	has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+}
+
+ENG_uq_ai_cannot_spend = {
+	OR = {
+		has_active_mission = bankruptcy_incoming_collapse
+		gdp_debt_ratio_higher_50 = yes
+		treasury_lower_than_10 = yes
+	}
 }
 
 # Union Question decision cost tiers. Each pairs a share of GDP against the treasury with the decision's political power price; the name matches the decision's custom_cost_text.

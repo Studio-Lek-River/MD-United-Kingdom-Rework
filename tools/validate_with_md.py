@@ -244,8 +244,10 @@ def main():
 
     ref = args.ref or MD_BASE_REF.read_text(encoding="utf-8").strip()
     md_root = Path(args.md)
-    ws = args.workspace.resolve() if args.workspace else make_worktree(md_root, ref)
     out_root = args.output_dir.resolve()
+    # A stale sidecar from an earlier run would hide a validator crash in this one.
+    shutil.rmtree(out_root, ignore_errors=True)
+    ws = args.workspace.resolve() if args.workspace else make_worktree(md_root, ref)
     try:
         if not args.no_overlay:
             overlay(ws)

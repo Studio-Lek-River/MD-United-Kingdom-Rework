@@ -77,4 +77,9 @@ spriteTypes = {
 		name = "GFX_autonomy_crown_protectorate_icon"
 		texturefile = "gfx/interface/autonomy/autonomy_constituent.dds"
 	}
+
+	spritetype = {
+		name = "GFX_autonomy_crown_colony_icon"
+		texturefile = "gfx/interface/autonomy/autonomy_colony_icon.dds"
+	}
 }

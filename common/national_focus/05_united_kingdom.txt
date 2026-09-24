@@ -21268,7 +21268,13 @@ focus_tree = {
 			hidden_effect = { add_dynamic_modifier = { modifier = ENG_union_question_dm } }
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -21301,7 +21307,13 @@ focus_tree = {
 			hidden_effect = { ENG_uq_update_dm = yes }
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21341,7 +21353,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21376,7 +21394,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21440,6 +21464,10 @@ focus_tree = {
 		ai_will_do = {
 			base = 0
 			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+			modifier = {
 				factor = 0
 				has_active_mission = bankruptcy_incoming_collapse
 			}
@@ -21481,7 +21509,13 @@ focus_tree = {
 			add_to_variable = { ENG_education_cost_multiplier_modifier = -0.025 tooltip = education_cost_multiplier_modifier_tt }
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21520,7 +21554,13 @@ focus_tree = {
 			ENG_change_wales_nationalists = yes
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21547,6 +21587,12 @@ focus_tree = {
 			}
 		}
 
+		bypass = {
+			country_exists = SCO
+			country_exists = WAS
+			country_exists = NIR
+		}
+
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_westminster_first"
 			set_temp_variable = { ENG_union_strain_change = -5 }
@@ -21563,7 +21609,13 @@ focus_tree = {
 			change_domestic_influence_percentage = yes
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21598,7 +21650,13 @@ focus_tree = {
 			hidden_effect = { update_eng_devolution_dirty_variable = yes }
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21654,7 +21712,13 @@ focus_tree = {
 			effect_tooltip = { custom_effect_tooltip = ENG_uq_council_of_the_isles_refused_TT }
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21693,7 +21757,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21729,7 +21799,13 @@ focus_tree = {
 			effect_tooltip = { custom_effect_tooltip = ENG_uq_anglo_irish_economic_union_refused_TT }
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21765,7 +21841,13 @@ focus_tree = {
 			effect_tooltip = { custom_effect_tooltip = ENG_uq_common_travel_area_plus_refused_TT }
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21800,6 +21882,7 @@ focus_tree = {
 			OR = {
 				NOT = { country_exists = IRE }
 				IRE = { NOT = { has_idea = EU_member } }
+				has_idea = EU_member
 			}
 		}
 
@@ -21809,7 +21892,13 @@ focus_tree = {
 			unlock_decision_tooltip = ENG_uq_fund_irexit_campaign
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21856,7 +21945,7 @@ focus_tree = {
 		bypass = {
 			OR = {
 				NOT = { country_exists = IRE }
-				IRE = { owns_state = 17 }
+				NOT = { 17 = { is_owned_by = ROOT } }
 			}
 		}
 
@@ -21875,7 +21964,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21917,7 +22012,13 @@ focus_tree = {
 			hidden_effect = { ENG_uq_update_dm = yes }
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -21966,7 +22067,13 @@ focus_tree = {
 			change_domestic_influence_percentage = yes
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22000,7 +22107,13 @@ focus_tree = {
 			ENG_uq_update_direct_rule = yes
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22069,7 +22182,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22105,7 +22224,13 @@ focus_tree = {
 			ENG_change_wales_agitation = yes
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22141,7 +22266,13 @@ focus_tree = {
 			hidden_effect = { set_variable = { ENG_pacification_pressure_cap = 35 } }
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22176,7 +22307,13 @@ focus_tree = {
 			add_to_variable = { ENG_uq_army_morale_factor = 0.03 tooltip = army_morale_factor_tt }
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22238,7 +22375,13 @@ focus_tree = {
 			hidden_effect = { ENG_uq_update_dm = yes }
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22262,6 +22405,13 @@ focus_tree = {
 			IRE = { is_subject = no }
 		}
 
+		bypass = {
+			OR = {
+				NOT = { country_exists = IRE }
+				IRE = { is_subject_of = ROOT }
+			}
+		}
+
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_irish_question_reopened"
 			custom_effect_tooltip = ENG_the_irish_question_reopened_TT
@@ -22274,7 +22424,13 @@ focus_tree = {
 			unlock_decision_tooltip = ENG_uq_sponsor_loyalists
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22300,6 +22456,13 @@ focus_tree = {
 			}
 		}
 
+		bypass = {
+			OR = {
+				NOT = { country_exists = IRE }
+				IRE = { is_subject_of = ROOT }
+			}
+		}
+
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_sponsor_the_unionist_lobby_in_dublin"
 			set_temp_variable = { percent_change = 5 }
@@ -22310,7 +22473,13 @@ focus_tree = {
 			unlock_decision_tooltip = ENG_uq_economic_pressure
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22337,6 +22506,13 @@ focus_tree = {
 			}
 		}
 
+		bypass = {
+			OR = {
+				NOT = { country_exists = IRE }
+				IRE = { is_subject_of = ROOT }
+			}
+		}
+
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_close_the_irish_sea"
 			add_timed_idea = { idea = ENG_uq_irish_sea_blockade days = 365 }
@@ -22348,7 +22524,13 @@ focus_tree = {
 			activate_mission = ENG_uq_blockade_of_ireland
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22380,6 +22562,13 @@ focus_tree = {
 			NOT = { has_active_mission = ENG_uq_blockade_of_ireland }
 		}
 
+		bypass = {
+			OR = {
+				NOT = { country_exists = IRE }
+				IRE = { is_subject_of = ROOT }
+			}
+		}
+
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_ultimatum_to_dublin"
 			custom_effect_tooltip = ENG_ultimatum_to_dublin_TT
@@ -22399,7 +22588,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22454,7 +22649,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -22483,7 +22684,13 @@ focus_tree = {
 			ENG_change_imperial_tension = yes
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22546,7 +22753,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -22607,7 +22820,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -22667,7 +22886,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -22735,7 +22960,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -22805,7 +23036,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22866,7 +23103,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+			}
+		}
 	}
 
 	focus = {
@@ -22946,7 +23189,13 @@ focus_tree = {
 			ENG_change_union_strain = yes
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -22982,7 +23231,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -23046,7 +23301,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -23106,7 +23367,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -23176,6 +23443,10 @@ focus_tree = {
 
 		ai_will_do = {
 			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
 			modifier = {
 				factor = 0
 				has_active_mission = bankruptcy_incoming_collapse
@@ -23250,7 +23521,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -23351,7 +23628,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -23392,7 +23675,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -23454,7 +23743,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -23515,7 +23810,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -23582,7 +23883,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -23646,7 +23953,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -23708,7 +24021,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	focus = {
@@ -23772,7 +24091,13 @@ focus_tree = {
 			}
 		}
 
-		ai_will_do = { base = 0 }
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				ENG_ai_not_historical_path = yes
+			}
+		}
 	}
 
 	shared_focus = USoE001

@@ -7484,6 +7484,63 @@ country_event = {
 
 # The Union Question: consent
 
+# Relay (target, hidden). Fired by ENG with an ENG_uq_relay_* flag on the target; refires the flagged event from the target so that event's FROM is the target.
+country_event = {
+	id = ENG_uq.9
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = { has_country_flag = ENG_uq_relay_43 }
+			clr_country_flag = ENG_uq_relay_43
+			ENG = { country_event = ENG_uq.43 }
+		}
+		if = {
+			limit = { has_country_flag = ENG_uq_relay_124 }
+			clr_country_flag = ENG_uq_relay_124
+			ENG = { country_event = ENG_uq.124 }
+		}
+		if = {
+			limit = { has_country_flag = ENG_uq_relay_129 }
+			clr_country_flag = ENG_uq_relay_129
+			ENG = { country_event = ENG_uq.129 }
+		}
+		if = {
+			limit = { has_country_flag = ENG_uq_relay_160 }
+			clr_country_flag = ENG_uq_relay_160
+			ENG = { country_event = ENG_uq.160 }
+		}
+		if = {
+			limit = { has_country_flag = ENG_uq_relay_161 }
+			clr_country_flag = ENG_uq_relay_161
+			ENG = { country_event = ENG_uq.161 }
+		}
+		if = {
+			limit = { has_country_flag = ENG_uq_relay_170 }
+			clr_country_flag = ENG_uq_relay_170
+			ENG = { country_event = ENG_uq.170 }
+		}
+		if = {
+			limit = { has_country_flag = ENG_uq_relay_252 }
+			clr_country_flag = ENG_uq_relay_252
+			ENG = { country_event = ENG_uq.252 }
+		}
+		if = {
+			limit = { has_country_flag = ENG_uq_relay_left_commonwealth }
+			clr_country_flag = ENG_uq_relay_left_commonwealth
+			ENG = { news_event = { id = United_Kingdom_News.7 hours = 6 } }
+			for_each_scope_loop = {
+				array = global.commonwealth_member
+				if = {
+					limit = { NOT = { tag = ENG } }
+					country_event = CMW_Leaving.1
+				}
+			}
+		}
+	}
+}
+
 # Sovereignty Movement forms once consent first crosses 50; Ireland's lasts five years
 country_event = {
 	id = ENG_uq.10
@@ -7603,7 +7660,8 @@ country_event = {
 				}
 			}
 			FROM = {
-				ENG = { country_event = { id = ENG_uq.124 days = 1 } }
+				set_country_flag = ENG_uq_relay_124
+				country_event = { id = ENG_uq.9 days = 1 }
 			}
 		}
 		else = {
@@ -8056,7 +8114,7 @@ country_event = {
 	option = { name = ENG_uq.65.a }
 }
 
-# Patron reaction to a coerced client (ENG, FROM = client)
+# Patron reaction to a coerced client (ENG; client and patron in ENG_uq_patron_client and ENG_uq_reacting_patron)
 country_event = {
 	id = ENG_uq.66
 	title = ENG_uq.66.t
@@ -8070,11 +8128,11 @@ country_event = {
 		random_list = {
 			60 = {
 				custom_effect_tooltip = ENG_uq_patron_protest_TT
-				var:FROM.ENG_uq_patron_var = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_patron_opinion } }
+				var:ENG_uq_reacting_patron = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_patron_opinion } }
 			}
 			30 = {
 				custom_effect_tooltip = ENG_uq_patron_sanctions_TT
-				var:FROM.ENG_uq_patron_var = {
+				var:ENG_uq_reacting_patron = {
 					add_opinion_modifier = { target = ROOT modifier = ENG_uq_patron_opinion }
 					if = {
 						limit = { has_dlc = "By Blood Alone" }
@@ -8084,8 +8142,8 @@ country_event = {
 			}
 			10 = {
 				custom_effect_tooltip = ENG_uq_patron_claim_TT
-				set_temp_variable = { ENG_uq_claim_target = FROM }
-				var:FROM.ENG_uq_patron_var = {
+				set_temp_variable = { ENG_uq_claim_target = ENG_uq_patron_client }
+				var:ENG_uq_reacting_patron = {
 					every_state = {
 						limit = {
 							is_core_of = var:ENG_uq_claim_target
@@ -10178,6 +10236,8 @@ country_event = {
 	picture = GFX_treaty
 	is_triggered_only = yes
 
+	immediate = { ENG_uq_set_accept_weight = yes }
+
 	option = {
 		name = ENG_uq.260.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.260.a executed"
@@ -10191,6 +10251,9 @@ country_event = {
 				add = 100
 				has_opinion = { target = ENG value > 40 }
 				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+			modifier = {
+				add = ENG_uq_accept_weight
 			}
 		}
 	}
@@ -10208,6 +10271,9 @@ country_event = {
 				factor = 0
 				has_opinion = { target = ENG value > 40 }
 				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+			modifier = {
+				add = ENG_uq_decline_weight
 			}
 		}
 	}
@@ -10258,6 +10324,8 @@ country_event = {
 	picture = GFX_treaty
 	is_triggered_only = yes
 
+	immediate = { ENG_uq_set_accept_weight = yes }
+
 	option = {
 		name = ENG_uq.263.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.263.a executed"
@@ -10271,6 +10339,9 @@ country_event = {
 				add = 100
 				has_opinion = { target = ENG value > 40 }
 				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+			modifier = {
+				add = ENG_uq_accept_weight
 			}
 		}
 	}
@@ -10288,6 +10359,9 @@ country_event = {
 				factor = 0
 				has_opinion = { target = ENG value > 40 }
 				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+			modifier = {
+				add = ENG_uq_decline_weight
 			}
 		}
 	}
@@ -10338,6 +10412,8 @@ country_event = {
 	picture = GFX_treaty
 	is_triggered_only = yes
 
+	immediate = { ENG_uq_set_accept_weight = yes }
+
 	option = {
 		name = ENG_uq.266.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.266.a executed"
@@ -10351,6 +10427,9 @@ country_event = {
 				add = 100
 				has_opinion = { target = ENG value > 40 }
 				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+			modifier = {
+				add = ENG_uq_accept_weight
 			}
 		}
 	}
@@ -10368,6 +10447,9 @@ country_event = {
 				factor = 0
 				has_opinion = { target = ENG value > 40 }
 				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+			modifier = {
+				add = ENG_uq_decline_weight
 			}
 		}
 	}
@@ -10418,6 +10500,8 @@ country_event = {
 	picture = GFX_treaty
 	is_triggered_only = yes
 
+	immediate = { ENG_uq_set_accept_weight = yes }
+
 	option = {
 		name = ENG_uq.270.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.270.a executed"
@@ -10432,6 +10516,9 @@ country_event = {
 				ENG = { check_variable = { ENG_consent@PREV > 40 } }
 				NOT = { has_country_flag = ENG_uq_republic }
 				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+			modifier = {
+				add = ENG_uq_accept_weight
 			}
 		}
 	}
@@ -10450,6 +10537,9 @@ country_event = {
 				ENG = { check_variable = { ENG_consent@PREV > 40 } }
 				NOT = { has_country_flag = ENG_uq_republic }
 				NOT = { has_idea = ENG_uq_sovereignty_movement }
+			}
+			modifier = {
+				add = ENG_uq_decline_weight
 			}
 		}
 	}
@@ -10588,6 +10678,8 @@ country_event = {
 	picture = GFX_ENG_commonwealth
 	is_triggered_only = yes
 
+	immediate = { ENG_uq_set_accept_weight = yes }
+
 	option = {
 		name = ENG_uq.290.a
 		log = "[GetDateText]: [This.GetName]: ENG_uq.290.a executed"
@@ -10610,6 +10702,9 @@ country_event = {
 				ENG = { check_variable = { ENG_consent@PREV > 50 } }
 				has_opinion = { target = ENG value > 50 }
 			}
+			modifier = {
+				add = ENG_uq_accept_weight
+			}
 		}
 	}
 
@@ -10627,6 +10722,9 @@ country_event = {
 				factor = 0
 				ENG = { check_variable = { ENG_consent@PREV > 50 } }
 				has_opinion = { target = ENG value > 50 }
+			}
+			modifier = {
+				add = ENG_uq_decline_weight
 			}
 		}
 	}
@@ -11060,7 +11158,7 @@ country_event = {
 	option = { name = ENG_cmw.20.a }
 }
 
-# Readmitted to the Commonwealth
+# Offer of readmission to the Commonwealth (former member, FROM = ENG)
 country_event = {
 	id = ENG_cmw.21
 	title = ENG_cmw.21.t
@@ -11068,8 +11166,23 @@ country_event = {
 	picture = GFX_ENG_commonwealth
 	is_triggered_only = yes
 
-	minor_flavor = yes
-	option = { name = ENG_cmw.21.a }
+	option = {
+		name = ENG_cmw.21.a
+		log = "[GetDateText]: [This.GetName]: ENG_cmw.21.a executed"
+		ENG_cmw_restore_member = yes
+		ai_chance = {
+			base = 20
+			modifier = {
+				add = 60
+				has_opinion = { target = FROM value > 50 }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_cmw.21.b
+		ai_chance = { base = 30 }
+	}
 }
 
 # Commonwealth Defence Pact invitation to a realm

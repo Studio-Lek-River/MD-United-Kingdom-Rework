@@ -300,3 +300,31 @@ ENG_cancel_war_neighbours = {
 	ai_strategy = { type = declare_war id = "WAS" value = -4000 }
 	ai_strategy = { type = declare_war id = "NIR" value = -4000 }
 }
+
+ENG_uq_family_of_nations = {
+	allowed = { original_tag = ENG }
+	enable = {
+		has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+		has_completed_focus = ENG_a_family_of_nations
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = { type = befriend id = "IRE" value = 100 }
+	ai_strategy = { type = befriend id = "CAN" value = 100 }
+	ai_strategy = { type = befriend id = "AST" value = 100 }
+	ai_strategy = { type = befriend id = "NZL" value = 100 }
+}
+
+ENG_uq_coerce_ireland = {
+	allowed = { original_tag = ENG }
+	enable = {
+		has_completed_focus = ENG_the_irish_question_reopened
+		country_exists = IRE
+		NOT = { IRE = { is_subject_of = ENG } }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = { type = antagonize id = "IRE" value = 100 }
+	ai_strategy = { type = contain id = "IRE" value = 50 }
+	ai_strategy = { type = consider_weak id = "IRE" value = 50 }
+}

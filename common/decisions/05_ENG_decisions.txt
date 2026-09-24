@@ -3326,6 +3326,31 @@ ENG_devolved_matters = {
 		ai_will_do = { base = 0 }
 	}
 
+	ENG_uq_restore_the_assemblies = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = { has_country_flag = ENG_uq_assemblies_suspended }
+
+		available = { nationalist_monarchists_are_in_power = no }
+
+		cost = 50
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_restore_the_assemblies"
+			custom_effect_tooltip = ENG_uq_restore_the_assemblies_TT
+			if = {
+				limit = { has_idea = ENG_direct_rule_idea }
+				remove_ideas = ENG_direct_rule_idea
+			}
+			hidden_effect = {
+				clr_country_flag = ENG_uq_assemblies_suspended
+				update_eng_devolution_dirty_variable = yes
+			}
+		}
+
+		ai_will_do = { base = 10 }
+	}
+
 	# Referendum Missions
 	ENG_scottish_referendum = {
 		activation = { always = no }
@@ -3993,6 +4018,7 @@ ENG_devolved_matters = {
 			ENG_referendum_in_progress = no
 			has_stability > 0.5
 			60_percent_government_popularity = yes
+			treasury_higher_than_3 = yes
 		}
 
 		complete_effect = {
@@ -4752,7 +4778,13 @@ ENG_union_question_decisions = {
 			}
 		}
 
-		ai_will_do = { base = 5 }
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
+			}
+		}
 	}
 
 	ENG_uq_economic_pressure = {
@@ -4831,10 +4863,15 @@ ENG_union_question_decisions = {
 				strength_ratio = { tag = FROM ratio > 2 }
 			}
 			NOT = { has_war_with = FROM }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_offer_pending_TT
+				NOT = { has_country_flag = ENG_uq_offer_pending@FROM }
+			}
 		}
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_deliver_ultimatum"
+			set_country_flag = { flag = ENG_uq_offer_pending@FROM value = 1 days = 90 }
 			FROM = { country_event = { id = ENG_uq.40 days = 1 } }
 			if = {
 				limit = {
@@ -4875,10 +4912,15 @@ ENG_union_question_decisions = {
 
 		available = {
 			NOT = { has_war_with = FROM }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_offer_pending_TT
+				NOT = { has_country_flag = ENG_uq_offer_pending@FROM }
+			}
 		}
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_dismissal"
+			set_country_flag = { flag = ENG_uq_offer_pending@FROM value = 1 days = 90 }
 			FROM = { country_event = { id = ENG_uq.180 days = 1 } }
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = { custom_effect_tooltip = ENG_uq_ultimatum_accept_TT }
@@ -5113,7 +5155,13 @@ ENG_union_question_decisions = {
 
 		timeout_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_scottish_martial_law"
-			country_event = ENG_uq.80
+			if = {
+				limit = {
+					ENG_uq_scotland_suspended = yes
+					NOT = { has_country_flag = ENG_scottish_rising_cooldown }
+				}
+				country_event = ENG_uq.80
+			}
 		}
 	}
 
@@ -5152,7 +5200,13 @@ ENG_union_question_decisions = {
 
 		timeout_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_north_irish_martial_law"
-			country_event = ENG_uq.81
+			if = {
+				limit = {
+					ENG_uq_north_ireland_suspended = yes
+					NOT = { has_country_flag = ENG_north_irish_rising_cooldown }
+				}
+				country_event = ENG_uq.81
+			}
 		}
 	}
 
@@ -5191,7 +5245,13 @@ ENG_union_question_decisions = {
 
 		timeout_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision timeout ENG_uq_welsh_martial_law"
-			country_event = ENG_uq.82
+			if = {
+				limit = {
+					ENG_uq_wales_suspended = yes
+					NOT = { has_country_flag = ENG_welsh_rising_cooldown }
+				}
+				country_event = ENG_uq.82
+			}
 		}
 	}
 
@@ -5442,7 +5502,13 @@ ENG_union_question_decisions = {
 			effect_tooltip = { custom_effect_tooltip = ENG_uq_monarchy_refused_TT }
 		}
 
-		ai_will_do = { base = 5 }
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
+			}
+		}
 	}
 
 	ENG_uq_royal_tour = {
@@ -5479,7 +5545,13 @@ ENG_union_question_decisions = {
 			}
 		}
 
-		ai_will_do = { base = 5 }
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
+			}
+		}
 	}
 
 	ENG_uq_development_grant = {
@@ -5515,7 +5587,13 @@ ENG_union_question_decisions = {
 			}
 		}
 
-		ai_will_do = { base = 5 }
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
+			}
+		}
 	}
 
 	ENG_uq_trade_preference = {
@@ -5550,7 +5628,13 @@ ENG_union_question_decisions = {
 			}
 		}
 
-		ai_will_do = { base = 5 }
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
+			}
+		}
 	}
 
 	ENG_uq_cultural_diplomacy = {
@@ -5622,7 +5706,13 @@ ENG_union_question_decisions = {
 			}
 		}
 
-		ai_will_do = { base = 5 }
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
+			}
+		}
 	}
 
 	ENG_uq_royal_caribbean_tour = {
@@ -5664,7 +5754,13 @@ ENG_union_question_decisions = {
 			}
 		}
 
-		ai_will_do = { base = 5 }
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
+			}
+		}
 	}
 
 	ENG_uq_regional_development_programme = {
@@ -5732,7 +5828,13 @@ ENG_union_question_decisions = {
 			ENG_cmw_change_cohesion = yes
 		}
 
-		ai_will_do = { base = 5 }
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
+			}
+		}
 	}
 
 	ENG_uq_renew_commonwealth_invitation = {
@@ -6026,7 +6128,13 @@ ENG_union_question_decisions = {
 			custom_effect_tooltip = ENG_uq_irexit_campaign_funded_TT
 		}
 
-		ai_will_do = { base = 5 }
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
+			}
+		}
 	}
 
 	ENG_union_dividend_programme = {
@@ -6129,7 +6237,13 @@ ENG_union_question_decisions = {
 			}
 		}
 
-		ai_will_do = { base = 5 }
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
+			}
+		}
 	}
 
 	ENG_uq_reopen_chagos_talks = {
@@ -6238,6 +6352,10 @@ ENG_union_question_decisions = {
 				add = 10
 				check_variable = { ENG_union_strain > 50 }
 			}
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
+			}
 		}
 	}
 
@@ -6317,7 +6435,7 @@ ENG_union_question_decisions = {
 			}
 		}
 		custom_cost_text = ENG_cost_gdp_1_percent
-		days_re_enable = 365
+		days_remove = 365
 
 		available = {
 			custom_trigger_tooltip = {
@@ -6345,6 +6463,10 @@ ENG_union_question_decisions = {
 			modifier = {
 				add = 10
 				check_variable = { ENG_union_strain > 50 }
+			}
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
 			}
 		}
 	}
@@ -6468,6 +6590,10 @@ ENG_union_question_decisions = {
 
 		available = {
 			ENG_uq_can_transition = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_devolution_not_purged_TT
+				NOT = { has_country_flag = ENG_devolution_purged }
+			}
 			if = {
 				limit = { has_completed_focus = ENG_a_family_of_nations }
 				custom_trigger_tooltip = {
@@ -6567,6 +6693,10 @@ ENG_union_question_decisions = {
 				factor = 0
 				check_variable = { ENG_union_strain > 40 }
 			}
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
+			}
 		}
 	}
 
@@ -6645,6 +6775,10 @@ ENG_union_question_decisions = {
 			modifier = {
 				factor = 0
 				check_variable = { ENG_union_strain > 40 }
+			}
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
 			}
 		}
 	}
@@ -6725,6 +6859,10 @@ ENG_union_question_decisions = {
 			modifier = {
 				factor = 0
 				check_variable = { ENG_union_strain > 40 }
+			}
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
 			}
 		}
 	}
@@ -6808,7 +6946,8 @@ ENG_union_question_decisions = {
 						}
 					}
 					ROOT = { set_country_flag = { flag = ENG_uq_offer_pending@PREV value = 1 days = 90 } }
-					ENG = { country_event = { id = ENG_uq.129 days = 1 } }
+					set_country_flag = ENG_uq_relay_129
+					country_event = { id = ENG_uq.9 days = 1 }
 				}
 			}
 		}
@@ -6830,6 +6969,10 @@ ENG_union_question_decisions = {
 		cost = 150
 
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_devolution_not_purged_TT
+				NOT = { has_country_flag = ENG_devolution_purged }
+			}
 			custom_trigger_tooltip = {
 				tooltip = ENG_uq_strain_allows_transition_TT
 				check_variable = { ENG_union_strain < 61 }
@@ -6901,7 +7044,8 @@ ENG_union_question_decisions = {
 						}
 					}
 					ROOT = { set_country_flag = { flag = ENG_uq_offer_pending@PREV value = 1 days = 90 } }
-					ENG = { country_event = { id = ENG_uq.129 days = 1 } }
+					set_country_flag = ENG_uq_relay_129
+					country_event = { id = ENG_uq.9 days = 1 }
 				}
 			}
 		}
@@ -6978,6 +7122,10 @@ ENG_union_question_decisions = {
 			modifier = {
 				factor = 0
 				check_variable = { ENG_union_strain > 40 }
+			}
+			modifier = {
+				factor = 0
+				ENG_uq_ai_cannot_spend = yes
 			}
 		}
 	}
@@ -7621,6 +7769,10 @@ ENG_commonwealth_decisions = {
 			FROM = {
 				ENG_cmw_violates_harare_principles = no
 				has_war = no
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_not_republic_TT
+					NOT = { has_country_flag = ENG_uq_republic }
+				}
 			}
 		}
 
@@ -7629,7 +7781,15 @@ ENG_commonwealth_decisions = {
 
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_cmw_restore_membership for [FROM.GetName] completed"
-			FROM = { ENG_cmw_restore_member = yes }
+			FROM = {
+				if = {
+					limit = {
+						exists = yes
+						ENG_cmw_is_member = no
+					}
+					country_event = ENG_cmw.21
+				}
+			}
 		}
 
 		ai_will_do = { base = 5 }

@@ -88,6 +88,11 @@ def main():
         sys.exit(f"not an MD checkout: {md_root}")
     if git("status", "--porcelain", capture=True):
         sys.exit("working tree is dirty; commit or discard first")
+    # CI checks out md_base_ref.txt from GitHub, so the synced files must match a pushed commit.
+    if git("status", "--porcelain", "--", *ENG_PATHS, cwd=md_root, capture=True):
+        sys.exit(f"ENG files have uncommitted changes in {md_root}")
+    if not git("branch", "-r", "--contains", "HEAD", cwd=md_root, capture=True):
+        sys.exit(f"HEAD of {md_root} is not on any remote branch; check out a pushed MD commit")
 
     md_hash = git("rev-parse", "--short", "HEAD", cwd=md_root, capture=True)
     md_full_hash = git("rev-parse", "HEAD", cwd=md_root, capture=True)
@@ -108,7 +113,8 @@ def main():
 
     git("checkout", "-q", "main" if start_branch == "md-base" else start_branch)
     if changed and not args.no_merge:
-        subprocess.run(["git", "merge", "md-base"], cwd=REPO, check=False)
+        if subprocess.run(["git", "merge", "md-base"], cwd=REPO, check=False).returncode:
+            sys.exit("merging md-base stopped on conflicts; resolve them, keeping md-base's tools/md_base_ref.txt")
 
 
 if __name__ == "__main__":

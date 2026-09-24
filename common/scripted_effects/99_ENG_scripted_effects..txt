@@ -893,6 +893,11 @@ ENG_uq_set_accept_weight = {
 		limit = { has_opinion = { target = FROM value > 80 } }
 		add_to_variable = { ENG_uq_accept_weight = 15 }
 	}
+	if = {
+		limit = { FROM = { check_variable = { ENG_imperial_tension > 60 } } }
+		set_variable = { ENG_uq_accept_weight = -1000 }
+		add_to_variable = { ENG_uq_decline_weight = 100 }
+	}
 }
 
 # Target scope. Saves the strongest eligible foreign influencer as event_target:ENG_uq_patron.
@@ -1167,7 +1172,8 @@ ENG_uq_realm_monthly = {
 		random = {
 			chance = 10
 			ROOT = { set_country_flag = { flag = ENG_uq_realm_crisis@PREV value = 1 days = 365 } }
-			ENG = { country_event = ENG_uq.170 }
+			set_country_flag = ENG_uq_relay_170
+			country_event = ENG_uq.9
 		}
 	}
 	if = {
@@ -1182,10 +1188,12 @@ ENG_uq_realm_monthly = {
 		random_list = {
 			94 = {}
 			3 = {
-				ENG = { country_event = { id = ENG_uq.160 days = 1 } }
+				set_country_flag = ENG_uq_relay_160
+				country_event = { id = ENG_uq.9 days = 1 }
 			}
 			3 = {
-				ENG = { country_event = { id = ENG_uq.161 days = 1 } }
+				set_country_flag = ENG_uq_relay_161
+				country_event = { id = ENG_uq.9 days = 1 }
 			}
 		}
 	}
@@ -1492,7 +1500,8 @@ ENG_uq_ex_empire_monthly = {
 		random = {
 			chance = 5
 			ROOT = { set_country_flag = { flag = ENG_uq_realm_crisis@PREV value = 1 days = 365 } }
-			ENG = { country_event = ENG_uq.252 }
+			set_country_flag = ENG_uq_relay_252
+			country_event = ENG_uq.9
 		}
 	}
 }
@@ -1619,6 +1628,14 @@ ENG_change_imperial_tension = {
 # Monthly coercion step for one Nationalist-path target. Call in the target's scope with ROOT = ENG.
 # Unused claims lapse, a won war becomes an occupation, each occupied month costs tension and rolls an insurgency.
 ENG_uq_update_coercion = {
+	# Claims stay live for as long as the war over them lasts.
+	if = {
+		limit = {
+			has_war_with = ROOT
+			ENG = { has_country_flag = ENG_uq_claims@PREV }
+		}
+		ROOT = { set_country_flag = { flag = ENG_uq_claims@PREV value = 1 days = 730 } }
+	}
 	if = {
 		limit = {
 			ENG = { has_country_flag = ENG_uq_claims@PREV }
@@ -1691,6 +1708,7 @@ ENG_uq_begin_occupation = {
 			limit = { PREV = { original_tag = IRE } }
 			ENG_uq_apply_irish_pacification = yes
 		}
+		set_variable = { ENG_uq_occupied_target = PREV }
 		country_event = { id = ENG_uq.44 days = 1 }
 	}
 }
@@ -1715,8 +1733,9 @@ ENG_uq_expire_claims = {
 	ROOT = {
 		set_country_flag = ENG_uq_ultimatum_rejected@PREV
 		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@PREV value = 1 days = 180 }
-		country_event = { id = ENG_uq.43 days = 1 }
 	}
+	set_country_flag = ENG_uq_relay_43
+	country_event = { id = ENG_uq.9 days = 1 }
 }
 
 # Monthly insurgency roll for one occupied target. Call in the target's scope with ROOT = ENG. Event chance equals the highest resistance among its states; the dissident campaign makes an Irish occupation half again as violent.
@@ -1754,7 +1773,13 @@ ENG_uq_roll_insurgency = {
 					}
 				}
 			}
-			ROOT = { country_event = ENG_uq.50 }
+			# One report a month: the event reads the state from ENG.
+			if = {
+				limit = { NOT = { check_variable = { ENG_uq_insurgency_reported = 1 } } }
+				set_temp_variable = { ENG_uq_insurgency_reported = 1 }
+				var:ENG_uq_event_state = { ROOT = { set_variable = { ENG_uq_event_state = PREV } } }
+				ROOT = { country_event = ENG_uq.50 }
+			}
 		}
 		ENG_uq_defection_weight = {
 			ROOT = {
@@ -1762,7 +1787,13 @@ ENG_uq_roll_insurgency = {
 				add_war_support = -0.01
 			}
 			var:ENG_uq_event_state = { add_resistance = 5 }
-			ROOT = { country_event = ENG_uq.51 }
+			# One report a month: the event reads the state from ENG.
+			if = {
+				limit = { NOT = { check_variable = { ENG_uq_insurgency_reported = 1 } } }
+				set_temp_variable = { ENG_uq_insurgency_reported = 1 }
+				var:ENG_uq_event_state = { ROOT = { set_variable = { ENG_uq_event_state = PREV } } }
+				ROOT = { country_event = ENG_uq.51 }
+			}
 		}
 		ENG_uq_quiet_weight = {
 			log = "[GetDateText]: [Root.GetName]: quiet month in [This.GetName]"
@@ -2011,13 +2042,19 @@ ENG_uq_patron_reactions = {
 					ENG = { has_country_flag = ENG_uq_occupying@PREV }
 				}
 				ROOT = { NOT = { has_country_flag = ENG_uq_patron_reacted@PREV } }
+				NOT = { check_variable = { ENG_uq_patron_reported = 1 } }
 			}
 			ENG_uq_set_patron = yes
 			if = {
 				limit = { check_variable = { ENG_uq_patron > 0 } }
-				ROOT = { set_country_flag = ENG_uq_patron_reacted@PREV }
-				set_variable = { ENG_uq_patron_var = ENG_uq_patron }
-				ENG = { country_event = { id = ENG_uq.66 days = 1 } }
+				# One reaction a month: the event reads the client and patron from ENG variables.
+				set_temp_variable = { ENG_uq_patron_reported = 1 }
+				ROOT = {
+					set_country_flag = ENG_uq_patron_reacted@PREV
+					set_variable = { ENG_uq_patron_client = PREV }
+					set_variable = { ENG_uq_reacting_patron = ENG_uq_patron }
+					country_event = { id = ENG_uq.66 days = 1 }
+				}
 			}
 		}
 	}
@@ -2065,16 +2102,8 @@ ENG_uq_commonwealth_leave = {
 			remove_ideas = ENG_crown_realm_status
 		}
 	}
-	ROOT = {
-		news_event = { id = United_Kingdom_News.7 hours = 6 }
-	}
-	for_each_scope_loop = {
-		array = global.commonwealth_member
-		if = {
-			limit = { NOT = { tag = ROOT } }
-			country_event = CMW_Leaving.1
-		}
-	}
+	set_country_flag = ENG_uq_relay_left_commonwealth
+	country_event = ENG_uq.9
 }
 
 # Commonwealth of Nations institution. Cohesion is global so member projects can move it; monthly driver runs from on_monthly_ENG.
@@ -2232,7 +2261,6 @@ ENG_cmw_restore_member = {
 	remove_from_array = { global.ENG_cmw_former_members = THIS }
 	set_temp_variable = { ENG_cmw_cohesion_change = 1 }
 	ENG_cmw_change_cohesion = yes
-	country_event = ENG_cmw.21
 }
 
 # Monthly driver, ROOT = ENG
