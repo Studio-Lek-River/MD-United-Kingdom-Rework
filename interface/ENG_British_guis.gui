@@ -306,9 +306,9 @@ guiTypes = {
 			pdx_tooltip = "CLOSE"
 		}
 
-		iconType = {
+		buttonType = {
 			name = "ENG_uq_help_icon"
-			position = { x = 14 y = 14 }
+			position = { x = 14 y = 8 }
 			spriteType = "GFX_help_button_custom"
 			pdx_tooltip = ENG_uq_help_TT
 			pdx_tooltip_delayed = ENG_uq_help_TT_delayed
@@ -316,10 +316,10 @@ guiTypes = {
 
 		instantTextBoxType = {
 			name = "ENG_uq_panel_title"
-			position = { x = 0 y = 18 }
+			position = { x = 60 y = 18 }
 			font = "hoi_30header"
 			format = center
-			maxWidth = 600
+			maxWidth = 480
 			maxHeight = 22
 			fixedsize = yes
 			text = "ENG_uq_panel_title"
