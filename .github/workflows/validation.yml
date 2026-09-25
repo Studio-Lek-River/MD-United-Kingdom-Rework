@@ -1,0 +1,306 @@
+name: Validation
+
+# Runs Millennium Dawn's validator suite against this submod's files, overlaid
+# on MD at the commit pinned in tools/md_base_ref.txt (see tools/validate_with_md.py).
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+  # A run on main caches the baseline where every PR can restore it.
+  push:
+    branches: [main]
+    paths:
+      - tools/md_base_ref.txt
+      - tools/validate_with_md.py
+      - .github/workflows/validation.yml
+  workflow_dispatch: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  MD_REPOSITORY: MillenniumDawn/Millennium-Dawn
+  # Mirrors SPARSE_PROFILE in tools/validate_with_md.py.
+  # Root-anchored: a bare `interface` would also match the gfx/interface art tree.
+  MD_SPARSE_PATHS: |
+    /tools/
+    /common/
+    /events/
+    /history/
+    /localisation/english/
+    /interface/
+    /gfx/flags/
+    /gfx/interface/decisions/
+    /map/adjacency_rules.txt
+    /resources/documentation/
+    /.claude/docs/typo-watchlist.md
+    /pyproject.toml
+    /descriptor.mod
+    /*.mod
+
+jobs:
+  md-ref:
+    name: Resolve MD commit
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.ref.outputs.sha }}
+    steps:
+      - name: Checkout pin file
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout: tools/md_base_ref.txt
+          sparse-checkout-cone-mode: false
+
+      - name: Read pinned MD commit
+        id: ref
+        run: |
+          sha=$(tr -d '[:space:]' < tools/md_base_ref.txt)
+          if ! [[ "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::tools/md_base_ref.txt must hold a full commit SHA"
+            exit 1
+          fi
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
+  baseline:
+    name: MD baseline
+    needs: [md-ref]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      MD_SHA: ${{ needs.md-ref.outputs.sha }}
+    steps:
+      - name: Restore baseline for this MD commit
+        id: cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: .validation_baseline
+          key: md-baseline-v1-${{ env.MD_SHA }}
+
+      - name: Checkout this repository
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Checkout Millennium Dawn
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ env.MD_REPOSITORY }}
+          ref: ${{ env.MD_SHA }}
+          path: md
+          fetch-depth: 1
+          filter: blob:none
+          persist-credentials: false
+          sparse-checkout: ${{ env.MD_SPARSE_PATHS }}
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Python
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v6
+        with:
+          python-version: "3.12"
+
+      - name: Run the suite on pristine MD
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: >-
+          python tools/validate_with_md.py --workspace md --batch all
+          --no-overlay --no-filter --output-dir baseline-raw
+
+      - name: Write baseline
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p baseline-flat
+          find baseline-raw -name 'validation-*.json' -exec cp {} baseline-flat/ \;
+          python md/tools/baseline_check.py \
+            --previous .validation_baseline \
+            --current baseline-flat \
+            --output .validation_baseline \
+            --toolshash "$MD_SHA" \
+            --commit-sha "$MD_SHA" \
+            --github-repository "$MD_REPOSITORY"
+
+      - name: Save baseline
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: .validation_baseline
+          key: md-baseline-v1-${{ env.MD_SHA }}
+
+      - name: Upload baseline
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: md-baseline
+          path: .validation_baseline
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
+
+  validate:
+    name: Mod tests (${{ matrix.batch }})
+    needs: [md-ref, baseline]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        batch: [core, targeted-a, targeted-b]
+    env:
+      MD_SHA: ${{ needs.md-ref.outputs.sha }}
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Checkout Millennium Dawn
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ env.MD_REPOSITORY }}
+          ref: ${{ env.MD_SHA }}
+          path: md
+          fetch-depth: 1
+          filter: blob:none
+          persist-credentials: false
+          sparse-checkout: ${{ env.MD_SPARSE_PATHS }}
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v6
+        with:
+          python-version: "3.12"
+
+      - name: Download baseline
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: md-baseline
+          path: .validation_baseline
+
+      - name: List changed files
+        if: matrix.batch == 'core'
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref || 'main' }}
+        run: |
+          git diff --name-only "origin/$BASE_REF...HEAD" > changed-files.txt
+          wc -l changed-files.txt
+
+      - name: Upload changed files
+        if: matrix.batch == 'core'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: changed-files
+          path: changed-files.txt
+          retention-days: 7
+
+      - name: Run validators
+        run: >-
+          python tools/validate_with_md.py --workspace md
+          --batch ${{ matrix.batch }}
+          --baseline-dir .validation_baseline
+          --output-dir batch-results
+
+      - name: Upload results
+        if: always() && !cancelled()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: validation-batch-${{ matrix.batch }}-results
+          path: batch-results
+          if-no-files-found: error
+          retention-days: 7
+
+  report:
+    name: Validation report
+    needs: [md-ref, validate]
+    if: always() && !cancelled()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
+    env:
+      MD_SHA: ${{ needs.md-ref.outputs.sha }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout MD report tooling
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ env.MD_REPOSITORY }}
+          ref: ${{ env.MD_SHA }}
+          path: md
+          fetch-depth: 1
+          filter: blob:none
+          persist-credentials: false
+          sparse-checkout: |
+            tools/generate_validation_report.py
+            tools/report_lib
+            tools/validation
+            tools/shared_utils.py
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v6
+        with:
+          python-version: "3.12"
+
+      - name: Download validation results
+        continue-on-error: true
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          pattern: "*results"
+          path: validation-results
+
+      - name: Download changed files
+        continue-on-error: true
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: changed-files
+          path: changed-files
+
+      - name: Download baseline
+        continue-on-error: true
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: md-baseline
+          path: .validation_baseline
+
+      - name: Generate and post report
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          args=(
+            --results-dir validation-results
+            --output report.md
+            --commit-sha "$HEAD_SHA"
+            --workflow-run-url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            --github-repository "$GITHUB_REPOSITORY"
+            --validation-scope full
+            --baseline-dir .validation_baseline
+            --baseline-toolshash "$MD_SHA"
+            --checks-api
+            --print
+          )
+          if [ -f changed-files/changed-files.txt ]; then
+            args+=(--changed-files changed-files/changed-files.txt)
+          fi
+          if [ -n "$PR_NUMBER" ]; then
+            args+=(--pr-number "$PR_NUMBER" --post-comment)
+          fi
+          python md/tools/generate_validation_report.py "${args[@]}"
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: validation-report
+          path: report.md
+          retention-days: 30

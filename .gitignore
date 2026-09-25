@@ -17,3 +17,9 @@ __pycache__/
 .claude/settings.local.json
 .claude/agent-memory/
 .mcp.json
+
+# tools/validate_with_md.py output
+validation-out/
+
+# MD validator disk cache
+.validation_cache/

@@ -50,4 +50,106 @@ opinion_modifiers = {
 	ENG_monarch_outreach = {
 		value = 15
 	}
+	ENG_uq_royal_tour_opinion = {
+		value = 10
+		months = 24
+	}
+	ENG_uq_economic_pressure_opinion = {
+		value = -30
+		months = 24
+	}
+	ENG_uq_imperial_tension_opinion = {
+		value = -20
+		months = 36
+	}
+	ENG_uq_special_relationship_opinion = {
+		value = -20
+		months = 36
+	}
+	ENG_uq_patron_opinion = {
+		value = -25
+		months = 36
+	}
+	ENG_uq_council_of_the_isles_opinion = {
+		value = 15
+	}
+	ENG_uq_dublin_outreach_opinion = {
+		value = 10
+		months = 24
+	}
+	ENG_uq_common_travel_area_opinion = {
+		value = 20
+	}
+	ENG_uq_brussels_displeasure_opinion = {
+		value = -15
+		months = 24
+	}
+	ENG_uq_irish_lobby_opinion = {
+		value = -15
+		months = 36
+	}
+	ENG_uq_irish_question_opinion = {
+		value = -20
+		months = 24
+	}
+	ENG_uq_irish_war_opinion = {
+		value = -30
+		months = 36
+	}
+	ENG_uq_monroe_opinion = {
+		value = -20
+		months = 36
+	}
+	ENG_uq_realm_accord_opinion = {
+		value = 15
+	}
+	ENG_uq_statute_opinion = {
+		value = -15
+		months = 24
+	}
+	ENG_uq_chagos_settlement_opinion = {
+		value = 15
+	}
+	ENG_uq_south_atlantic_opinion = {
+		value = -20
+		months = 24
+	}
+	ENG_uq_gibraltar_treaty_opinion = {
+		value = 20
+	}
+	ENG_uq_hong_kong_opinion = {
+		value = -20
+		months = 36
+	}
+	ENG_uq_chagos_crisis_opinion = {
+		value = -50
+		months = 36
+	}
+	ENG_uq_gibraltar_defiance_opinion = {
+		value = -40
+		months = 36
+	}
+	ENG_cmw_games_host_opinion = {
+		value = 10
+		months = 48
+	}
+	ENG_cmw_chogm_host_opinion = {
+		value = 10
+		months = 24
+	}
+	ENG_cmw_censure_opinion = {
+		value = -15
+		months = 36
+	}
+	ENG_cmw_development_fund_opinion = {
+		value = 15
+		months = 36
+	}
+	ENG_cmw_suspended_opinion = {
+		value = -20
+		months = 60
+	}
+	ENG_crown_realm_opinion = {
+		value = 50
+	}
 }

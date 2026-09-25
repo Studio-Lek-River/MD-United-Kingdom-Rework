@@ -459,6 +459,2032 @@ ENG_apply_integrated_baseline = {
 	}
 }
 
+# Parameters:
+# - ENG_union_strain_change: signed amount. ROOT must be ENG.
+ENG_change_union_strain = {
+	custom_effect_tooltip = ENG_union_strain_change_tt
+	hidden_effect = {
+		set_variable = { ROOT.ENG_union_strain = { value = ROOT.ENG_union_strain add = ENG_union_strain_change clamp = { min = 0 max = 100 } } }
+		ROOT = { ENG_uq_update_dm = yes }
+	}
+}
+
+# Strain penalties scale linearly to the issue's caps at 100; Westminster overreach only bites on the Western path.
+# political_power_factor and democratic_drift also carry the focus bonuses, so any change to a ENG_uq_bonus_* variable must call this.
+ENG_uq_update_dm = {
+	set_variable = { ENG_uq_stability_weekly = { value = ENG_union_strain multiply = -0.00005 } }
+	set_variable = { ENG_uq_political_power_factor = { value = ENG_union_strain multiply = -0.005 add = ENG_uq_bonus_political_power_factor } }
+	set_variable = { ENG_uq_consumer_goods_factor = { value = ENG_union_strain multiply = 0.002 } }
+	set_variable = { ENG_uq_bureaucracy_cost = { value = ENG_union_strain multiply = 0.004 } }
+	if = {
+		limit = { has_completed_focus = ENG_a_family_of_nations }
+		set_variable = { ENG_uq_democratic_drift = { value = ENG_union_strain multiply = -0.002 add = ENG_uq_bonus_democratic_drift } }
+	}
+	else = {
+		set_variable = { ENG_uq_democratic_drift = ENG_uq_bonus_democratic_drift }
+	}
+}
+
+# Call in the target's scope with ROOT = ENG.
+# Parameters:
+# - ENG_union_strain_stage: 1 occupation (+7), 2 subject (+6), 3 constituent (half of 4), 4 integrated (8 + 1 per 2M population)
+# Conquest targets (ENG_uq_conquest) pay triple.
+ENG_add_union_strain_for_target = {
+	if = {
+		limit = { check_variable = { ENG_union_strain_stage < 3 } }
+		set_temp_variable = { ENG_union_strain_change = { value = 8 subtract = ENG_union_strain_stage } }
+	}
+	else = {
+		set_temp_variable = { ENG_union_strain_change = 0 }
+		every_state = {
+			limit = { is_core_of = PREV }
+			add_to_temp_variable = { ENG_union_strain_change = state_population_k }
+		}
+		set_temp_variable = { ENG_union_strain_change = { value = ENG_union_strain_change divide = 2000 add = 8 } }
+		if = {
+			limit = { check_variable = { ENG_union_strain_stage = 3 } }
+			multiply_temp_variable = { ENG_union_strain_change = 0.5 }
+		}
+		round_temp_variable = ENG_union_strain_change
+	}
+	if = {
+		limit = { ROOT = { has_country_flag = ENG_uq_conquest@PREV } }
+		multiply_temp_variable = { ENG_union_strain_change = 3 }
+	}
+	ENG_change_union_strain = yes
+}
+
+# Stage 0 -> 1. Call in the target's scope with ROOT = ENG.
+ENG_uq_align_target = {
+	ROOT = {
+		if = {
+			limit = {
+				NOT = { is_in_array = { array = ENG_integration_targets value = PREV } }
+				PREV = { ENG_uq_crown_colony = no }
+			}
+			add_to_array = { ENG_integration_targets = PREV }
+		}
+	}
+}
+
+# Stage 1 -> 2. Call with ROOT = ENG and FROM = target (ladder decision or acceptance event).
+ENG_uq_enter_stage_2 = {
+	set_temp_variable = { ENG_uq_stage_reached = 2 }
+	clr_country_flag = ENG_uq_offer_pending@FROM
+	if = {
+		limit = { has_completed_focus = ENG_a_family_of_nations }
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_crown_dominion
+		}
+	}
+	else_if = {
+		limit = { FROM = { exists = no } }
+		release_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_crown_protectorate
+		}
+	}
+	else = {
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_crown_protectorate
+		}
+	}
+	clr_country_flag = ENG_uq_occupying@FROM
+	FROM = {
+		set_temp_variable = { ENG_union_strain_stage = 2 }
+		ENG_add_union_strain_for_target = yes
+		if = {
+			limit = { exists = yes }
+			set_temp_variable = { percent_change = 10 }
+			set_temp_variable = { tag_index = ENG }
+			change_influence_percentage = yes
+		}
+	}
+	ENG_uq_irish_lobby_reaction = yes
+	ENG_uq_realm_stage_reaction = yes
+	ENG_uq_possession_stage_reaction = yes
+	ENG_uq_ex_empire_stage_reaction = yes
+	if = {
+		limit = {
+			FROM = { original_tag = RAJ }
+			has_completed_focus = ENG_restore_the_british_raj
+		}
+		ENG_uq_proclaim_british_raj = yes
+	}
+}
+
+# Stage 2 -> 3. Call with ROOT = ENG and FROM = target. The constituent level refuses an overlord that purged devolution.
+ENG_uq_enter_stage_3 = {
+	set_temp_variable = { ENG_uq_stage_reached = 3 }
+	clr_country_flag = ENG_uq_offer_pending@FROM
+	if = {
+		limit = { NOT = { has_country_flag = ENG_devolution_purged } }
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_constituent_country_very_low_devolution
+		}
+	}
+	FROM = {
+		set_temp_variable = { ENG_union_strain_stage = 3 }
+		ENG_add_union_strain_for_target = yes
+	}
+	ENG_uq_irish_lobby_reaction = yes
+	ENG_uq_realm_stage_reaction = yes
+	ENG_uq_possession_stage_reaction = yes
+}
+
+# Stage 3 -> 4. Call with ROOT = ENG and FROM = target.
+# Temp in: ENG_uq_colonial = 1 annexes without British cores, leaving colony states like the Falklands.
+ENG_uq_enter_stage_4 = {
+	set_temp_variable = { ENG_uq_stage_reached = 4 }
+	clr_country_flag = ENG_uq_offer_pending@FROM
+	set_country_flag = ENG_uq_integrated@FROM
+	clr_country_flag = ENG_uq_occupying@FROM
+	clr_country_flag = ENG_uq_pacified@FROM
+	FROM = {
+		set_temp_variable = { ENG_union_strain_stage = 4 }
+		ENG_add_union_strain_for_target = yes
+		clear_united_nations_member_state = yes
+		every_unit_leader = { set_nationality = ROOT }
+	}
+	if = {
+		limit = { NOT = { check_variable = { ENG_uq_colonial = 1 } } }
+		every_state = {
+			limit = {
+				OR = {
+					is_owned_by = FROM
+					is_core_of = FROM
+				}
+			}
+			add_core_of = ROOT
+		}
+	}
+	if = {
+		limit = { has_completed_focus = ENG_a_family_of_nations }
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+	}
+	else = {
+		set_temp_variable = { ENG_imperial_tension_change = 10 }
+	}
+	ENG_change_imperial_tension = yes
+	ENG_uq_irish_lobby_reaction = yes
+	ENG_uq_realm_stage_reaction = yes
+	ENG_uq_possession_stage_reaction = yes
+	remove_from_array = { ENG_integration_targets = FROM }
+	annex_country = {
+		target = FROM
+		transfer_troops = yes
+	}
+}
+
+# Stage 3 -> Crown Colony, the Nationalist path's subject ending. Call with ROOT = ENG and FROM = target.
+ENG_uq_enter_crown_colony = {
+	set_temp_variable = { ENG_uq_stage_reached = 4 }
+	clr_country_flag = ENG_uq_offer_pending@FROM
+	clr_country_flag = ENG_uq_occupying@FROM
+	clr_country_flag = ENG_uq_pacified@FROM
+	set_autonomy = {
+		target = FROM
+		autonomy_state = autonomy_crown_colony
+	}
+	FROM = {
+		set_temp_variable = { ENG_union_strain_stage = 4 }
+		ENG_add_union_strain_for_target = yes
+	}
+	set_temp_variable = { ENG_imperial_tension_change = 10 }
+	ENG_change_imperial_tension = yes
+	ENG_uq_irish_lobby_reaction = yes
+	ENG_uq_realm_stage_reaction = yes
+	ENG_uq_possession_stage_reaction = yes
+	remove_from_array = { ENG_integration_targets = FROM }
+}
+
+# Frees the target and takes it off the ladder for five years. Call with ROOT = ENG and FROM = target.
+ENG_uq_release_target = {
+	set_autonomy = {
+		target = FROM
+		autonomy_state = autonomy_free
+	}
+	remove_from_array = { ENG_integration_targets = FROM }
+	clr_country_flag = ENG_uq_occupying@FROM
+	clr_country_flag = ENG_uq_pacified@FROM
+	set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1825 }
+}
+
+# One rung down: a constituent country becomes a Crown subject again, a Crown subject goes free. Call with ROOT = ENG and FROM = target.
+ENG_uq_step_down = {
+	if = {
+		limit = { FROM = { ENG_uq_stage_3 = yes } }
+		if = {
+			limit = { has_completed_focus = ENG_a_family_of_nations }
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_crown_dominion
+			}
+		}
+		else = {
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_crown_protectorate
+			}
+		}
+		set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1825 }
+	}
+	else = {
+		ENG_uq_release_target = yes
+	}
+}
+
+ENG_uq_fail_transition = {
+	custom_effect_tooltip = ENG_uq_fail_transition_TT
+	hidden_effect = {
+		clr_country_flag = ENG_uq_offer_pending@FROM
+		if = {
+			limit = { has_completed_focus = ENG_a_family_of_nations }
+			set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1825 }
+		}
+		else = {
+			set_country_flag = { flag = ENG_uq_lock@FROM value = 1 days = 1095 }
+		}
+	}
+	FROM = {
+		set_temp_variable = { ENG_uq_consent_change = -20 }
+		ENG_uq_change_consent = yes
+	}
+}
+
+ENG_uq_change_consent = {
+	custom_effect_tooltip = ENG_uq_consent_change_tt
+	hidden_effect = {
+		set_temp_variable = { ENG_uq_consent_cap = 100 }
+		if = {
+			limit = { ENG_uq_medium_influence = no }
+			set_temp_variable = { ENG_uq_consent_cap = ENG.ENG_consent@THIS }
+			clamp_temp_variable = { var = ENG_uq_consent_cap min = 40 max = 100 }
+		}
+		ENG = {
+			add_to_variable = { ENG_consent@PREV = ENG_uq_consent_change }
+			clamp_variable = { var = ENG_consent@PREV min = 0 max = ENG_uq_consent_cap }
+		}
+		# Copy for the Union Question panel bar, which reads from the target's scope.
+		set_variable = { ENG_uq_consent_bar = ENG.ENG_consent@THIS }
+	}
+}
+
+# Call in the target's scope. The programme is spun badly at home and consent slips.
+ENG_uq_press_scandal = {
+	set_temp_variable = { ENG_uq_consent_change = -5 }
+	ENG_uq_change_consent = yes
+}
+
+ENG_uq_update_consent = {
+	set_temp_variable = { ENG_uq_consent_change = 0 }
+	if = {
+		limit = { ENG_uq_high_influence = yes }
+		add_to_temp_variable = { ENG_uq_consent_change = 1 }
+	}
+	else_if = {
+		limit = { ENG_uq_medium_influence = yes }
+		add_to_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	if = {
+		limit = { has_country_flag = trade_agreement@ENG }
+		add_to_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	if = {
+		limit = { has_opinion = { target = ENG value > 70 } }
+		add_to_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	else_if = {
+		limit = { has_opinion = { target = ENG value < 30 } }
+		add_to_temp_variable = { ENG_uq_consent_change = -0.5 }
+	}
+	if = {
+		limit = {
+			OR = {
+				western_conservatism_are_in_power = yes
+				nationalist_monarchists_are_in_power = yes
+			}
+		}
+		add_to_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	else_if = {
+		limit = {
+			OR = {
+				has_government = nationalist
+				has_government = communism
+			}
+		}
+		add_to_temp_variable = { ENG_uq_consent_change = -0.5 }
+	}
+	if = {
+		limit = { has_idea = ENG_uq_trade_preference_idea }
+		add_to_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	if = {
+		limit = { has_idea = ENG_uq_anglo_irish_economic_union_idea }
+		add_to_temp_variable = { ENG_uq_consent_change = 1 }
+	}
+	if = {
+		limit = { has_idea = ENG_uq_sovereignty_movement }
+		add_to_temp_variable = { ENG_uq_consent_change = -0.5 }
+	}
+	if = {
+		limit = {
+			ENG = {
+				OR = {
+					has_added_tension_amount > 5
+					has_war = yes
+				}
+			}
+		}
+		add_to_temp_variable = { ENG_uq_consent_change = -1 }
+	}
+	if = {
+		limit = { ENG = { check_variable = { ENG_union_strain > 40 } } }
+		add_to_temp_variable = { ENG_uq_consent_change = -0.5 }
+	}
+	if = {
+		limit = {
+			any_country = {
+				NOT = { tag = ENG }
+				has_guaranteed = PREV
+			}
+		}
+		add_to_temp_variable = { ENG_uq_consent_change = -0.5 }
+	}
+	if = {
+		limit = {
+			has_idea = ENG_uq_sovereignty_movement
+			check_variable = { ENG_uq_consent_change > 0 }
+		}
+		multiply_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	if = {
+		limit = { ENG = { has_completed_focus = ENG_the_crown_imperial } }
+		multiply_temp_variable = { ENG_uq_consent_change = 0.5 }
+	}
+	if = {
+		limit = { has_idea = ENG_uq_sovereignty_campaign }
+		clamp_temp_variable = { var = ENG_uq_consent_change max = 0 }
+		add_to_temp_variable = { ENG_uq_consent_change = -1 }
+	}
+	ENG = { set_variable = { ENG_consent_delta@PREV = ENG_uq_consent_change } }
+	ENG_uq_change_consent = yes
+	if = {
+		limit = {
+			ENG = {
+				check_variable = { ENG_consent@PREV > 50 }
+				NOT = { has_country_flag = ENG_uq_sovereignty_done@PREV }
+			}
+		}
+		ENG = { set_country_flag = ENG_uq_sovereignty_done@PREV }
+		country_event = { id = ENG_uq.10 days = 1 }
+	}
+}
+
+# AI weights for accepting or declining a ladder offer or referendum request. Call in the target's scope with FROM = ENG.
+ENG_uq_set_accept_weight = {
+	set_variable = { ENG_uq_decline_weight = 40 }
+	if = {
+		limit = {
+			OR = {
+				has_idea = ENG_uq_sovereignty_movement
+				has_idea = ENG_uq_sovereignty_campaign
+			}
+		}
+		add_to_variable = { ENG_uq_decline_weight = 30 }
+	}
+	if = {
+		limit = { has_opinion = { target = FROM value < 50 } }
+		add_to_variable = { ENG_uq_decline_weight = 20 }
+	}
+	if = {
+		limit = {
+			OR = {
+				has_government = nationalist
+				has_government = communism
+			}
+			nationalist_monarchists_are_in_power = no
+		}
+		add_to_variable = { ENG_uq_decline_weight = 20 }
+	}
+	if = {
+		limit = {
+			any_country = {
+				NOT = { tag = ENG }
+				has_guaranteed = PREV
+			}
+		}
+		add_to_variable = { ENG_uq_decline_weight = 15 }
+	}
+	if = {
+		limit = { is_in_faction_with = FROM }
+		subtract_from_variable = { ENG_uq_decline_weight = 20 }
+	}
+	set_temp_variable = { ENG_uq_from_consent = FROM.ENG_consent@THIS }
+	set_variable = { ENG_uq_accept_weight = { value = ENG_uq_from_consent subtract = 50 multiply = 2 } }
+	if = {
+		limit = { is_in_faction_with = FROM }
+		add_to_variable = { ENG_uq_accept_weight = 20 }
+	}
+	if = {
+		limit = { has_war = yes }
+		subtract_from_variable = { ENG_uq_accept_weight = 30 }
+	}
+	if = {
+		limit = {
+			has_government = nationalist
+			nationalist_monarchists_are_in_power = no
+		}
+		subtract_from_variable = { ENG_uq_accept_weight = 50 }
+	}
+	if = {
+		limit = { has_opinion = { target = FROM value > 80 } }
+		add_to_variable = { ENG_uq_accept_weight = 15 }
+	}
+	if = {
+		limit = { FROM = { check_variable = { ENG_imperial_tension > 60 } } }
+		set_variable = { ENG_uq_accept_weight = -1000 }
+		add_to_variable = { ENG_uq_decline_weight = 100 }
+	}
+}
+
+# Target scope. Saves the strongest eligible foreign influencer as event_target:ENG_uq_patron.
+ENG_uq_pick_patron = {
+	set_temp_variable = { ENG_uq_patron_found = 0 }
+	for_each_loop = {
+		array = influence_array
+		value = v
+		index = i
+		if = {
+			limit = {
+				check_variable = { ENG_uq_patron_found = 0 }
+				check_variable = { influence_array_val^i > 29.999 }
+				var:v = {
+					NOT = { tag = ENG }
+					NOT = { is_subject_of = ENG }
+					NOT = { is_in_faction_with = ENG }
+					has_war = no
+				}
+			}
+			var:v = { save_event_target_as = ENG_uq_patron }
+			set_temp_variable = { ENG_uq_patron_found = 1 }
+			set_temp_variable = { break = 1 }
+		}
+	}
+	set_temp_variable = { break = 0 }
+}
+
+# USA reaction to each Irish stage transition. Call with ROOT = ENG and FROM = target; only Ireland triggers it.
+ENG_uq_irish_lobby_reaction = {
+	if = {
+		limit = {
+			FROM = { original_tag = IRE }
+			country_exists = USA
+			NOT = { has_war_with = USA }
+		}
+		hidden_effect = {
+			random_list = {
+				70 = { country_event = { id = ENG_uq.104 days = 5 } }
+				30 = { country_event = { id = ENG_uq.105 days = 5 } }
+			}
+		}
+	}
+}
+
+# Bring one Commonwealth realm onto the ladder at the stage its existing status already implies. Call in the target's scope with ROOT = ENG.
+ENG_uq_align_realm = {
+	if = {
+		limit = {
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
+			ENG_uq_crown_colony = no
+		}
+		if = {
+			limit = { is_subject_of = ROOT }
+			ROOT = {
+				add_to_array = { ENG_integration_targets = PREV }
+				if = {
+					limit = { NOT = { has_country_flag = ENG_devolution_purged } }
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_constituent_country_very_low_devolution
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				ENG_cmw_is_member = yes
+				NOT = { has_country_flag = ENG_uq_republic }
+			}
+			ENG_uq_align_target = yes
+		}
+	}
+}
+
+# Call in ENG's own scope. Brings Canada, Australia, New Zealand and the Caribbean realms onto the ladder at once.
+ENG_uq_align_realms = {
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = CAN
+				original_tag = AST
+				original_tag = NZL
+				ENG_uq_is_caribbean_realm = yes
+			}
+		}
+		ENG_uq_align_realm = yes
+	}
+}
+
+# ENG scope. Dublin accepts the Council of the Isles.
+ENG_uq_apply_council_of_the_isles = {
+	custom_effect_tooltip = ENG_council_of_the_isles_TT
+	IRE = {
+		add_ideas = ENG_uq_council_of_the_isles_idea
+		add_opinion_modifier = { target = ROOT modifier = ENG_uq_council_of_the_isles_opinion }
+		reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_council_of_the_isles_opinion }
+		hidden_effect = { ENG_uq_align_target = yes }
+	}
+}
+
+# ENG scope. Dublin accepts the Anglo-Irish Economic Union.
+ENG_uq_apply_anglo_irish_economic_union = {
+	IRE = {
+		add_ideas = ENG_uq_anglo_irish_economic_union_idea
+		newline = yes
+		set_temp_variable = { ENG_uq_consent_change = 5 }
+		ENG_uq_change_consent = yes
+	}
+	if = {
+		limit = { IRE = { has_idea = EU_member } }
+		for_each_scope_loop = {
+			array = global.EU_member
+			if = {
+				limit = {
+					NOT = { tag = ROOT }
+					NOT = { tag = IRE }
+				}
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_brussels_displeasure_opinion }
+			}
+		}
+		hidden_effect = { IRE = { country_event = { id = ENG_uq.93 days = 30 } } }
+	}
+}
+
+# ENG scope. Dublin accepts Common Travel Area Plus.
+ENG_uq_apply_common_travel_area_plus = {
+	IRE = {
+		add_opinion_modifier = { target = ROOT modifier = ENG_uq_common_travel_area_opinion }
+		reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_common_travel_area_opinion }
+		set_temp_variable = { ENG_uq_consent_change = 10 }
+		ENG_uq_change_consent = yes
+	}
+}
+
+# Call in the realm's scope with ROOT = ENG. The realm accepts its Realm Accord.
+ENG_uq_apply_realm_accord = {
+	add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+	reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_realm_accord_opinion }
+	if = {
+		limit = { original_tag = NZL }
+		set_temp_variable = { ENG_uq_consent_change = 15 }
+	}
+	else = {
+		set_temp_variable = { ENG_uq_consent_change = 10 }
+	}
+	ENG_uq_change_consent = yes
+}
+
+# ENG scope. Average consent across Caribbean realms still on the ladder, for the group decisions' consent gate.
+ENG_uq_update_caribbean_consent = {
+	set_temp_variable = { ENG_uq_caribbean_consent_sum = 0 }
+	set_temp_variable = { ENG_uq_caribbean_consent_count = 0 }
+	for_each_scope_loop = {
+		array = ENG_integration_targets
+		if = {
+			limit = {
+				ENG_uq_is_caribbean_realm = yes
+				ROOT = { NOT = { has_country_flag = ENG_uq_integrated@PREV } }
+			}
+			ROOT = {
+				add_to_temp_variable = { ENG_uq_caribbean_consent_sum = ENG_consent@PREV }
+				add_to_temp_variable = { ENG_uq_caribbean_consent_count = 1 }
+			}
+		}
+	}
+	if = {
+		limit = { check_variable = { ENG_uq_caribbean_consent_count > 0 } }
+		set_variable = { ENG_uq_caribbean_consent = { value = ENG_uq_caribbean_consent_sum divide = ENG_uq_caribbean_consent_count } }
+	}
+	else = {
+		set_variable = { ENG_uq_caribbean_consent = 0 }
+	}
+}
+
+# Call in the target's scope; the caller's ROOT does not matter. A realm becomes a republic outside the Commonwealth-leave path (lost referendum, Governor-General dismissal).
+ENG_uq_realm_republic = {
+	custom_effect_tooltip = ENG_uq_realm_republic_TT
+	set_country_flag = ENG_uq_republic
+	ENG_crown_realm_remove = yes
+	ENG = { set_country_flag = { flag = ENG_uq_lock@PREV value = 1 days = 3650 } }
+	set_temp_variable = { ENG_uq_consent_change = -30 }
+	ENG_uq_change_consent = yes
+	set_temp_variable = { percent_change = -20 }
+	set_temp_variable = { tag_index = ENG }
+	change_influence_percentage = yes
+}
+
+# Call in the realm's scope. The British monarch becomes head of state.
+ENG_crown_realm_add = {
+	if = {
+		limit = { NOT = { has_idea = ENG_crown_realm_status } }
+		add_ideas = ENG_crown_realm_status
+	}
+	add_opinion_modifier = { target = ENG modifier = ENG_crown_realm_opinion }
+	reverse_add_opinion_modifier = { target = ENG modifier = ENG_crown_realm_opinion }
+}
+
+# Call in the realm's scope. The realm drops the British monarch as head of state.
+ENG_crown_realm_remove = {
+	if = {
+		limit = { has_idea = ENG_crown_realm_status }
+		remove_ideas = ENG_crown_realm_status
+	}
+	remove_opinion_modifier = { target = ENG modifier = ENG_crown_realm_opinion }
+	ENG = { remove_opinion_modifier = { target = PREV modifier = ENG_crown_realm_opinion } }
+}
+
+# USA/Canada/Australia/Caribbean reactions to a realm's stage transition. Call with ROOT = ENG and FROM = target, right after ENG_uq_irish_lobby_reaction inside ENG_uq_enter_stage_2/3/4.
+ENG_uq_realm_stage_reaction = {
+	if = {
+		limit = {
+			FROM = { original_tag = CAN }
+			country_exists = USA
+			NOT = { has_war_with = USA }
+		}
+		if = {
+			limit = { check_variable = { ENG_uq_stage_reached = 2 } }
+			USA = { country_event = { id = ENG_uq.130 days = 5 } }
+		}
+		else_if = {
+			limit = { check_variable = { ENG_uq_stage_reached = 3 } }
+			USA = { country_event = { id = ENG_uq.131 days = 5 } }
+		}
+		else_if = {
+			limit = { check_variable = { ENG_uq_stage_reached = 4 } }
+			USA = { country_event = { id = ENG_uq.132 days = 5 } }
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				original_tag = CAN
+				owns_state = 762
+				NOT = { has_country_flag = ENG_uq_quebec_pending }
+			}
+			NOT = { country_exists = QUE }
+			OR = {
+				check_variable = { ENG_uq_stage_reached = 2 }
+				check_variable = { ENG_uq_stage_reached = 3 }
+			}
+		}
+		FROM = {
+			set_country_flag = { flag = ENG_uq_quebec_pending value = 1 days = 400 }
+			country_event = { id = ENG_uq.150 days = 10 }
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				original_tag = AST
+				exists = yes
+				NOT = { has_country_flag = ENG_uq_republic }
+			}
+			OR = {
+				check_variable = { ENG_uq_stage_reached = 2 }
+				check_variable = { ENG_uq_stage_reached = 3 }
+			}
+		}
+		FROM = { country_event = { id = ENG_uq.140 days = 10 } }
+	}
+	if = {
+		limit = {
+			FROM = { ENG_uq_is_caribbean_realm = yes }
+			check_variable = { ENG_uq_stage_reached = 2 }
+			NOT = { has_country_flag = ENG_uq_monroe_reacted }
+		}
+		set_country_flag = ENG_uq_monroe_reacted
+		USA = { country_event = { id = ENG_uq.133 days = 5 } }
+	}
+}
+
+# Monthly step for one ladder target during the Realms tier. Call in the target's scope with ROOT = ENG.
+ENG_uq_realm_monthly = {
+	if = {
+		limit = {
+			ENG_uq_is_crown_realm = yes
+			exists = yes
+			OR = {
+				ENG_uq_stage_2 = yes
+				ENG_uq_stage_3 = yes
+			}
+			OR = {
+				ROOT = { has_stability < 0.4 }
+				ROOT = { check_variable = { ENG_imperial_tension > 60 } }
+			}
+			NOT = { ROOT = { has_country_flag = ENG_uq_realm_crisis@PREV } }
+		}
+		random = {
+			chance = 10
+			ROOT = { set_country_flag = { flag = ENG_uq_realm_crisis@PREV value = 1 days = 365 } }
+			set_country_flag = ENG_uq_relay_170
+			country_event = ENG_uq.9
+		}
+	}
+	if = {
+		limit = {
+			ENG_uq_is_caribbean_realm = yes
+			exists = yes
+			OR = {
+				ENG_uq_stage_2 = yes
+				ENG_uq_stage_3 = yes
+			}
+		}
+		random_list = {
+			94 = {}
+			3 = {
+				set_country_flag = ENG_uq_relay_160
+				country_event = { id = ENG_uq.9 days = 1 }
+			}
+			3 = {
+				set_country_flag = ENG_uq_relay_161
+				country_event = { id = ENG_uq.9 days = 1 }
+			}
+		}
+	}
+}
+
+# China and Cyprus reactions to a possession's stage transition. Call with ROOT = ENG and FROM = target, right after ENG_uq_realm_stage_reaction inside ENG_uq_enter_stage_2/3/4.
+ENG_uq_possession_stage_reaction = {
+	if = {
+		limit = {
+			FROM = { original_tag = HKG }
+			check_variable = { ENG_uq_stage_reached = 2 }
+			country_exists = CHI
+			NOT = { has_war_with = CHI }
+		}
+		CHI = { country_event = { id = ENG_uq.231 days = 3 } }
+	}
+	if = {
+		limit = {
+			FROM = { original_tag = CYP }
+			check_variable = { ENG_uq_stage_reached > 1 }
+			owns_state = 812
+			NOT = { 812 = { is_core_of = ROOT } }
+		}
+		812 = { add_core_of = ROOT }
+	}
+}
+
+# Tier 4: wider empire. Regions are opened by focus; each target carries its region, its rival and a cost factor fixed when the region opens.
+
+# ENG scope. Temp in: ENG_uq_rival_candidate. Keeps the first candidate that exists, is independent and is not at war with Britain in ENG_uq_region_rival.
+ENG_uq_pick_rival = {
+	if = {
+		limit = {
+			check_variable = { ENG_uq_region_rival = 0 }
+			var:ENG_uq_rival_candidate = {
+				exists = yes
+				is_subject = no
+				NOT = { has_war_with = ROOT }
+			}
+		}
+		set_temp_variable = { ENG_uq_region_rival = ENG_uq_rival_candidate }
+	}
+}
+
+# Target scope with ROOT = ENG. Temps in: ENG_uq_region_id, ENG_uq_region_rival, ENG_uq_region_factor.
+ENG_uq_register_ex_empire = {
+	ENG_uq_align_target = yes
+	ROOT = {
+		set_variable = { ENG_uq_region@PREV = ENG_uq_region_id }
+		set_variable = { ENG_uq_rival@PREV = ENG_uq_region_rival }
+		set_variable = { ENG_uq_region_cost_factor@PREV = ENG_uq_region_factor }
+	}
+}
+
+# ENG scope. Opens West Africa: region 1. The fourth region opened costs roughly three times the first.
+ENG_uq_open_west_africa = {
+	set_temp_variable = { ENG_uq_region_id = 1 }
+	set_temp_variable = { ENG_uq_region_rival = 0 }
+	set_temp_variable = { ENG_uq_rival_candidate = FRA }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_rival_candidate = CHI }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_region_factor = { value = ENG_uq_active_regions multiply = 0.67 add = 1 } }
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = SIE
+				original_tag = GAM
+				original_tag = GAH
+				original_tag = NIG
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
+		}
+		ENG_uq_register_ex_empire = yes
+	}
+	add_to_variable = { ENG_uq_active_regions = 1 }
+	ENG_uq_update_regions = yes
+}
+
+# ENG scope. Opens East Africa: region 2. The fourth region opened costs roughly three times the first.
+ENG_uq_open_east_africa = {
+	set_temp_variable = { ENG_uq_region_id = 2 }
+	set_temp_variable = { ENG_uq_region_rival = 0 }
+	set_temp_variable = { ENG_uq_rival_candidate = CHI }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_region_factor = { value = ENG_uq_active_regions multiply = 0.67 add = 1 } }
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = KEN
+				original_tag = UGA
+				original_tag = TNZ
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
+		}
+		ENG_uq_register_ex_empire = yes
+	}
+	add_to_variable = { ENG_uq_active_regions = 1 }
+	ENG_uq_update_regions = yes
+}
+
+# ENG scope. Opens Southern Africa: region 3. The fourth region opened costs roughly three times the first.
+ENG_uq_open_southern_africa = {
+	set_temp_variable = { ENG_uq_region_id = 3 }
+	set_temp_variable = { ENG_uq_region_rival = 0 }
+	set_temp_variable = { ENG_uq_rival_candidate = SAF }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_rival_candidate = CHI }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_region_factor = { value = ENG_uq_active_regions multiply = 0.67 add = 1 } }
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = ZAM
+				original_tag = ZIM
+				original_tag = MLW
+				original_tag = BOT
+				original_tag = SWA
+				original_tag = LES
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
+		}
+		ENG_uq_register_ex_empire = yes
+	}
+	add_to_variable = { ENG_uq_active_regions = 1 }
+	ENG_uq_update_regions = yes
+}
+
+# ENG scope. Opens the Gulf: region 4. The fourth region opened costs roughly three times the first.
+ENG_uq_open_gulf = {
+	set_temp_variable = { ENG_uq_region_id = 4 }
+	set_temp_variable = { ENG_uq_region_rival = 0 }
+	set_temp_variable = { ENG_uq_rival_candidate = USA }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_rival_candidate = SAU }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_rival_candidate = PER }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_region_factor = { value = ENG_uq_active_regions multiply = 0.67 add = 1 } }
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = KUW
+				original_tag = QAT
+				original_tag = BHR
+				original_tag = UAE
+				original_tag = OMA
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
+		}
+		ENG_uq_register_ex_empire = yes
+	}
+	add_to_variable = { ENG_uq_active_regions = 1 }
+	ENG_uq_update_regions = yes
+}
+
+# ENG scope. Opens Asia: region 5. The fourth region opened costs roughly three times the first.
+ENG_uq_open_asia = {
+	set_temp_variable = { ENG_uq_region_id = 5 }
+	set_temp_variable = { ENG_uq_region_rival = 0 }
+	set_temp_variable = { ENG_uq_rival_candidate = CHI }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_rival_candidate = RAJ }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_region_factor = { value = ENG_uq_active_regions multiply = 0.67 add = 1 } }
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = MAY
+				original_tag = SIN
+				original_tag = BRU
+				original_tag = SRI
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
+		}
+		ENG_uq_register_ex_empire = yes
+	}
+	add_to_variable = { ENG_uq_active_regions = 1 }
+	ENG_uq_update_regions = yes
+}
+
+# ENG scope. Opens the Pacific: region 6. The fourth region opened costs roughly three times the first.
+ENG_uq_open_pacific = {
+	set_temp_variable = { ENG_uq_region_id = 6 }
+	set_temp_variable = { ENG_uq_region_rival = 0 }
+	set_temp_variable = { ENG_uq_rival_candidate = CHI }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_rival_candidate = AST }
+	ENG_uq_pick_rival = yes
+	set_temp_variable = { ENG_uq_region_factor = { value = ENG_uq_active_regions multiply = 0.67 add = 1 } }
+	every_country = {
+		limit = {
+			OR = {
+				original_tag = FIJ
+				original_tag = SOL
+				original_tag = VAN
+				original_tag = TON
+				original_tag = SAM
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			NOT = { ROOT = { is_in_array = { array = ENG_integration_targets value = PREV } } }
+		}
+		ENG_uq_register_ex_empire = yes
+	}
+	add_to_variable = { ENG_uq_active_regions = 1 }
+	ENG_uq_update_regions = yes
+}
+
+# The regional rival reacts to a wider-empire target becoming a subject. Call with ROOT = ENG and FROM = target inside ENG_uq_enter_stage_2.
+ENG_uq_ex_empire_stage_reaction = {
+	if = {
+		limit = {
+			FROM = { ENG_uq_is_ex_empire = yes }
+			check_variable = { ENG_uq_rival@FROM > 0 }
+		}
+		set_variable = { ENG_uq_patron_var = ENG_uq_rival@FROM }
+		if = {
+			limit = {
+				var:ENG_uq_patron_var = {
+					exists = yes
+					NOT = { has_war_with = ROOT }
+				}
+			}
+			var:ENG_uq_patron_var = {
+				set_variable = { ENG_uq_sponsor_target = FROM }
+				country_event = { id = ENG_uq.250 days = 2 }
+			}
+		}
+	}
+}
+
+# ENG scope, monthly once a region is open. Writes each region's average consent and the current decision cost to every member.
+ENG_uq_update_regions = {
+	resize_temp_array = { array = ENG_uq_rc_sum size = 7 }
+	resize_temp_array = { array = ENG_uq_rc_count size = 7 }
+	set_temp_variable = { ENG_uq_strain_cost = { value = ENG_union_strain divide = 100 add = 1 } }
+	for_each_scope_loop = {
+		array = ENG_integration_targets
+		if = {
+			limit = { ENG_uq_is_ex_empire = yes }
+			set_temp_variable = { ENG_uq_r = ROOT.ENG_uq_region@THIS }
+			ROOT = {
+				add_to_temp_variable = { ENG_uq_rc_sum^ENG_uq_r = ENG_consent@PREV }
+				add_to_temp_variable = { ENG_uq_rc_count^ENG_uq_r = 1 }
+			}
+		}
+	}
+	for_each_scope_loop = {
+		array = ENG_integration_targets
+		if = {
+			limit = { ENG_uq_is_ex_empire = yes }
+			set_temp_variable = { ENG_uq_r = ROOT.ENG_uq_region@THIS }
+			ROOT = {
+				set_variable = { ENG_uq_region_consent@PREV = ENG_uq_rc_sum^ENG_uq_r }
+				if = {
+					limit = { check_variable = { ENG_uq_rc_count^ENG_uq_r > 0 } }
+					divide_variable = { ENG_uq_region_consent@PREV = ENG_uq_rc_count^ENG_uq_r }
+				}
+				set_variable = { ENG_uq_region_cost@PREV = gdp_total }
+				multiply_variable = { ENG_uq_region_cost@PREV = 0.002 }
+				multiply_variable = { ENG_uq_region_cost@PREV = ENG_uq_region_cost_factor@PREV }
+				multiply_variable = { ENG_uq_region_cost@PREV = ENG_uq_strain_cost }
+			}
+		}
+	}
+}
+
+# Target scope in the monthly ladder loop with ROOT = ENG. A wider-empire subject rolls for a rising while British stability is below 50%.
+ENG_uq_ex_empire_monthly = {
+	if = {
+		limit = {
+			ENG_uq_is_ex_empire = yes
+			exists = yes
+			is_subject_of = ROOT
+			ENG_uq_stage_2 = yes
+			ROOT = {
+				has_stability < 0.5
+				NOT = { has_country_flag = ENG_uq_realm_crisis@PREV }
+			}
+		}
+		random = {
+			chance = 5
+			ROOT = { set_country_flag = { flag = ENG_uq_realm_crisis@PREV value = 1 days = 365 } }
+			set_country_flag = ENG_uq_relay_252
+			country_event = ENG_uq.9
+		}
+	}
+}
+
+# ENG scope. The Chagos question is settled: the archipelago returns to British sovereignty.
+ENG_uq_chagos_settled = {
+	transfer_state = 824
+	USA = {
+		add_opinion_modifier = { target = ROOT modifier = ENG_uq_chagos_settlement_opinion }
+		reverse_add_opinion_modifier = { target = ROOT modifier = ENG_uq_chagos_settlement_opinion }
+	}
+	clr_country_flag = ENG_uq_chagos_crisis
+	clr_country_flag = ENG_uq_chagos_lock
+}
+
+# ENG scope. War on Ireland: NATO turns on us, Washington's Irish lobby mobilises and the Commonwealth wavers.
+ENG_uq_irish_war_reactions = {
+	custom_effect_tooltip = ENG_uq_irish_war_reactions_TT
+	set_temp_variable = { ENG_imperial_tension_change = 15 }
+	ENG_change_imperial_tension = yes
+	set_temp_variable = { ENG_cmw_cohesion_change = -5 }
+	ENG_cmw_change_cohesion = yes
+	hidden_effect = {
+		for_each_scope_loop = {
+			array = global.nato_members
+			if = {
+				limit = { NOT = { tag = ROOT } }
+				add_opinion_modifier = { target = ROOT modifier = ENG_uq_irish_war_opinion }
+			}
+		}
+		if = {
+			limit = { country_exists = USA }
+			USA = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_irish_lobby_opinion } }
+		}
+		country_event = { id = ENG_uq.111 days = 3 }
+	}
+}
+
+# ENG scope. Dublin holds Ulster at peace: the Irish tier resets and the Ulster question is settled Ireland's way.
+ENG_uq_reset_irish_tier = {
+	remove_from_array = { ENG_integration_targets = IRE }
+	clr_country_flag = ENG_uq_integrated@IRE
+	clr_country_flag = ENG_uq_occupying@IRE
+	clr_country_flag = ENG_uq_pacified@IRE
+	clr_country_flag = ENG_uq_claims@IRE
+	clr_country_flag = ENG_uq_ultimatum_rejected@IRE
+	clr_country_flag = ENG_uq_ultimatum_cooldown@IRE
+	every_state = {
+		limit = { is_core_of = IRE }
+		remove_claim_by = ROOT
+		if = {
+			limit = { has_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm } }
+			remove_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm }
+		}
+	}
+	ENG_uq_lift_irish_sea_blockade = yes
+	clr_country_flag = ENG_uq_irish_sea_surrender
+	if = {
+		limit = { has_active_mission = ENG_uq_blockade_of_ireland }
+		remove_mission = ENG_uq_blockade_of_ireland
+	}
+	IRE = {
+		if = {
+			limit = { has_idea = ENG_uq_loyalist_movement }
+			remove_ideas = ENG_uq_loyalist_movement
+		}
+	}
+	uncomplete_national_focus = { focus = ENG_the_irish_question_reopened refund_political_power = no }
+	uncomplete_national_focus = { focus = ENG_sponsor_the_unionist_lobby_in_dublin refund_political_power = no }
+	uncomplete_national_focus = { focus = ENG_close_the_irish_sea refund_political_power = no }
+	uncomplete_national_focus = { focus = ENG_ultimatum_to_dublin refund_political_power = no }
+	ENG_settle_northern_ireland_question = yes
+	set_temp_variable = { ENG_union_strain_change = 10 }
+	ENG_change_union_strain = yes
+	add_stability = -0.05
+	country_event = { id = ENG_uq.112 days = 1 }
+}
+
+# ENG scope. Ends the Irish Sea blockade on both sides.
+ENG_uq_lift_irish_sea_blockade = {
+	if = {
+		limit = { has_idea = ENG_uq_irish_sea_blockade }
+		remove_ideas = ENG_uq_irish_sea_blockade
+	}
+	IRE = {
+		if = {
+			limit = { has_idea = ENG_uq_irish_sea_blockaded }
+			remove_ideas = ENG_uq_irish_sea_blockaded
+		}
+	}
+}
+
+# ENG scope. Ireland comes under the Crown by force: the dissident campaign spreads south as Irish Partisans.
+ENG_uq_apply_irish_pacification = {
+	if = {
+		limit = { NOT = { has_idea = ENG_the_dissident_campaign } }
+		add_ideas = ENG_the_dissident_campaign
+	}
+	custom_effect_tooltip = ENG_uq_irish_partisans_TT
+	hidden_effect = {
+		every_state = {
+			limit = {
+				OR = {
+					state = 27
+					state = 28
+					state = 29
+				}
+				NOT = { has_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm } }
+			}
+			add_dynamic_modifier = { modifier = ENG_uq_irish_partisans_dm }
+		}
+	}
+}
+
+# Parameters:
+# - ENG_imperial_tension_change: signed amount. ROOT must be ENG. Decay and the reaction bands run in ENG_uq_update_imperial_tension.
+ENG_change_imperial_tension = {
+	custom_effect_tooltip = ENG_imperial_tension_change_tt
+	hidden_effect = {
+		set_variable = { ROOT.ENG_imperial_tension = { value = ROOT.ENG_imperial_tension add = ENG_imperial_tension_change clamp = { min = 0 max = 100 } } }
+	}
+}
+
+# Monthly coercion step for one Nationalist-path target. Call in the target's scope with ROOT = ENG.
+# Unused claims lapse, a won war becomes an occupation, each occupied month costs tension and rolls an insurgency.
+ENG_uq_update_coercion = {
+	# Claims stay live for as long as the war over them lasts.
+	if = {
+		limit = {
+			has_war_with = ROOT
+			ENG = { has_country_flag = ENG_uq_claims@PREV }
+		}
+		ROOT = { set_country_flag = { flag = ENG_uq_claims@PREV value = 1 days = 730 } }
+	}
+	if = {
+		limit = {
+			ENG = { has_country_flag = ENG_uq_claims@PREV }
+			NOT = { has_war_with = ROOT }
+			ENG_uq_all_cores_held = yes
+		}
+		ENG_uq_begin_occupation = yes
+	}
+	else_if = {
+		limit = {
+			ENG = { NOT = { has_country_flag = ENG_uq_claims@PREV } }
+			NOT = { has_war_with = ROOT }
+			any_state = {
+				is_core_of = PREV
+				is_claimed_by = ROOT
+			}
+		}
+		ENG_uq_expire_claims = yes
+	}
+	if = {
+		limit = { ENG = { has_country_flag = ENG_uq_occupying@PREV } }
+		ROOT = {
+			set_temp_variable = { ENG_imperial_tension_change = 1 }
+			ENG_change_imperial_tension = yes
+		}
+	}
+	if = {
+		limit = { ENG_uq_occupation_active = yes }
+		ENG_uq_roll_insurgency = yes
+	}
+}
+
+# Call in the target's scope with ROOT = ENG once the war is over and every core state is held. Lower pre-war consent means a harder occupation.
+ENG_uq_begin_occupation = {
+	ROOT = {
+		set_country_flag = ENG_uq_occupying@PREV
+		clr_country_flag = ENG_uq_claims@PREV
+	}
+	set_temp_variable = { ENG_union_strain_stage = 1 }
+	ENG_add_union_strain_for_target = yes
+	if = {
+		limit = { has_idea = ENG_uq_loyalist_movement }
+		remove_ideas = ENG_uq_loyalist_movement
+	}
+	every_state = {
+		limit = { is_core_of = PREV }
+		remove_claim_by = ROOT
+		set_variable = { ENG_uq_occ_resistance_target = { value = 100 subtract = ROOT.ENG_consent@PREV multiply = 0.003 } }
+		set_variable = { ENG_uq_occ_compliance_growth = { value = ROOT.ENG_consent@PREV subtract = 100 multiply = 0.005 } }
+		add_dynamic_modifier = { modifier = ENG_uq_occupation_dm }
+	}
+	if = {
+		limit = {
+			exists = yes
+			is_subject_of = ROOT
+		}
+		ROOT = {
+			annex_country = {
+				target = PREV
+				transfer_troops = no
+			}
+		}
+	}
+	ROOT = {
+		if = {
+			limit = { NOT = { has_idea = ENG_uq_occupation_burden } }
+			add_ideas = ENG_uq_occupation_burden
+		}
+		if = {
+			limit = { PREV = { original_tag = IRE } }
+			ENG_uq_apply_irish_pacification = yes
+		}
+		set_variable = { ENG_uq_occupied_target = PREV }
+		country_event = { id = ENG_uq.44 days = 1 }
+	}
+	if = {
+		limit = {
+			original_tag = RAJ
+			ROOT = { has_completed_focus = ENG_the_lahore_compact }
+			country_exists = PAK
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state = 427
+					state = 993
+				}
+				is_owned_by = ROOT
+			}
+			if = {
+				limit = { has_dynamic_modifier = { modifier = ENG_uq_occupation_dm } }
+				remove_dynamic_modifier = { modifier = ENG_uq_occupation_dm }
+			}
+			transfer_state_to = PAK
+		}
+	}
+	if = {
+		limit = {
+			original_tag = RAJ
+			ROOT = { has_country_flag = ENG_uq_himalayan_pact }
+			country_exists = CHI
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state = 475
+					state = 982
+				}
+				is_owned_by = ROOT
+			}
+			if = {
+				limit = { has_dynamic_modifier = { modifier = ENG_uq_occupation_dm } }
+				remove_dynamic_modifier = { modifier = ENG_uq_occupation_dm }
+			}
+			transfer_state_to = CHI
+		}
+	}
+}
+
+# Target scope with ROOT = ENG. A great-power conquest target joins the ladder; every rung costs triple Union Strain. The wargoal waits for ENG_uq_manufacture_pretext.
+ENG_uq_mark_conquest = {
+	ENG_uq_align_target = yes
+	ENG_uq_patron_opinion_hit = yes
+	ROOT = {
+		set_country_flag = ENG_uq_conquest@PREV
+		set_temp_variable = { ENG_imperial_tension_change = 5 }
+		ENG_change_imperial_tension = yes
+	}
+}
+
+# Partner scope (MEX, SPR or FRA). Claims the partner's Grand Partition share.
+ENG_uq_partition_claim_share = {
+	every_state = {
+		limit = {
+			OR = {
+				AND = {
+					PREV = { tag = MEX }
+					ENG_uq_partition_share_MEX = yes
+				}
+				AND = {
+					PREV = { tag = SPR }
+					ENG_uq_partition_share_SPR = yes
+				}
+				AND = {
+					PREV = { tag = FRA }
+					ENG_uq_partition_share_FRA = yes
+				}
+			}
+		}
+		add_claim_by = PREV
+	}
+}
+
+# Partner scope (MEX, SPR or FRA). Washington cedes the partner's Grand Partition share.
+ENG_uq_partition_cede_share = {
+	every_state = {
+		limit = {
+			is_owned_by = USA
+			OR = {
+				AND = {
+					PREV = { tag = MEX }
+					ENG_uq_partition_share_MEX = yes
+				}
+				AND = {
+					PREV = { tag = SPR }
+					ENG_uq_partition_share_SPR = yes
+				}
+				AND = {
+					PREV = { tag = FRA }
+					ENG_uq_partition_share_FRA = yes
+				}
+			}
+		}
+		transfer_state_to = PREV
+	}
+}
+
+# Target scope with ROOT = ENG. The pretext is complete: claims on every core and a puppet wargoal.
+ENG_uq_open_conquest = {
+	every_state = {
+		limit = { is_core_of = PREV }
+		add_claim_by = ROOT
+	}
+	ROOT = {
+		set_country_flag = { flag = ENG_uq_claims@PREV value = 1 days = 730 }
+		add_opinion_modifier = { target = PREV modifier = imminent_danger_to_national_security }
+		set_temp_variable = { wargoal_on = PREV }
+		add_threat_from_wargoal_effect = yes
+		create_wargoal = {
+			type = puppet_wargoal_focus
+			target = PREV
+		}
+		set_temp_variable = { ENG_imperial_tension_change = 10 }
+		ENG_change_imperial_tension = yes
+		set_temp_variable = { ENG_union_strain_change = 10 }
+		ENG_change_union_strain = yes
+	}
+}
+
+# ENG scope with FROM = India as it becomes a protectorate. Pakistan folds into a restored British Raj.
+ENG_uq_proclaim_british_raj = {
+	if = {
+		limit = {
+			country_exists = PAK
+			PAK = { is_subject_of = ROOT }
+		}
+		FROM = {
+			annex_country = {
+				target = PAK
+				transfer_troops = yes
+			}
+		}
+	}
+	every_owned_state = {
+		limit = { is_core_of = PAK }
+		transfer_state_to = FROM
+	}
+	FROM = { set_cosmetic_tag = RAJ_british_raj }
+}
+
+# Call in the target's scope with ROOT = ENG. Pacification success ends the occupation regime on its states.
+ENG_uq_end_occupation = {
+	every_state = {
+		limit = {
+			is_core_of = PREV
+			has_dynamic_modifier = { modifier = ENG_uq_occupation_dm }
+		}
+		remove_dynamic_modifier = { modifier = ENG_uq_occupation_dm }
+	}
+}
+
+# Call in the target's scope with ROOT = ENG. Unused claims lapse; the ultimatum can be enforced again after a fresh cooldown.
+ENG_uq_expire_claims = {
+	every_state = {
+		limit = { is_core_of = PREV }
+		remove_claim_by = ROOT
+	}
+	ROOT = {
+		set_country_flag = ENG_uq_ultimatum_rejected@PREV
+		set_country_flag = { flag = ENG_uq_ultimatum_cooldown@PREV value = 1 days = 180 }
+	}
+	set_country_flag = ENG_uq_relay_43
+	country_event = { id = ENG_uq.9 days = 1 }
+}
+
+# Monthly insurgency roll for one occupied target. Call in the target's scope with ROOT = ENG. Event chance equals the highest resistance among its states; the dissident campaign makes an Irish occupation half again as violent.
+ENG_uq_roll_insurgency = {
+	set_temp_variable = { ENG_uq_max_resistance = 0 }
+	every_state = {
+		limit = {
+			is_core_of = PREV
+			is_controlled_by = ROOT
+			check_variable = { resistance > ENG_uq_max_resistance }
+		}
+		set_temp_variable = { ENG_uq_max_resistance = resistance }
+		PREV = { set_variable = { ENG_uq_event_state = PREV } }
+	}
+	set_temp_variable = { ENG_uq_bombing_weight = { value = ENG_uq_max_resistance multiply = 0.6 } }
+	set_temp_variable = { ENG_uq_defection_weight = { value = ENG_uq_max_resistance multiply = 0.4 } }
+	set_temp_variable = { ENG_uq_quiet_weight = { value = 100 subtract = ENG_uq_max_resistance } }
+	if = {
+		limit = {
+			original_tag = IRE
+			ROOT = { has_idea = ENG_the_dissident_campaign }
+		}
+		multiply_temp_variable = { ENG_uq_bombing_weight = 1.5 }
+		multiply_temp_variable = { ENG_uq_defection_weight = 1.5 }
+	}
+	random_list = {
+		ENG_uq_bombing_weight = {
+			ROOT = { add_stability = -0.01 }
+			var:ENG_uq_event_state = {
+				if = {
+					limit = { infrastructure > 0 }
+					damage_building = {
+						type = infrastructure
+						damage = 1
+					}
+				}
+			}
+			# One report a month: the event reads the state from ENG.
+			if = {
+				limit = { NOT = { check_variable = { ENG_uq_insurgency_reported = 1 } } }
+				set_temp_variable = { ENG_uq_insurgency_reported = 1 }
+				var:ENG_uq_event_state = { ROOT = { set_variable = { ENG_uq_event_state = PREV } } }
+				ROOT = { country_event = ENG_uq.50 }
+			}
+		}
+		ENG_uq_defection_weight = {
+			ROOT = {
+				add_manpower = -1500
+				add_war_support = -0.01
+			}
+			var:ENG_uq_event_state = { add_resistance = 5 }
+			# One report a month: the event reads the state from ENG.
+			if = {
+				limit = { NOT = { check_variable = { ENG_uq_insurgency_reported = 1 } } }
+				set_temp_variable = { ENG_uq_insurgency_reported = 1 }
+				var:ENG_uq_event_state = { ROOT = { set_variable = { ENG_uq_event_state = PREV } } }
+				ROOT = { country_event = ENG_uq.51 }
+			}
+		}
+		ENG_uq_quiet_weight = {
+			log = "[GetDateText]: [Root.GetName]: quiet month in [This.GetName]"
+		}
+	}
+}
+
+# Monthly Imperial Tension step. ROOT = ENG. Decays 1 a month with no coercion or occupation running (100 to 0 in about 8 years).
+# Each band fires once on the way up and re-arms once tension drops back below it.
+ENG_uq_update_imperial_tension = {
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 0 }
+			NOT = { ENG_uq_coercion_active = yes }
+		}
+		set_temp_variable = { ENG_imperial_tension_change = -1 }
+		ENG_change_imperial_tension = yes
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 19 }
+			NOT = { has_country_flag = ENG_uq_tension_band_20 }
+		}
+		set_country_flag = ENG_uq_tension_band_20
+		ENG_uq_tension_band_20 = yes
+	}
+	else_if = {
+		limit = {
+			check_variable = { ENG_imperial_tension < 20 }
+			has_country_flag = ENG_uq_tension_band_20
+		}
+		clr_country_flag = ENG_uq_tension_band_20
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 39 }
+			NOT = { has_country_flag = ENG_uq_tension_band_40 }
+		}
+		set_country_flag = ENG_uq_tension_band_40
+		ENG_uq_tension_band_40 = yes
+	}
+	else_if = {
+		limit = {
+			check_variable = { ENG_imperial_tension < 40 }
+			has_country_flag = ENG_uq_tension_band_40
+		}
+		clr_country_flag = ENG_uq_tension_band_40
+		if = {
+			limit = { has_idea = ENG_uq_eu_trade_penalty }
+			remove_ideas = ENG_uq_eu_trade_penalty
+		}
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 59 }
+			NOT = { has_country_flag = ENG_uq_tension_band_60 }
+		}
+		set_country_flag = ENG_uq_tension_band_60
+		ENG_uq_tension_band_60 = yes
+	}
+	else_if = {
+		limit = {
+			check_variable = { ENG_imperial_tension < 60 }
+			has_country_flag = ENG_uq_tension_band_60
+		}
+		clr_country_flag = ENG_uq_tension_band_60
+		if = {
+			limit = { has_idea = ENG_uq_nato_strain }
+			remove_ideas = ENG_uq_nato_strain
+		}
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_imperial_tension > 79 }
+			NOT = { has_country_flag = ENG_uq_tension_band_80 }
+		}
+		set_country_flag = ENG_uq_tension_band_80
+		ENG_uq_tension_band_80 = yes
+	}
+	else_if = {
+		limit = {
+			check_variable = { ENG_imperial_tension < 80 }
+			has_country_flag = ENG_uq_tension_band_80
+		}
+		clr_country_flag = ENG_uq_tension_band_80
+	}
+	if = {
+		limit = { check_variable = { ENG_imperial_tension > 59 } }
+		ENG_uq_patron_reactions = yes
+	}
+	if = {
+		limit = { check_variable = { ENG_imperial_tension > 79 } }
+		ENG_uq_sponsored_resistance = yes
+	}
+	if = {
+		limit = { check_variable = { ENG_imperial_tension > 39 } }
+		ENG_uq_commonwealth_exodus = yes
+	}
+}
+
+# Band 20: the Western capitals and the Commonwealth turn cold.
+ENG_uq_tension_band_20 = {
+	every_other_country = {
+		limit = {
+			OR = {
+				tag = USA
+				tag = FRA
+				tag = GER
+				is_in_array = { array = global.commonwealth_member value = THIS }
+			}
+		}
+		add_opinion_modifier = { target = ROOT modifier = ENG_uq_imperial_tension_opinion }
+	}
+	news_event = { id = United_Kingdom_News.6 hours = 6 }
+}
+
+# Band 40: the EU closes ranks and Washington reviews the special relationship.
+ENG_uq_tension_band_40 = {
+	if = {
+		limit = { NOT = { has_idea = EU_member } }
+		add_ideas = ENG_uq_eu_trade_penalty
+		country_event = { id = ENG_uq.60 days = 1 }
+	}
+	else_if = {
+		limit = { ENG_uq_ireland_targeted = yes }
+		leaving_EU = yes
+		country_event = { id = ENG_uq.61 days = 1 }
+	}
+	country_event = { id = ENG_uq.62 days = 2 }
+}
+
+# Band 60: enough generated threat to enter the UN sanctions pool (the AI proposes above 10); NATO strains when a democracy is being coerced.
+ENG_uq_tension_band_60 = {
+	add_named_threat = { threat = 10 name = ENG_uq_imperial_tension_threat }
+	if = {
+		limit = {
+			has_idea = NATO_member
+			any_of_scopes = {
+				array = ENG_integration_targets
+				has_government = democratic
+				ENG_uq_coerced = yes
+			}
+		}
+		add_ideas = ENG_uq_nato_strain
+	}
+	country_event = { id = ENG_uq.63 days = 1 }
+}
+
+# Band 80: a rival great power starts arming the resistance in every occupied territory. Russia first, then China, then Washington if both are Britain's partners.
+ENG_uq_tension_band_80 = {
+	if = {
+		limit = {
+			SOV = {
+				exists = yes
+				NOT = { is_in_faction_with = ROOT }
+			}
+		}
+		set_variable = { ENG_uq_resistance_sponsor = SOV }
+	}
+	else_if = {
+		limit = {
+			CHI = {
+				exists = yes
+				NOT = { is_in_faction_with = ROOT }
+			}
+		}
+		set_variable = { ENG_uq_resistance_sponsor = CHI }
+	}
+	else = {
+		set_variable = { ENG_uq_resistance_sponsor = USA }
+	}
+	country_event = { id = ENG_uq.64 days = 1 }
+	var:ENG_uq_resistance_sponsor = { country_event = { id = ENG_uq.65 days = 1 } }
+}
+
+# Monthly while band 80 holds: sponsored resistance grows in every state Britain occupies.
+ENG_uq_sponsored_resistance = {
+	for_each_scope_loop = {
+		array = ENG_integration_targets
+		if = {
+			limit = { ENG_uq_occupation_active = yes }
+			every_state = {
+				limit = {
+					is_core_of = PREV
+					is_controlled_by = ROOT
+				}
+				add_resistance = 3
+			}
+		}
+	}
+}
+
+# Call in the target's scope with ROOT = ENG. The great power that regards the target as its own concern, or nothing.
+ENG_uq_set_patron = {
+	set_temp_variable = { ENG_uq_patron = 0 }
+	if = {
+		limit = {
+			capital_scope = {
+				OR = {
+					is_on_continent = north_america
+					is_on_continent = south_america
+					is_on_continent = australia
+				}
+			}
+		}
+		set_temp_variable = { ENG_uq_patron = USA }
+	}
+	else_if = {
+		limit = { capital_scope = { is_on_continent = asia } }
+		set_temp_variable = { ENG_uq_patron = CHI }
+	}
+	else_if = {
+		limit = { capital_scope = { is_on_continent = africa } }
+		set_temp_variable = { ENG_uq_patron = FRA }
+	}
+	if = {
+		limit = {
+			check_variable = { ENG_uq_patron > 0 }
+			OR = {
+				var:ENG_uq_patron = { exists = no }
+				var:ENG_uq_patron = { is_subject_of = ROOT }
+				var:ENG_uq_patron = { has_war_with = PREV }
+			}
+		}
+		set_temp_variable = { ENG_uq_patron = 0 }
+	}
+}
+
+# Call in the target's scope with ROOT = ENG when the ultimatum is enforced. The patron's opinion of Britain drops.
+ENG_uq_patron_opinion_hit = {
+	ENG_uq_set_patron = yes
+	if = {
+		limit = { check_variable = { ENG_uq_patron > 0 } }
+		var:ENG_uq_patron = { add_opinion_modifier = { target = ROOT modifier = ENG_uq_patron_opinion } }
+	}
+}
+
+# Monthly while band 60 holds. ROOT = ENG. Each target at war with Britain or under occupation draws one reaction from its patron.
+ENG_uq_patron_reactions = {
+	for_each_scope_loop = {
+		array = ENG_integration_targets
+		if = {
+			limit = {
+				OR = {
+					has_war_with = ROOT
+					ENG = { has_country_flag = ENG_uq_occupying@PREV }
+				}
+				ROOT = { NOT = { has_country_flag = ENG_uq_patron_reacted@PREV } }
+				NOT = { check_variable = { ENG_uq_patron_reported = 1 } }
+			}
+			ENG_uq_set_patron = yes
+			if = {
+				limit = { check_variable = { ENG_uq_patron > 0 } }
+				# One reaction a month: the event reads the client and patron from ENG variables.
+				set_temp_variable = { ENG_uq_patron_reported = 1 }
+				ROOT = {
+					set_country_flag = ENG_uq_patron_reacted@PREV
+					set_variable = { ENG_uq_patron_client = PREV }
+					set_variable = { ENG_uq_reacting_patron = ENG_uq_patron }
+					country_event = { id = ENG_uq.66 days = 1 }
+				}
+			}
+		}
+	}
+}
+
+# Monthly while band 40 holds. ROOT = ENG. Every member outside the Union rolls to leave; the chance climbs with tension and doubles past 80.
+ENG_uq_commonwealth_exodus = {
+	set_temp_variable = { ENG_uq_leave_chance = { value = ENG_imperial_tension subtract = 40 multiply = 0.1 } }
+	if = {
+		limit = { check_variable = { ENG_imperial_tension > 79 } }
+		multiply_temp_variable = { ENG_uq_leave_chance = 2 }
+	}
+	if = {
+		limit = { check_variable = { global.commonwealth_cohesion < 30 } }
+		multiply_temp_variable = { ENG_uq_leave_chance = 2 }
+	}
+	# Iterates countries, not global.commonwealth_member, because a leaver removes itself from that array mid-loop.
+	every_other_country = {
+		limit = {
+			is_in_array = { array = global.commonwealth_member value = THIS }
+			NOT = { is_subject_of = ROOT }
+		}
+		random = {
+			chance = ENG_uq_leave_chance
+			ENG_uq_commonwealth_leave = yes
+		}
+	}
+}
+
+# Call in the leaver's scope with ROOT = ENG. Mirrors MD's denounce decision; a realm that leaves also becomes a republic.
+ENG_uq_commonwealth_leave = {
+	if = { limit = { has_dynamic_modifier = { modifier = Commonwealth_member_modifier } } remove_dynamic_modifier = { modifier = Commonwealth_member_modifier } }
+	remove_from_array = { global.commonwealth_member = THIS }
+	add_to_array = { global.ENG_cmw_former_members = THIS }
+	ROOT = {
+		add_opinion_modifier = { target = PREV modifier = left_alliance }
+		set_temp_variable = { ENG_cmw_cohesion_change = -2 }
+		ENG_cmw_change_cohesion = yes
+	}
+	if = {
+		limit = { ENG_uq_is_crown_realm = yes }
+		set_country_flag = ENG_uq_republic
+		ENG_crown_realm_remove = yes
+	}
+	set_country_flag = ENG_uq_relay_left_commonwealth
+	country_event = ENG_uq.9
+}
+
+# Commonwealth of Nations institution. Cohesion is global so member projects can move it; monthly driver runs from on_monthly_ENG.
+ENG_cmw_change_cohesion = {
+	add_to_variable = { global.commonwealth_cohesion = ENG_cmw_cohesion_change }
+	clamp_variable = { var = global.commonwealth_cohesion min = 0 max = 100 }
+	custom_effect_tooltip = ENG_cmw_cohesion_change_tt
+}
+
+# Monthly, ROOT = ENG
+ENG_cmw_update_cohesion = {
+	set_temp_variable = { ENG_cmw_cohesion_change = 0 }
+	if = {
+		limit = {
+			ENG_cmw_is_member = yes
+			has_stability > 0.6
+			has_war = no
+		}
+		add_to_temp_variable = { ENG_cmw_cohesion_change = 0.5 }
+	}
+	if = {
+		limit = { has_idea = ENG_cmw_trade_area_idea }
+		add_to_temp_variable = { ENG_cmw_cohesion_change = 0.3 }
+	}
+	if = {
+		limit = { has_idea = ENG_cmw_development_fund_idea }
+		add_to_temp_variable = { ENG_cmw_cohesion_change = 0.3 }
+	}
+	if = {
+		limit = {
+			has_global_flag = ENG_cmw_defence_pact
+			is_faction_leader = yes
+		}
+		add_to_temp_variable = { ENG_cmw_cohesion_change = 0.3 }
+	}
+	if = {
+		limit = { check_variable = { ENG_imperial_tension > 20 } }
+		set_temp_variable = { ENG_cmw_tension_drag = { value = ENG_imperial_tension subtract = 20 multiply = 0.1 } }
+		subtract_from_temp_variable = { ENG_cmw_cohesion_change = ENG_cmw_tension_drag }
+	}
+	if = {
+		limit = { has_completed_focus = ENG_the_crown_imperial }
+		subtract_from_temp_variable = { ENG_cmw_cohesion_change = 0.5 }
+	}
+	set_variable = { global.ENG_cmw_cohesion_delta = ENG_cmw_cohesion_change }
+	ENG_cmw_change_cohesion = yes
+}
+
+# Monthly, ROOT = ENG on the Western path. Cohesion above 25 raises foreign influence; 50 and 75 each add an auto-influence slot.
+ENG_cmw_update_influence_dm = {
+	set_variable = { ENG_cmw_foreign_influence = { value = global.commonwealth_cohesion subtract = 25 multiply = 0.004 } }
+	if = {
+		limit = { has_idea = ENG_cmw_trade_area_idea }
+		multiply_variable = { ENG_cmw_foreign_influence = 1.33 }
+	}
+	if = {
+		limit = { check_variable = { global.commonwealth_cohesion > 74.999 } }
+		set_variable = { ENG_cmw_auto_influence_cap = 2 }
+	}
+	else_if = {
+		limit = { check_variable = { global.commonwealth_cohesion > 49.999 } }
+		set_variable = { ENG_cmw_auto_influence_cap = 1 }
+	}
+	else = {
+		set_variable = { ENG_cmw_auto_influence_cap = 0 }
+	}
+	if = {
+		limit = { check_variable = { ENG_cmw_foreign_influence > 0 } }
+		if = { limit = { NOT = { has_dynamic_modifier = { modifier = ENG_cmw_influence_dm } } } add_dynamic_modifier = { modifier = ENG_cmw_influence_dm } }
+	}
+	else_if = {
+		limit = { has_dynamic_modifier = { modifier = ENG_cmw_influence_dm } }
+		remove_dynamic_modifier = { modifier = ENG_cmw_influence_dm }
+	}
+}
+
+# Monthly, ROOT = ENG. CHOGM meets every other October; a member that bid hosts, otherwise a random member.
+ENG_cmw_schedule_chogm = {
+	if = {
+		limit = {
+			NOT = { has_global_flag = ENG_cmw_chogm_cycle }
+			check_variable = { global.month = 10 }
+			check_variable = { global.commonwealth_member^num > 0 }
+		}
+		if = {
+			limit = {
+				has_global_flag = ENG_cmw_chogm_host_bid
+				var:global.ENG_cmw_chogm_host = { ENG_cmw_is_member = yes }
+			}
+			var:global.ENG_cmw_chogm_host = { country_event = ENG_cmw.10 }
+		}
+		else = {
+			random_scope_in_array = {
+				array = global.commonwealth_member
+				set_variable = { global.ENG_cmw_chogm_host = THIS.id }
+				country_event = ENG_cmw.10
+			}
+		}
+		ENG_cmw_chogm_outcome = yes
+		set_global_flag = { flag = ENG_cmw_chogm_cycle value = 1 days = 700 }
+		clr_global_flag = ENG_cmw_chogm_host_bid
+	}
+}
+
+# ROOT = ENG. The meeting judges British conduct; only a member is judged.
+ENG_cmw_chogm_outcome = {
+	if = {
+		limit = { ENG_cmw_is_member = yes }
+		if = {
+			limit = {
+				check_variable = { global.commonwealth_cohesion > 59.999 }
+				check_variable = { ENG_imperial_tension < 40 }
+			}
+			country_event = { id = ENG_cmw.11 days = 1 }
+			set_variable = { global.ENG_cmw_chogm_result = 1 }
+		}
+		else_if = {
+			limit = {
+				OR = {
+					check_variable = { global.commonwealth_cohesion < 40 }
+					check_variable = { ENG_imperial_tension > 39.999 }
+				}
+			}
+			country_event = { id = ENG_cmw.12 days = 1 }
+			set_variable = { global.ENG_cmw_chogm_result = -1 }
+		}
+		else = {
+			country_event = { id = ENG_cmw.13 days = 1 }
+			set_variable = { global.ENG_cmw_chogm_result = 0 }
+		}
+	}
+	else = {
+		set_variable = { global.ENG_cmw_chogm_result = 0 }
+	}
+	every_other_country = {
+		limit = {
+			ENG_cmw_is_member = yes
+			NOT = { check_variable = { global.ENG_cmw_chogm_host = THIS } }
+		}
+		country_event = { id = ENG_cmw.14 days = 1 }
+	}
+}
+
+# Call in the member's scope with ROOT = ENG.
+ENG_cmw_suspend_member = {
+	if = { limit = { has_dynamic_modifier = { modifier = Commonwealth_member_modifier } } remove_dynamic_modifier = { modifier = Commonwealth_member_modifier } }
+	remove_from_array = { global.commonwealth_member = THIS }
+	add_ideas = ENG_cmw_suspended
+	add_to_array = { global.ENG_cmw_former_members = THIS }
+	add_opinion_modifier = { target = ROOT modifier = ENG_cmw_suspended_opinion }
+	country_event = ENG_cmw.20
+}
+
+# Call in the rejoining country's scope.
+ENG_cmw_restore_member = {
+	if = {
+		limit = { has_idea = ENG_cmw_suspended }
+		remove_ideas = ENG_cmw_suspended
+	}
+	add_dynamic_modifier = { modifier = Commonwealth_member_modifier }
+	add_to_array = { global.commonwealth_member = THIS }
+	remove_from_array = { global.ENG_cmw_former_members = THIS }
+	set_temp_variable = { ENG_cmw_cohesion_change = 1 }
+	ENG_cmw_change_cohesion = yes
+}
+
+# Monthly driver, ROOT = ENG
+ENG_cmw_monthly = {
+	ENG_cmw_update_cohesion = yes
+	if = {
+		limit = {
+			has_completed_focus = ENG_a_family_of_nations
+			ENG_cmw_is_member = yes
+		}
+		ENG_cmw_update_influence_dm = yes
+	}
+	else_if = {
+		limit = { has_dynamic_modifier = { modifier = ENG_cmw_influence_dm } }
+		remove_dynamic_modifier = { modifier = ENG_cmw_influence_dm }
+	}
+	ENG_cmw_schedule_chogm = yes
+}
+
+# ENG scope. Repeals the Good Friday Agreement.
+ENG_repeal_good_friday_agreement_effect = {
+	custom_effect_tooltip = ENG_repeal_gfa_remove_TT
+	hidden_effect = { remove_ideas = ENG_good_friday_agreement }
+	add_stability = -0.10
+	set_temp_variable = { ENG_agitation_change = 25 }
+	ENG_change_north_irish_agitation = yes
+	set_temp_variable = { ENG_nationalists_change = 15 }
+	ENG_change_north_irish_nationalists = yes
+	set_temp_variable = { ENG_dependency_change = -10 }
+	ENG_change_north_irish_dependency = yes
+	if = {
+		limit = { NOT = { has_idea = ENG_the_dissident_campaign } }
+		add_ideas = ENG_the_dissident_campaign
+	}
+	newline = yes
+	activate_mission = ENG_ulster_on_the_brink
+	custom_effect_tooltip = ENG_ulster_on_the_brink_activated_TT
+	if = {
+		limit = {
+			country_exists = IRE
+			NOT = { IRE = { is_subject_of = ROOT } }
+		}
+		newline = yes
+		custom_effect_tooltip = ENG_repeal_gfa_dublin_TT
+		hidden_effect = { IRE = { country_event = { id = ENG_uq.110 days = 2 } } }
+	}
+}
+
 ENG_settle_northern_ireland_question = {
 	if = {
 		limit = { has_idea = ENG_good_friday_agreement }
@@ -493,6 +2519,7 @@ ENG_sync_referendum_stay_vote = {
 	subtract_from_variable = { var = ENG_referendum_stay_vote value = ENG_referendum_leave_vote }
 }
 
+# Opening ballot position: nationalism carries twice the weight of the wider pressure score
 ENG_seed_referendum_campaign = {
 	clr_country_flag = ENG_referendum_pledge_used
 	if = {
@@ -548,6 +2575,15 @@ ENG_resolve_independence_referendum = {
 
 ENG_resolve_union_settlement = {
 	ENG_sync_referendum_stay_vote = yes
+	# Hard mode: the status quo bias only lifts once the Union Dividend has been paid
+	if = {
+		limit = {
+			has_completed_focus = ENG_one_nation
+			NOT = { has_completed_focus = ENG_the_union_dividend }
+		}
+		subtract_from_variable = { var = ENG_referendum_stay_vote value = 10 }
+		clamp_variable = { var = ENG_referendum_stay_vote min = 0 max = 100 }
+	}
 	update_eng_devolution_dirty_variable = yes
 	random_list = {
 		ENG_referendum_stay_vote = {
@@ -673,6 +2709,479 @@ ENG_integrate_referendum_region = {
 			remove_core_of = WAS
 		}
 		ENG_apply_integrated_baseline = yes
+	}
+	ENG_centralisation_backlash = yes
+	update_eng_devolution_dirty_variable = yes
+}
+
+# Hard mode: each integration unsettles the regions still devolved
+ENG_centralisation_backlash = {
+	if = {
+		limit = { has_completed_focus = ENG_one_nation }
+		if = {
+			limit = { NOT = { has_country_flag = ENG_scottish_integrated } }
+			set_temp_variable = { ENG_agitation_change = 5 }
+			ENG_change_scottish_agitation = yes
+			set_temp_variable = { ENG_nationalists_change = 3 }
+			ENG_change_scottish_nationalists = yes
+		}
+		if = {
+			limit = { NOT = { has_country_flag = ENG_north_irish_integrated } }
+			set_temp_variable = { ENG_agitation_change = 5 }
+			ENG_change_north_irish_agitation = yes
+			set_temp_variable = { ENG_nationalists_change = 3 }
+			ENG_change_north_irish_nationalists = yes
+		}
+		if = {
+			limit = { NOT = { has_country_flag = ENG_welsh_integrated } }
+			set_temp_variable = { ENG_agitation_change = 5 }
+			ENG_change_wales_agitation = yes
+			set_temp_variable = { ENG_nationalists_change = 3 }
+			ENG_change_wales_nationalists = yes
+		}
+	}
+}
+
+# Country scope (ENG). The released nation gets War of Independence and its militia army.
+ENG_raise_scottish_rising = {
+	SCO = {
+		add_ideas = ENG_war_of_independence
+		division_template = {
+			name = "The Fowk's Airmy o Scotland"
+			priority = 0
+			regiments = {
+				Militia_Bat = { x = 0 y = 0 }
+				Militia_Bat = { x = 0 y = 1 }
+				Militia_Bat = { x = 0 y = 2 }
+				Arty_Bat = { x = 0 y = 3 }
+				Militia_Bat = { x = 1 y = 0 }
+				Militia_Bat = { x = 1 y = 1 }
+				Militia_Bat = { x = 1 y = 2 }
+				Arty_Bat = { x = 1 y = 3 }
+				Militia_Bat = { x = 2 y = 0 }
+				Militia_Bat = { x = 2 y = 1 }
+				Militia_Bat = { x = 2 y = 2 }
+				Arty_Bat = { x = 2 y = 3 }
+			}
+			support = {
+				L_Recce_Comp = { x = 0 y = 0 }
+				L_Engi_Comp = { x = 0 y = 1 }
+				combat_service_support_company = { x = 0 y = 2 }
+				Arty_Battery = { x = 0 y = 3 }
+			}
+		}
+		9 = {
+			create_unit = {
+				division = "name = \"1st. Airmy o Freedom\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = SCO
+				prioritize_location = 6395
+			}
+			create_unit = {
+				division = "name = \"2nd. Airmy o Leddom\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = SCO
+				prioritize_location = 9392
+			}
+			create_unit = {
+				division = "name = \"3rd. Scots Freedom Division\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = SCO
+				prioritize_location = 9383
+			}
+			create_unit = {
+				division = "name = \"4th. Red Thistle Division\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = SCO
+				prioritize_location = 6320
+			}
+		}
+		1194 = {
+			create_unit = {
+				division = "name = \"5th. Bannockburn Division\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = SCO
+				prioritize_location = 9237
+			}
+			create_unit = {
+				division = "name = \"6th. Bruce Division\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = SCO
+				prioritize_location = 9350
+			}
+			create_unit = {
+				division = "name = \"7th. Covenant Host\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = SCO
+				prioritize_location = 11218
+			}
+			create_unit = {
+				division = "name = \"8th. Host o Alba\" division_template = \"The Fowk's Airmy o Scotland\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = SCO
+				prioritize_location = 9314
+			}
+		}
+	}
+}
+
+ENG_raise_welsh_rising = {
+	WAS = {
+		add_ideas = ENG_war_of_independence
+		division_template = {
+			name = "Byddin Rhyddid"
+			priority = 0
+			regiments = {
+				Militia_Bat = { x = 0 y = 0 }
+				Militia_Bat = { x = 0 y = 1 }
+				Militia_Bat = { x = 0 y = 2 }
+				Arty_Bat = { x = 0 y = 3 }
+				Militia_Bat = { x = 1 y = 0 }
+				Militia_Bat = { x = 1 y = 1 }
+				Militia_Bat = { x = 1 y = 2 }
+				Arty_Bat = { x = 1 y = 3 }
+				Militia_Bat = { x = 2 y = 0 }
+				Militia_Bat = { x = 2 y = 1 }
+				Militia_Bat = { x = 2 y = 2 }
+				Arty_Bat = { x = 2 y = 3 }
+			}
+			support = {
+				L_Recce_Comp = { x = 0 y = 0 }
+				L_Engi_Comp = { x = 0 y = 1 }
+				combat_service_support_company = { x = 0 y = 2 }
+				Arty_Battery = { x = 0 y = 3 }
+			}
+		}
+		16 = {
+			create_unit = {
+				division = "name = \"1st. Byddin y Bobl\" division_template = \"Byddin Rhyddid\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = WAS
+				prioritize_location = 3274
+			}
+			create_unit = {
+				division = "name = \"2nd. Byddin Gwrthsafiad\" division_template = \"Byddin Rhyddid\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = WAS
+				prioritize_location = 253
+			}
+			create_unit = {
+				division = "name = \"3rd. Byddin Genedlaethol Cymru\" division_template = \"Byddin Rhyddid\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = WAS
+				prioritize_location = 407
+			}
+			create_unit = {
+				division = "name = \"4th. Byddin y Faner Goch\" division_template = \"Byddin Rhyddid\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = WAS
+				prioritize_location = 377
+			}
+		}
+		1192 = {
+			create_unit = {
+				division = "name = \"5th. Byddin y Bobl\" division_template = \"Byddin Rhyddid\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = WAS
+				prioritize_location = 9364
+			}
+			create_unit = {
+				division = "name = \"6th. Byddin Gwrthsafiad\" division_template = \"Byddin Rhyddid\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = WAS
+				prioritize_location = 311
+			}
+		}
+	}
+}
+
+ENG_raise_north_irish_rising = {
+	NIR = {
+		add_ideas = ENG_war_of_independence
+		division_template = {
+			name = "Arm Saoirse"
+			priority = 0
+			regiments = {
+				Militia_Bat = { x = 0 y = 0 }
+				Militia_Bat = { x = 0 y = 1 }
+				Militia_Bat = { x = 0 y = 2 }
+				Arty_Bat = { x = 0 y = 3 }
+				Militia_Bat = { x = 1 y = 0 }
+				Militia_Bat = { x = 1 y = 1 }
+				Militia_Bat = { x = 1 y = 2 }
+				Arty_Bat = { x = 1 y = 3 }
+				Militia_Bat = { x = 2 y = 0 }
+				Militia_Bat = { x = 2 y = 1 }
+				Militia_Bat = { x = 2 y = 2 }
+				Arty_Bat = { x = 2 y = 3 }
+			}
+			support = {
+				L_Recce_Comp = { x = 0 y = 0 }
+				L_Engi_Comp = { x = 0 y = 1 }
+				combat_service_support_company = { x = 0 y = 2 }
+				Arty_Battery = { x = 0 y = 3 }
+			}
+		}
+		17 = {
+			create_unit = {
+				division = "name = \"1st. Arm Fuascailte\" division_template = \"Arm Saoirse\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = NIR
+				prioritize_location = 14492
+			}
+			create_unit = {
+				division = "name = \"2nd. Arm an Phobail\" division_template = \"Arm Saoirse\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = NIR
+				prioritize_location = 276
+			}
+			create_unit = {
+				division = "name = \"3rd. Arm an Athbheochana\" division_template = \"Arm Saoirse\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = NIR
+				prioritize_location = 3329
+			}
+			create_unit = {
+				division = "name = \"4th. Arm Uladh\" division_template = \"Arm Saoirse\" start_experience_factor = 1.0 start_equipment_factor = 1.0"
+				owner = NIR
+				prioritize_location = 3379
+			}
+		}
+	}
+}
+
+# Direct rule. State scope; reads ENG_resistance_tier_change (1-3). Tier 2 is the old fixed penalty.
+ENG_apply_resistance_against_westminster = {
+	set_variable = { ENG_resistance_tier = ENG_resistance_tier_change }
+	if = {
+		limit = { check_variable = { ENG_resistance_tier = 1 } }
+		set_variable = { ENG_rw_productivity = -0.10 }
+		set_variable = { ENG_rw_manpower = -0.05 }
+		set_variable = { ENG_rw_supplies = -0.10 }
+		set_variable = { ENG_rw_resources = -0.15 }
+		set_variable = { ENG_rw_attrition = 0.03 }
+	}
+	else_if = {
+		limit = { check_variable = { ENG_resistance_tier = 2 } }
+		set_variable = { ENG_rw_productivity = -0.25 }
+		set_variable = { ENG_rw_manpower = -0.20 }
+		set_variable = { ENG_rw_supplies = -0.30 }
+		set_variable = { ENG_rw_resources = -0.50 }
+		set_variable = { ENG_rw_attrition = 0.10 }
+	}
+	else = {
+		set_variable = { ENG_rw_productivity = -0.40 }
+		set_variable = { ENG_rw_manpower = -0.35 }
+		set_variable = { ENG_rw_supplies = -0.50 }
+		set_variable = { ENG_rw_resources = -0.75 }
+		set_variable = { ENG_rw_attrition = 0.20 }
+	}
+	if = {
+		limit = { NOT = { has_dynamic_modifier = { modifier = ENG_resistance_against_westminster } } }
+		add_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+	}
+}
+
+ENG_remove_resistance_against_westminster = {
+	if = {
+		limit = { has_dynamic_modifier = { modifier = ENG_resistance_against_westminster } }
+		remove_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+	}
+	set_variable = { ENG_resistance_tier = 0 }
+}
+
+# Reads ENG_uq_region_pressure, sets ENG_resistance_tier_change
+ENG_uq_tier_from_pressure = {
+	if = {
+		limit = { check_variable = { ENG_uq_region_pressure < 25 } }
+		set_temp_variable = { ENG_resistance_tier_change = 1 }
+	}
+	else_if = {
+		limit = { check_variable = { ENG_uq_region_pressure < 50 } }
+		set_temp_variable = { ENG_resistance_tier_change = 2 }
+	}
+	else = {
+		set_temp_variable = { ENG_resistance_tier_change = 3 }
+	}
+}
+
+ENG_uq_update_direct_rule = {
+	if = {
+		limit = { ENG_uq_scotland_under_direct_rule = yes }
+		set_temp_variable = { ENG_uq_region_pressure = ENG_scottish_pressure }
+		ENG_uq_tier_from_pressure = yes
+		every_owned_state = {
+			limit = { is_core_of = SCO }
+			ENG_apply_resistance_against_westminster = yes
+		}
+	}
+	if = {
+		limit = { ENG_uq_north_ireland_under_direct_rule = yes }
+		set_temp_variable = { ENG_uq_region_pressure = ENG_north_irish_pressure }
+		ENG_uq_tier_from_pressure = yes
+		17 = {
+			ENG_apply_resistance_against_westminster = yes
+		}
+	}
+	if = {
+		limit = { ENG_uq_wales_under_direct_rule = yes }
+		set_temp_variable = { ENG_uq_region_pressure = ENG_wales_pressure }
+		ENG_uq_tier_from_pressure = yes
+		every_owned_state = {
+			limit = { is_core_of = WAS }
+			ENG_apply_resistance_against_westminster = yes
+		}
+	}
+}
+
+ENG_uq_scottish_unrest = {
+	random_list = {
+		60 = { country_event = ENG_uq.70 }
+		20 = {
+			country_event = ENG_uq.76
+			modifier = { factor = 0 NOT = { has_country_flag = ENG_uq_loyalists_funded } }
+		}
+		20 = {
+			country_event = ENG_uq.73
+			modifier = {
+				factor = 0
+				OR = {
+					check_variable = { ENG_scottish_nationalists < 40 }
+					has_country_flag = ENG_uq_declaration_cooldown
+				}
+			}
+		}
+	}
+}
+
+ENG_uq_north_irish_unrest = {
+	random_list = {
+		60 = { country_event = ENG_uq.71 }
+		20 = {
+			country_event = ENG_uq.77
+			modifier = { factor = 0 NOT = { has_country_flag = ENG_uq_loyalists_funded } }
+		}
+	}
+}
+
+ENG_uq_welsh_unrest = {
+	random_list = {
+		60 = { country_event = ENG_uq.72 }
+		20 = {
+			country_event = ENG_uq.78
+			modifier = { factor = 0 NOT = { has_country_flag = ENG_uq_loyalists_funded } }
+		}
+		20 = {
+			country_event = ENG_uq.74
+			modifier = { factor = 0 has_country_flag = ENG_uq_welsh_exile_assembly }
+		}
+	}
+}
+
+ENG_uq_suspension_monthly = {
+	if = {
+		limit = { ENG_uq_scotland_under_direct_rule = yes }
+		set_temp_variable = { ENG_agitation_change = -2 }
+		ENG_change_scottish_agitation = yes
+	}
+	if = {
+		limit = { ENG_uq_north_ireland_under_direct_rule = yes }
+		set_temp_variable = { ENG_agitation_change = -2 }
+		ENG_change_north_irish_agitation = yes
+	}
+	if = {
+		limit = { ENG_uq_wales_under_direct_rule = yes }
+		set_temp_variable = { ENG_agitation_change = -2 }
+		ENG_change_wales_agitation = yes
+	}
+	ENG_uq_update_direct_rule = yes
+	if = {
+		limit = {
+			NOT = { has_active_mission = ENG_uq_scottish_martial_law }
+			NOT = { has_country_flag = ENG_scottish_integrated }
+			check_variable = { ENG_scottish_agitation > 40 }
+			any_owned_state = { is_core_of = SCO }
+		}
+		activate_mission = ENG_uq_scottish_martial_law
+	}
+	if = {
+		limit = {
+			NOT = { has_active_mission = ENG_uq_north_irish_martial_law }
+			NOT = { has_country_flag = ENG_north_irish_integrated }
+			check_variable = { ENG_north_irish_agitation > 40 }
+			any_owned_state = { is_core_of = NIR }
+		}
+		activate_mission = ENG_uq_north_irish_martial_law
+	}
+	if = {
+		limit = {
+			NOT = { has_active_mission = ENG_uq_welsh_martial_law }
+			NOT = { has_country_flag = ENG_welsh_integrated }
+			check_variable = { ENG_wales_agitation > 40 }
+			any_owned_state = { is_core_of = WAS }
+		}
+		activate_mission = ENG_uq_welsh_martial_law
+	}
+	if = {
+		limit = {
+			has_active_mission = ENG_uq_scottish_martial_law
+			ENG_uq_scottish_garrisoned = yes
+		}
+		set_temp_variable = { ENG_agitation_change = -5 }
+		ENG_change_scottish_agitation = yes
+	}
+	if = {
+		limit = {
+			has_active_mission = ENG_uq_north_irish_martial_law
+			ENG_uq_north_irish_garrisoned = yes
+		}
+		set_temp_variable = { ENG_agitation_change = -5 }
+		ENG_change_north_irish_agitation = yes
+	}
+	if = {
+		limit = {
+			has_active_mission = ENG_uq_welsh_martial_law
+			ENG_uq_welsh_garrisoned = yes
+		}
+		set_temp_variable = { ENG_agitation_change = -5 }
+		ENG_change_wales_agitation = yes
+	}
+	if = {
+		limit = { ENG_uq_scotland_suspended = yes }
+		if = {
+			limit = {
+				check_variable = { ENG_scottish_pressure > 80 }
+				NOT = { has_country_flag = ENG_scottish_rising_cooldown }
+			}
+			country_event = ENG_uq.80
+		}
+		else_if = {
+			limit = { check_variable = { ENG_scottish_agitation > 49 } }
+			random = { chance = 40 ENG_uq_scottish_unrest = yes }
+		}
+		else_if = {
+			limit = { check_variable = { ENG_scottish_agitation > 24 } }
+			random = { chance = 20 ENG_uq_scottish_unrest = yes }
+		}
+	}
+	if = {
+		limit = { ENG_uq_north_ireland_suspended = yes }
+		if = {
+			limit = {
+				check_variable = { ENG_north_irish_pressure > 80 }
+				NOT = { has_country_flag = ENG_north_irish_rising_cooldown }
+			}
+			country_event = ENG_uq.81
+		}
+		else_if = {
+			limit = { check_variable = { ENG_north_irish_agitation > 49 } }
+			random = { chance = 40 ENG_uq_north_irish_unrest = yes }
+		}
+		else_if = {
+			limit = { check_variable = { ENG_north_irish_agitation > 24 } }
+			random = { chance = 20 ENG_uq_north_irish_unrest = yes }
+		}
+	}
+	if = {
+		limit = { ENG_uq_wales_suspended = yes }
+		if = {
+			limit = {
+				check_variable = { ENG_wales_pressure > 80 }
+				NOT = { has_country_flag = ENG_welsh_rising_cooldown }
+			}
+			country_event = ENG_uq.82
+		}
+		else_if = {
+			limit = { check_variable = { ENG_wales_agitation > 49 } }
+			random = { chance = 40 ENG_uq_welsh_unrest = yes }
+		}
+		else_if = {
+			limit = { check_variable = { ENG_wales_agitation > 24 } }
+			random = { chance = 20 ENG_uq_welsh_unrest = yes }
+		}
 	}
 }
 
@@ -1735,15 +4244,4 @@ ENG_arm_milestone_2026 = {
 		limit = { has_game_rule = { rule = rule_corporate_history option = outcomes_only } }
 		ENG_arm_apply_licensing_island = yes
 	}
-}
-
-ENG_update_commonwealth_totals = {
-	set_variable = { commonwealth_total_gdp = 0 }
-	add_to_variable = { var = commonwealth_total_gdp value = NZL.gdp_total }
-	add_to_variable = { var = commonwealth_total_gdp value = CAN.gdp_total }
-	add_to_variable = { var = commonwealth_total_gdp value = AST.gdp_total }
-	set_variable = { commonwealth_total_army = 0 }
-	add_to_variable = { var = commonwealth_total_army value = NZL.deployed_army_manpower_k }
-	add_to_variable = { var = commonwealth_total_army value = CAN.deployed_army_manpower_k }
-	add_to_variable = { var = commonwealth_total_army value = AST.deployed_army_manpower_k }
 }

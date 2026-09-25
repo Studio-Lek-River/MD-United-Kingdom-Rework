@@ -411,7 +411,7 @@ Paths: `common/` files may appear by basename alone — focus trees live in `com
 - **Turkey-Syria union** (focus-union; AI: yes) — `turkey.txt:16786` (`TUR_turkey_syria_union`); `events/Turkey.txt:4393`. Writes: cosmetic `TUR_TURKEY_SYRIA_UNION`; annex SYR. Ratchet: none.
 - **Polish-Lithuanian Commonwealth / Visegrad** (focus-union; AI: `base = 50`) — `05_poland.txt:26299` (`POL_make_two_nations_one_again`, cosmetic :26349); Visegrad below. Writes: cosmetic `POL_LIT` / `POL_QUAD` / `POL_LIT_QUAD`; annex LIT; subjects. Ratchet: none.
 - **Baltic union under Estonia** (focus-union; AI: yes) — `05_estonia.txt:3340` (`EST_dreams_of_union`). Writes: annex LIT/LAT; no cosmetic. Ratchet: sub-step of BLT (id 1).
-- **Commonwealth Federation** (focus-union; AI: `base = 1`) — `05_united_kingdom.txt:20317` (`ENG_declare_the_commonwealth`, cosmetic :20374); Ireland below. Writes: cosmetic `ENG_commonwealth_federation`; annex 3 subjects; cores. Ratchet: sub-step of CANZUK (id 15).
+- **Commonwealth Federation** (focus-union; AI: `base = 0`) — `05_united_kingdom.txt` capstone `ENG_the_crown_realms_united` (its nationalist branch sets the cosmetic once `ENG_uq_canzuk_integrated`); annexation runs through `ENG_uq_enter_stage_4` in `99_ENG_scripted_effects..txt`; Ireland below. Writes: cosmetic `ENG_commonwealth_federation`; cores + annex via the ladder. Ratchet: sub-step of CANZUK (id 15).
 - **Gulf super-state** (focus-union; AI: `base = 1`) — `gulf_shared.txt:1551` (`GCC_gulf_super_state`, cosmetic :1618); `05_saudi_arabia.txt:1544` (below). Writes: cosmetic `GCC`; cores + annex; two `*_completed` globals (below). Ratchet: none (not wired).
 - **United States of Africa** (special; AI: yes) — `06_AfricanUnion_shared.txt:2619` (§4.5). Writes: cosmetic `AFRICAN_UNION`; `African_Union_united`; `is_united_states_of_africa`; cores + annex/puppet. Ratchet: sentinel 105.
 - **Alpine Federation** (focus-union; AI: `base = 2`) — `05_switzerland.txt:6526` (`SWI_proclaim_the_alp_federation`, cosmetic :6547). Writes: cosmetic `SWI_alpine_federation`; cores. Ratchet: none.
@@ -448,7 +448,7 @@ Further anchors:
 - German empires / mandates: `05_germany.txt:21856` (`GER_restore_the_empire` → `germany.218`, latch `events/Germany.txt:4328`, :4338), SWI/AUS/BEL mandates.
 - United Islamic Republics: `PER_reunification` (`05_iran.txt:16230`) → `common/decisions/Iran.txt:3466` (`PER_integrate_*`).
 - Polish-Lithuanian Commonwealth / Visegrad: `05_poland.txt:21362` (`POL_quadruple_alliance`, :21409).
-- Commonwealth Federation: `05_ENG_decisions.txt:1523` (`ENG_integrate_ireland`).
+- Commonwealth Federation: `ENG_uq_enter_stage_4` (`99_ENG_scripted_effects..txt`) cores and annexes each ladder target, Ireland included. On the Nationalist path the last rung is `ENG_uq_crown_colony_status` (`autonomy_crown_colony` subject) or `ENG_uq_colonial_annexation_act` (stage 4 with temp `ENG_uq_colonial = 1`, annex without cores); `ENG_uq_canzuk_integrated` accepts either.
 - Gulf super-state: `05_saudi_arabia.txt:1544` (`SAU_unif_khaleeji_union`, :1599); globals `GCC_gulf_super_state_completed` / `SAU_unif_khaleeji_union_completed`.
 - China SAR integrations / Mongolia: `05_china.txt:28936` (`CHI_MON_reunification_offer`).
 

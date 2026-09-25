@@ -4,6 +4,7 @@ ENG_constituent_state_check = {
 		original_tag = NIR
 		original_tag = SCO
 		original_tag = WAS
+		ENG = { is_in_array = { array = ENG_integration_targets value = PREV } }
 	}
 }
 
@@ -49,6 +50,126 @@ ENG_referendum_in_progress = {
 	}
 }
 
+# Hard mode: the party that called the settlement referendum has lost office
+ENG_settlement_government_fell = {
+	has_completed_focus = ENG_one_nation
+	NOT = { check_variable = { ruling_party = ENG_settlement_ruling_party } }
+}
+
+# Country scope. Enough divisions stand in the region to enforce martial law.
+ENG_uq_scottish_garrisoned = {
+	divisions_in_state = { state = 9 size > 2 }
+	divisions_in_state = { state = 437 size > 0 }
+}
+
+ENG_uq_north_irish_garrisoned = {
+	divisions_in_state = { state = 17 size > 2 }
+}
+
+ENG_uq_welsh_garrisoned = {
+	divisions_in_state = { state = 16 size > 2 }
+	divisions_in_state = { state = 1192 size > 0 }
+}
+
+# Country scope. The Royal Navy keeps the Irish Sea closed.
+ENG_uq_irish_sea_blockade_held = {
+	has_idea = ENG_uq_irish_sea_blockade
+	has_navy_size = { size > 11 }
+}
+
+# Suspension: the region is still ours and still devolved
+ENG_uq_scotland_suspended = {
+	has_country_flag = ENG_uq_assemblies_suspended
+	NOT = { has_country_flag = ENG_scottish_integrated }
+	NOT = { country_exists = SCO }
+	ENG_holds_scotland = yes
+}
+
+ENG_uq_scotland_under_direct_rule = {
+	ENG_uq_scotland_suspended = yes
+	has_idea = ENG_direct_rule_idea
+	NOT = { has_country_flag = ENG_scottish_pacified }
+}
+
+ENG_uq_scotland_calm = {
+	check_variable = { var = ENG_scottish_pressure value = ENG_pacification_pressure_cap compare = less_than }
+	NOT = {
+		any_owned_state = {
+			is_core_of = SCO
+			has_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+			check_variable = { ENG_resistance_tier > 1 }
+		}
+	}
+}
+
+ENG_uq_north_ireland_suspended = {
+	has_country_flag = ENG_uq_assemblies_suspended
+	NOT = { has_country_flag = ENG_north_irish_integrated }
+	NOT = { country_exists = NIR }
+	ENG_holds_north_ireland = yes
+}
+
+ENG_uq_north_ireland_under_direct_rule = {
+	ENG_uq_north_ireland_suspended = yes
+	has_idea = ENG_direct_rule_idea
+	NOT = { has_country_flag = ENG_north_irish_pacified }
+}
+
+ENG_uq_north_ireland_calm = {
+	check_variable = { var = ENG_north_irish_pressure value = ENG_pacification_pressure_cap compare = less_than }
+	NOT = {
+		17 = {
+			has_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+			check_variable = { ENG_resistance_tier > 1 }
+		}
+	}
+}
+
+ENG_uq_wales_suspended = {
+	has_country_flag = ENG_uq_assemblies_suspended
+	NOT = { has_country_flag = ENG_welsh_integrated }
+	NOT = { country_exists = WAS }
+	ENG_holds_wales = yes
+}
+
+ENG_uq_wales_under_direct_rule = {
+	ENG_uq_wales_suspended = yes
+	has_idea = ENG_direct_rule_idea
+	NOT = { has_country_flag = ENG_welsh_pacified }
+}
+
+ENG_uq_wales_calm = {
+	check_variable = { var = ENG_wales_pressure value = ENG_pacification_pressure_cap compare = less_than }
+	NOT = {
+		any_owned_state = {
+			is_core_of = WAS
+			has_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+			check_variable = { ENG_resistance_tier > 1 }
+		}
+	}
+}
+
+ENG_uq_home_nations_pacified = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_home_nations_pacified_TT
+		OR = {
+			has_country_flag = ENG_scottish_pacified
+			has_country_flag = ENG_scottish_integrated
+			NOT = { any_owned_state = { is_core_of = SCO } }
+		}
+		OR = {
+			has_country_flag = ENG_welsh_pacified
+			has_country_flag = ENG_welsh_integrated
+			NOT = { any_owned_state = { is_core_of = WAS } }
+		}
+		OR = {
+			has_country_flag = ENG_north_irish_pacified
+			has_country_flag = ENG_north_irish_integrated
+			NOT = { any_owned_state = { is_core_of = NIR } }
+		}
+	}
+}
+
 ENG_inner_circle_is_ascension_cd_over = {
 	NOT = {
 		has_country_flag = {
@@ -73,15 +194,15 @@ ENG_uq_home_nations_done = {
 		tooltip = ENG_uq_home_nations_done_TT
 		OR = {
 			has_country_flag = ENG_scottish_integrated
-			NOT = { any_state = { is_core_of = SCO } }
+			NOT = { any_owned_state = { is_core_of = SCO } }
 		}
 		OR = {
 			has_country_flag = ENG_welsh_integrated
-			NOT = { any_state = { is_core_of = WAS } }
+			NOT = { any_owned_state = { is_core_of = WAS } }
 		}
 		OR = {
 			has_country_flag = ENG_north_irish_integrated
-			NOT = { any_state = { is_core_of = NIR } }
+			NOT = { any_owned_state = { is_core_of = NIR } }
 		}
 	}
 }
@@ -89,7 +210,28 @@ ENG_uq_home_nations_done = {
 ENG_uq_ireland_done = {
 	custom_trigger_tooltip = {
 		tooltip = ENG_uq_ireland_done_TT
-		check_variable = { ENG_integration_stage@IRE > 2 }
+		OR = {
+			IRE = { ENG_uq_stage_3 = yes }
+			IRE = { ENG_uq_crown_colony = yes }
+			has_country_flag = ENG_uq_integrated@IRE
+		}
+	}
+}
+
+ENG_uq_caribbean_opened = {
+	has_completed_focus = ENG_the_realms_beyond_the_seas
+}
+
+ENG_uq_path_in_power = {
+	OR = {
+		AND = {
+			has_completed_focus = ENG_a_family_of_nations
+			has_government = democratic
+		}
+		AND = {
+			has_completed_focus = ENG_the_crown_imperial
+			nationalist_monarchists_are_in_power = yes
+		}
 	}
 }
 
@@ -99,10 +241,433 @@ ENG_uq_realms_done = {
 		any_country = {
 			count = 3
 			is_in_array = { array = global.commonwealth_member value = THIS }
-			ROOT = { check_variable = { ENG_integration_stage@PREV > 1 } }
+			OR = {
+				ENG_uq_stage_2 = yes
+				ENG_uq_stage_3 = yes
+				ENG_uq_crown_colony = yes
+			}
 		}
 	}
 }
+
+# FROM = the ladder target
+ENG_uq_can_transition = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_strain_allows_transition_TT
+		check_variable = { ENG_union_strain < 61 }
+	}
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_not_at_war_TT
+		OR = {
+			has_war = no
+			has_completed_focus = ENG_the_crown_imperial
+		}
+	}
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_not_locked_TT
+		NOT = { has_country_flag = ENG_uq_lock@FROM }
+	}
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_offer_pending_TT
+		NOT = { has_country_flag = ENG_uq_offer_pending@FROM }
+	}
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_no_campaign_TT
+		OR = {
+			has_completed_focus = ENG_the_crown_imperial
+			FROM = { NOT = { has_idea = ENG_uq_sovereignty_campaign } }
+		}
+	}
+}
+
+# Target scope. Some coercive step has been taken against this target.
+ENG_uq_coerced = {
+	OR = {
+		has_idea = ENG_uq_loyalist_movement
+		has_idea = ENG_uq_embargoed
+		ENG = { has_country_flag = ENG_uq_ultimatum_rejected@PREV }
+		ENG = { has_country_flag = ENG_uq_claims@PREV }
+		ENG = { has_country_flag = ENG_uq_occupying@PREV }
+		ENG = { has_country_flag = ENG_uq_pacified@PREV }
+	}
+}
+
+# Target scope. On the ladder but not yet inside a British autonomy level.
+ENG_uq_stage_1 = {
+	NOT = { has_autonomy_state = autonomy_crown_dominion }
+	NOT = { has_autonomy_state = autonomy_crown_protectorate }
+	NOT = { has_autonomy_state = autonomy_constituent_country_very_low_devolution }
+	NOT = { has_autonomy_state = autonomy_crown_colony }
+}
+
+# Target scope. Associated with the Union as a dominion or a protectorate.
+ENG_uq_stage_2 = {
+	is_subject_of = ENG
+	OR = {
+		has_autonomy_state = autonomy_crown_dominion
+		has_autonomy_state = autonomy_crown_protectorate
+	}
+}
+
+# Target scope. A constituent country of the Union.
+ENG_uq_stage_3 = {
+	is_subject_of = ENG
+	has_autonomy_state = autonomy_constituent_country_very_low_devolution
+}
+
+# Target scope. A Crown Colony, the Nationalist path's subject ending.
+ENG_uq_crown_colony = {
+	is_subject_of = ENG
+	has_autonomy_state = autonomy_crown_colony
+}
+
+# Target scope. Britain is the top influencer here above 50%.
+ENG_uq_high_influence = {
+	check_variable = { influence_array^0 = ENG }
+	check_variable = { influence_array_val^0 > 49.999 }
+}
+
+# Target scope. Britain holds at least 30% influence here.
+ENG_uq_medium_influence = {
+	any_of = {
+		array = influence_array
+		value = v
+		index = i
+		var:v = { tag = ENG }
+		check_variable = { influence_array_val^i > 29.999 }
+	}
+}
+
+# Target scope. Ireland and single-state possessions are taken outright; realms and the old empire are puppeted.
+ENG_uq_annexation_target = {
+	OR = {
+		original_tag = IRE
+		num_of_controlled_states < 3
+	}
+}
+
+# FROM = the ladder target. True while every state it holds a core on is quiet under British rule.
+ENG_uq_states_pacified = {
+	NOT = {
+		any_state = {
+			is_core_of = FROM
+			OR = {
+				compliance < 70
+				resistance > 20
+			}
+		}
+	}
+}
+
+# ENG scope. Ireland's three states are quiet under the stricter Irish pacification bar.
+ENG_uq_irish_states_pacified = {
+	27 = { compliance > 75 resistance < 15 }
+	28 = { compliance > 75 resistance < 15 }
+	29 = { compliance > 75 resistance < 15 }
+}
+
+# Target scope with ROOT = ENG. No core state is still held by the target or by a country at war with Britain.
+ENG_uq_all_cores_held = {
+	any_state = { is_core_of = PREV }
+	NOT = {
+		any_state = {
+			is_core_of = PREV
+			NOT = { is_controlled_by = ROOT }
+			controller = { NOT = { is_subject_of = ROOT } }
+			OR = {
+				is_controlled_by = PREV
+				controller = { has_war_with = ROOT }
+			}
+		}
+	}
+}
+
+# Target scope. Occupied, or pacified but not yet a protectorate.
+ENG_uq_occupation_active = {
+	ENG_uq_stage_1 = yes
+	OR = {
+		ENG = { has_country_flag = ENG_uq_occupying@PREV }
+		ENG = { has_country_flag = ENG_uq_pacified@PREV }
+	}
+}
+
+# ENG scope. A coercion step or an occupation is under way, so Imperial Tension does not decay.
+ENG_uq_coercion_active = {
+	OR = {
+		has_idea = ENG_uq_embargo
+		has_idea = ENG_uq_occupation_burden
+		any_of_scopes = {
+			array = ENG_integration_targets
+			ENG = { has_country_flag = ENG_uq_claims@PREV }
+		}
+	}
+}
+
+# ENG scope. Ireland is being pulled into the Union beyond alignment, which the EU treats as a breach.
+ENG_uq_ireland_targeted = {
+	OR = {
+		IRE = {
+			OR = {
+				ENG_uq_stage_2 = yes
+				ENG_uq_stage_3 = yes
+				ENG_uq_crown_colony = yes
+				ENG_uq_coerced = yes
+			}
+		}
+		has_country_flag = ENG_uq_integrated@IRE
+	}
+}
+
+# ENG scope. The Commonwealth development fund is paying out, either through the fund idea or permanently under The Crown Imperial.
+ENG_uq_commonwealth_fund_running = {
+	OR = {
+		has_completed_focus = ENG_the_crown_imperial
+		custom_trigger_tooltip = {
+			tooltip = ENG_uq_fund_running_TT
+			has_idea = ENG_cmw_development_fund_idea
+		}
+	}
+}
+
+# Country scope. The Caribbean realms that share the Realms tier's group decisions.
+ENG_uq_is_caribbean_realm = {
+	OR = {
+		original_tag = JAM
+		original_tag = BAH
+		original_tag = BLZ
+		original_tag = ANT
+		original_tag = GRA
+		original_tag = BAR
+		original_tag = STK
+		original_tag = STL
+		original_tag = STV
+	}
+}
+
+# Country scope. The Commonwealth realms that keep the British monarch as head of state, plus any member that accepted the Crown under A Shared Crown.
+ENG_uq_is_crown_realm = {
+	OR = {
+		has_country_flag = ENG_uq_crown_accepted
+		ENG_uq_is_caribbean_realm = yes
+		original_tag = CAN
+		original_tag = AST
+		original_tag = NZL
+		original_tag = PAP
+		original_tag = SOL
+		original_tag = TUL
+	}
+}
+
+# Target scope. A wider-empire target opened by a tier 4 region focus.
+ENG_uq_is_ex_empire = {
+	check_variable = { ROOT.ENG_uq_region@THIS > 0 }
+}
+
+# Target scope. Hong Kong and the wider empire are permanently capped short of full integration; Malta and Cyprus are capped until the Crown is restored there.
+ENG_uq_stage_capped = {
+	OR = {
+		ENG_uq_is_ex_empire = yes
+		original_tag = HKG
+		AND = {
+			OR = {
+				original_tag = MLT
+				original_tag = CYP
+			}
+			NOT = { has_country_flag = ENG_uq_monarchy_restored }
+		}
+	}
+}
+
+# ENG scope. Cyprus is settled: either the island has one government controlling both its cores, or the Cypriot side is at peace.
+ENG_uq_cyprus_settled = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_cyprus_settled_TT
+		OR = {
+			NOT = { country_exists = NCY }
+			NOT = { country_exists = CYP }
+			146 = { owner = { owns_state = 145 } }
+		}
+	}
+	OR = {
+		NOT = { country_exists = CYP }
+		CYP = { has_war = no }
+	}
+}
+
+# ENG scope. Washington is distracted by domestic crisis and cannot press back over the Chagos.
+ENG_uq_usa_distracted = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_usa_distracted_TT
+		USA = {
+			OR = {
+				has_war = yes
+				has_stability < 0.4
+				has_civil_war = yes
+				has_idea = us_public_disorder
+				has_idea = us_public_disorder_two
+				has_idea = us_public_disorder_three
+				has_country_flag = collapsed_nation
+			}
+		}
+	}
+}
+
+# ENG scope. Washington is open to reopening the Chagos question.
+ENG_uq_chagos_gate = {
+	USA = { has_opinion = { target = ROOT value > 70 } }
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_usa_medium_influence_TT
+		USA = { influence_higher_20 = yes }
+	}
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_chagos_opening_TT
+		OR = {
+			USA = { has_war = yes }
+			USA = { NOT = { check_variable = { ruling_party = 1 } } }
+			has_country_flag = ENG_uq_chagos_ruling
+		}
+	}
+}
+
+# ENG scope. Canada, Australia and New Zealand have each reached full integration or ceased to exist as a separate realm.
+ENG_uq_canzuk_integrated = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_canzuk_integrated_TT
+		OR = {
+			has_country_flag = ENG_uq_integrated@CAN
+			NOT = { country_exists = CAN }
+			CAN = { ENG_uq_crown_colony = yes }
+		}
+		OR = {
+			has_country_flag = ENG_uq_integrated@AST
+			NOT = { country_exists = AST }
+			AST = { ENG_uq_crown_colony = yes }
+		}
+		OR = {
+			has_country_flag = ENG_uq_integrated@NZL
+			NOT = { country_exists = NZL }
+			NZL = { ENG_uq_crown_colony = yes }
+		}
+	}
+}
+
+# FROM = the ladder target. A guarantee by any third country blocks the Nationalist wargoal.
+ENG_uq_not_foreign_guaranteed = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_uq_not_foreign_guaranteed_TT
+		NOT = {
+			any_country = {
+				NOT = { tag = ROOT }
+				has_guaranteed = FROM
+			}
+		}
+	}
+}
+
+# Country scope with ROOT = ENG. A free country Britain can bring into its war.
+ENG_uq_war_partner = {
+	exists = yes
+	is_subject = no
+	NOT = { has_war_with = ROOT }
+}
+
+# Partner scope with ROOT = ENG. A partition partner that signed the compact and can still be brought into the war.
+ENG_uq_partition_partner_ready = {
+	ROOT = { has_country_flag = ENG_uq_partition_signed@PREV }
+	ENG_uq_war_partner = yes
+	NOT = { is_in_faction_with = USA }
+}
+
+# State scope. The Grand Partition shares: Britain takes the Oregon Country and New England.
+ENG_uq_partition_share_ENG = {
+	OR = {
+		state = 764
+		state = 765
+		state = 766
+		state = 767
+		state = 768
+		state = 808
+		state = 809
+		state = 810
+		state = 1084
+	}
+}
+
+# State scope. Mexico's share: the Mexican Cession and Texas.
+ENG_uq_partition_share_MEX = {
+	OR = {
+		state = 800
+		state = 803
+		state = 804
+		state = 805
+		state = 806
+		state = 807
+		state = 811
+	}
+}
+
+# State scope. Spain's share: Florida.
+ENG_uq_partition_share_SPR = {
+	state = 795
+}
+
+# State scope. France's share: the Louisiana Purchase.
+ENG_uq_partition_share_FRA = {
+	OR = {
+		state = 780
+		state = 781
+		state = 783
+		state = 784
+		state = 785
+		state = 786
+		state = 787
+		state = 788
+		state = 789
+		state = 797
+		state = 798
+		state = 799
+	}
+}
+
+# Target scope. A foreign power other than Britain holds at least 30% influence here and is not tied to London.
+ENG_uq_patron_available = {
+	any_of = {
+		array = influence_array
+		value = v
+		index = i
+		check_variable = { influence_array_val^i > 29.999 }
+		var:v = {
+			NOT = { tag = ENG }
+			NOT = { is_subject_of = ENG }
+			NOT = { is_in_faction_with = ENG }
+			has_war = no
+		}
+	}
+}
+
+# Commonwealth of Nations institution. Membership is the MD dynamic modifier; MD's is_commonwealth_member tests ROOT and is wrong inside loops.
+ENG_cmw_is_member = {
+	has_dynamic_modifier = { modifier = Commonwealth_member_modifier }
+}
+
+ENG_cmw_violates_harare_principles = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_cmw_violates_harare_principles_TT
+		OR = {
+			nationalist_military_junta_are_in_power = yes
+			jihadist_government = yes
+			has_civil_war = yes
+		}
+	}
+}
+
+ENG_cmw_cohesion_greater_60 = {
+	custom_trigger_tooltip = {
+		tooltip = ENG_cmw_cohesion_greater_60_tt
+		check_variable = { global.commonwealth_cohesion > 59.999 }
+	}
+}
+
 ENG_ai_not_historical_path = {
 	OR = {
 		has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
@@ -142,4 +707,76 @@ ENG_ai_not_rule_britannia_path = {
 ENG_ai_not_imperial_path = {
 	NOT = { has_global_flag = ENG_RULE_BRITANNIA_FOCUS_PATH }
 	has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
+}
+
+ENG_uq_ai_cannot_spend = {
+	OR = {
+		has_active_mission = bankruptcy_incoming_collapse
+		gdp_debt_ratio_higher_50 = yes
+		treasury_lower_than_10 = yes
+	}
+}
+
+# Union Question decision cost tiers. Each pairs a share of GDP against the treasury with the decision's political power price; the name matches the decision's custom_cost_text.
+ENG_uq_cost_small_pp25 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.002
+		less_than = { value = treasury }
+	}
+	has_political_power > 24.999
+}
+
+ENG_uq_cost_small_pp75 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.002
+		less_than = { value = treasury }
+	}
+	has_political_power > 74.999
+}
+
+ENG_uq_cost_small_pp100 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.002
+		less_than = { value = treasury }
+	}
+	has_political_power > 99.999
+}
+
+ENG_uq_cost_medium_pp50 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.004
+		less_than = { value = treasury }
+	}
+	has_political_power > 49.999
+}
+
+ENG_uq_cost_medium_pp75 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.004
+		less_than = { value = treasury }
+	}
+	has_political_power > 74.999
+}
+
+ENG_uq_cost_medium_pp150 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.004
+		less_than = { value = treasury }
+	}
+	has_political_power > 149.999
+}
+
+ENG_uq_cost_large_pp300 = {
+	check_expr = {
+		value = gdp_total
+		multiply = 0.006
+		less_than = { value = treasury }
+	}
+	has_political_power > 299.999
 }

@@ -32,13 +32,21 @@ ENG_overseas_territory = {
 	state_air_base_max_level_terrain_limit = 1
 }
 
+ENG_uq_fortress_state = {
+	icon = GFX_idea_westminster_system
+
+	state_production_speed_bunker_factor = 0.20
+	state_production_speed_coastal_bunker_factor = 0.20
+	state_production_speed_anti_air_building_factor = 0.20
+}
+
 ENG_resistance_against_westminster = {
 	icon = GFX_idea_fire
-	state_productivity_growth_modifier = -0.25
-	local_manpower = -0.20
-	local_supplies = -0.30
-	state_resources_factor = -0.15
-	attrition_for_controller = 0.10
+	state_productivity_growth_modifier = ENG_rw_productivity
+	local_manpower = ENG_rw_manpower
+	local_supplies = ENG_rw_supplies
+	state_resources_factor = ENG_rw_resources
+	attrition_for_controller = ENG_rw_attrition
 }
 
 ENG_economy_modifier = {
@@ -148,6 +156,54 @@ ENG_political_modifier = {
 	special_forces_cap = ENG_special_forces_cap_percent
 	army_morale_factor = ENG_army_morale_factor
 	econ_cycle_upg_cost_multiplier_modifier = ENG_econ_cycle_upg_cost_multiplier_modifier
+}
+
+ENG_union_question_dm = {
+	icon = GFX_idea_westminster_system
+	custom_modifier_tooltip = ENG_union_question_dm_TT
+
+	stability_weekly = ENG_uq_stability_weekly
+	political_power_factor = ENG_uq_political_power_factor
+	democratic_drift = ENG_uq_democratic_drift
+	consumer_goods_factor = ENG_uq_consumer_goods_factor
+	bureaucracy_cost_multiplier_modifier = ENG_uq_bureaucracy_cost
+	stability_factor = ENG_uq_stability_factor
+	war_support_factor = ENG_uq_war_support_factor
+	trade_opinion_factor = ENG_uq_trade_opinion_factor
+	opinion_gain_monthly_factor = ENG_uq_opinion_gain_monthly_factor
+	required_garrison_factor = ENG_uq_required_garrison_factor
+	conscription_factor = ENG_uq_conscription_factor
+	army_morale_factor = ENG_uq_army_morale_factor
+}
+
+ENG_uq_occupation_dm = {
+	icon = GFX_idea_fire
+
+	resistance_target = ENG_uq_occ_resistance_target
+	compliance_growth = ENG_uq_occ_compliance_growth
+}
+
+ENG_uq_strike_dm = {
+	icon = GFX_idea_fire
+
+	local_factory_sabotage = 0.25
+	state_productivity_growth_modifier = -0.10
+}
+
+ENG_uq_irish_partisans_dm = {
+	icon = GFX_idea_fire
+
+	local_factory_sabotage = 0.15
+	required_garrison_factor = 0.25
+	state_productivity_growth_modifier = -0.10
+}
+
+ENG_cmw_influence_dm = {
+	icon = GFX_idea_commonwealth_member
+	custom_modifier_tooltip = ENG_cmw_influence_dm_TT
+
+	foreign_influence_modifier = ENG_cmw_foreign_influence
+	foreign_influence_auto_influence_cap_modifier = ENG_cmw_auto_influence_cap
 }
 
 ENG_invest_northern_ireland = {
