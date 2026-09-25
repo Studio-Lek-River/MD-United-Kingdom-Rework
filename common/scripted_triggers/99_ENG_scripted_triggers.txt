@@ -571,6 +571,64 @@ ENG_uq_war_partner = {
 	NOT = { has_war_with = ROOT }
 }
 
+# Partner scope with ROOT = ENG. A partition partner that signed the compact and can still be brought into the war.
+ENG_uq_partition_partner_ready = {
+	ROOT = { has_country_flag = ENG_uq_partition_signed@PREV }
+	ENG_uq_war_partner = yes
+	NOT = { is_in_faction_with = USA }
+}
+
+# State scope. The Grand Partition shares: Britain takes the Oregon Country and New England.
+ENG_uq_partition_share_ENG = {
+	OR = {
+		state = 764
+		state = 765
+		state = 766
+		state = 767
+		state = 768
+		state = 808
+		state = 809
+		state = 810
+		state = 1084
+	}
+}
+
+# State scope. Mexico's share: the Mexican Cession and Texas.
+ENG_uq_partition_share_MEX = {
+	OR = {
+		state = 800
+		state = 803
+		state = 804
+		state = 805
+		state = 806
+		state = 807
+		state = 811
+	}
+}
+
+# State scope. Spain's share: Florida.
+ENG_uq_partition_share_SPR = {
+	state = 795
+}
+
+# State scope. France's share: the Louisiana Purchase.
+ENG_uq_partition_share_FRA = {
+	OR = {
+		state = 780
+		state = 781
+		state = 783
+		state = 784
+		state = 785
+		state = 786
+		state = 787
+		state = 788
+		state = 789
+		state = 797
+		state = 798
+		state = 799
+	}
+}
+
 # Target scope. A foreign power other than Britain holds at least 30% influence here and is not tied to London.
 ENG_uq_patron_available = {
 	any_of = {

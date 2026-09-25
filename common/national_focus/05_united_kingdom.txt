@@ -23206,7 +23206,6 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
 
 		available = {
-			has_completed_focus = ENG_the_crown_imperial
 			ENG_uq_path_in_power = yes
 		}
 
@@ -23227,7 +23226,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_the_grand_partition #Needs to become an event chain with the other nations first before making a ultimatum for the USA Also need to think about the other leftover USA states
+		id = ENG_the_grand_partition
 		icon = demand_territory3
 
 		x = -4
@@ -23255,79 +23254,9 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_grand_partition"
-			every_state = {
-				limit = {
-					OR = {
-						state = 764
-						state = 765
-						state = 766
-						state = 767
-						state = 768
-						state = 808
-						state = 809
-						state = 810
-						state = 1084
-					}
-				}
-				add_claim_by = ROOT
-			}
 			custom_effect_tooltip = ENG_the_grand_partition_TT
-			hidden_effect = {
-				every_state = {
-					limit = {
-						OR = {
-							state = 800
-							state = 803
-							state = 804
-							state = 805
-							state = 806
-							state = 807
-							state = 811
-						}
-					}
-					add_claim_by = MEX
-				}
-				if = {
-					limit = {
-						SPR = {
-							ENG_uq_war_partner = yes
-							NOT = { is_in_faction_with = USA }
-						}
-					}
-					795 = { add_claim_by = SPR }
-				}
-				if = {
-					limit = {
-						FRA = {
-							ENG_uq_war_partner = yes
-							NOT = { is_in_faction_with = USA }
-						}
-					}
-					every_state = {
-						limit = {
-							OR = {
-								state = 780
-								state = 781
-								state = 783
-								state = 784
-								state = 785
-								state = 786
-								state = 787
-								state = 788
-								state = 789
-								state = 797
-								state = 798
-								state = 799
-							}
-						}
-						add_claim_by = FRA
-					}
-				}
-			}
-			declare_war_on = {
-				target = USA
-				type = take_claimed_state
-			}
+			newline = yes
+			unlock_decision_tooltip = ENG_uq_partition_ultimatum
 			hidden_effect = {
 				every_country = {
 					limit = {
@@ -23339,16 +23268,12 @@ focus_tree = {
 						ENG_uq_war_partner = yes
 						NOT = { is_in_faction_with = USA }
 					}
-					add_to_war = {
-						targeted_alliance = ROOT
-						enemy = USA
-					}
+					country_event = { id = ENG_uq.320 days = 1 }
 				}
 			}
-			set_temp_variable = { ENG_imperial_tension_change = 15 }
+			newline = yes
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
 			ENG_change_imperial_tension = yes
-			set_temp_variable = { ENG_union_strain_change = 20 }
-			ENG_change_union_strain = yes
 		}
 
 		ai_will_do = {
@@ -23386,8 +23311,9 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_thirteen_colonies_reclaimed"
-			custom_effect_tooltip = ENG_uq_conquest_TT
-			USA = { ENG_uq_open_conquest = yes }
+			custom_effect_tooltip = ENG_uq_conquest_USA_TT
+			newline = yes
+			USA = { ENG_uq_mark_conquest = yes }
 		}
 
 		ai_will_do = {
@@ -23400,7 +23326,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_the_lahore_compact #Should be an event chain and also be pretty hard to just do. We don't want to give free war goals. Maybe also make a deal with China?
+		id = ENG_the_lahore_compact
 		icon = focus_RAJ_kingmaker
 
 		x = 0
@@ -23428,19 +23354,24 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_lahore_compact"
-			custom_effect_tooltip = ENG_uq_conquest_TT
-			RAJ = { ENG_uq_open_conquest = yes }
+			custom_effect_tooltip = ENG_uq_conquest_RAJ_TT
+			newline = yes
+			RAJ = { ENG_uq_mark_conquest = yes }
+			set_country_flag = ENG_uq_pretext_locked@RAJ
+			newline = yes
 			custom_effect_tooltip = ENG_the_lahore_compact_TT
-			declare_war_on = {
-				target = RAJ
-				type = puppet_wargoal_focus
-			}
 			hidden_effect = {
-				PAK = {
-					add_to_war = {
-						targeted_alliance = ROOT
-						enemy = RAJ
+				PAK = { country_event = { id = ENG_uq.330 days = 1 } }
+				if = {
+					limit = {
+						country_exists = CHI
+						CHI = {
+							is_subject = no
+							NOT = { is_in_faction_with = RAJ }
+							NOT = { has_war_with = ROOT }
+						}
 					}
+					CHI = { country_event = { id = ENG_uq.335 days = 3 } }
 				}
 			}
 		}
@@ -23455,7 +23386,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_restore_the_british_raj #Don't just give a wargoal
+		id = ENG_restore_the_british_raj
 		icon = focus_RAJ_the_crown_and_the_world
 
 		x = 2
@@ -23482,14 +23413,12 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_restore_the_british_raj"
-			custom_effect_tooltip = ENG_uq_conquest_TT
-			RAJ = { ENG_uq_open_conquest = yes }
-			set_temp_variable = { wargoal_on = PAK }
-			add_threat_from_wargoal_effect = yes
-			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = PAK
-			}
+			custom_effect_tooltip = ENG_uq_conquest_RAJ_PAK_TT
+			newline = yes
+			RAJ = { ENG_uq_mark_conquest = yes }
+			newline = yes
+			PAK = { ENG_uq_mark_conquest = yes }
+			newline = yes
 			custom_effect_tooltip = ENG_restore_the_british_raj_TT
 		}
 
@@ -23526,8 +23455,8 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_return_to_suez"
-			custom_effect_tooltip = ENG_uq_conquest_TT
-			EGY = { ENG_uq_open_conquest = yes }
+			custom_effect_tooltip = ENG_uq_conquest_EGY_TT
+			EGY = { ENG_uq_mark_conquest = yes }
 		}
 
 		ai_will_do = {
@@ -23540,7 +23469,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_the_mandate_restored #Shoudn't just be a wargoal. We don't want to give a frew wargoal and be done with it.
+		id = ENG_the_mandate_restored
 		icon = Generic_Revanchism02
 
 		x = 4
@@ -23569,7 +23498,8 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_the_mandate_restored"
-			custom_effect_tooltip = ENG_uq_conquest_TT
+			custom_effect_tooltip = ENG_uq_conquest_JOR_ISR_TT
+			newline = yes
 			every_country = {
 				limit = {
 					OR = {
@@ -23580,8 +23510,15 @@ focus_tree = {
 					NOT = { has_war_with = ROOT }
 					NOT = { is_in_array = { array = ROOT.ENG_integration_targets value = THIS } }
 				}
-				ENG_uq_open_conquest = yes
+				ENG_uq_mark_conquest = yes
+				if = {
+					limit = { original_tag = JOR }
+					ROOT = { set_country_flag = ENG_uq_pretext_locked@PREV }
+					country_event = { id = ENG_uq.340 days = 1 }
+				}
 			}
+			newline = yes
+			custom_effect_tooltip = ENG_the_mandate_restored_TT
 		}
 
 		ai_will_do = {

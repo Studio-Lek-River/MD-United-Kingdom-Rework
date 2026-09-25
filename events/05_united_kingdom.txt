@@ -11031,6 +11031,475 @@ country_event = {
 	option = { name = ENG_uq.308.a }
 }
 
+# The Imperial Reckoning
+
+# Partition proposal (MEX, SPR or FRA; FROM = ENG)
+country_event = {
+	id = ENG_uq.320
+	title = ENG_uq.320.t
+	desc = {
+		text = ENG_uq.320.d_MEX
+		trigger = { tag = MEX }
+	}
+	desc = {
+		text = ENG_uq.320.d_SPR
+		trigger = { tag = SPR }
+	}
+	desc = {
+		text = ENG_uq.320.d_FRA
+		trigger = { tag = FRA }
+	}
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.320.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.320.a executed"
+		custom_effect_tooltip = ENG_uq_partition_we_sign_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.321 days = 1 } }
+		}
+		ai_chance = {
+			base = 30
+			modifier = {
+				add = 40
+				has_opinion = { target = USA value < 0 }
+			}
+			modifier = {
+				add = 30
+				FROM = { strength_ratio = { tag = USA ratio > 0.5 } }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.320.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.320.b executed"
+		custom_effect_tooltip = ENG_uq_partition_we_decline_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.322 days = 1 } }
+		}
+		ai_chance = {
+			base = 50
+			modifier = {
+				add = 50
+				has_idea = NATO_member
+			}
+			modifier = {
+				add = 30
+				has_opinion = { target = USA value > 50 }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ENG_uq.321
+	title = ENG_uq.321.t
+	desc = ENG_uq.321.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.321.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.321.a executed"
+		set_country_flag = ENG_uq_partition_signed@FROM
+		if = {
+			limit = { FROM = { tag = MEX } }
+			clr_country_flag = ENG_uq_partition_refused
+			unlock_decision_tooltip = ENG_uq_partition_ultimatum
+		}
+	}
+}
+
+country_event = {
+	id = ENG_uq.322
+	title = ENG_uq.322.t
+	desc = ENG_uq.322.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.322.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.322.a executed"
+		if = {
+			limit = { FROM = { tag = MEX } }
+			set_country_flag = ENG_uq_partition_refused
+			set_country_flag = { flag = ENG_uq_partition_cooldown value = 1 days = 180 }
+			custom_effect_tooltip = ENG_uq_partition_stalled_TT
+		}
+	}
+}
+
+# Partition ultimatum (USA, FROM = ENG)
+country_event = {
+	id = ENG_uq.325
+	title = ENG_uq.325.t
+	desc = ENG_uq.325.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.325.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.325.a executed"
+		custom_effect_tooltip = ENG_uq_partition_cede_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.326 days = 1 } }
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				FROM = {
+					ENG_uq_usa_distracted = yes
+					strength_ratio = { tag = USA ratio > 3 }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.325.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.325.b executed"
+		custom_effect_tooltip = ENG_uq_ultimatum_we_reject_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.327 days = 1 } }
+		}
+		ai_chance = {
+			base = 100
+			modifier = {
+				factor = 0
+				FROM = {
+					ENG_uq_usa_distracted = yes
+					strength_ratio = { tag = USA ratio > 3 }
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ENG_uq.326
+	title = ENG_uq.326.t
+	desc = ENG_uq.326.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.326.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.326.a executed"
+		every_state = {
+			limit = {
+				ENG_uq_partition_share_ENG = yes
+				is_owned_by = USA
+			}
+			transfer_state_to = ROOT
+		}
+		custom_effect_tooltip = ENG_uq_partition_partners_cede_TT
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						tag = MEX
+						tag = SPR
+						tag = FRA
+					}
+					ENG_uq_partition_partner_ready = yes
+				}
+				ENG_uq_partition_cede_share = yes
+			}
+		}
+		set_temp_variable = { ENG_imperial_tension_change = 15 }
+		ENG_change_imperial_tension = yes
+		set_temp_variable = { ENG_union_strain_change = 20 }
+		ENG_change_union_strain = yes
+	}
+}
+
+country_event = {
+	id = ENG_uq.327
+	title = ENG_uq.327.t
+	desc = ENG_uq.327.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.327.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.327.a executed"
+		if = {
+			limit = {
+				country_exists = USA
+				NOT = { has_war_with = USA }
+			}
+			declare_war_on = {
+				target = USA
+				type = take_claimed_state
+			}
+			custom_effect_tooltip = ENG_uq_partition_partners_join_TT
+			hidden_effect = {
+				every_country = {
+					limit = {
+						OR = {
+							tag = MEX
+							tag = SPR
+							tag = FRA
+						}
+						ENG_uq_partition_partner_ready = yes
+					}
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = USA
+					}
+				}
+			}
+		}
+		set_temp_variable = { ENG_imperial_tension_change = 15 }
+		ENG_change_imperial_tension = yes
+		set_temp_variable = { ENG_union_strain_change = 20 }
+		ENG_change_union_strain = yes
+	}
+}
+
+# Lahore Compact (PAK, FROM = ENG)
+country_event = {
+	id = ENG_uq.330
+	title = ENG_uq.330.t
+	desc = ENG_uq.330.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.330.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.330.a executed"
+		custom_effect_tooltip = ENG_uq_compact_we_sign_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.331 days = 1 } }
+		}
+		ai_chance = {
+			base = 40
+			modifier = {
+				add = 40
+				has_opinion = { target = RAJ value < -25 }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.330.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.330.b executed"
+		custom_effect_tooltip = ENG_uq_compact_we_decline_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.332 days = 1 } }
+		}
+		ai_chance = {
+			base = 40
+			modifier = {
+				add = 40
+				has_opinion = { target = FROM value < 0 }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ENG_uq.331
+	title = ENG_uq.331.t
+	desc = ENG_uq.331.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.331.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.331.a executed"
+		clr_country_flag = ENG_uq_compact_refused
+		clr_country_flag = ENG_uq_pretext_locked@RAJ
+		unlock_decision_tooltip = ENG_uq_manufacture_pretext
+	}
+}
+
+country_event = {
+	id = ENG_uq.332
+	title = ENG_uq.332.t
+	desc = ENG_uq.332.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.332.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.332.a executed"
+		set_country_flag = ENG_uq_compact_refused
+		set_country_flag = { flag = ENG_uq_compact_cooldown value = 1 days = 180 }
+		custom_effect_tooltip = ENG_uq_compact_stalled_TT
+	}
+}
+
+# Himalayan Understanding (CHI, FROM = ENG)
+country_event = {
+	id = ENG_uq.335
+	title = ENG_uq.335.t
+	desc = ENG_uq.335.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.335.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.335.a executed"
+		475 = { add_claim_by = ROOT }
+		982 = { add_claim_by = ROOT }
+		custom_effect_tooltip = ENG_uq_himalayan_join_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.336 days = 1 } }
+		}
+		ai_chance = {
+			base = 20
+			modifier = {
+				add = 40
+				has_opinion = { target = RAJ value < -25 }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.335.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.335.b executed"
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.337 days = 1 } }
+		}
+		ai_chance = { base = 50 }
+	}
+
+	option = {
+		name = ENG_uq.335.c
+		log = "[GetDateText]: [This.GetName]: ENG_uq.335.c executed"
+		if = {
+			limit = { country_exists = RAJ }
+			give_guarantee = RAJ
+		}
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.338 days = 1 } }
+		}
+		ai_chance = {
+			base = 20
+			modifier = {
+				add = 40
+				has_opinion = { target = FROM value < -25 }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ENG_uq.336
+	title = ENG_uq.336.t
+	desc = ENG_uq.336.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.336.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.336.a executed"
+		set_country_flag = ENG_uq_himalayan_pact
+		custom_effect_tooltip = ENG_uq_himalayan_pact_TT
+	}
+}
+
+country_event = {
+	id = ENG_uq.337
+	title = ENG_uq.337.t
+	desc = ENG_uq.337.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	minor_flavor = yes
+	option = { name = ENG_uq.337.a }
+}
+
+country_event = {
+	id = ENG_uq.338
+	title = ENG_uq.338.t
+	desc = ENG_uq.338.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = { name = ENG_uq.338.a }
+}
+
+# Hashemite protectorate offer (JOR, FROM = ENG)
+country_event = {
+	id = ENG_uq.340
+	title = ENG_uq.340.t
+	desc = ENG_uq.340.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.340.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.340.a executed"
+		custom_effect_tooltip = ENG_uq_we_accept_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.341 days = 1 } }
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				is_in_faction = no
+				NOT = { is_guaranteed_by = USA }
+				FROM = { strength_ratio = { tag = ROOT ratio > 4 } }
+			}
+		}
+	}
+
+	option = {
+		name = ENG_uq.340.b
+		log = "[GetDateText]: [This.GetName]: ENG_uq.340.b executed"
+		custom_effect_tooltip = ENG_uq_we_decline_TT
+		hidden_effect = {
+			ENG = { country_event = { id = ENG_uq.342 days = 1 } }
+		}
+		ai_chance = {
+			base = 100
+			modifier = {
+				factor = 0
+				is_in_faction = no
+				NOT = { is_guaranteed_by = USA }
+				FROM = { strength_ratio = { tag = ROOT ratio > 4 } }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ENG_uq.341
+	title = ENG_uq.341.t
+	desc = ENG_uq.341.d
+	picture = GFX_treaty
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.341.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.341.a executed"
+		clr_country_flag = ENG_uq_conquest@FROM
+		clr_country_flag = ENG_uq_pretext_locked@FROM
+		ENG_uq_enter_stage_2 = yes
+	}
+}
+
+country_event = {
+	id = ENG_uq.342
+	title = ENG_uq.342.t
+	desc = ENG_uq.342.d
+	picture = GFX_treaty_rejected
+	is_triggered_only = yes
+
+	option = {
+		name = ENG_uq.342.a
+		log = "[GetDateText]: [This.GetName]: ENG_uq.342.a executed"
+		clr_country_flag = ENG_uq_pretext_locked@FROM
+		unlock_decision_tooltip = ENG_uq_manufacture_pretext
+	}
+}
+
 ########################## Commonwealth of Nations #########################
 # Commonwealth Games held
 news_event = {

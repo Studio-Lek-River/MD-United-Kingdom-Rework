@@ -5459,6 +5459,228 @@ ENG_union_question_decisions = {
 		ai_will_do = { base = 5 }
 	}
 
+	ENG_uq_manufacture_pretext = {
+		icon = GFX_decision_generic_police_action
+
+		target_array = ENG_integration_targets
+		target_root_trigger = { has_completed_focus = ENG_the_imperial_reckoning }
+		target_trigger = {
+			has_country_flag = ENG_uq_conquest@FROM
+			NOT = { has_country_flag = ENG_uq_claims@FROM }
+			NOT = { has_country_flag = ENG_uq_occupying@FROM }
+			NOT = { has_country_flag = ENG_uq_pretext_locked@FROM }
+			FROM = {
+				exists = yes
+				NOT = { is_subject_of = ROOT }
+			}
+		}
+
+		cost = 150
+		days_remove = 120
+
+		available = {
+			NOT = { has_war_with = FROM }
+			ENG_uq_not_foreign_guaranteed = yes
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_strength_ratio_2_TT
+				strength_ratio = { tag = FROM ratio > 2 }
+			}
+			if = {
+				limit = { has_completed_focus = ENG_restore_the_british_raj }
+				custom_trigger_tooltip = {
+					tooltip = ENG_uq_raj_loyalists_TT
+					OR = {
+						FROM = {
+							NOT = { original_tag = RAJ }
+							NOT = { original_tag = PAK }
+						}
+						FROM = { has_idea = ENG_uq_loyalist_movement }
+					}
+				}
+			}
+			if = {
+				limit = { FROM = { original_tag = ISR } }
+				ENG_uq_usa_distracted = yes
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_manufacture_pretext"
+			add_named_threat = { threat = 3 name = ENG_uq_enforce_threat }
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove ENG_uq_manufacture_pretext"
+			if = {
+				limit = {
+					FROM = { exists = yes }
+					NOT = { has_war_with = FROM }
+				}
+				FROM = { ENG_uq_open_conquest = yes }
+				custom_effect_tooltip = ENG_uq_claims_expire_TT
+				if = {
+					limit = {
+						FROM = { original_tag = RAJ }
+						has_completed_focus = ENG_the_lahore_compact
+					}
+					custom_effect_tooltip = ENG_uq_compact_war_TT
+					declare_war_on = {
+						target = FROM
+						type = puppet_wargoal_focus
+					}
+					hidden_effect = {
+						every_country = {
+							limit = {
+								OR = {
+									tag = PAK
+									AND = {
+										tag = CHI
+										ROOT = { has_country_flag = ENG_uq_himalayan_pact }
+									}
+								}
+								ENG_uq_war_partner = yes
+								NOT = { is_in_faction_with = RAJ }
+							}
+							add_to_war = {
+								targeted_alliance = ROOT
+								enemy = RAJ
+							}
+						}
+					}
+				}
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_renew_partition_offer = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = {
+			has_completed_focus = ENG_the_grand_partition
+			has_country_flag = ENG_uq_partition_refused
+		}
+
+		cost = 50
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_partition_cooldown_TT
+				NOT = { has_country_flag = ENG_uq_partition_cooldown }
+			}
+			MEX = {
+				ENG_uq_war_partner = yes
+				NOT = { is_in_faction_with = USA }
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_renew_partition_offer"
+			clr_country_flag = ENG_uq_partition_refused
+			MEX = { country_event = { id = ENG_uq.320 days = 1 } }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_partition_ultimatum = {
+		icon = GFX_decision_generic_nationalism
+
+		visible = {
+			has_completed_focus = ENG_the_grand_partition
+			NOT = { has_country_flag = ENG_uq_partition_delivered }
+		}
+
+		cost = 150
+		days_remove = 90
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_partition_mexico_signed_TT
+				MEX = { ENG_uq_partition_partner_ready = yes }
+			}
+			country_exists = USA
+			NOT = { has_war_with = USA }
+			USA = { is_subject = no }
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_not_allied_usa_TT
+				NOT = { is_in_faction_with = USA }
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_partition_ultimatum"
+			add_named_threat = { threat = 5 name = ENG_uq_enforce_threat }
+			set_temp_variable = { ENG_imperial_tension_change = 5 }
+			ENG_change_imperial_tension = yes
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove ENG_uq_partition_ultimatum"
+			if = {
+				limit = {
+					country_exists = USA
+					NOT = { has_war_with = USA }
+				}
+				set_country_flag = ENG_uq_partition_delivered
+				every_state = {
+					limit = { ENG_uq_partition_share_ENG = yes }
+					add_claim_by = ROOT
+				}
+				custom_effect_tooltip = ENG_uq_partition_claims_TT
+				hidden_effect = {
+					every_country = {
+						limit = {
+							OR = {
+								tag = MEX
+								tag = SPR
+								tag = FRA
+							}
+							ENG_uq_partition_partner_ready = yes
+						}
+						ENG_uq_partition_claim_share = yes
+					}
+					USA = { country_event = { id = ENG_uq.325 days = 1 } }
+				}
+			}
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
+	ENG_uq_renew_lahore_compact = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = {
+			has_completed_focus = ENG_the_lahore_compact
+			has_country_flag = ENG_uq_compact_refused
+		}
+
+		cost = 50
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ENG_uq_compact_cooldown_TT
+				NOT = { has_country_flag = ENG_uq_compact_cooldown }
+			}
+			PAK = {
+				ENG_uq_war_partner = yes
+				NOT = { is_in_faction_with = RAJ }
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_uq_renew_lahore_compact"
+			clr_country_flag = ENG_uq_compact_refused
+			PAK = { country_event = { id = ENG_uq.330 days = 1 } }
+		}
+
+		ai_will_do = { base = 5 }
+	}
+
 	ENG_uq_sponsor_monarchists = {
 		icon = GFX_decision_generic_political_discourse
 
