@@ -2681,3 +2681,57 @@ defined_text = {
 		localization_key = ENG_uq_src_none
 	}
 }
+
+defined_text = {
+	name = ENGScotlandIndependenceLine
+	text = {
+		trigger = {
+			ENG = {
+				OR = {
+					check_variable = { ENG_scottish_pressure > 49 }
+					ENG_uq_scotland_suspended = yes
+				}
+			}
+		}
+		localization_key = ENG_scotland_independence_line
+	}
+	text = {
+		localization_key = ENG_independence_line_none
+	}
+}
+
+defined_text = {
+	name = ENGNorthernIrelandIndependenceLine
+	text = {
+		trigger = {
+			ENG = {
+				OR = {
+					check_variable = { ENG_north_irish_pressure > 49 }
+					ENG_uq_north_ireland_suspended = yes
+				}
+			}
+		}
+		localization_key = ENG_northern_ireland_independence_line
+	}
+	text = {
+		localization_key = ENG_independence_line_none
+	}
+}
+
+defined_text = {
+	name = ENGWalesIndependenceLine
+	text = {
+		trigger = {
+			ENG = {
+				OR = {
+					check_variable = { ENG_wales_pressure > 49 }
+					ENG_uq_wales_suspended = yes
+				}
+			}
+		}
+		localization_key = ENG_wales_independence_line
+	}
+	text = {
+		localization_key = ENG_independence_line_none
+	}
+}
