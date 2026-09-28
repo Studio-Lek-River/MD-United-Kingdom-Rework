@@ -1,12 +1,3 @@
 v0.1.0 - for Millennium Dawn v2.0.1
 
  - First Workshop release of the United Kingdom rework.
- - [ENG] Marked all submod-added content with the ENG_DUK prefix (Issue #34)
- - [ENG] Fixed Crown, Commonwealth, EU and UN country events showing oversized news pictures (Issue #37)
- - [ENG] Fixed the cut-off Raise Consent button and its tooltip layout (Issue #39)
- - [ENG] Fixed Union Strain and Imperial Tension reductions showing red instead of green (Issue #40)
- - [ENG] Changed An Ireland United Under the Crown to offer Ireland constituent status when Northern Ireland is integrated (Issue #41)
- - [ENG] Fixed Ireland's Commonwealth association requiring Irexit while the UK is also an EU member (Issue #42)
- - [ENG] Added opinion and influence to Crown vote AI and a tooltip listing what raises acceptance (Issue #43)
- - [ENG] Shortened Crown association votes and referendums to resolve after 7 days (Issue #44)
- - [ENG] Fixed raw flag and opinion names in United Kingdom tooltips (Issue #45)
