@@ -308,7 +308,7 @@ ideas = {
 				patrol_boat_design_cost_factor = -0.50
 				battle_cruiser_design_cost_factor = -0.50
 				helicopter_operator_design_cost_factor = -0.50
-				battleship_hull_0_design_cost_factor = -0.50
+				battleship_design_cost_factor = -0.50
 				dockyard_income_tax_modifier = -0.50
 				custom_modifier_tooltip = ENG_naval_defense_act_1889_1_tt
 			}
@@ -349,7 +349,7 @@ ideas = {
 				battle_cruiser = {
 					build_cost_ic = -0.25
 				}
-				battleship_hull_0 = {
+				battleship = {
 					build_cost_ic = -0.25
 				}
 			}
@@ -381,7 +381,7 @@ ideas = {
 				patrol_boat_design_cost_factor = -0.50
 				battle_cruiser_design_cost_factor = -0.50
 				helicopter_operator_design_cost_factor = -0.50
-				battleship_hull_0_design_cost_factor = -0.50
+				battleship_design_cost_factor = -0.50
 				dockyard_income_tax_modifier = -0.50
 			}
 			equipment_bonus = {
@@ -421,7 +421,7 @@ ideas = {
 				battle_cruiser = {
 					build_cost_ic = -0.25
 				}
-				battleship_hull_0 = {
+				battleship = {
 					build_cost_ic = -0.25
 				}
 			}

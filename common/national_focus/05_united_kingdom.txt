@@ -8320,7 +8320,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ECONOMY }
 
 		available = {
-			has_tech = internet4
+			has_tech = internet_4
 			offices > 39
 		}
 
@@ -11517,6 +11517,14 @@ focus_tree = {
 			}
 			add_to_variable = { ENG_production_factory_efficiency_gain_factor = 0.05 tooltip = production_factory_efficiency_gain_factor_tt }
 			newline = yes
+			add_tech_bonus = {
+				name = ENG_deeper_prosperity
+				bonus = 0.5
+				uses = 1
+				technology = railway_system_05
+				ahead_reduction = 1
+			}
+			newline = yes
 			custom_effect_tooltip = ENG_build_something_you_bum_TT
 			hidden_effect = { activate_mission = ENG_build_london }
 		}
@@ -13389,28 +13397,28 @@ focus_tree = {
 			add_to_variable = { ENG_production_speed_internet_station_factor = 0.10 tooltip = production_speed_internet_station_factor_tt }
 			newline = yes
 			if = {
-				limit = { NOT = { has_tech = internet3 } }
-				set_technology = { internet3 = 1 }
+				limit = { NOT = { has_tech = internet_3 } }
+				set_technology = { internet_3 = 1 }
 			}
 			else_if = {
 				limit = { NOT = { has_tech = umts } }
 				set_technology = { umts = 1 }
 			}
 			else_if = {
-				limit = { NOT = { has_tech = internet4 } }
-				set_technology = { internet4 = 1 }
+				limit = { NOT = { has_tech = internet_4 } }
+				set_technology = { internet_4 = 1 }
 			}
 			else_if = {
 				limit = { NOT = { has_tech = lte } }
 				set_technology = { lte = 1 }
 			}
 			else_if = {
-				limit = { NOT = { has_tech = internet5 } }
-				set_technology = { internet5 = 1 }
+				limit = { NOT = { has_tech = internet_5 } }
+				set_technology = { internet_5 = 1 }
 			}
 			else_if = {
-				limit = { NOT = { has_tech = internet6 } }
-				set_technology = { internet6 = 1 }
+				limit = { NOT = { has_tech = internet_6 } }
+				set_technology = { internet_6 = 1 }
 			}
 		}
 
@@ -17687,11 +17695,11 @@ focus_tree = {
 				}
 			}
 			if = {
-				limit = { country_exists = IND }
+				limit = { country_exists = RAJ }
 				set_temp_variable = { percent_change = 3 }
-				set_temp_variable = { influence_target = IND }
+				set_temp_variable = { influence_target = RAJ }
 				change_influence_percentage = yes
-				IND = {
+				RAJ = {
 					add_opinion_modifier = { target = ENG modifier = ENG_monarch_outreach }
 					reverse_add_opinion_modifier = { target = ENG modifier = ENG_monarch_outreach }
 				}
@@ -22400,18 +22408,15 @@ focus_tree = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_DUK_crown_union"
 			if = {
 				limit = { ENG_DUK_scotland_suspended = yes }
-				set_variable = { ENG_referendum_target = 1 }
-				ENG_integrate_referendum_region = yes
+				ENG_integrate_scotland = yes
 			}
 			if = {
 				limit = { ENG_DUK_north_ireland_suspended = yes }
-				set_variable = { ENG_referendum_target = 2 }
-				ENG_integrate_referendum_region = yes
+				ENG_integrate_northern_ireland = yes
 			}
 			if = {
 				limit = { ENG_DUK_wales_suspended = yes }
-				set_variable = { ENG_referendum_target = 3 }
-				ENG_integrate_referendum_region = yes
+				ENG_integrate_wales = yes
 			}
 			if = {
 				limit = { has_idea = ENG_DUK_direct_rule_idea }
