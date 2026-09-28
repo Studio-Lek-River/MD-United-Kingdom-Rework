@@ -49,13 +49,16 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       sha: ${{ steps.ref.outputs.sha }}
+      baseline-key: ${{ steps.ref.outputs.baseline-key }}
     steps:
       - name: Checkout pin file
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
           persist-credentials: false
-          sparse-checkout: tools/md_base_ref.txt
+          sparse-checkout: |
+            tools/md_base_ref.txt
+            tools/validate_with_md.py
           sparse-checkout-cone-mode: false
 
       - name: Read pinned MD commit
@@ -67,6 +70,29 @@ jobs:
             exit 1
           fi
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          # Editing the script rebuilds the baseline. Bump v1 when MD_SPARSE_PATHS changes.
+          echo "baseline-key=md-baseline-v1-$sha-${{ hashFiles('tools/validate_with_md.py') }}" >> "$GITHUB_OUTPUT"
+
+  tools-tests:
+    name: Tools tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v6
+        with:
+          python-version: "3.12"
+
+      - name: Run pytest
+        run: |
+          python -m pip install --quiet pytest
+          python -m pytest tools/tests
 
   baseline:
     name: MD baseline
@@ -81,7 +107,7 @@ jobs:
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: .validation_baseline
-          key: md-baseline-v1-${{ env.MD_SHA }}
+          key: ${{ needs.md-ref.outputs.baseline-key }}
 
       - name: Checkout this repository
         if: steps.cache.outputs.cache-hit != 'true'
@@ -133,7 +159,7 @@ jobs:
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: .validation_baseline
-          key: md-baseline-v1-${{ env.MD_SHA }}
+          key: ${{ needs.md-ref.outputs.baseline-key }}
 
       - name: Upload baseline
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -220,7 +246,7 @@ jobs:
   report:
     name: Validation report
     needs: [md-ref, validate]
-    if: always() && !cancelled()
+    if: always() && !cancelled() && needs.md-ref.result == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: read

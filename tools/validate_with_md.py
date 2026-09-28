@@ -122,12 +122,12 @@ def run_core_extras(ws, out_dir):
     steps = {
         "style": (
             [sys.executable, str(validation / "validate_style.py"), "--staged", "--strict", "--no-color",
-             "--path", str(ws), "--output", str(out_dir / "validation-style.log")],
+             "--path", str(ws), "--output", str(out_dir / "validation-style-owned.log")],
             env,
         ),
         "common-mistakes": (
             [sys.executable, str(linting / "check_common_mistakes.py"), *txt,
-             "--output", str(out_dir / "validation-common-mistakes.log")],
+             "--output", str(out_dir / "validation-common-mistakes-owned.log")],
             None,
         ),
         "txt-encoding": ([sys.executable, str(linting / "validate_txt_encoding.py"), *txt], None),
@@ -229,11 +229,17 @@ def print_summary(issues):
     print(f"\n{errors} error(s), {warnings} warning(s) in scope")
 
 
+def check_output_dir(out_root):
+    """The output folder is wiped before each run, so it must not hold anything else."""
+    if out_root == REPO or out_root in REPO.parents or (out_root / ".git").exists():
+        sys.exit(f"refusing to clear {out_root}; pick an output folder of its own")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--md", default="D:/Documenten/Paradox Interactive/Hearts of Iron IV/mod/Millennium-Dawn", help="Millennium Dawn checkout to build a worktree from")
     parser.add_argument("--ref", default=None, help="MD commit (default: tools/md_base_ref.txt)")
-    parser.add_argument("--workspace", type=Path, help="existing MD tree to validate in place (skips the worktree)")
+    parser.add_argument("--workspace", type=Path, help="scratch MD tree to validate in place; owned files in it are overwritten")
     parser.add_argument("--batch", choices=BATCHES + ("all",), default="all")
     parser.add_argument("--output-dir", type=Path, default=Path("validation-out"))
     parser.add_argument("--baseline-dir", type=Path, help="pristine-MD baseline; new findings elsewhere are kept")
@@ -245,6 +251,9 @@ def main():
     ref = args.ref or MD_BASE_REF.read_text(encoding="utf-8").strip()
     md_root = Path(args.md)
     out_root = args.output_dir.resolve()
+    check_output_dir(out_root)
+    if args.workspace and not args.no_overlay and args.workspace.resolve() == md_root.resolve():
+        sys.exit("--workspace is overwritten by the overlay; point it at a scratch MD tree, not the --md checkout")
     # A stale sidecar from an earlier run would hide a validator crash in this one.
     shutil.rmtree(out_root, ignore_errors=True)
     ws = args.workspace.resolve() if args.workspace else make_worktree(md_root, ref)

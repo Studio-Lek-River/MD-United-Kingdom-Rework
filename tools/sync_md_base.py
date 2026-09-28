@@ -117,7 +117,10 @@ def main():
     git("checkout", "-q", "main" if start_branch == "md-base" else start_branch)
     if changed and not args.no_merge:
         if subprocess.run(["git", "merge", "md-base"], cwd=REPO, check=False).returncode:
-            sys.exit("merging md-base stopped on conflicts; resolve them, keeping md-base's tools/md_base_ref.txt")
+            sys.exit(
+                "merging md-base stopped on conflicts; keep md-base's tools/md_base_ref.txt, and merge MD's changes"
+                " into this branch's copies of the owned game files rather than taking md-base's side"
+            )
 
 
 if __name__ == "__main__":

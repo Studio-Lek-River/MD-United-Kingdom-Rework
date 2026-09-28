@@ -2,6 +2,8 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import validate_with_md as v
 
@@ -68,3 +70,16 @@ def test_filter_results_keeps_crash_status(tmp_path):
 
 def test_crashed_validators_reports_missing_manifest(tmp_path):
     assert v.crashed_validators(tmp_path, ["core"]) == ["core (no manifest)"]
+
+
+def test_check_output_dir_refuses_repo_and_checkouts(tmp_path):
+    for path in (v.REPO, v.REPO.parent):
+        with pytest.raises(SystemExit):
+            v.check_output_dir(path)
+    (tmp_path / ".git").mkdir()
+    with pytest.raises(SystemExit):
+        v.check_output_dir(tmp_path)
+
+
+def test_check_output_dir_allows_plain_folder(tmp_path):
+    v.check_output_dir(tmp_path / "validation-out")
