@@ -6778,6 +6778,7 @@ ENG_DUK_union_question_decisions = {
 					effect_tooltip = { custom_effect_tooltip = ENG_DUK_realm_vote_TT }
 					custom_effect_tooltip = TT_IF_THEY_REJECT
 					effect_tooltip = { ENG_DUK_fail_transition = yes }
+					custom_effect_tooltip = ENG_DUK_acceptance_factors_TT
 				}
 				else = {
 					FROM = { country_event = { id = ENG_DUK.20 days = 1 } }
@@ -6785,6 +6786,7 @@ ENG_DUK_union_question_decisions = {
 					effect_tooltip = { custom_effect_tooltip = ENG_DUK_stage_2_TT }
 					custom_effect_tooltip = TT_IF_THEY_REJECT
 					effect_tooltip = { ENG_DUK_fail_transition = yes }
+					custom_effect_tooltip = ENG_DUK_acceptance_factors_TT
 				}
 			}
 			else = {
@@ -7144,6 +7146,7 @@ ENG_DUK_union_question_decisions = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_caribbean_association"
 			if = {
 				limit = { has_completed_focus = ENG_DUK_a_family_of_nations }
+				custom_effect_tooltip = ENG_DUK_acceptance_factors_TT
 				every_country = {
 					limit = {
 						ENG_DUK_is_caribbean_realm = yes

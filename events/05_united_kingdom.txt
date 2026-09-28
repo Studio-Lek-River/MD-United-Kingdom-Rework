@@ -8876,6 +8876,22 @@ country_event = {
 
 	immediate = {
 		ENG = { set_variable = { PREV.ENG_DUK_referendum_yes = ENG_DUK_consent@PREV } }
+		if = {
+			limit = { has_opinion = { target = ENG value > 70 } }
+			add_to_variable = { ENG_DUK_referendum_yes = 10 }
+		}
+		else_if = {
+			limit = { has_opinion = { target = ENG value < 30 } }
+			subtract_from_variable = { ENG_DUK_referendum_yes = 10 }
+		}
+		if = {
+			limit = { ENG_DUK_high_influence = yes }
+			add_to_variable = { ENG_DUK_referendum_yes = 10 }
+		}
+		else_if = {
+			limit = { ENG_DUK_medium_influence = yes }
+			add_to_variable = { ENG_DUK_referendum_yes = 5 }
+		}
 		set_variable = { ENG_DUK_referendum_no = 100 }
 		subtract_from_variable = { ENG_DUK_referendum_no = ENG_DUK_referendum_yes }
 		clamp_variable = { var = ENG_DUK_referendum_yes min = 5 max = 95 }

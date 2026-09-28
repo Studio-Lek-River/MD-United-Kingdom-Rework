@@ -1891,6 +1891,7 @@
  ENG_DUK_not_republic_TT: "[FROM.GetName] has §Ynot§! become a republic"
  ENG_DUK_devolution_not_purged_TT: "We have §Ynot§! passed the §YAct of Union§!"
  ENG_DUK_realm_vote_TT: "[FROM.GetName]'s parliament votes on association with the Crown"
+ ENG_DUK_acceptance_factors_TT: "Acceptance is §Gmore likely§! with higher consent, a better opinion of Britain, at least §Y30%§! British influence (more at §Y50%§!) and a shared faction. It is §Rless likely§! at war, under a nationalist or communist government, during a sovereignty movement or under a foreign guarantee, and impossible above §R60§! Imperial Tension.\nA realm's parliament passes the vote with a chance equal to consent, raised by an opinion above §Y70§! and by British influence."
  ENG_DUK_realm_republic_TT: "[THIS.GetName] becomes a §Rrepublic§!, leaves the Crown behind and is §Rlocked§! against further transitions for §R10§! years. [THIS.GetAdjective] §Hconsent§!: §R-30§!"
  ENG_DUK_canzuk_integrated_TT: "Canada, Australia and New Zealand have each reached §GIntegrated§! status or ceased to exist as a separate realm"
  ENG_DUK_caribbean_consent_60_TT: "Average Caribbean consent is above §Y60§! (currently §Y[?ENG_DUK_caribbean_consent|0]§!)"

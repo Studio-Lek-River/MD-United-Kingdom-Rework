@@ -905,6 +905,19 @@ ENG_DUK_set_accept_weight = {
 		limit = { has_opinion = { target = FROM value > 80 } }
 		add_to_variable = { ENG_DUK_accept_weight = 15 }
 	}
+	else_if = {
+		limit = { has_opinion = { target = FROM value > 50 } }
+		add_to_variable = { ENG_DUK_accept_weight = 5 }
+	}
+	if = {
+		limit = { ENG_DUK_high_influence = yes }
+		add_to_variable = { ENG_DUK_accept_weight = 25 }
+		subtract_from_variable = { ENG_DUK_decline_weight = 15 }
+	}
+	else_if = {
+		limit = { ENG_DUK_medium_influence = yes }
+		add_to_variable = { ENG_DUK_accept_weight = 10 }
+	}
 	if = {
 		limit = { FROM = { check_variable = { ENG_DUK_imperial_tension > 60 } } }
 		set_variable = { ENG_DUK_accept_weight = -1000 }
