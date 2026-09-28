@@ -6735,9 +6735,12 @@ ENG_DUK_union_question_decisions = {
 					limit = { FROM = { original_tag = IRE } }
 					has_completed_focus = ENG_DUK_the_irexit_question
 					IRE = {
-						custom_trigger_tooltip = {
-							tooltip = ENG_DUK_ireland_outside_eu_TT
-							NOT = { has_idea = EU_member }
+						if = {
+							limit = { NOT = { ROOT = { has_idea = EU_member } } }
+							custom_trigger_tooltip = {
+								tooltip = ENG_DUK_ireland_outside_eu_TT
+								NOT = { has_idea = EU_member }
+							}
 						}
 						custom_trigger_tooltip = {
 							tooltip = ENG_DUK_ireland_in_commonwealth_TT
