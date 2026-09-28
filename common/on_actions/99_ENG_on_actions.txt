@@ -184,7 +184,7 @@ on_actions = {
 					NOT = { has_country_flag = ENG_scottish_integrated }
 					NOT = { country_exists = SCO }
 				}
-				set_temp_variable = { ENG_dependency_change = -0.1 }
+				set_temp_variable = { ENG_dependency_change = -0.25 }
 				if = {
 					limit = {
 						OR = {
@@ -227,7 +227,7 @@ on_actions = {
 					NOT = { has_country_flag = ENG_north_irish_integrated }
 					NOT = { country_exists = NIR }
 				}
-				set_temp_variable = { ENG_dependency_change = -0.1 }
+				set_temp_variable = { ENG_dependency_change = -0.25 }
 				if = {
 					limit = {
 						OR = {
@@ -270,7 +270,7 @@ on_actions = {
 					NOT = { has_country_flag = ENG_welsh_integrated }
 					NOT = { country_exists = WAS }
 				}
-				set_temp_variable = { ENG_dependency_change = -0.1 }
+				set_temp_variable = { ENG_dependency_change = -0.25 }
 				if = {
 					limit = {
 						OR = {
