@@ -981,13 +981,22 @@ ENG_DUK_align_realm = {
 			ROOT = {
 				add_to_array = { ENG_DUK_integration_targets = PREV }
 				if = {
-					limit = { NOT = { has_country_flag = ENG_devolution_purged } }
+					limit = { has_completed_focus = ENG_DUK_a_family_of_nations }
 					set_autonomy = {
 						target = PREV
-						autonomy_state = autonomy_constituent_country_very_low_devolution
+						autonomy_state = autonomy_ENG_DUK_crown_dominion
+					}
+				}
+				else = {
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_ENG_DUK_crown_protectorate
 					}
 				}
 			}
+			ENG_DUK_crown_realm_add = yes
+			set_temp_variable = { ENG_DUK_union_strain_stage = 2 }
+			ENG_DUK_add_union_strain_for_target = yes
 		}
 		else_if = {
 			limit = {
