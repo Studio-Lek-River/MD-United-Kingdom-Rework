@@ -7704,7 +7704,7 @@ country_event = {
 		name = ENG_DUK.23.a
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.23.a executed"
 		custom_effect_tooltip = ENG_DUK_referendum_scheduled_TT
-		country_event = { id = ENG_DUK.25 days = 60 }
+		country_event = { id = ENG_DUK.25 days = 7 }
 		ai_chance = {
 			base = 0
 			modifier = { add = ENG_DUK_accept_weight }
@@ -8847,7 +8847,7 @@ country_event = {
 		name = ENG_DUK.120.a
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.120.a executed"
 		custom_effect_tooltip = ENG_DUK_we_accept_TT
-		country_event = { id = ENG_DUK.121 days = 30 }
+		country_event = { id = ENG_DUK.121 days = 7 }
 		ai_chance = {
 			base = 20
 			modifier = { add = ENG_DUK_accept_weight }
@@ -9088,7 +9088,7 @@ country_event = {
 	option = {
 		name = ENG_DUK.140.a
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.140.a executed"
-		country_event = { id = ENG_DUK.141 days = 90 }
+		country_event = { id = ENG_DUK.141 days = 7 }
 	}
 }
 
