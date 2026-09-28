@@ -15,6 +15,9 @@ scripted_gui = {
 			ENG_wales_map_button = {
 				image = "[ENG_DUK_wales_map_sprite]"
 			}
+			ENG_DUK_ireland_map = {
+				image = "[ENG_DUK_ireland_map_sprite]"
+			}
 		}
 
 		triggers = {
@@ -53,6 +56,7 @@ scripted_gui = {
 			ENG_north_ireland_map_button_right_click_enabled = {
 				NOT = { country_exists = NIR }
 				NOT = { has_country_flag = ENG_north_irish_integrated }
+				NOT = { 17 = { is_owned_by = IRE } }
 				NOT = { has_country_flag = ENG_stop_cliking_me_headass_NIR }
 			}
 			ENG_wales_map_button_right_click_enabled = {
@@ -68,6 +72,7 @@ scripted_gui = {
 			ENG_north_ireland_map_button_shift_click_enabled = {
 				NOT = { country_exists = NIR }
 				NOT = { has_country_flag = ENG_north_irish_integrated }
+				NOT = { 17 = { is_owned_by = IRE } }
 			}
 			ENG_wales_map_button_shift_click_enabled = {
 				NOT = { country_exists = WAS }
@@ -76,12 +81,16 @@ scripted_gui = {
 
 			ENG_scotland_map_button_click_enabled = {
 				NOT = { country_exists = SCO }
+				NOT = { has_country_flag = ENG_scottish_integrated }
 			}
 			ENG_north_ireland_map_button_click_enabled = {
 				NOT = { country_exists = NIR }
+				NOT = { has_country_flag = ENG_north_irish_integrated }
+				NOT = { 17 = { is_owned_by = IRE } }
 			}
 			ENG_wales_map_button_click_enabled = {
 				NOT = { country_exists = WAS }
+				NOT = { has_country_flag = ENG_welsh_integrated }
 			}
 		}
 		effects = {

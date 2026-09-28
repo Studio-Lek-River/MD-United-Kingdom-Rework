@@ -3048,7 +3048,7 @@ ENG_devolved_matters = {
 			set_variable = { ENG_wales_dependency = random }
 			multiply_variable = { ENG_wales_dependency = 100 }
 			round_variable = ENG_wales_dependency
-			# Map art only: 0 normal, 1 integrated, 2 independent.
+			# Map art only: 0 normal, 1 integrated, 2 independent (Ireland: constituent).
 			add_to_variable = { ENG_DUK_devolution_debug_map = 1 }
 			if = {
 				limit = { check_variable = { ENG_DUK_devolution_debug_map > 2 } }

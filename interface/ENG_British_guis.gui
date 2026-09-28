@@ -47,6 +47,14 @@ guiTypes = {
 			pdx_tooltip = ENG_northern_ireland_tooltip
 		}
 		iconType = {
+			name = "ENG_DUK_ireland_map"
+			spriteType = "GFX_ENG_DUK_ireland_map"
+			position = { x = 214 y = 282 }
+			scale = 0.65
+			Orientation = "UPPER_LEFT"
+			pdx_tooltip = ENG_DUK_ireland_map_TT
+		}
+		iconType = {
 			name = "GFX_ENG_england_map"
 			spriteType = "GFX_ENG_england_map"
 			position = { x = 325 y = 266 }

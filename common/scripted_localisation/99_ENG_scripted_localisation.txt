@@ -2456,6 +2456,23 @@ defined_text = {
 
 	text = {
 		trigger = {
+			17 = { is_owned_by = IRE }
+			IRE = {
+				OR = {
+					ENG_DUK_stage_2 = yes
+					ENG_DUK_stage_3 = yes
+					ENG_DUK_crown_colony = yes
+				}
+			}
+		}
+		localization_key = GFX_ENG_DUK_north_ireland_map_irish_constituent
+	}
+	text = {
+		trigger = { 17 = { is_owned_by = IRE } }
+		localization_key = GFX_ENG_DUK_north_ireland_map_irish
+	}
+	text = {
+		trigger = {
 			OR = {
 				has_country_flag = ENG_north_irish_integrated
 				check_variable = { ENG_DUK_devolution_debug_map = 1 }
@@ -2499,6 +2516,37 @@ defined_text = {
 	}
 	text = {
 		localization_key = GFX_ENG_wales_map
+	}
+}
+defined_text = {
+	name = ENG_DUK_ireland_map_sprite
+
+	text = {
+		trigger = {
+			OR = {
+				has_country_flag = ENG_DUK_integrated@IRE
+				check_variable = { ENG_DUK_devolution_debug_map = 1 }
+			}
+		}
+		localization_key = GFX_ENG_DUK_ireland_map_integrated
+	}
+	text = {
+		trigger = {
+			OR = {
+				IRE = {
+					OR = {
+						ENG_DUK_stage_2 = yes
+						ENG_DUK_stage_3 = yes
+						ENG_DUK_crown_colony = yes
+					}
+				}
+				check_variable = { ENG_DUK_devolution_debug_map = 2 }
+			}
+		}
+		localization_key = GFX_ENG_DUK_ireland_map_constituent
+	}
+	text = {
+		localization_key = GFX_ENG_DUK_ireland_map
 	}
 }
 
