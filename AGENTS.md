@@ -15,6 +15,8 @@ overrides MD's copy. Everything else lives in MD, checked out at `D:/Documenten/
   the MD checkout against files here when needed.
 - Before renaming or removing an `ENG_*` focus, idea, flag, or effect, grep the MD checkout for
   references; other countries and shared systems depend on some of them.
+- Every ID the submod adds uses the `ENG_DUK_` prefix (sprites `GFX_ENG_DUK_`, events in the
+  `ENG_DUK` namespace, new files `99_ENG_DUK_*`). IDs that come from MD keep their MD names.
 
 ## Guardrails
 

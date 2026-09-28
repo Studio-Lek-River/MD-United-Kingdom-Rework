@@ -7,13 +7,13 @@ scripted_gui = {
 
 		properties = {
 			ENG_scotland_map_button = {
-				image = "[ENG_scotland_map_sprite]"
+				image = "[ENG_DUK_scotland_map_sprite]"
 			}
 			ENG_north_ireland_map_button = {
-				image = "[ENG_north_ireland_map_sprite]"
+				image = "[ENG_DUK_north_ireland_map_sprite]"
 			}
 			ENG_wales_map_button = {
-				image = "[ENG_wales_map_sprite]"
+				image = "[ENG_DUK_wales_map_sprite]"
 			}
 		}
 
@@ -198,102 +198,102 @@ scripted_gui = {
 		}
 	}
 	# Opens the Union Question panel from inside the decision category.
-	ENG_uq_ladder_ui = {
-		window_name = "ENG_uq_ladder_ui_window"
+	ENG_DUK_ladder_ui = {
+		window_name = "ENG_DUK_ladder_ui_window"
 		context_type = decision_category
 
 		effects = {
-			ENG_uq_open_btn_click = {
+			ENG_DUK_open_btn_click = {
 				if = {
-					limit = { has_country_flag = ENG_uq_panel_open }
-					clr_country_flag = ENG_uq_panel_open
+					limit = { has_country_flag = ENG_DUK_panel_open }
+					clr_country_flag = ENG_DUK_panel_open
 				}
 				else = {
-					set_country_flag = ENG_uq_panel_open
+					set_country_flag = ENG_DUK_panel_open
 				}
 				update_eng_devolution_dirty_variable = yes
 			}
 		}
 	}
-	ENG_uq_panel = {
-		window_name = "ENG_uq_panel_window"
+	ENG_DUK_panel = {
+		window_name = "ENG_DUK_panel_window"
 		context_type = player_context
 		parent_window_token = decision_tab
 
 		dirty = global.ENG_devolution_dirty_update_var
 
 		visible = {
-			has_country_flag = ENG_uq_panel_open
+			has_country_flag = ENG_DUK_panel_open
 		}
 
 		dynamic_lists = {
-			ENG_uq_ladder_grid = {
-				array = ENG_integration_targets
-				entry_container = "ENG_uq_ladder_entry"
+			ENG_DUK_ladder_grid = {
+				array = ENG_DUK_integration_targets
+				entry_container = "ENG_DUK_ladder_entry"
 				change_scope = yes
 			}
 		}
 
 		effects = {
-			ENG_uq_panel_close_btn_click = {
-				clr_country_flag = ENG_uq_panel_open
+			ENG_DUK_panel_close_btn_click = {
+				clr_country_flag = ENG_DUK_panel_open
 				update_eng_devolution_dirty_variable = yes
 			}
 		}
 
 		triggers = {
-			ENG_uq_ladder_entry_lock_visible = { ROOT = { has_country_flag = ENG_uq_lock@PREV } }
-			ENG_uq_ladder_entry_glow_visible = {
+			ENG_DUK_ladder_entry_lock_visible = { ROOT = { has_country_flag = ENG_DUK_lock@PREV } }
+			ENG_DUK_ladder_entry_glow_visible = {
 				ROOT = {
-					has_country_flag = ENG_uq_offer_pending@PREV
-					NOT = { has_country_flag = ENG_uq_lock@PREV }
+					has_country_flag = ENG_DUK_offer_pending@PREV
+					NOT = { has_country_flag = ENG_DUK_lock@PREV }
 				}
 			}
-			ENG_uq_ladder_entry_name_visible = {
-				ENG_uq_stage_2 = no
-				ENG_uq_stage_3 = no
+			ENG_DUK_ladder_entry_name_visible = {
+				ENG_DUK_stage_2 = no
+				ENG_DUK_stage_3 = no
 			}
-			ENG_uq_ladder_entry_name_yellow_visible = {
+			ENG_DUK_ladder_entry_name_yellow_visible = {
 				OR = {
-					ENG_uq_stage_2 = yes
-					ENG_uq_stage_3 = yes
+					ENG_DUK_stage_2 = yes
+					ENG_DUK_stage_3 = yes
 				}
 			}
-			ENG_uq_pip_60_off_visible = { ROOT = { OR = { has_completed_focus = ENG_a_family_of_nations is_debug = yes } } }
-			ENG_uq_pip_75_off_visible = { ROOT = { OR = { has_completed_focus = ENG_a_family_of_nations is_debug = yes } } }
-			ENG_uq_pip_85_off_visible = { ROOT = { OR = { has_completed_focus = ENG_a_family_of_nations is_debug = yes } } }
-			ENG_uq_pip_60_on_visible = {
-				ROOT = { OR = { has_completed_focus = ENG_a_family_of_nations is_debug = yes } }
-				check_variable = { ENG_uq_consent_bar > 60 }
+			ENG_DUK_pip_60_off_visible = { ROOT = { OR = { has_completed_focus = ENG_DUK_a_family_of_nations is_debug = yes } } }
+			ENG_DUK_pip_75_off_visible = { ROOT = { OR = { has_completed_focus = ENG_DUK_a_family_of_nations is_debug = yes } } }
+			ENG_DUK_pip_85_off_visible = { ROOT = { OR = { has_completed_focus = ENG_DUK_a_family_of_nations is_debug = yes } } }
+			ENG_DUK_pip_60_on_visible = {
+				ROOT = { OR = { has_completed_focus = ENG_DUK_a_family_of_nations is_debug = yes } }
+				check_variable = { ENG_DUK_consent_bar > 60 }
 			}
-			ENG_uq_pip_75_on_visible = {
-				ROOT = { OR = { has_completed_focus = ENG_a_family_of_nations is_debug = yes } }
-				check_variable = { ENG_uq_consent_bar > 75 }
+			ENG_DUK_pip_75_on_visible = {
+				ROOT = { OR = { has_completed_focus = ENG_DUK_a_family_of_nations is_debug = yes } }
+				check_variable = { ENG_DUK_consent_bar > 75 }
 			}
-			ENG_uq_pip_85_on_visible = {
-				ROOT = { OR = { has_completed_focus = ENG_a_family_of_nations is_debug = yes } }
-				check_variable = { ENG_uq_consent_bar > 85 }
+			ENG_DUK_pip_85_on_visible = {
+				ROOT = { OR = { has_completed_focus = ENG_DUK_a_family_of_nations is_debug = yes } }
+				check_variable = { ENG_DUK_consent_bar > 85 }
 			}
 		}
 
 		properties = {
-			ENG_uq_stage_icon = {
-				image = "[ENG_uq_stage_icon]"
+			ENG_DUK_stage_icon = {
+				image = "[ENG_DUK_stage_icon]"
 			}
-			ENG_uq_ladder_entry_bar = {
-				frame = ENG_uq_consent_bar
+			ENG_DUK_ladder_entry_bar = {
+				frame = ENG_DUK_consent_bar
 			}
-			ENG_uq_strain_bar = {
-				frame = ENG_union_strain
+			ENG_DUK_strain_bar = {
+				frame = ENG_DUK_union_strain
 			}
-			ENG_uq_tension_bar = {
-				frame = ENG_imperial_tension
+			ENG_DUK_tension_bar = {
+				frame = ENG_DUK_imperial_tension
 			}
-			ENG_uq_cohesion_bar = {
-				frame = global.commonwealth_cohesion
+			ENG_DUK_cohesion_bar = {
+				frame = global.ENG_DUK_commonwealth_cohesion
 			}
-			ENG_uq_caribbean_bar = {
-				frame = ENG_uq_caribbean_consent
+			ENG_DUK_caribbean_bar = {
+				frame = ENG_DUK_caribbean_consent
 			}
 		}
 

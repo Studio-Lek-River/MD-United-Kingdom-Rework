@@ -44,17 +44,17 @@ ENG_PATHS = [
 
 # Submod-only files with no MD counterpart. Owned like ENG_PATHS, never synced.
 ENG_SUBMOD_ONLY_PATHS = [
-    "common/autonomous_states/99_ENG_autonomies.txt",
-    "common/factions/templates/99_ENG_commonwealth.txt",
-    "gfx/interface/scripted_gui/eng/ENG_scotland_integrated_gfx.dds",
-    "gfx/interface/scripted_gui/eng/ENG_scotland_independent_gfx.dds",
-    "gfx/interface/scripted_gui/eng/ENG_wales_integrated_gfx.dds",
-    "gfx/interface/scripted_gui/eng/ENG_wales_independent_gfx.dds",
-    "gfx/interface/scripted_gui/eng/ENG_north_ireland_integrated_gfx.dds",
-    "gfx/interface/scripted_gui/eng/ENG_north_ireland_independent_gfx.dds",
-    "gfx/flags/RAJ_british_raj.tga",
-    "gfx/flags/medium/RAJ_british_raj.tga",
-    "gfx/flags/small/RAJ_british_raj.tga",
+    "common/autonomous_states/99_ENG_DUK_autonomies.txt",
+    "common/factions/templates/99_ENG_DUK_commonwealth.txt",
+    "gfx/interface/scripted_gui/eng/ENG_DUK_scotland_integrated_gfx.dds",
+    "gfx/interface/scripted_gui/eng/ENG_DUK_scotland_independent_gfx.dds",
+    "gfx/interface/scripted_gui/eng/ENG_DUK_wales_integrated_gfx.dds",
+    "gfx/interface/scripted_gui/eng/ENG_DUK_wales_independent_gfx.dds",
+    "gfx/interface/scripted_gui/eng/ENG_DUK_north_ireland_integrated_gfx.dds",
+    "gfx/interface/scripted_gui/eng/ENG_DUK_north_ireland_independent_gfx.dds",
+    "gfx/flags/ENG_DUK_british_raj.tga",
+    "gfx/flags/medium/ENG_DUK_british_raj.tga",
+    "gfx/flags/small/ENG_DUK_british_raj.tga",
 ]
 
 

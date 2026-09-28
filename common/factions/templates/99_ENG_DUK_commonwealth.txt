@@ -1,5 +1,5 @@
-faction_template_eng_commonwealth = {
-	name = ENG_cmw_defence_pact_name
+faction_template_ENG_DUK_commonwealth = {
+	name = ENG_DUK_cmw_defence_pact_name
 	icon = GFX_faction_icon_commonwealth
 	manifest = faction_manifest_strength_in_unity
 	can_leader_join_other_factions = no

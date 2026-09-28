@@ -301,11 +301,11 @@ ENG_cancel_war_neighbours = {
 	ai_strategy = { type = declare_war id = "NIR" value = -4000 }
 }
 
-ENG_uq_family_of_nations = {
+ENG_DUK_family_of_nations = {
 	allowed = { original_tag = ENG }
 	enable = {
 		has_global_flag = ENG_RISE_OF_BRITAIN_FOCUS_PATH
-		has_completed_focus = ENG_a_family_of_nations
+		has_completed_focus = ENG_DUK_a_family_of_nations
 	}
 	abort_when_not_enabled = yes
 
@@ -315,10 +315,10 @@ ENG_uq_family_of_nations = {
 	ai_strategy = { type = befriend id = "NZL" value = 100 }
 }
 
-ENG_uq_coerce_ireland = {
+ENG_DUK_coerce_ireland = {
 	allowed = { original_tag = ENG }
 	enable = {
-		has_completed_focus = ENG_the_irish_question_reopened
+		has_completed_focus = ENG_DUK_the_irish_question_reopened
 		country_exists = IRE
 		NOT = { IRE = { is_subject_of = ENG } }
 	}

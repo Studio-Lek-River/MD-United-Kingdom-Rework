@@ -1217,7 +1217,7 @@ ideas = {
 			research_bonus = { CAT_information_technology = 0.04 }
 		}
 
-		ENG_uq_sovereignty_movement = {
+		ENG_DUK_sovereignty_movement = {
 			picture = nationalism
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1226,7 +1226,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_sovereignty_campaign = {
+		ENG_DUK_sovereignty_campaign = {
 			picture = nationalism
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1235,7 +1235,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_trade_preference_idea = {
+		ENG_DUK_trade_preference_idea = {
 			picture = trade
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1243,7 +1243,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_council_of_the_isles_idea = {
+		ENG_DUK_council_of_the_isles_idea = {
 			picture = guided_by_england
 			allowed_civil_war = { always = yes }
 			targeted_modifier = {
@@ -1256,7 +1256,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_anglo_irish_economic_union_idea = {
+		ENG_DUK_anglo_irish_economic_union_idea = {
 			picture = trade
 			allowed_civil_war = { always = yes }
 			targeted_modifier = {
@@ -1269,7 +1269,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_eu_infringement_idea = {
+		ENG_DUK_eu_infringement_idea = {
 			picture = trade
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1278,7 +1278,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_loyalist_movement = {
+		ENG_DUK_loyalist_movement = {
 			picture = nationalism
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1287,7 +1287,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_embargo = {
+		ENG_DUK_embargo = {
 			picture = trade
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1295,7 +1295,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_us_trade_war = {
+		ENG_DUK_us_trade_war = {
 			picture = embargo
 			allowed_civil_war = { always = yes }
 			targeted_modifier = {
@@ -1307,7 +1307,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_diego_garcia_joint_basing = {
+		ENG_DUK_diego_garcia_joint_basing = {
 			picture = liberty_ships
 			allowed_civil_war = { always = yes }
 			targeted_modifier = {
@@ -1319,7 +1319,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_embargoed = {
+		ENG_DUK_embargoed = {
 			picture = trade
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1328,7 +1328,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_occupation_burden = {
+		ENG_DUK_occupation_burden = {
 			picture = firearm_wall_sheep
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1338,7 +1338,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_eu_trade_penalty = {
+		ENG_DUK_eu_trade_penalty = {
 			picture = trade
 			allowed_civil_war = { always = yes }
 			cancel = { has_idea = EU_member }
@@ -1348,7 +1348,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_nato_strain = {
+		ENG_DUK_nato_strain = {
 			picture = NATO_member
 			allowed_civil_war = { always = yes }
 			cancel = { NOT = { has_idea = NATO_member } }
@@ -1359,7 +1359,7 @@ ideas = {
 			}
 		}
 
-		ENG_direct_rule_idea = {
+		ENG_DUK_direct_rule_idea = {
 			picture = firearm_wall_sheep
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1369,7 +1369,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_irish_sea_blockade = {
+		ENG_DUK_irish_sea_blockade = {
 			picture = trade
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1378,7 +1378,7 @@ ideas = {
 			}
 		}
 
-		ENG_uq_irish_sea_blockaded = {
+		ENG_DUK_irish_sea_blockaded = {
 			picture = trade
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1388,7 +1388,7 @@ ideas = {
 			}
 		}
 
-		ENG_cmw_trade_area_idea = {
+		ENG_DUK_cmw_trade_area_idea = {
 			picture = trade
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1396,7 +1396,7 @@ ideas = {
 			}
 		}
 
-		ENG_cmw_trade_area_member_idea = {
+		ENG_DUK_cmw_trade_area_member_idea = {
 			picture = trade
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1404,7 +1404,7 @@ ideas = {
 			}
 		}
 
-		ENG_cmw_development_fund_idea = {
+		ENG_DUK_cmw_development_fund_idea = {
 			picture = commonwealth_member
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1412,7 +1412,7 @@ ideas = {
 			}
 		}
 
-		ENG_cmw_games_host_idea = {
+		ENG_DUK_cmw_games_host_idea = {
 			picture = commonwealth_member
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1421,7 +1421,7 @@ ideas = {
 			}
 		}
 
-		ENG_cmw_cftc_grant_idea = {
+		ENG_DUK_cmw_cftc_grant_idea = {
 			picture = commonwealth_member
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1430,7 +1430,7 @@ ideas = {
 			}
 		}
 
-		ENG_cmw_scholarship_idea = {
+		ENG_DUK_cmw_scholarship_idea = {
 			picture = commonwealth_member
 			allowed_civil_war = { always = yes }
 			modifier = {
@@ -1438,7 +1438,7 @@ ideas = {
 			}
 		}
 
-		ENG_cmw_suspended = {
+		ENG_DUK_cmw_suspended = {
 			picture = commonwealth_member
 			allowed_civil_war = { always = yes }
 			modifier = {
