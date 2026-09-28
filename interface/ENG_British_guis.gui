@@ -501,11 +501,10 @@ guiTypes = {
 
 		buttonType = {
 			name = "ENG_DUK_consent_help_btn"
-			position = { x = 440 y = 200 }
-			spriteType = "GFX_sort_up_down_button_83x29"
+			position = { x = 400 y = 196 }
+			spriteType = "GFX_button_123x34"
 			buttonText = "ENG_DUK_consent_help_btn"
 			buttonFont = "hoi_16mbs"
-			frame = 1
 			pdx_tooltip = ENG_DUK_consent_help_TT
 		}
 
