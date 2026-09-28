@@ -2343,6 +2343,22 @@ ENG_DUK_cmw_update_cohesion = {
 		limit = { has_completed_focus = ENG_DUK_the_crown_imperial }
 		subtract_from_temp_variable = { ENG_DUK_cmw_cohesion_change = 0.5 }
 	}
+	subtract_from_temp_variable = { ENG_DUK_cmw_cohesion_change = 0.25 }
+	if = {
+		limit = {
+			OR = {
+				has_idea = recession
+				has_idea = depression
+			}
+		}
+		subtract_from_temp_variable = { ENG_DUK_cmw_cohesion_change = 0.3 }
+	}
+	if = {
+		limit = {
+			any_enemy_country = { ENG_DUK_cmw_is_member = yes }
+		}
+		subtract_from_temp_variable = { ENG_DUK_cmw_cohesion_change = 0.5 }
+	}
 	set_variable = { global.ENG_DUK_cmw_cohesion_delta = ENG_DUK_cmw_cohesion_change }
 	ENG_DUK_cmw_change_cohesion = yes
 }

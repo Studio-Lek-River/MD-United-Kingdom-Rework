@@ -184,6 +184,26 @@ on_actions = {
 					NOT = { has_country_flag = ENG_scottish_integrated }
 					NOT = { country_exists = SCO }
 				}
+				set_temp_variable = { ENG_dependency_change = -0.1 }
+				if = {
+					limit = {
+						OR = {
+							has_idea = recession
+							has_idea = depression
+						}
+					}
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				if = {
+					limit = { check_variable = { ENG_DUK_union_strain > 40 } }
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				if = {
+					limit = { check_variable = { ENG_scottish_nationalists > 50 } }
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				ENG_change_scottish_dependency = yes
+
 				if = {
 					limit = { check_variable = { ENG_scottish_dependency > 79 } }
 					set_temp_variable = { ENG_agitation_change = -0.25 }
@@ -207,6 +227,26 @@ on_actions = {
 					NOT = { has_country_flag = ENG_north_irish_integrated }
 					NOT = { country_exists = NIR }
 				}
+				set_temp_variable = { ENG_dependency_change = -0.1 }
+				if = {
+					limit = {
+						OR = {
+							has_idea = recession
+							has_idea = depression
+						}
+					}
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				if = {
+					limit = { check_variable = { ENG_DUK_union_strain > 40 } }
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				if = {
+					limit = { check_variable = { ENG_north_irish_nationalists > 50 } }
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				ENG_change_north_irish_dependency = yes
+
 				if = {
 					limit = { check_variable = { ENG_north_irish_dependency > 79 } }
 					set_temp_variable = { ENG_agitation_change = -0.25 }
@@ -230,6 +270,26 @@ on_actions = {
 					NOT = { has_country_flag = ENG_welsh_integrated }
 					NOT = { country_exists = WAS }
 				}
+				set_temp_variable = { ENG_dependency_change = -0.1 }
+				if = {
+					limit = {
+						OR = {
+							has_idea = recession
+							has_idea = depression
+						}
+					}
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				if = {
+					limit = { check_variable = { ENG_DUK_union_strain > 40 } }
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				if = {
+					limit = { check_variable = { ENG_wales_nationalists > 50 } }
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				ENG_change_wales_dependency = yes
+
 				if = {
 					limit = { check_variable = { ENG_wales_dependency > 79 } }
 					set_temp_variable = { ENG_agitation_change = -0.25 }
@@ -280,6 +340,27 @@ on_actions = {
 					set_temp_variable = { temp_change = -1 }
 					ENG_referendum_campaign_shift = yes
 				}
+
+				# Campaign momentum favours change, faster when Westminster looks weak
+				set_temp_variable = { temp_change = 0.5 }
+				if = {
+					limit = { has_stability < 0.4 }
+					add_to_temp_variable = { temp_change = 0.5 }
+				}
+				if = {
+					limit = {
+						OR = {
+							has_idea = recession
+							has_idea = depression
+						}
+					}
+					add_to_temp_variable = { temp_change = 0.5 }
+				}
+				if = {
+					limit = { check_variable = { ENG_DUK_union_strain > 40 } }
+					add_to_temp_variable = { temp_change = 0.5 }
+				}
+				ENG_referendum_campaign_shift = yes
 			}
 			else_if = {
 				limit = { check_variable = { ENG_referendum_target > 0 } }
