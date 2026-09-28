@@ -6,3 +6,4 @@ v0.1.0 - for Millennium Dawn v2.0.1
  - [ENG] Fixed the cut-off Raise Consent button and its tooltip layout (Issue #39)
  - [ENG] Fixed Union Strain and Imperial Tension reductions showing red instead of green (Issue #40)
  - [ENG] Changed An Ireland United Under the Crown to offer Ireland constituent status when Northern Ireland is integrated (Issue #41)
+ - [ENG] Fixed Ireland's Commonwealth association requiring Irexit while the UK is also an EU member (Issue #42)
