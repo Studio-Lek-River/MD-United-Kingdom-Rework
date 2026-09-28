@@ -3264,7 +3264,10 @@ ENG_devolved_matters = {
 				limit = { is_core_of = SCO }
 				if = { limit = { has_dynamic_modifier = { modifier = ENG_resistance_against_westminster } } remove_dynamic_modifier = { modifier = ENG_resistance_against_westminster } }
 			}
-			hidden_effect = { SCO = { ingame_startup_nations_effect = yes } }
+			hidden_effect = {
+				SCO = { ingame_startup_nations_effect = yes }
+				update_eng_devolution_dirty_variable = yes
+			}
 		}
 
 		ai_will_do = { base = 0 }
@@ -3289,7 +3292,10 @@ ENG_devolved_matters = {
 			17 = {
 				if = { limit = { has_dynamic_modifier = { modifier = ENG_resistance_against_westminster } } remove_dynamic_modifier = { modifier = ENG_resistance_against_westminster } }
 			}
-			hidden_effect = { NIR = { ingame_startup_nations_effect = yes } }
+			hidden_effect = {
+				NIR = { ingame_startup_nations_effect = yes }
+				update_eng_devolution_dirty_variable = yes
+			}
 		}
 
 		ai_will_do = { base = 0 }
@@ -3321,7 +3327,10 @@ ENG_devolved_matters = {
 				limit = { is_core_of = WAS }
 				if = { limit = { has_dynamic_modifier = { modifier = ENG_resistance_against_westminster } } remove_dynamic_modifier = { modifier = ENG_resistance_against_westminster } }
 			}
-			hidden_effect = { WAS = { ingame_startup_nations_effect = yes } }
+			hidden_effect = {
+				WAS = { ingame_startup_nations_effect = yes }
+				update_eng_devolution_dirty_variable = yes
+			}
 		}
 
 		ai_will_do = { base = 0 }
@@ -3345,6 +3354,20 @@ ENG_devolved_matters = {
 			}
 			hidden_effect = {
 				clr_country_flag = ENG_DUK_assemblies_suspended
+				# Direct-rule escalation ends with the suspension; unrest falls back to the lowest tier
+				set_temp_variable = { ENG_DUK_resistance_tier_change = 1 }
+				every_owned_state = {
+					limit = {
+						OR = {
+							is_core_of = SCO
+							is_core_of = WAS
+							is_core_of = NIR
+						}
+						has_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
+						check_variable = { ENG_DUK_resistance_tier > 1 }
+					}
+					ENG_DUK_apply_resistance_against_westminster = yes
+				}
 				update_eng_devolution_dirty_variable = yes
 			}
 		}
@@ -3360,7 +3383,7 @@ ENG_devolved_matters = {
 		cancel_trigger = {
 			OR = {
 				country_exists = SCO
-				has_country_flag = ENG_devolution_purged
+				ENG_DUK_devolution_dissolved = yes
 				has_country_flag = ENG_DUK_assemblies_suspended
 				has_country_flag = ENG_scottish_integrated
 				NOT = { ENG_holds_scotland = yes }
@@ -3384,7 +3407,7 @@ ENG_devolved_matters = {
 		cancel_trigger = {
 			OR = {
 				country_exists = NIR
-				has_country_flag = ENG_devolution_purged
+				ENG_DUK_devolution_dissolved = yes
 				has_country_flag = ENG_DUK_assemblies_suspended
 				has_country_flag = ENG_north_irish_integrated
 				NOT = { ENG_holds_north_ireland = yes }
@@ -3408,7 +3431,7 @@ ENG_devolved_matters = {
 		cancel_trigger = {
 			OR = {
 				country_exists = WAS
-				has_country_flag = ENG_devolution_purged
+				ENG_DUK_devolution_dissolved = yes
 				has_country_flag = ENG_DUK_assemblies_suspended
 				has_country_flag = ENG_welsh_integrated
 				NOT = { ENG_holds_wales = yes }
@@ -3433,7 +3456,7 @@ ENG_devolved_matters = {
 		cancel_trigger = {
 			OR = {
 				country_exists = SCO
-				has_country_flag = ENG_devolution_purged
+				ENG_DUK_devolution_dissolved = yes
 				has_country_flag = ENG_scottish_integrated
 				NOT = { ENG_holds_scotland = yes }
 				has_country_flag = ENG_DUK_assemblies_suspended
@@ -3469,7 +3492,7 @@ ENG_devolved_matters = {
 		cancel_trigger = {
 			OR = {
 				country_exists = NIR
-				has_country_flag = ENG_devolution_purged
+				ENG_DUK_devolution_dissolved = yes
 				has_country_flag = ENG_north_irish_integrated
 				NOT = { ENG_holds_north_ireland = yes }
 				has_country_flag = ENG_DUK_assemblies_suspended
@@ -3505,7 +3528,7 @@ ENG_devolved_matters = {
 		cancel_trigger = {
 			OR = {
 				country_exists = WAS
-				has_country_flag = ENG_devolution_purged
+				ENG_DUK_devolution_dissolved = yes
 				has_country_flag = ENG_welsh_integrated
 				NOT = { ENG_holds_wales = yes }
 				has_country_flag = ENG_DUK_assemblies_suspended
@@ -3686,7 +3709,7 @@ ENG_devolved_matters = {
 		icon = GFX_decision_generic_nationalism
 
 		activation = {
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			NOT = { has_country_flag = ENG_DUK_assemblies_suspended }
 			NOT = { has_country_flag = ENG_referendum_cooldown }
 			NOT = { has_country_flag = ENG_scottish_referendum_cooldown }
@@ -3712,7 +3735,7 @@ ENG_devolved_matters = {
 		cancel_trigger = {
 			OR = {
 				country_exists = SCO
-				has_country_flag = ENG_devolution_purged
+				ENG_DUK_devolution_dissolved = yes
 				has_country_flag = ENG_DUK_assemblies_suspended
 				has_country_flag = ENG_scottish_integrated
 				NOT = { ENG_holds_scotland = yes }
@@ -3743,7 +3766,7 @@ ENG_devolved_matters = {
 		icon = GFX_decision_generic_nationalism
 
 		activation = {
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			NOT = { has_country_flag = ENG_DUK_assemblies_suspended }
 			NOT = { has_country_flag = ENG_referendum_cooldown }
 			NOT = { has_country_flag = ENG_north_irish_referendum_cooldown }
@@ -3769,7 +3792,7 @@ ENG_devolved_matters = {
 		cancel_trigger = {
 			OR = {
 				country_exists = NIR
-				has_country_flag = ENG_devolution_purged
+				ENG_DUK_devolution_dissolved = yes
 				has_country_flag = ENG_DUK_assemblies_suspended
 				has_country_flag = ENG_north_irish_integrated
 				NOT = { 17 = { is_owned_and_controlled_by = ROOT } }
@@ -3800,7 +3823,7 @@ ENG_devolved_matters = {
 		icon = GFX_decision_generic_nationalism
 
 		activation = {
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			NOT = { has_country_flag = ENG_DUK_assemblies_suspended }
 			NOT = { has_country_flag = ENG_referendum_cooldown }
 			NOT = { has_country_flag = ENG_welsh_referendum_cooldown }
@@ -3826,7 +3849,7 @@ ENG_devolved_matters = {
 		cancel_trigger = {
 			OR = {
 				country_exists = WAS
-				has_country_flag = ENG_devolution_purged
+				ENG_DUK_devolution_dissolved = yes
 				has_country_flag = ENG_DUK_assemblies_suspended
 				has_country_flag = ENG_welsh_integrated
 				NOT = { ENG_holds_wales = yes }
@@ -3858,7 +3881,7 @@ ENG_devolved_matters = {
 		icon = GFX_decision_generic_political_discourse
 
 		visible = {
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			NOT = { has_country_flag = ENG_scottish_integrated }
 			NOT = { country_exists = SCO }
 			ENG_holds_scotland = yes
@@ -3911,7 +3934,7 @@ ENG_devolved_matters = {
 		icon = GFX_decision_generic_political_discourse
 
 		visible = {
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			NOT = { has_country_flag = ENG_north_irish_integrated }
 			NOT = { country_exists = NIR }
 			ENG_holds_north_ireland = yes
@@ -3953,7 +3976,7 @@ ENG_devolved_matters = {
 		icon = GFX_decision_generic_political_discourse
 
 		visible = {
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			NOT = { has_country_flag = ENG_welsh_integrated }
 			NOT = { country_exists = WAS }
 			ENG_holds_wales = yes
@@ -4004,7 +4027,7 @@ ENG_devolved_matters = {
 		fire_only_once = yes
 
 		visible = {
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			NOT = { has_country_flag = ENG_constitutional_convention }
 			OR = {
 				ENG_holds_scotland = yes
@@ -4028,11 +4051,6 @@ ENG_devolved_matters = {
 			unlock_decision_tooltip = ENG_scottish_union_settlement
 			unlock_decision_tooltip = ENG_north_irish_union_settlement
 			unlock_decision_tooltip = ENG_welsh_union_settlement
-			hidden_effect = {
-				set_variable = { ENG_DUK_settlement_cost = 200 }
-				set_variable = { ENG_DUK_settlement_pressure_cap = 25 }
-				set_variable = { ENG_DUK_settlement_nationalists_cap = 30 }
-			}
 			newline = yes
 			set_temp_variable = { treasury_change = -3 }
 			modify_treasury_effect = yes
@@ -4054,7 +4072,7 @@ ENG_devolved_matters = {
 		icon = GFX_decision_generic_political_rally
 
 		visible = {
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			NOT = { has_country_flag = ENG_DUK_assemblies_suspended }
 			has_country_flag = ENG_constitutional_convention
 			NOT = { has_country_flag = ENG_scottish_integrated }
@@ -4149,7 +4167,7 @@ ENG_devolved_matters = {
 		icon = GFX_decision_generic_political_rally
 
 		visible = {
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			NOT = { has_country_flag = ENG_DUK_assemblies_suspended }
 			has_country_flag = ENG_constitutional_convention
 			NOT = { has_country_flag = ENG_north_irish_integrated }
@@ -4251,7 +4269,7 @@ ENG_devolved_matters = {
 		icon = GFX_decision_generic_political_rally
 
 		visible = {
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			NOT = { has_country_flag = ENG_DUK_assemblies_suspended }
 			has_country_flag = ENG_constitutional_convention
 			NOT = { has_country_flag = ENG_welsh_integrated }
@@ -4342,7 +4360,7 @@ ENG_devolved_matters = {
 		fire_only_once = yes
 
 		visible = {
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			has_country_flag = ENG_constitutional_convention
 			NOT = { has_country_flag = ENG_scottish_integrated }
 			check_variable = { ENG_scottish_referendum_success = 3 }
@@ -4373,7 +4391,7 @@ ENG_devolved_matters = {
 		fire_only_once = yes
 
 		visible = {
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			has_country_flag = ENG_constitutional_convention
 			NOT = { has_country_flag = ENG_north_irish_integrated }
 			check_variable = { ENG_north_irish_referendum_success = 3 }
@@ -4404,7 +4422,7 @@ ENG_devolved_matters = {
 		fire_only_once = yes
 
 		visible = {
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			has_country_flag = ENG_constitutional_convention
 			NOT = { has_country_flag = ENG_welsh_integrated }
 			check_variable = { ENG_welsh_referendum_success = 3 }
@@ -4563,7 +4581,7 @@ ENG_devolved_matters = {
 		cancel_trigger = {
 			OR = {
 				NOT = { 17 = { is_owned_and_controlled_by = ROOT } }
-				has_country_flag = ENG_devolution_purged
+				ENG_DUK_devolution_dissolved = yes
 				has_country_flag = ENG_DUK_assemblies_suspended
 			}
 		}
@@ -4716,11 +4734,11 @@ ENG_DUK_union_question_decisions = {
 				}
 				if = {
 					limit = { check_variable = { ENG_DUK_debug_variant = 1 } }
-					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 90 } }
+					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 90 } hidden_effect = { country_event = { id = ENG_DUK.611 days = 91 } } }
 				}
 				else_if = {
 					limit = { check_variable = { ENG_DUK_debug_variant = 2 } }
-					ROOT = { set_country_flag = { flag = ENG_DUK_lock@PREV value = 1 days = 90 } }
+					ROOT = { set_country_flag = { flag = ENG_DUK_lock@PREV value = 1 days = 90 } hidden_effect = { country_event = { id = ENG_DUK.611 days = 91 } } }
 				}
 				else_if = {
 					limit = { check_variable = { ENG_DUK_debug_variant = 3 } }
@@ -4905,6 +4923,7 @@ ENG_DUK_union_question_decisions = {
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_deliver_ultimatum"
 			set_country_flag = { flag = ENG_DUK_offer_pending@FROM value = 1 days = 30 }
+			hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } }
 			FROM = { country_event = { id = ENG_DUK.40 days = 1 } }
 			if = {
 				limit = {
@@ -4954,6 +4973,7 @@ ENG_DUK_union_question_decisions = {
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_dismissal"
 			set_country_flag = { flag = ENG_DUK_offer_pending@FROM value = 1 days = 30 }
+			hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } }
 			FROM = { country_event = { id = ENG_DUK.180 days = 1 } }
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = { custom_effect_tooltip = ENG_DUK_ultimatum_accept_TT }
@@ -5018,6 +5038,7 @@ ENG_DUK_union_question_decisions = {
 			}
 			if = {
 				limit = { FROM = { original_tag = IRE } }
+				clr_country_flag = ENG_DUK_irish_war_fought
 				ENG_DUK_irish_war_reactions = yes
 			}
 		}
@@ -5088,6 +5109,7 @@ ENG_DUK_union_question_decisions = {
 		icon = GFX_decision_generic_civil_support
 
 		target_array = ENG_DUK_integration_targets
+		target_non_existing = yes
 		target_root_trigger = { has_completed_focus = ENG_DUK_the_crown_imperial }
 		target_trigger = { NOT = { FROM = { original_tag = IRE } } }
 
@@ -6391,7 +6413,7 @@ ENG_DUK_union_question_decisions = {
 		icon = GFX_decision_generic_construction
 		activation = { always = no }
 		available = { always = no }
-		cancel_trigger = { has_country_flag = ENG_devolution_purged }
+		cancel_trigger = { ENG_DUK_devolution_dissolved = yes }
 		days_mission_timeout = 730
 		is_good = yes
 		selectable_mission = no
@@ -6407,7 +6429,7 @@ ENG_DUK_union_question_decisions = {
 
 		visible = {
 			has_completed_focus = ENG_DUK_the_union_dividend
-			NOT = { has_country_flag = ENG_devolution_purged }
+			NOT = { ENG_DUK_devolution_dissolved = yes }
 			NOT = { has_active_mission = ENG_DUK_union_dividend_programme }
 			ENG_DUK_has_union_dividend_recipient = yes
 		}
@@ -6712,13 +6734,21 @@ ENG_DUK_union_question_decisions = {
 		icon = GFX_decision_generic_political_discourse
 
 		target_array = ENG_DUK_integration_targets
+		target_non_existing = yes
 		target_trigger = {
-			FROM = {
-				exists = yes
-				ENG_DUK_stage_1 = yes
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
+			OR = {
+				FROM = {
+					exists = yes
+					ENG_DUK_stage_1 = yes
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+				# Annexed at the peace table, released as a protectorate once pacified
+				AND = {
+					FROM = { exists = no }
+					has_country_flag = ENG_DUK_pacified@FROM
 				}
 			}
 			NOT = { FROM = { ENG_DUK_is_caribbean_realm = yes } }
@@ -6787,6 +6817,7 @@ ENG_DUK_union_question_decisions = {
 			if = {
 				limit = { has_completed_focus = ENG_DUK_a_family_of_nations }
 				set_country_flag = { flag = ENG_DUK_offer_pending@FROM value = 1 days = 30 }
+				hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } }
 				if = {
 					limit = { FROM = { ENG_DUK_is_crown_realm = yes } }
 					FROM = { country_event = { id = ENG_DUK.120 days = 1 } }
@@ -6865,6 +6896,7 @@ ENG_DUK_union_question_decisions = {
 			if = {
 				limit = { has_completed_focus = ENG_DUK_a_family_of_nations }
 				set_country_flag = { flag = ENG_DUK_offer_pending@FROM value = 1 days = 30 }
+				hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } }
 				FROM = { country_event = { id = ENG_DUK.23 days = 1 } }
 				custom_effect_tooltip = TT_IF_THEY_ACCEPT
 				effect_tooltip = { custom_effect_tooltip = ENG_DUK_referendum_scheduled_TT }
@@ -6922,6 +6954,7 @@ ENG_DUK_union_question_decisions = {
 			hidden_effect = { add_political_power = -300 }
 			large_expenditure = yes
 			set_country_flag = { flag = ENG_DUK_offer_pending@FROM value = 1 days = 30 }
+			hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } }
 			FROM = { country_event = { id = ENG_DUK.20 days = 1 } }
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = { custom_effect_tooltip = ENG_DUK_stage_4_TT }
@@ -7028,14 +7061,21 @@ ENG_DUK_union_question_decisions = {
 		icon = GFX_decision_generic_political_discourse
 
 		target_array = ENG_DUK_integration_targets
+		target_non_existing = yes
 		target_trigger = {
-			FROM = {
-				ENG_DUK_stage_1 = yes
-				ENG_DUK_is_ex_empire = yes
-				exists = yes
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
+			FROM = { ENG_DUK_is_ex_empire = yes }
+			OR = {
+				FROM = {
+					exists = yes
+					ENG_DUK_stage_1 = yes
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+				AND = {
+					FROM = { exists = no }
+					has_country_flag = ENG_DUK_pacified@FROM
 				}
 			}
 		}
@@ -7084,6 +7124,7 @@ ENG_DUK_union_question_decisions = {
 			if = {
 				limit = { has_completed_focus = ENG_DUK_a_family_of_nations }
 				set_country_flag = { flag = ENG_DUK_offer_pending@FROM value = 1 days = 30 }
+				hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } }
 				FROM = { country_event = { id = ENG_DUK.20 days = 1 } }
 				custom_effect_tooltip = TT_IF_THEY_ACCEPT
 				effect_tooltip = { custom_effect_tooltip = ENG_DUK_stage_2_TT }
@@ -7174,7 +7215,7 @@ ENG_DUK_union_question_decisions = {
 						}
 						NOT = { has_country_flag = ENG_DUK_republic }
 					}
-					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } }
+					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } } }
 					country_event = { id = ENG_DUK.120 days = 1 }
 				}
 			}
@@ -7191,7 +7232,7 @@ ENG_DUK_union_question_decisions = {
 							}
 						}
 					}
-					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } }
+					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } } }
 					set_country_flag = ENG_DUK_relay_129
 					country_event = { id = ENG_DUK.9 days = 1 }
 				}
@@ -7276,7 +7317,7 @@ ENG_DUK_union_question_decisions = {
 						}
 						NOT = { has_country_flag = ENG_DUK_republic }
 					}
-					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } }
+					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } } }
 					country_event = { id = ENG_DUK.23 days = 1 }
 				}
 			}
@@ -7293,7 +7334,7 @@ ENG_DUK_union_question_decisions = {
 							}
 						}
 					}
-					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } }
+					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } } }
 					set_country_flag = ENG_DUK_relay_129
 					country_event = { id = ENG_DUK.9 days = 1 }
 				}
@@ -7363,7 +7404,7 @@ ENG_DUK_union_question_decisions = {
 					}
 					NOT = { has_country_flag = ENG_DUK_republic }
 				}
-				ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } }
+				ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } } }
 				country_event = { id = ENG_DUK.20 days = 1 }
 			}
 		}

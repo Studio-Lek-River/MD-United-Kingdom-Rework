@@ -31,7 +31,7 @@ ENG_devolved_matters = {
 	scripted_gui = ENG_devolution_gui_window
 	visible_when_empty = yes
 
-	visible = { NOT = { has_country_flag = ENG_devolution_purged } }
+	visible = { NOT = { ENG_DUK_devolution_dissolved = yes } }
 }
 
 ENG_DUK_union_question_decisions = {

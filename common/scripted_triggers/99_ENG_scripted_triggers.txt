@@ -27,6 +27,14 @@ ENG_holds_wales = {
 	1192 = { is_owned_and_controlled_by = ROOT }
 }
 
+# The devolved assemblies are gone. The Act of Union keeps its own flag so the constituent autonomy stays allowed.
+ENG_DUK_devolution_dissolved = {
+	OR = {
+		has_country_flag = ENG_devolution_purged
+		has_country_flag = ENG_DUK_act_of_union_passed
+	}
+}
+
 ENG_referendum_campaign_running = {
 	OR = {
 		has_active_mission = ENG_scottish_referendum
@@ -97,7 +105,7 @@ ENG_DUK_scotland_calm = {
 		any_owned_state = {
 			is_core_of = SCO
 			has_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
-			check_variable = { ENG_DUK_resistance_tier > 1 }
+			check_variable = { var = ENG_DUK_resistance_tier value = ROOT.ENG_DUK_pacification_tier_cap compare = greater_than }
 		}
 	}
 }
@@ -120,7 +128,7 @@ ENG_DUK_north_ireland_calm = {
 	NOT = {
 		17 = {
 			has_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
-			check_variable = { ENG_DUK_resistance_tier > 1 }
+			check_variable = { var = ENG_DUK_resistance_tier value = ROOT.ENG_DUK_pacification_tier_cap compare = greater_than }
 		}
 	}
 }
@@ -144,7 +152,7 @@ ENG_DUK_wales_calm = {
 		any_owned_state = {
 			is_core_of = WAS
 			has_dynamic_modifier = { modifier = ENG_resistance_against_westminster }
-			check_variable = { ENG_DUK_resistance_tier > 1 }
+			check_variable = { var = ENG_DUK_resistance_tier value = ROOT.ENG_DUK_pacification_tier_cap compare = greater_than }
 		}
 	}
 }
@@ -235,13 +243,18 @@ ENG_DUK_path_in_power = {
 	}
 }
 
-# Target scope. A Commonwealth member associated with the Union, counted by ENG_DUK_realms_done.
+# Target scope. A Commonwealth member associated with or integrated into the Union, counted by ENG_DUK_realms_done.
 ENG_DUK_realm_associated = {
-	is_in_array = { array = global.commonwealth_member value = THIS }
 	OR = {
-		ENG_DUK_stage_2 = yes
-		ENG_DUK_stage_3 = yes
-		ENG_DUK_crown_colony = yes
+		ENG = { has_country_flag = ENG_DUK_integrated@PREV }
+		AND = {
+			is_in_array = { array = global.commonwealth_member value = THIS }
+			OR = {
+				ENG_DUK_stage_2 = yes
+				ENG_DUK_stage_3 = yes
+				ENG_DUK_crown_colony = yes
+			}
+		}
 	}
 }
 

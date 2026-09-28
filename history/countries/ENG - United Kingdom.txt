@@ -1301,10 +1301,11 @@ capital = 13
 	set_variable = { ENG_wales_dependency = 100 } # The dependancy of the Welsh on the British
 	# Union settlement thresholds; ENG_DUK_one_nation tightens them
 	set_variable = { ENG_DUK_settlement_cost = 200 }
-	set_variable = { ENG_DUK_settlement_pressure_cap = 20 }
-	set_variable = { ENG_DUK_settlement_nationalists_cap = 25 }
+	set_variable = { ENG_DUK_settlement_pressure_cap = 25 }
+	set_variable = { ENG_DUK_settlement_nationalists_cap = 30 }
 	# Pacification threshold; ENG_DUK_the_kings_men loosens it
 	set_variable = { ENG_DUK_pacification_pressure_cap = 25 }
+	set_variable = { ENG_DUK_pacification_tier_cap = 1 }
 	# Inner Circle
 	set_variable = { ENG_ascended_advisor_1 = 0 }
 	set_variable = { ENG_ascended_advisor_2 = 0 }

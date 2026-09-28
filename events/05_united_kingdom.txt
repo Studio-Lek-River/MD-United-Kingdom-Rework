@@ -2749,7 +2749,7 @@ country_event = {
 				country_exists = SCO
 				country_exists = NIR
 				country_exists = WAS
-				has_country_flag = ENG_devolution_purged
+				ENG_DUK_devolution_dissolved = yes
 			}
 		}
 	}
@@ -3465,6 +3465,18 @@ country_event = {
 		name = ENG_DUK.610.a
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.610.a executed"
 		add_stability = -0.03
+	}
+}
+
+# Redraws the Union Question panel once a timed lock or pending offer has lapsed
+country_event = {
+	id = ENG_DUK.611
+	hidden = yes
+	is_triggered_only = yes
+
+	immediate = {
+		log = "[GetDateText]: [This.GetName]: ENG_DUK.611 executed"
+		update_eng_devolution_dirty_variable = yes
 	}
 }
 
@@ -8701,7 +8713,7 @@ country_event = {
 		name = ENG_DUK.99.a
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.99.a executed"
 		custom_effect_tooltip = ENG_DUK_irexit_lock_TT
-		hidden_effect = { set_country_flag = { flag = ENG_DUK_lock@IRE value = 1 days = 3650 } }
+		hidden_effect = { set_country_flag = { flag = ENG_DUK_lock@IRE value = 1 days = 3650 } country_event = { id = ENG_DUK.611 days = 3651 } }
 		IRE = {
 			set_temp_variable = { ENG_DUK_consent_change = -20 }
 			ENG_DUK_change_consent = yes
@@ -11679,6 +11691,10 @@ country_event = {
 	option = {
 		name = ENG_DUK.530.a
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.530.a executed"
+		trigger = {
+			is_in_faction = no
+			ENG = { is_faction_leader = yes }
+		}
 		ai_chance = {
 			base = 40
 			modifier = {

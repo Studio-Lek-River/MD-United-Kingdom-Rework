@@ -21379,6 +21379,20 @@ focus_tree = {
 			has_country_flag = ENG_constitutional_convention
 		}
 
+		bypass = {
+			NOT = { has_country_flag = ENG_constitutional_convention }
+			OR = {
+				ENG_DUK_devolution_dissolved = yes
+				NOT = {
+					OR = {
+						ENG_holds_scotland = yes
+						ENG_holds_north_ireland = yes
+						ENG_holds_wales = yes
+					}
+				}
+			}
+		}
+
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_DUK_one_nation"
 			custom_effect_tooltip = { localization_key = modifies_dynamic_modifier_tt MODIFIER = ENG_DUK_union_question_dm }
@@ -21637,7 +21651,7 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_DUK_act_of_union"
 			custom_effect_tooltip = ENG_DUK_act_of_union_TT
-			set_country_flag = ENG_devolution_purged
+			set_country_flag = ENG_DUK_act_of_union_passed
 			custom_effect_tooltip = {
 				localization_key = modifies_dynamic_modifier_tt
 				MODIFIER = ENG_DUK_union_question_dm
@@ -21977,6 +21991,7 @@ focus_tree = {
 			if = {
 				limit = { has_country_flag = ENG_north_irish_integrated }
 				set_country_flag = { flag = ENG_DUK_offer_pending@IRE value = 1 days = 30 }
+				hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } }
 				IRE = { country_event = { id = ENG_DUK.23 days = 1 } }
 				custom_effect_tooltip = TT_IF_THEY_ACCEPT
 				effect_tooltip = { custom_effect_tooltip = ENG_DUK_referendum_scheduled_TT }
@@ -22303,7 +22318,10 @@ focus_tree = {
 			newline = yes
 			set_temp_variable = { ENG_DUK_union_strain_change = 10 }
 			ENG_DUK_change_union_strain = yes
-			hidden_effect = { set_variable = { ENG_DUK_pacification_pressure_cap = 35 } }
+			hidden_effect = {
+				set_variable = { ENG_DUK_pacification_pressure_cap = 35 }
+				set_variable = { ENG_DUK_pacification_tier_cap = 2 }
+			}
 		}
 
 		ai_will_do = {

@@ -679,6 +679,7 @@ ENG_DUK_release_target = {
 	clr_country_flag = ENG_DUK_occupying@FROM
 	clr_country_flag = ENG_DUK_pacified@FROM
 	set_country_flag = { flag = ENG_DUK_lock@FROM value = 1 days = 1825 }
+	hidden_effect = { country_event = { id = ENG_DUK.611 days = 1826 } }
 }
 
 # One rung down: a constituent country becomes a Crown subject again, a Crown subject goes free. Call with ROOT = ENG and FROM = target.
@@ -699,6 +700,7 @@ ENG_DUK_step_down = {
 			}
 		}
 		set_country_flag = { flag = ENG_DUK_lock@FROM value = 1 days = 1825 }
+		hidden_effect = { country_event = { id = ENG_DUK.611 days = 1826 } }
 	}
 	else = {
 		ENG_DUK_release_target = yes
@@ -712,9 +714,11 @@ ENG_DUK_fail_transition = {
 		if = {
 			limit = { has_completed_focus = ENG_DUK_a_family_of_nations }
 			set_country_flag = { flag = ENG_DUK_lock@FROM value = 1 days = 1825 }
+			hidden_effect = { country_event = { id = ENG_DUK.611 days = 1826 } }
 		}
 		else = {
 			set_country_flag = { flag = ENG_DUK_lock@FROM value = 1 days = 1095 }
+			hidden_effect = { country_event = { id = ENG_DUK.611 days = 1096 } }
 		}
 	}
 	FROM = {
@@ -1123,7 +1127,7 @@ ENG_DUK_realm_republic = {
 	custom_effect_tooltip = ENG_DUK_realm_republic_TT
 	set_country_flag = ENG_DUK_republic
 	ENG_DUK_crown_realm_remove = yes
-	ENG = { set_country_flag = { flag = ENG_DUK_lock@PREV value = 1 days = 3650 } }
+	ENG = { set_country_flag = { flag = ENG_DUK_lock@PREV value = 1 days = 3650 } hidden_effect = { country_event = { id = ENG_DUK.611 days = 3651 } } }
 	set_temp_variable = { ENG_DUK_consent_change = -30 }
 	ENG_DUK_change_consent = yes
 	set_temp_variable = { percent_change = -20 }
@@ -1624,6 +1628,7 @@ ENG_DUK_reset_irish_tier = {
 	clr_country_flag = ENG_DUK_occupying@IRE
 	clr_country_flag = ENG_DUK_pacified@IRE
 	clr_country_flag = ENG_DUK_claims@IRE
+	clr_country_flag = ENG_DUK_irish_war_fought
 	clr_country_flag = ENG_DUK_ultimatum_rejected@IRE
 	clr_country_flag = ENG_DUK_ultimatum_cooldown@IRE
 	every_state = {
@@ -2734,6 +2739,7 @@ ENG_release_referendum_region = {
 			}
 		}
 	}
+	update_eng_devolution_dirty_variable = yes
 }
 
 ENG_integrate_referendum_region = {
