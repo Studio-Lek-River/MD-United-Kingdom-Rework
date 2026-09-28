@@ -3,6 +3,11 @@
 Submod for [Millennium Dawn](https://github.com/MillenniumDawn/Millennium-Dawn) that expands the
 United Kingdom (ENG) focus tree.
 
+- Current Changes:
+
+- Focus Tree Branch for regaining old territory
+- Reworked Devolution GUI and in a new place
+
 ## Validation
 
 Pull requests run Millennium Dawn's validator suite against this repo's files overlaid on MD at the
