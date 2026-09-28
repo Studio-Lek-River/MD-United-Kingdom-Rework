@@ -8565,7 +8565,7 @@ country_event = {
 	id = ENG_DUK.93
 	title = ENG_DUK.93.t
 	desc = ENG_DUK.93.d
-	picture = GFX_eu
+	picture = GFX_european_union_flag
 	is_triggered_only = yes
 
 	option = {
@@ -8777,7 +8777,7 @@ country_event = {
 	id = ENG_DUK.105
 	title = ENG_DUK.105.t
 	desc = ENG_DUK.105.d
-	picture = GFX_UN_emergency_meeting
+	picture = GFX_UN_gen_assembly
 	is_triggered_only = yes
 
 	option = {
@@ -8813,7 +8813,7 @@ country_event = {
 	id = ENG_DUK.111
 	title = ENG_DUK.111.t
 	desc = ENG_DUK.111.d
-	picture = GFX_UN_emergency_meeting
+	picture = GFX_UN_gen_assembly
 	is_triggered_only = yes
 
 	minor_flavor = yes
@@ -8971,7 +8971,7 @@ country_event = {
 	id = ENG_DUK.130
 	title = ENG_DUK.130.t
 	desc = ENG_DUK.130.d
-	picture = GFX_ENG_commonwealth
+	picture = GFX_SIN_y2006_queen_elizabeth_visited_singapore
 	is_triggered_only = yes
 
 	option = {
@@ -9024,7 +9024,7 @@ country_event = {
 	id = ENG_DUK.132
 	title = ENG_DUK.132.t
 	desc = ENG_DUK.132.d
-	picture = GFX_ENG_commonwealth
+	picture = GFX_SIN_y2006_queen_elizabeth_visited_singapore
 	is_triggered_only = yes
 
 	option = {
@@ -10671,7 +10671,7 @@ country_event = {
 	id = ENG_DUK.290
 	title = ENG_DUK.290.t
 	desc = ENG_DUK.290.d
-	picture = GFX_ENG_commonwealth
+	picture = GFX_SIN_y2006_queen_elizabeth_visited_singapore
 	is_triggered_only = yes
 
 	immediate = { ENG_DUK_set_accept_weight = yes }
@@ -10728,7 +10728,7 @@ country_event = {
 	id = ENG_DUK.291
 	title = ENG_DUK.291.t
 	desc = ENG_DUK.291.d
-	picture = GFX_ENG_commonwealth
+	picture = GFX_SIN_y2006_queen_elizabeth_visited_singapore
 	is_triggered_only = yes
 
 	minor_flavor = yes
@@ -11516,7 +11516,7 @@ country_event = {
 	id = ENG_DUK.510
 	title = ENG_DUK.510.t
 	desc = ENG_DUK.510.d
-	picture = GFX_ENG_commonwealth
+	picture = GFX_CAN_chogm_meeting_2018
 	is_triggered_only = yes
 
 	option = {
@@ -11579,7 +11579,7 @@ country_event = {
 	id = ENG_DUK.513
 	title = ENG_DUK.513.t
 	desc = ENG_DUK.513.d
-	picture = GFX_ENG_commonwealth
+	picture = GFX_CAN_chogm_meeting_2018
 	is_triggered_only = yes
 
 	minor_flavor = yes
@@ -11602,7 +11602,7 @@ country_event = {
 		text = ENG_DUK.514.d3
 		trigger = { check_variable = { global.ENG_DUK_cmw_chogm_result = 0 } }
 	}
-	picture = GFX_ENG_commonwealth
+	picture = GFX_CAN_chogm_meeting_2018
 	is_triggered_only = yes
 
 	minor_flavor = yes
@@ -11614,7 +11614,7 @@ country_event = {
 	id = ENG_DUK.520
 	title = ENG_DUK.520.t
 	desc = ENG_DUK.520.d
-	picture = GFX_news_leave_commonwealth
+	picture = GFX_CAN_chogm_meeting_2018
 	is_triggered_only = yes
 
 	option = { name = ENG_DUK.520.a }
@@ -11625,7 +11625,7 @@ country_event = {
 	id = ENG_DUK.521
 	title = ENG_DUK.521.t
 	desc = ENG_DUK.521.d
-	picture = GFX_ENG_commonwealth
+	picture = GFX_CAN_chogm_meeting_2018
 	is_triggered_only = yes
 
 	option = {
@@ -11689,7 +11689,7 @@ country_event = {
 	id = ENG_DUK.540
 	title = ENG_DUK.540.t
 	desc = ENG_DUK.540.d
-	picture = GFX_ENG_commonwealth
+	picture = GFX_SIN_y2006_queen_elizabeth_visited_singapore
 	is_triggered_only = yes
 
 	option = {
@@ -11747,7 +11747,7 @@ country_event = {
 	id = ENG_DUK.541
 	title = ENG_DUK.541.t
 	desc = ENG_DUK.541.d
-	picture = GFX_ENG_commonwealth
+	picture = GFX_SIN_y2006_queen_elizabeth_visited_singapore
 	is_triggered_only = yes
 
 	option = { name = ENG_DUK.541.a }
@@ -11758,7 +11758,7 @@ country_event = {
 	id = ENG_DUK.542
 	title = ENG_DUK.542.t
 	desc = ENG_DUK.542.d
-	picture = GFX_ENG_commonwealth
+	picture = GFX_country_monarchy_abolished
 	is_triggered_only = yes
 
 	option = { name = ENG_DUK.542.a }
