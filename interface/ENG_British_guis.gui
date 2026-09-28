@@ -38,14 +38,6 @@ guiTypes = {
 			Orientation = "UPPER_LEFT"
 			pdx_tooltip = ENG_scotland_gui_tooltip
 		}
-		buttonType = {
-			name = "ENG_north_ireland_map_button"
-			spriteType = "GFX_ENG_north_ireland_map"
-			position = { x = 265 y = 288 }
-			scale = 0.65
-			Orientation = "UPPER_LEFT"
-			pdx_tooltip = ENG_northern_ireland_tooltip
-		}
 		iconType = {
 			name = "ENG_DUK_ireland_map"
 			spriteType = "GFX_ENG_DUK_ireland_map"
@@ -53,6 +45,14 @@ guiTypes = {
 			scale = 0.65
 			Orientation = "UPPER_LEFT"
 			pdx_tooltip = ENG_DUK_ireland_map_TT
+		}
+		buttonType = {
+			name = "ENG_north_ireland_map_button"
+			spriteType = "GFX_ENG_north_ireland_map"
+			position = { x = 265 y = 288 }
+			scale = 0.65
+			Orientation = "UPPER_LEFT"
+			pdx_tooltip = ENG_northern_ireland_tooltip
 		}
 		iconType = {
 			name = "GFX_ENG_england_map"
