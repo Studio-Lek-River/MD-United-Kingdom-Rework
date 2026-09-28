@@ -43,6 +43,17 @@ defined_text = {
 	}
 }
 
+defined_text = {
+	name = ENG_DUK_GetMonarch
+	text = {
+		trigger = { ENG = { has_country_flag = ENG_elizabeth_ruling_monarch } }
+		localization_key = ENG_DUK_monarch_elizabeth
+	}
+	text = {
+		localization_key = ENG_DUK_monarch_generic
+	}
+}
+
 ### Inner Circle
 defined_text = {
 	name = ENGGetAscendedAdvisorName1

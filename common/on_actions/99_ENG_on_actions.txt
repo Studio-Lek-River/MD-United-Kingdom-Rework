@@ -43,14 +43,6 @@ on_actions = {
 		}
 	}
 
-	on_daily_ENG = {
-		effect = {
-			if = {
-				limit = { is_ai = no }
-				update_eng_devolution_dirty_variable = yes
-			}
-		}
-	}
 	on_monthly_ENG = {
 		effect = {
 			#-----------# "Good Friday" #-----------#
@@ -404,6 +396,7 @@ on_actions = {
 					limit = { has_idea = ENG_crown_realm_status }
 					set_temp_variable = { percent_change = 4 }
 					set_temp_variable = { tag_index = ENG }
+					set_temp_variable = { influence_target = THIS }
 					change_influence_percentage = yes
 				}
 			}
@@ -449,7 +442,10 @@ on_actions = {
 			# Every ladder target: consent drifts on both paths, coercion only on the Nationalist path
 			for_each_scope_loop = {
 				array = ENG_DUK_integration_targets
-				ENG_DUK_update_consent = yes
+				if = {
+					limit = { exists = yes }
+					ENG_DUK_update_consent = yes
+				}
 				ENG_DUK_realm_monthly = yes
 				ENG_DUK_ex_empire_monthly = yes
 				if = {
@@ -483,6 +479,7 @@ on_actions = {
 			}
 
 			ENG_DUK_cmw_monthly = yes
+			update_eng_devolution_dirty_variable = yes
 		}
 	}
 

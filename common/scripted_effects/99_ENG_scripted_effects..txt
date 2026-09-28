@@ -397,12 +397,14 @@ ENG_change_wales_nationalists = {
 }
 
 update_eng_devolution_dirty_variable = {
-	if = {
-		limit = { check_variable = { global.ENG_devolution_dirty_update_var < 10000 } }
-		add_to_variable = { global.ENG_devolution_dirty_update_var = 1 }
-	}
-	else = {
-		set_variable = { global.ENG_devolution_dirty_update_var = 1 }
+	hidden_effect = {
+		if = {
+			limit = { check_variable = { global.ENG_devolution_dirty_update_var < 10000 } }
+			add_to_variable = { global.ENG_devolution_dirty_update_var = 1 }
+		}
+		else = {
+			set_variable = { global.ENG_devolution_dirty_update_var = 1 }
+		}
 	}
 }
 
@@ -467,6 +469,7 @@ ENG_DUK_change_union_strain = {
 		set_variable = { ROOT.ENG_DUK_union_strain = { value = ROOT.ENG_DUK_union_strain add = ENG_DUK_union_strain_change clamp = { min = 0 max = 100 } } }
 		ROOT = { ENG_DUK_update_dm = yes }
 	}
+	update_eng_devolution_dirty_variable = yes
 }
 
 # Strain penalties scale linearly to the issue's caps at 100; Westminster overreach only bites on the Western path.
@@ -574,6 +577,7 @@ ENG_DUK_enter_stage_2 = {
 		}
 		ENG_DUK_proclaim_british_raj = yes
 	}
+	update_eng_devolution_dirty_variable = yes
 }
 
 # Stage 2 -> 3. Call with ROOT = ENG and FROM = target. The constituent level refuses an overlord that purged devolution.
@@ -594,6 +598,7 @@ ENG_DUK_enter_stage_3 = {
 	ENG_DUK_irish_lobby_reaction = yes
 	ENG_DUK_realm_stage_reaction = yes
 	ENG_DUK_possession_stage_reaction = yes
+	update_eng_devolution_dirty_variable = yes
 }
 
 # Stage 3 -> 4. Call with ROOT = ENG and FROM = target.
@@ -638,6 +643,7 @@ ENG_DUK_enter_stage_4 = {
 		target = FROM
 		transfer_troops = yes
 	}
+	update_eng_devolution_dirty_variable = yes
 }
 
 # Stage 3 -> Crown Colony, the Nationalist path's subject ending. Call with ROOT = ENG and FROM = target.
@@ -660,6 +666,7 @@ ENG_DUK_enter_crown_colony = {
 	ENG_DUK_realm_stage_reaction = yes
 	ENG_DUK_possession_stage_reaction = yes
 	remove_from_array = { ENG_DUK_integration_targets = FROM }
+	update_eng_devolution_dirty_variable = yes
 }
 
 # Frees the target and takes it off the ladder for five years. Call with ROOT = ENG and FROM = target.
@@ -714,6 +721,7 @@ ENG_DUK_fail_transition = {
 		set_temp_variable = { ENG_DUK_consent_change = -20 }
 		ENG_DUK_change_consent = yes
 	}
+	update_eng_devolution_dirty_variable = yes
 }
 
 ENG_DUK_change_consent = {
@@ -732,6 +740,7 @@ ENG_DUK_change_consent = {
 		# Copy for the Union Question panel bar, which reads from the target's scope.
 		set_variable = { ENG_DUK_consent_bar = ENG.ENG_DUK_consent@THIS }
 	}
+	update_eng_devolution_dirty_variable = yes
 }
 
 # Call in the target's scope. The programme is spun badly at home and consent slips.
@@ -1090,6 +1099,7 @@ ENG_DUK_update_caribbean_consent = {
 		array = ENG_DUK_integration_targets
 		if = {
 			limit = {
+				exists = yes
 				ENG_DUK_is_caribbean_realm = yes
 				ROOT = { NOT = { has_country_flag = ENG_DUK_integrated@PREV } }
 			}
@@ -1520,7 +1530,10 @@ ENG_DUK_update_regions = {
 	for_each_scope_loop = {
 		array = ENG_DUK_integration_targets
 		if = {
-			limit = { ENG_DUK_is_ex_empire = yes }
+			limit = {
+				exists = yes
+				ENG_DUK_is_ex_empire = yes
+			}
 			set_temp_variable = { ENG_DUK_r = ROOT.ENG_DUK_region@THIS }
 			ROOT = {
 				add_to_temp_variable = { ENG_DUK_rc_sum^ENG_DUK_r = ENG_DUK_consent@PREV }
@@ -1687,6 +1700,7 @@ ENG_DUK_change_imperial_tension = {
 	hidden_effect = {
 		set_variable = { ROOT.ENG_DUK_imperial_tension = { value = ROOT.ENG_DUK_imperial_tension add = ENG_DUK_imperial_tension_change clamp = { min = 0 max = 100 } } }
 	}
+	update_eng_devolution_dirty_variable = yes
 }
 
 # Monthly coercion step for one Nationalist-path target. Call in the target's scope with ROOT = ENG.
@@ -2315,6 +2329,7 @@ ENG_DUK_cmw_change_cohesion = {
 	add_to_variable = { global.ENG_DUK_commonwealth_cohesion = ENG_DUK_cmw_cohesion_change }
 	clamp_variable = { var = global.ENG_DUK_commonwealth_cohesion min = 0 max = 100 }
 	custom_effect_tooltip = ENG_DUK_cmw_cohesion_change_tt
+	update_eng_devolution_dirty_variable = yes
 }
 
 # Monthly, ROOT = ENG

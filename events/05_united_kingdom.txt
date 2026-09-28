@@ -689,7 +689,7 @@ news_event = {
 	id = ENG_DUK.601
 	title = ENG_DUK.601.t
 	desc = ENG_DUK.601.d
-	picture = GFX_ENG_generic
+	picture = GFX_ENG_commonwealth
 	is_triggered_only = yes
 
 	option = { name = ENG_DUK.601.a }
@@ -735,7 +735,7 @@ news_event = {
 	id = ENG_DUK.604
 	title = ENG_DUK.604.t
 	desc = ENG_DUK.604.d
-	picture = GFX_ENG_canzuk_alliance
+	picture = GFX_british_flag
 	is_triggered_only = yes
 	major = yes
 
@@ -7663,7 +7663,8 @@ country_event = {
 				country_event = { id = ENG_DUK.9 days = 1 }
 			}
 		}
-		else = {
+		else_if = {
+			limit = { FROM = { ENG_DUK_stage_3 = yes } }
 			ENG_DUK_enter_stage_4 = yes
 		}
 	}
@@ -8258,9 +8259,14 @@ country_event = {
 		name = ENG_DUK.73.b
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.73.b executed"
 		clr_country_flag = ENG_DUK_scottish_pacified
+		set_temp_variable = { ENG_DUK_saved_referendum_target = ENG_referendum_target }
 		set_variable = { ENG_referendum_target = 1 }
 		ENG_release_referendum_region = yes
-		set_variable = { ENG_referendum_target = 0 }
+		set_variable = { ENG_referendum_target = ENG_DUK_saved_referendum_target }
+		if = {
+			limit = { check_variable = { ENG_referendum_target = 1 } }
+			set_variable = { ENG_referendum_target = 0 }
+		}
 		ai_chance = { base = 0 }
 	}
 }
@@ -10779,10 +10785,8 @@ country_event = {
 		custom_effect_tooltip = ENG_DUK_patron_guarantee_TT
 		hidden_effect = {
 			FROM = { country_event = { id = ENG_DUK.302 days = 730 } }
-			ENG = {
-				set_variable = { ENG_DUK_patron_client = FROM }
-				country_event = { id = ENG_DUK.301 days = 1 }
-			}
+			set_variable = { ENG_DUK_guaranteed_client = FROM }
+			ENG = { country_event = { id = ENG_DUK.301 days = 1 } }
 		}
 		ai_chance = {
 			base = 40
@@ -11521,8 +11525,9 @@ news_event = {
 	id = ENG_DUK.501
 	title = ENG_DUK.501.t
 	desc = ENG_DUK.501.d
-	picture = GFX_event_olympics
+	picture = GFX_commonwealthgames_ast_1
 	is_triggered_only = yes
+	major = yes
 
 	option = { name = ENG_DUK.501.a }
 }

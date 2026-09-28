@@ -235,17 +235,36 @@ ENG_DUK_path_in_power = {
 	}
 }
 
+# Target scope. A Commonwealth member associated with the Union, counted by ENG_DUK_realms_done.
+ENG_DUK_realm_associated = {
+	is_in_array = { array = global.commonwealth_member value = THIS }
+	OR = {
+		ENG_DUK_stage_2 = yes
+		ENG_DUK_stage_3 = yes
+		ENG_DUK_crown_colony = yes
+	}
+}
+
 ENG_DUK_realms_done = {
 	custom_trigger_tooltip = {
 		tooltip = ENG_DUK_realms_done_TT
-		any_country = {
-			count = 3
-			is_in_array = { array = global.commonwealth_member value = THIS }
-			OR = {
-				ENG_DUK_stage_2 = yes
-				ENG_DUK_stage_3 = yes
-				ENG_DUK_crown_colony = yes
-			}
+		count_triggers = {
+			amount = 3
+			CAN = { ENG_DUK_realm_associated = yes }
+			AST = { ENG_DUK_realm_associated = yes }
+			NZL = { ENG_DUK_realm_associated = yes }
+			PAP = { ENG_DUK_realm_associated = yes }
+			SOL = { ENG_DUK_realm_associated = yes }
+			TUL = { ENG_DUK_realm_associated = yes }
+			JAM = { ENG_DUK_realm_associated = yes }
+			BAH = { ENG_DUK_realm_associated = yes }
+			BLZ = { ENG_DUK_realm_associated = yes }
+			ANT = { ENG_DUK_realm_associated = yes }
+			GRA = { ENG_DUK_realm_associated = yes }
+			BAR = { ENG_DUK_realm_associated = yes }
+			STK = { ENG_DUK_realm_associated = yes }
+			STL = { ENG_DUK_realm_associated = yes }
+			STV = { ENG_DUK_realm_associated = yes }
 		}
 	}
 }
@@ -346,11 +365,12 @@ ENG_DUK_annexation_target = {
 	}
 }
 
-# FROM = the ladder target. True while every state it holds a core on is quiet under British rule.
+# FROM = the ladder target. True while every British-held state it has a core on is quiet.
 ENG_DUK_states_pacified = {
 	NOT = {
 		any_state = {
 			is_core_of = FROM
+			is_controlled_by = ROOT
 			OR = {
 				compliance < 70
 				resistance > 20
@@ -464,6 +484,7 @@ ENG_DUK_has_union_dividend_recipient = {
 
 # Country scope. The Commonwealth realms that keep the British monarch as head of state, plus any member that accepted the Crown under A Shared Crown.
 ENG_DUK_is_crown_realm = {
+	NOT = { has_country_flag = ENG_DUK_republic }
 	OR = {
 		has_country_flag = ENG_DUK_crown_accepted
 		ENG_DUK_is_caribbean_realm = yes

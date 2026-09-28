@@ -12352,6 +12352,7 @@ focus_tree = {
 			every_other_country = {
 				limit = { has_country_flag = european_nation_flag }
 				set_temp_variable = { percent_change = 2 }
+				set_temp_variable = { influence_target = THIS }
 				change_influence_percentage = yes
 			}
 			newline = yes
@@ -13681,6 +13682,7 @@ focus_tree = {
 			every_other_country = {
 				limit = { has_war = yes }
 				set_temp_variable = { percent_change = 2 }
+				set_temp_variable = { influence_target = THIS }
 				change_influence_percentage = yes
 			}
 		}
@@ -13753,6 +13755,7 @@ focus_tree = {
 			every_other_country = {
 				limit = { has_government = democratic }
 				set_temp_variable = { percent_change = 2 }
+				set_temp_variable = { influence_target = THIS }
 				change_influence_percentage = yes
 			}
 		}
@@ -14112,6 +14115,7 @@ focus_tree = {
 					NOT = { original_tag = ENG }
 				}
 				set_temp_variable = { percent_change = 2 }
+				set_temp_variable = { influence_target = THIS }
 				change_influence_percentage = yes
 			}
 			newline = yes
@@ -14351,6 +14355,7 @@ focus_tree = {
 				if = {
 					limit = { NOT = { original_tag = ENG } }
 					set_temp_variable = { percent_change = 2 }
+					set_temp_variable = { influence_target = THIS }
 					change_influence_percentage = yes
 				}
 			}
@@ -23257,6 +23262,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
 
 		available = {
+			has_completed_focus = ENG_DUK_the_crown_imperial
 			ENG_DUK_path_in_power = yes
 		}
 
@@ -23288,8 +23294,6 @@ focus_tree = {
 
 		prerequisite = { focus = ENG_DUK_the_imperial_reckoning }
 		mutually_exclusive = { focus = ENG_DUK_the_thirteen_colonies_reclaimed }
-
-		will_lead_to_war_with = USA
 
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION }
 
@@ -23349,8 +23353,6 @@ focus_tree = {
 		prerequisite = { focus = ENG_DUK_the_imperial_reckoning }
 		mutually_exclusive = { focus = ENG_DUK_the_grand_partition }
 
-		will_lead_to_war_with = USA
-
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION }
 
 		available = {
@@ -23388,8 +23390,6 @@ focus_tree = {
 
 		prerequisite = { focus = ENG_DUK_the_imperial_reckoning }
 		mutually_exclusive = { focus = ENG_DUK_restore_the_british_raj }
-
-		will_lead_to_war_with = RAJ
 
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION }
 
@@ -23449,9 +23449,6 @@ focus_tree = {
 		prerequisite = { focus = ENG_DUK_the_imperial_reckoning }
 		mutually_exclusive = { focus = ENG_DUK_the_lahore_compact }
 
-		will_lead_to_war_with = RAJ
-		will_lead_to_war_with = PAK
-
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION }
 
 		available = {
@@ -23494,8 +23491,6 @@ focus_tree = {
 
 		prerequisite = { focus = ENG_DUK_the_imperial_reckoning }
 
-		will_lead_to_war_with = EGY
-
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION }
 
 		available = {
@@ -23530,9 +23525,6 @@ focus_tree = {
 		cost = 10
 
 		prerequisite = { focus = ENG_DUK_return_to_suez }
-
-		will_lead_to_war_with = JOR
-		will_lead_to_war_with = ISR
 
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION }
 
@@ -23718,8 +23710,6 @@ focus_tree = {
 
 		bypass = { NOT = { owns_state = 26 } }
 
-		will_lead_to_war_with = ARG
-
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_DUK_south_atlantic_command"
 			26 = { add_core_of = ROOT }
@@ -23860,8 +23850,6 @@ focus_tree = {
 			}
 			NOT = { has_war_with = CHI }
 		}
-
-		will_lead_to_war_with = CHI
 
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_DUK_the_pearl_river_accord"

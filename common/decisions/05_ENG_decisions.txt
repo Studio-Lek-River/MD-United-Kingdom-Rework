@@ -3002,6 +3002,7 @@ ENG_monarchy_decision_category = {
 			every_other_country = {
 				limit = { has_dynamic_modifier = { modifier = Commonwealth_member_modifier } }
 				set_temp_variable = { percent_change = 5 }
+				set_temp_variable = { influence_target = THIS }
 				change_influence_percentage = yes
 			}
 		}
@@ -4076,10 +4077,12 @@ ENG_devolved_matters = {
 			}
 		}
 
-		cost = ENG_DUK_settlement_cost
 		ai_hint_pp_cost = 200
-		custom_cost_trigger = { check_variable = { treasury > 5 } }
-		custom_cost_text = cost_5_0
+		custom_cost_trigger = {
+			check_variable = { treasury > 5 }
+			check_variable = { political_power > ENG_DUK_settlement_cost }
+		}
+		custom_cost_text = ENG_DUK_settlement_cost_text
 		days_remove = 30
 
 		available = {
@@ -4106,8 +4109,17 @@ ENG_devolved_matters = {
 			}
 		}
 
-		remove_effect = {
+		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_scottish_union_settlement"
+			hidden_effect = {
+				set_temp_variable = { ENG_DUK_settlement_pp = ENG_DUK_settlement_cost }
+				multiply_temp_variable = { ENG_DUK_settlement_pp = -1 }
+				add_political_power = ENG_DUK_settlement_pp
+			}
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove ENG_scottish_union_settlement"
 			set_variable = { ENG_referendum_target = 1 }
 			ENG_seed_referendum_campaign = yes
 			set_variable = { ENG_DUK_settlement_ruling_party = ruling_party }
@@ -4151,10 +4163,12 @@ ENG_devolved_matters = {
 		}
 
 		highlight_states = { highlight_state_targets = { state = 17 } }
-		cost = ENG_DUK_settlement_cost
 		ai_hint_pp_cost = 200
-		custom_cost_trigger = { check_variable = { treasury > 5 } }
-		custom_cost_text = cost_5_0
+		custom_cost_trigger = {
+			check_variable = { treasury > 5 }
+			check_variable = { political_power > ENG_DUK_settlement_cost }
+		}
+		custom_cost_text = ENG_DUK_settlement_cost_text
 		days_remove = 30
 
 		available = {
@@ -4189,8 +4203,17 @@ ENG_devolved_matters = {
 			}
 		}
 
-		remove_effect = {
+		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_north_irish_union_settlement"
+			hidden_effect = {
+				set_temp_variable = { ENG_DUK_settlement_pp = ENG_DUK_settlement_cost }
+				multiply_temp_variable = { ENG_DUK_settlement_pp = -1 }
+				add_political_power = ENG_DUK_settlement_pp
+			}
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove ENG_north_irish_union_settlement"
 			set_variable = { ENG_referendum_target = 2 }
 			ENG_seed_referendum_campaign = yes
 			set_variable = { ENG_DUK_settlement_ruling_party = ruling_party }
@@ -4246,10 +4269,12 @@ ENG_devolved_matters = {
 			}
 		}
 
-		cost = ENG_DUK_settlement_cost
 		ai_hint_pp_cost = 200
-		custom_cost_trigger = { check_variable = { treasury > 5 } }
-		custom_cost_text = cost_5_0
+		custom_cost_trigger = {
+			check_variable = { treasury > 5 }
+			check_variable = { political_power > ENG_DUK_settlement_cost }
+		}
+		custom_cost_text = ENG_DUK_settlement_cost_text
 		days_remove = 30
 
 		available = {
@@ -4276,8 +4301,17 @@ ENG_devolved_matters = {
 			}
 		}
 
-		remove_effect = {
+		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_welsh_union_settlement"
+			hidden_effect = {
+				set_temp_variable = { ENG_DUK_settlement_pp = ENG_DUK_settlement_cost }
+				multiply_temp_variable = { ENG_DUK_settlement_pp = -1 }
+				add_political_power = ENG_DUK_settlement_pp
+			}
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove ENG_welsh_union_settlement"
 			set_variable = { ENG_referendum_target = 3 }
 			ENG_seed_referendum_campaign = yes
 			set_variable = { ENG_DUK_settlement_ruling_party = ruling_party }
@@ -4734,7 +4768,6 @@ ENG_DUK_union_question_decisions = {
 			}
 		}
 
-		cost = 100
 		custom_cost_trigger = { ENG_DUK_cost_small_pp100 = yes }
 		custom_cost_text = ENG_DUK_cost_small_expenditure_pp100
 		ai_hint_pp_cost = 100
@@ -5702,7 +5735,6 @@ ENG_DUK_union_question_decisions = {
 			FROM = { ENG_DUK_coerced = yes }
 		}
 
-		cost = 100
 		custom_cost_trigger = { ENG_DUK_cost_small_pp100 = yes }
 		custom_cost_text = ENG_DUK_cost_small_expenditure_pp100
 		ai_hint_pp_cost = 100
@@ -5742,7 +5774,6 @@ ENG_DUK_union_question_decisions = {
 		target_root_trigger = { has_completed_focus = ENG_DUK_a_family_of_nations }
 		target_trigger = { NOT = { FROM = { ENG_DUK_is_caribbean_realm = yes } } }
 
-		cost = 75
 		custom_cost_trigger = { ENG_DUK_cost_small_pp75 = yes }
 		custom_cost_text = ENG_DUK_cost_small_expenditure_pp75
 		ai_hint_pp_cost = 75
@@ -5785,7 +5816,6 @@ ENG_DUK_union_question_decisions = {
 		target_root_trigger = { has_completed_focus = ENG_DUK_a_family_of_nations }
 		target_trigger = { NOT = { FROM = { ENG_DUK_is_caribbean_realm = yes } } }
 
-		cost = 75
 		custom_cost_trigger = { ENG_DUK_cost_medium_pp75 = yes }
 		custom_cost_text = cost_medium_expenditure_pp75
 		ai_hint_pp_cost = 75
@@ -5828,7 +5858,6 @@ ENG_DUK_union_question_decisions = {
 		target_root_trigger = { has_completed_focus = ENG_DUK_a_family_of_nations }
 		target_trigger = { NOT = { FROM = { ENG_DUK_is_caribbean_realm = yes } } }
 
-		cost = 75
 		custom_cost_trigger = { ENG_DUK_cost_small_pp75 = yes }
 		custom_cost_text = ENG_DUK_cost_small_expenditure_pp75
 		ai_hint_pp_cost = 75
@@ -5901,7 +5930,6 @@ ENG_DUK_union_question_decisions = {
 			has_completed_focus = ENG_DUK_the_realms_beyond_the_seas
 		}
 
-		cost = 75
 		custom_cost_trigger = { ENG_DUK_cost_medium_pp75 = yes }
 		custom_cost_text = cost_medium_expenditure_pp75
 		ai_hint_pp_cost = 75
@@ -5948,7 +5976,6 @@ ENG_DUK_union_question_decisions = {
 			has_completed_focus = ENG_DUK_the_realms_beyond_the_seas
 		}
 
-		cost = 75
 		custom_cost_trigger = { ENG_DUK_cost_small_pp75 = yes }
 		custom_cost_text = ENG_DUK_cost_small_expenditure_pp75
 		ai_hint_pp_cost = 75
@@ -6000,7 +6027,6 @@ ENG_DUK_union_question_decisions = {
 			}
 		}
 
-		cost = 75
 		custom_cost_trigger = {
 			check_expr = {
 				value = ENG_DUK_region_cost@FROM
@@ -6339,7 +6365,6 @@ ENG_DUK_union_question_decisions = {
 			}
 		}
 
-		cost = 25
 		custom_cost_trigger = { ENG_DUK_cost_small_pp25 = yes }
 		custom_cost_text = ENG_DUK_cost_small_expenditure_pp25
 		ai_hint_pp_cost = 25
@@ -6547,7 +6572,6 @@ ENG_DUK_union_question_decisions = {
 	ENG_DUK_expand_the_civil_service = {
 		icon = GFX_decision_generic_civil_support
 
-		cost = 150
 		custom_cost_trigger = { ENG_DUK_cost_medium_pp150 = yes }
 		custom_cost_text = ENG_DUK_cost_medium_expenditure_pp150
 		ai_hint_pp_cost = 150
@@ -6690,6 +6714,7 @@ ENG_DUK_union_question_decisions = {
 		target_array = ENG_DUK_integration_targets
 		target_trigger = {
 			FROM = {
+				exists = yes
 				ENG_DUK_stage_1 = yes
 				OR = {
 					is_subject = no
@@ -6871,7 +6896,6 @@ ENG_DUK_union_question_decisions = {
 			NOT = { FROM = { ENG_DUK_is_caribbean_realm = yes } }
 		}
 
-		cost = 300
 		custom_cost_trigger = { ENG_DUK_cost_large_pp300 = yes }
 		custom_cost_text = ENG_DUK_cost_large_expenditure_pp300
 		ai_hint_pp_cost = 300
@@ -6963,7 +6987,6 @@ ENG_DUK_union_question_decisions = {
 			FROM = { ENG_DUK_stage_3 = yes }
 		}
 
-		cost = 300
 		custom_cost_trigger = { ENG_DUK_cost_large_pp300 = yes }
 		custom_cost_text = ENG_DUK_cost_large_expenditure_pp300
 		ai_hint_pp_cost = 300
@@ -7017,7 +7040,6 @@ ENG_DUK_union_question_decisions = {
 			}
 		}
 
-		cost = 100
 		custom_cost_trigger = {
 			check_expr = {
 				value = ENG_DUK_region_cost@FROM
@@ -7061,6 +7083,7 @@ ENG_DUK_union_question_decisions = {
 			modify_treasury_effect = yes
 			if = {
 				limit = { has_completed_focus = ENG_DUK_a_family_of_nations }
+				set_country_flag = { flag = ENG_DUK_offer_pending@FROM value = 1 days = 30 }
 				FROM = { country_event = { id = ENG_DUK.20 days = 1 } }
 				custom_effect_tooltip = TT_IF_THEY_ACCEPT
 				effect_tooltip = { custom_effect_tooltip = ENG_DUK_stage_2_TT }
@@ -7294,7 +7317,6 @@ ENG_DUK_union_question_decisions = {
 			has_completed_focus = ENG_DUK_a_family_of_nations
 		}
 
-		cost = 300
 		custom_cost_trigger = { ENG_DUK_cost_large_pp300 = yes }
 		custom_cost_text = ENG_DUK_cost_large_expenditure_pp300
 		ai_hint_pp_cost = 300
@@ -7849,7 +7871,6 @@ ENG_DUK_commonwealth_decisions = {
 			has_stability > 0.5
 		}
 
-		cost = 50
 		custom_cost_trigger = { ENG_DUK_cost_medium_pp50 = yes }
 		custom_cost_text = ENG_DUK_cost_medium_expenditure_pp50
 		ai_hint_pp_cost = 50
@@ -7871,8 +7892,8 @@ ENG_DUK_commonwealth_decisions = {
 			every_other_country = {
 				limit = { ENG_DUK_cmw_is_member = yes }
 				add_opinion_modifier = { target = ROOT modifier = ENG_DUK_cmw_games_host_opinion }
-				news_event = ENG_DUK.501
 			}
+			news_event = { id = ENG_DUK.501 hours = 6 }
 		}
 
 		ai_will_do = { base = 1 }
@@ -7886,7 +7907,6 @@ ENG_DUK_commonwealth_decisions = {
 			has_war = no
 		}
 
-		cost = 25
 		custom_cost_trigger = { ENG_DUK_cost_small_pp25 = yes }
 		custom_cost_text = ENG_DUK_cost_small_expenditure_pp25
 		ai_hint_pp_cost = 25
@@ -7914,7 +7934,6 @@ ENG_DUK_commonwealth_decisions = {
 			}
 		}
 
-		cost = 25
 		custom_cost_trigger = { ENG_DUK_cost_small_pp25 = yes }
 		custom_cost_text = ENG_DUK_cost_small_expenditure_pp25
 		ai_hint_pp_cost = 25
@@ -7953,7 +7972,7 @@ ENG_DUK_commonwealth_decisions = {
 			FROM = {
 				NOT = { tag = ROOT }
 				NOT = { has_idea = ENG_crown_realm_status }
-				ENG_DUK_influences_this_30 = yes
+				ENG_influences_this_30 = yes
 			}
 		}
 
@@ -7984,7 +8003,6 @@ ENG_DUK_commonwealth_decisions = {
 	ENG_DUK_cmw_scholarship_plan = {
 		icon = GFX_decision_generic_research
 
-		cost = 25
 		custom_cost_trigger = { ENG_DUK_cost_small_pp25 = yes }
 		custom_cost_text = ENG_DUK_cost_small_expenditure_pp25
 		ai_hint_pp_cost = 25
@@ -8065,7 +8083,6 @@ ENG_DUK_commonwealth_decisions = {
 
 		visible = { has_completed_focus = ENG_DUK_a_family_of_nations }
 
-		cost = 75
 		custom_cost_trigger = { ENG_DUK_cost_medium_pp75 = yes }
 		custom_cost_text = cost_medium_expenditure_pp75
 		ai_hint_pp_cost = 75
@@ -8099,7 +8116,6 @@ ENG_DUK_commonwealth_decisions = {
 			}
 		}
 
-		cost = 75
 		custom_cost_trigger = { ENG_DUK_cost_medium_pp75 = yes }
 		custom_cost_text = cost_medium_expenditure_pp75
 		ai_hint_pp_cost = 75
