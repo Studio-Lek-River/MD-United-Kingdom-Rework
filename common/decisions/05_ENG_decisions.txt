@@ -5026,8 +5026,10 @@ ENG_DUK_union_question_decisions = {
 					ENG_DUK_is_caribbean_realm = yes
 					is_in_array = { array = ROOT.ENG_DUK_integration_targets value = THIS }
 					ENG_DUK_stage_1 = yes
-					ROOT = {
-						NOT = { has_country_flag = ENG_DUK_ultimatum_rejected@PREV }
+					hidden_trigger = {
+						ROOT = {
+							NOT = { has_country_flag = ENG_DUK_ultimatum_rejected@PREV }
+						}
 					}
 					NOT = { has_war_with = ROOT }
 				}
@@ -7152,9 +7154,11 @@ ENG_DUK_union_question_decisions = {
 						ENG_DUK_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_DUK_integration_targets value = THIS }
 						ENG_DUK_stage_1 = yes
-						ROOT = {
-							NOT = { has_country_flag = ENG_DUK_lock@PREV }
-							NOT = { has_country_flag = ENG_DUK_offer_pending@PREV }
+						hidden_trigger = {
+							ROOT = {
+								NOT = { has_country_flag = ENG_DUK_lock@PREV }
+								NOT = { has_country_flag = ENG_DUK_offer_pending@PREV }
+							}
 						}
 						NOT = { has_country_flag = ENG_DUK_republic }
 					}
@@ -7168,9 +7172,11 @@ ENG_DUK_union_question_decisions = {
 						ENG_DUK_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_DUK_integration_targets value = THIS }
 						ENG_DUK_stage_1 = yes
-						ROOT = {
-							has_country_flag = ENG_DUK_pacified@PREV
-							NOT = { has_country_flag = ENG_DUK_offer_pending@PREV }
+						hidden_trigger = {
+							ROOT = {
+								has_country_flag = ENG_DUK_pacified@PREV
+								NOT = { has_country_flag = ENG_DUK_offer_pending@PREV }
+							}
 						}
 					}
 					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } }
@@ -7250,9 +7256,11 @@ ENG_DUK_union_question_decisions = {
 						ENG_DUK_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_DUK_integration_targets value = THIS }
 						ENG_DUK_stage_2 = yes
-						ROOT = {
-							NOT = { has_country_flag = ENG_DUK_lock@PREV }
-							NOT = { has_country_flag = ENG_DUK_offer_pending@PREV }
+						hidden_trigger = {
+							ROOT = {
+								NOT = { has_country_flag = ENG_DUK_lock@PREV }
+								NOT = { has_country_flag = ENG_DUK_offer_pending@PREV }
+							}
 						}
 						NOT = { has_country_flag = ENG_DUK_republic }
 					}
@@ -7266,9 +7274,11 @@ ENG_DUK_union_question_decisions = {
 						ENG_DUK_is_caribbean_realm = yes
 						is_in_array = { array = ROOT.ENG_DUK_integration_targets value = THIS }
 						ENG_DUK_stage_2 = yes
-						ROOT = {
-							has_country_flag = ENG_DUK_pacified@PREV
-							NOT = { has_country_flag = ENG_DUK_offer_pending@PREV }
+						hidden_trigger = {
+							ROOT = {
+								has_country_flag = ENG_DUK_pacified@PREV
+								NOT = { has_country_flag = ENG_DUK_offer_pending@PREV }
+							}
 						}
 					}
 					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } }
@@ -7334,9 +7344,11 @@ ENG_DUK_union_question_decisions = {
 					ENG_DUK_is_caribbean_realm = yes
 					is_in_array = { array = ROOT.ENG_DUK_integration_targets value = THIS }
 					ENG_DUK_stage_3 = yes
-					ROOT = {
-						NOT = { has_country_flag = ENG_DUK_lock@PREV }
-						NOT = { has_country_flag = ENG_DUK_offer_pending@PREV }
+					hidden_trigger = {
+						ROOT = {
+							NOT = { has_country_flag = ENG_DUK_lock@PREV }
+							NOT = { has_country_flag = ENG_DUK_offer_pending@PREV }
+						}
 					}
 					NOT = { has_country_flag = ENG_DUK_republic }
 				}

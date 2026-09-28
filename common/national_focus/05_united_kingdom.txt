@@ -22027,7 +22027,12 @@ focus_tree = {
 
 		bypass = {
 			NOT = { country_exists = IRE }
-			NOT = { has_country_flag = ENG_DUK_integrated@IRE }
+			NOT = {
+				custom_trigger_tooltip = {
+					tooltip = ENG_DUK_ireland_integrated_TT
+					has_country_flag = ENG_DUK_integrated@IRE
+				}
+			}
 		}
 
 		completion_reward = {
@@ -22756,7 +22761,10 @@ focus_tree = {
 		bypass = {
 			OR = {
 				NOT = { country_exists = CAN }
-				has_country_flag = ENG_DUK_integrated@CAN
+				custom_trigger_tooltip = {
+					tooltip = ENG_DUK_canada_integrated_TT
+					has_country_flag = ENG_DUK_integrated@CAN
+				}
 			}
 		}
 
@@ -22825,7 +22833,10 @@ focus_tree = {
 		bypass = {
 			OR = {
 				NOT = { country_exists = AST }
-				has_country_flag = ENG_DUK_integrated@AST
+				custom_trigger_tooltip = {
+					tooltip = ENG_DUK_australia_integrated_TT
+					has_country_flag = ENG_DUK_integrated@AST
+				}
 			}
 		}
 
@@ -22892,7 +22903,10 @@ focus_tree = {
 		bypass = {
 			OR = {
 				NOT = { country_exists = NZL }
-				has_country_flag = ENG_DUK_integrated@NZL
+				custom_trigger_tooltip = {
+					tooltip = ENG_DUK_new_zealand_integrated_TT
+					has_country_flag = ENG_DUK_integrated@NZL
+				}
 			}
 		}
 
