@@ -5802,6 +5802,7 @@ ENG_DUK_union_question_decisions = {
 					FROM = {
 						set_temp_variable = { ENG_DUK_consent_change = 5 }
 						ENG_DUK_change_consent = yes
+						add_timed_idea = { idea = ENG_DUK_development_grant_idea days = 730 }
 					}
 				}
 				20 = {
@@ -6372,14 +6373,7 @@ ENG_DUK_union_question_decisions = {
 
 		timeout_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_union_dividend_programme"
-			set_temp_variable = { ENG_dependency_change = 5 }
-			ENG_change_scottish_dependency = yes
-			ENG_change_north_irish_dependency = yes
-			ENG_change_wales_dependency = yes
-			set_temp_variable = { ENG_agitation_change = -3 }
-			ENG_change_scottish_agitation = yes
-			ENG_change_north_irish_agitation = yes
-			ENG_change_wales_agitation = yes
+			ENG_DUK_union_dividend_payoff = yes
 		}
 	}
 
@@ -6390,23 +6384,32 @@ ENG_DUK_union_question_decisions = {
 			has_completed_focus = ENG_DUK_the_union_dividend
 			NOT = { has_country_flag = ENG_devolution_purged }
 			NOT = { has_active_mission = ENG_DUK_union_dividend_programme }
+			ENG_DUK_has_union_dividend_recipient = yes
 		}
 
-		custom_cost_trigger = {
-			check_expr = {
-				value = gdp_total
-				multiply = 0.01
-				less_than = { value = treasury }
-			}
-		}
-		custom_cost_text = ENG_DUK_cost_gdp_1_percent
+		days_remove = 730
+
+		modifier = { tax_gain_multiplier_modifier = -0.05 }
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_renew_the_union_dividend"
-			activate_mission = ENG_DUK_union_dividend_programme
-			newline = yes
-			set_temp_variable = { treasury_change = { value = gdp_total multiply = -0.01 } }
-			modify_treasury_effect = yes
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = SCO
+						original_tag = WAS
+						original_tag = NIR
+						original_tag = IRE
+					}
+					is_subject_of = ROOT
+				}
+				add_timed_idea = { idea = ENG_DUK_union_dividend_idea days = 730 }
+			}
+		}
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_renew_the_union_dividend completed"
+			ENG_DUK_union_dividend_payoff = yes
 		}
 
 		ai_will_do = { base = 0 }
@@ -6551,12 +6554,7 @@ ENG_DUK_union_question_decisions = {
 		days_remove = 180
 		days_re_enable = 730
 
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = ENG_DUK_strain_above_10_TT
-				check_variable = { ENG_DUK_union_strain > 10 }
-			}
-		}
+		visible = { check_variable = { ENG_DUK_union_strain > 10 } }
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_expand_the_civil_service"
@@ -6566,7 +6564,7 @@ ENG_DUK_union_question_decisions = {
 
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_expand_the_civil_service"
-			set_temp_variable = { ENG_DUK_union_strain_change = -10 }
+			set_temp_variable = { ENG_DUK_union_strain_change = -20 }
 			ENG_DUK_change_union_strain = yes
 		}
 
@@ -6586,18 +6584,14 @@ ENG_DUK_union_question_decisions = {
 	ENG_DUK_regional_assemblies_act = {
 		icon = GFX_decision_generic_political_discourse
 
-		visible = { has_completed_focus = ENG_DUK_a_family_of_nations }
+		visible = {
+			has_completed_focus = ENG_DUK_a_family_of_nations
+			check_variable = { ENG_DUK_union_strain > 15 }
+		}
 
 		cost = 100
 		days_remove = 180
 		days_re_enable = 730
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = ENG_DUK_strain_above_15_TT
-				check_variable = { ENG_DUK_union_strain > 15 }
-			}
-		}
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_regional_assemblies_act"
@@ -6661,12 +6655,7 @@ ENG_DUK_union_question_decisions = {
 		custom_cost_text = ENG_DUK_cost_gdp_1_percent
 		days_remove = 365
 
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = ENG_DUK_strain_above_10_TT
-				check_variable = { ENG_DUK_union_strain > 10 }
-			}
-		}
+		visible = { check_variable = { ENG_DUK_union_strain > 10 } }
 
 		modifier = {
 			subjects_autonomy_gain = -0.05

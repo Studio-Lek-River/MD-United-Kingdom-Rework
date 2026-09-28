@@ -553,6 +553,7 @@ ENG_DUK_enter_stage_2 = {
 	}
 	clr_country_flag = ENG_DUK_occupying@FROM
 	FROM = {
+		ENG_DUK_crown_realm_add = yes
 		set_temp_variable = { ENG_DUK_union_strain_stage = 2 }
 		ENG_DUK_add_union_strain_for_target = yes
 		if = {
@@ -1109,6 +1110,18 @@ ENG_DUK_realm_republic = {
 	set_temp_variable = { percent_change = -20 }
 	set_temp_variable = { tag_index = ENG }
 	change_influence_percentage = yes
+}
+
+# Call in ENG scope. Payoff of a completed Union Dividend programme in the home nations.
+ENG_DUK_union_dividend_payoff = {
+	set_temp_variable = { ENG_dependency_change = 5 }
+	ENG_change_scottish_dependency = yes
+	ENG_change_north_irish_dependency = yes
+	ENG_change_wales_dependency = yes
+	set_temp_variable = { ENG_agitation_change = -3 }
+	ENG_change_scottish_agitation = yes
+	ENG_change_north_irish_agitation = yes
+	ENG_change_wales_agitation = yes
 }
 
 # Call in the realm's scope. The British monarch becomes head of state.

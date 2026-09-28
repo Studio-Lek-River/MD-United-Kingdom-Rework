@@ -13,6 +13,36 @@ on_actions = {
 		}
 	}
 
+	on_puppet = {
+		effect = {
+			if = {
+				limit = { FROM = { original_tag = ENG } }
+				ENG_DUK_crown_realm_add = yes
+			}
+		}
+	}
+
+	on_release_as_puppet = {
+		effect = {
+			if = {
+				limit = { FROM = { original_tag = ENG } }
+				ENG_DUK_crown_realm_add = yes
+			}
+		}
+	}
+
+	on_subject_free = {
+		effect = {
+			if = {
+				limit = {
+					FROM = { original_tag = ENG }
+					ENG_DUK_is_crown_realm = no
+				}
+				ENG_DUK_crown_realm_remove = yes
+			}
+		}
+	}
+
 	on_daily_ENG = {
 		effect = {
 			if = {

@@ -1598,7 +1598,7 @@
 # Decisions
 
  ENG_DUK_expand_the_civil_service: "Expand the Civil Service"
- ENG_DUK_expand_the_civil_service_desc: "Whitehall takes on the departments, courts and revenue offices that the new members of the Union need. It costs money and political capital and takes half a year to show results."
+ ENG_DUK_expand_the_civil_service_desc: "Whitehall takes on the departments, courts and revenue offices that the new members of the Union need. It costs money and political capital, but after half a year it takes more strain off Westminster than any other measure."
  ENG_DUK_regional_assemblies_act: "Regional Assemblies Act"
  ENG_DUK_regional_assemblies_act_desc: "Hand a share of the load back to elected regional assemblies. Westminster breathes easier, but the nationalists in Scotland, Wales and Northern Ireland gain ground from the precedent."
  ENG_DUK_crown_commissioners: "Crown Commissioners"
@@ -1608,7 +1608,7 @@
  ENG_DUK_union_dividend_programme: "The Union Dividend"
  ENG_DUK_union_dividend_programme_desc: "A two-year programme of investment in Scotland, Wales and Northern Ireland, paid from London. When it completes, dependency on the Union rises by §G5§! and agitation falls by §G3§! in each home nation."
  ENG_DUK_renew_the_union_dividend: "Renew the Union Dividend"
- ENG_DUK_renew_the_union_dividend_desc: "Commit another §R1%§! of GDP to a fresh two-year Union Dividend programme. Only one programme can run at a time."
+ ENG_DUK_renew_the_union_dividend_desc: "Fund a fresh two-year Union Dividend programme from general taxation. Scotland, Wales, Northern Ireland and Ireland benefit while they are British subjects, and the home nations still held by London gain dependency and lose agitation when it completes. Only one programme can run at a time."
  ENG_DUK_cost_medium_expenditure_pp150: "£treasury §H0.4%§! of GDP   £political_power_texticon §H150§!"
  ENG_DUK_cost_medium_expenditure_pp150_blocked: "£treasury §R0.4%§! of GDP   £political_power_texticon §R150§!"
  ENG_DUK_cost_medium_expenditure_pp150_tooltip: "This purchase will cost §H0.4%§! of your GDP and §H150§! political power"
@@ -1878,6 +1878,10 @@
  ENG_DUK_fund_irexit_campaign: "Fund the Leave Campaign"
  ENG_DUK_fund_irexit_campaign_desc: "Channel political capital and Treasury funds into the Leave campaign for as long as the Irish EU referendum runs, up to a maximum contribution."
  ENG_DUK_sovereignty_movement: "Sovereignty Movement"
+ ENG_DUK_development_grant_idea: "British Development Grant"
+ ENG_DUK_development_grant_idea_desc: "A two-year Westminster grant for roads, ports and mines, spent to show the material benefits of closer ties with the Union."
+ ENG_DUK_union_dividend_idea: "The Union Dividend"
+ ENG_DUK_union_dividend_idea_desc: "Money from London under the Union Dividend programme. It funds public works and steadies the country while the programme runs."
  ENG_DUK_trade_preference_idea: "Trade Preference"
  ENG_DUK_trade_preference_idea_desc: "Preferential access to British markets, granted by Westminster for two years. It raises trade opinion and builds public consent for the Union while it lasts."
  ENG_DUK_royal_tour_opinion: "Royal Tour"

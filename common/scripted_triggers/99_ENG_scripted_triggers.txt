@@ -444,6 +444,24 @@ ENG_DUK_is_caribbean_realm = {
 	}
 }
 
+# ENG scope. A home nation is still held, or Scotland, Wales, Northern Ireland or Ireland is a British subject.
+ENG_DUK_has_union_dividend_recipient = {
+	OR = {
+		ENG_holds_scotland = yes
+		ENG_holds_north_ireland = yes
+		ENG_holds_wales = yes
+		any_country = {
+			OR = {
+				original_tag = SCO
+				original_tag = WAS
+				original_tag = NIR
+				original_tag = IRE
+			}
+			is_subject_of = ROOT
+		}
+	}
+}
+
 # Country scope. The Commonwealth realms that keep the British monarch as head of state, plus any member that accepted the Crown under A Shared Crown.
 ENG_DUK_is_crown_realm = {
 	OR = {

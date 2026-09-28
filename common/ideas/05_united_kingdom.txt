@@ -1243,6 +1243,24 @@ ideas = {
 			}
 		}
 
+		ENG_DUK_development_grant_idea = {
+			picture = generic_infrastructure
+			allowed_civil_war = { always = yes }
+			modifier = {
+				production_speed_buildings_factor = 0.10
+				local_resources_factor = 0.05
+			}
+		}
+
+		ENG_DUK_union_dividend_idea = {
+			picture = guided_by_england
+			allowed_civil_war = { always = yes }
+			modifier = {
+				stability_factor = 0.05
+				production_speed_buildings_factor = 0.10
+			}
+		}
+
 		ENG_DUK_council_of_the_isles_idea = {
 			picture = guided_by_england
 			allowed_civil_war = { always = yes }
