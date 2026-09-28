@@ -4,3 +4,4 @@ v0.1.0 - for Millennium Dawn v2.0.1
  - [ENG] Marked all submod-added content with the ENG_DUK prefix (Issue #34)
  - [ENG] Fixed Crown, Commonwealth, EU and UN country events showing oversized news pictures (Issue #37)
  - [ENG] Fixed the cut-off Raise Consent button and its tooltip layout (Issue #39)
+ - [ENG] Fixed Union Strain and Imperial Tension reductions showing red instead of green (Issue #40)
