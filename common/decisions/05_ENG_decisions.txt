@@ -6441,7 +6441,7 @@ ENG_DUK_union_question_decisions = {
 			ENG_DUK_has_union_dividend_recipient = yes
 		}
 
-		days_remove = 730
+		days_remove = 180
 
 		modifier = { tax_gain_multiplier_modifier = -0.05 }
 
