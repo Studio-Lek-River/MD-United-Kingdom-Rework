@@ -1549,43 +1549,6 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: influence.5.c executed"
 		FROM = { clear_variable = influence_coup_party }
 	}
-
-	option = {
-		name = influence.5.d1
-		log = "[GetDateText]: [This.GetName]: influence.5.d1 executed"
-		trigger = {
-			original_tag = ENG
-			FROM = {
-				has_country_flag = european_nation_flag
-			}
-			has_completed_focus = ENG_glory_of_pax_britannica
-			NOT = {
-				check_variable = {
-					ENG_uses_for_ads > 3
-				}
-			}
-		}
-		add_to_variable = {
-			ENG_uses_for_ads = 1
-		}
-		hidden_effect = {
-			ADS = {
-				set_autonomy = {
-					target = FROM
-					autonomy_state = autonomy_constituent_country_very_low_devolution
-				}
-			}
-			FROM = {
-				set_temp_variable = { party_index = 22 }
-				set_temp_variable = { party_popularity_increase = 1 }
-				set_temp_variable = { temp_outlook_increase = 1 }
-				change_relative_party_popularity = yes
-				set_temp_variable = { rul_party_temp = 22 }
-				set_temp_variable = { disable_elections = 1 }
-				change_ruling_party_effect = yes
-			}
-		}
-	}
 }
 
 news_event = {

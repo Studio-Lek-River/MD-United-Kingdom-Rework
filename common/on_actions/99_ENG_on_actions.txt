@@ -1,15 +1,68 @@
 on_actions = {
-	on_daily_ENG = {
+	on_startup = {
 		effect = {
 			if = {
-				limit = {
-					is_ai = no
-					has_country_flag = open_devolution_screen
-				}
-				update_eng_devolution_dirty_variable = yes
+				limit = { NOT = { has_global_flag = ENG_DUK_cmw_initialised } }
+				set_variable = { global.ENG_DUK_commonwealth_cohesion = 50 }
+				set_global_flag = ENG_DUK_cmw_initialised
+			}
+			every_country = {
+				limit = { ENG_DUK_is_crown_realm = yes }
+				ENG_DUK_crown_realm_add = yes
 			}
 		}
 	}
+
+	on_puppet = {
+		effect = {
+			if = {
+				limit = { FROM = { original_tag = ENG } }
+				ENG_DUK_crown_realm_add = yes
+			}
+		}
+	}
+
+	on_release_as_puppet = {
+		effect = {
+			if = {
+				limit = { FROM = { original_tag = ENG } }
+				ENG_DUK_crown_realm_add = yes
+			}
+		}
+	}
+
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							original_tag = ENG
+							FROM = { original_tag = IRE }
+						}
+						AND = {
+							original_tag = IRE
+							FROM = { original_tag = ENG }
+						}
+					}
+				}
+				ENG = { set_country_flag = ENG_DUK_irish_war_fought }
+			}
+		}
+	}
+
+	on_subject_free = {
+		effect = {
+			if = {
+				limit = {
+					FROM = { original_tag = ENG }
+					ENG_DUK_is_crown_realm = no
+				}
+				ENG_DUK_crown_realm_remove = yes
+			}
+		}
+	}
+
 	on_monthly_ENG = {
 		effect = {
 			#-----------# "Good Friday" #-----------#
@@ -56,7 +109,8 @@ on_actions = {
 			#-----------# "Good Friday End" #-----------#
 			if = {
 				limit = {
-					NOT = {	has_country_flag = ENG_devolution_purged }
+					NOT = {	ENG_DUK_devolution_dissolved = yes }
+					NOT = { has_country_flag = ENG_DUK_assemblies_suspended }
 					check_variable = {
 						ENG_election_var > 0
 					}
@@ -66,7 +120,8 @@ on_actions = {
 			}
 			if = {
 				limit = {
-					NOT = {	has_country_flag = ENG_devolution_purged }
+					NOT = {	ENG_DUK_devolution_dissolved = yes }
+					NOT = { has_country_flag = ENG_DUK_assemblies_suspended }
 					check_variable = {
 						ENG_election_var = 0
 					}
@@ -79,18 +134,12 @@ on_actions = {
 				}
 			}
 
-			if = {
-				limit = {
-					has_completed_focus = ENG_a_more_united_kingdom
-				}
-				ENG_update_commonwealth_totals = yes
-			}
-
 			# Devolution
 
 			if = {
 				limit = {
-					NOT = {	has_country_flag = ENG_devolution_purged }
+					NOT = {	ENG_DUK_devolution_dissolved = yes }
+					NOT = { has_country_flag = ENG_DUK_assemblies_suspended }
 					NOT = { has_country_flag = ENG_devolution_event_cooldown }
 				}
 				if = {
@@ -143,10 +192,30 @@ on_actions = {
 			# A constituent that leans on Westminster calms down; one that no longer needs it does not
 			if = {
 				limit = {
-					NOT = {	has_country_flag = ENG_devolution_purged }
+					NOT = {	ENG_DUK_devolution_dissolved = yes }
 					NOT = { has_country_flag = ENG_scottish_integrated }
 					NOT = { country_exists = SCO }
 				}
+				set_temp_variable = { ENG_dependency_change = -0.25 }
+				if = {
+					limit = {
+						OR = {
+							has_idea = recession
+							has_idea = depression
+						}
+					}
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				if = {
+					limit = { check_variable = { ENG_DUK_union_strain > 40 } }
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				if = {
+					limit = { check_variable = { ENG_scottish_nationalists > 50 } }
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				ENG_change_scottish_dependency = yes
+
 				if = {
 					limit = { check_variable = { ENG_scottish_dependency > 79 } }
 					set_temp_variable = { ENG_agitation_change = -0.25 }
@@ -166,10 +235,30 @@ on_actions = {
 
 			if = {
 				limit = {
-					NOT = {	has_country_flag = ENG_devolution_purged }
+					NOT = {	ENG_DUK_devolution_dissolved = yes }
 					NOT = { has_country_flag = ENG_north_irish_integrated }
 					NOT = { country_exists = NIR }
 				}
+				set_temp_variable = { ENG_dependency_change = -0.25 }
+				if = {
+					limit = {
+						OR = {
+							has_idea = recession
+							has_idea = depression
+						}
+					}
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				if = {
+					limit = { check_variable = { ENG_DUK_union_strain > 40 } }
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				if = {
+					limit = { check_variable = { ENG_north_irish_nationalists > 50 } }
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				ENG_change_north_irish_dependency = yes
+
 				if = {
 					limit = { check_variable = { ENG_north_irish_dependency > 79 } }
 					set_temp_variable = { ENG_agitation_change = -0.25 }
@@ -189,10 +278,30 @@ on_actions = {
 
 			if = {
 				limit = {
-					NOT = {	has_country_flag = ENG_devolution_purged }
+					NOT = {	ENG_DUK_devolution_dissolved = yes }
 					NOT = { has_country_flag = ENG_welsh_integrated }
 					NOT = { country_exists = WAS }
 				}
+				set_temp_variable = { ENG_dependency_change = -0.25 }
+				if = {
+					limit = {
+						OR = {
+							has_idea = recession
+							has_idea = depression
+						}
+					}
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				if = {
+					limit = { check_variable = { ENG_DUK_union_strain > 40 } }
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				if = {
+					limit = { check_variable = { ENG_wales_nationalists > 50 } }
+					add_to_temp_variable = { ENG_dependency_change = -0.1 }
+				}
+				ENG_change_wales_dependency = yes
+
 				if = {
 					limit = { check_variable = { ENG_wales_dependency > 79 } }
 					set_temp_variable = { ENG_agitation_change = -0.25 }
@@ -243,6 +352,27 @@ on_actions = {
 					set_temp_variable = { temp_change = -1 }
 					ENG_referendum_campaign_shift = yes
 				}
+
+				# Campaign momentum favours change, faster when Westminster looks weak
+				set_temp_variable = { temp_change = 0.5 }
+				if = {
+					limit = { has_stability < 0.4 }
+					add_to_temp_variable = { temp_change = 0.5 }
+				}
+				if = {
+					limit = {
+						OR = {
+							has_idea = recession
+							has_idea = depression
+						}
+					}
+					add_to_temp_variable = { temp_change = 0.5 }
+				}
+				if = {
+					limit = { check_variable = { ENG_DUK_union_strain > 40 } }
+					add_to_temp_variable = { temp_change = 0.5 }
+				}
+				ENG_referendum_campaign_shift = yes
 			}
 
 			# Standing subsidies: re-arm anything whose own timeout did not renew it
@@ -286,6 +416,87 @@ on_actions = {
 					change_influence_percentage = yes
 				}
 			}
+
+			# Union Strain eases only at peace
+			if = {
+				limit = {
+					check_variable = { ENG_DUK_union_strain > 0 }
+					has_war = no
+				}
+				set_temp_variable = { ENG_DUK_union_strain_change = -0.25 }
+				ENG_DUK_change_union_strain = yes
+			}
+
+			# Westminster overreach unsettles the home nations that are still devolved
+			if = {
+				limit = {
+					NOT = { ENG_DUK_devolution_dissolved = yes }
+					check_variable = { ENG_DUK_union_strain > 0 }
+				}
+				set_temp_variable = { ENG_agitation_change = { value = ENG_DUK_union_strain multiply = 0.02 } }
+				ENG_change_scottish_agitation = yes
+				ENG_change_north_irish_agitation = yes
+				ENG_change_wales_agitation = yes
+			}
+
+			# Suspended assemblies: direct-rule tiers, unrest and the independence failure state
+			if = {
+				limit = { has_country_flag = ENG_DUK_assemblies_suspended }
+				ENG_DUK_suspension_monthly = yes
+			}
+
+			# The Irish war is lost once Dublin owns Ulster at peace
+			if = {
+				limit = {
+					has_country_flag = ENG_DUK_claims@IRE
+					has_country_flag = ENG_DUK_irish_war_fought
+					NOT = { has_war_with = IRE }
+					17 = { is_owned_by = IRE }
+				}
+				ENG_DUK_reset_irish_tier = yes
+			}
+
+			# Every ladder target: consent drifts on both paths, coercion only on the Nationalist path
+			for_each_scope_loop = {
+				array = ENG_DUK_integration_targets
+				if = {
+					limit = { exists = yes }
+					ENG_DUK_update_consent = yes
+				}
+				ENG_DUK_realm_monthly = yes
+				ENG_DUK_ex_empire_monthly = yes
+				if = {
+					limit = { ROOT = { has_completed_focus = ENG_DUK_the_crown_imperial } }
+					ENG_DUK_update_coercion = yes
+				}
+			}
+			if = {
+				limit = { ENG_DUK_caribbean_opened = yes }
+				ENG_DUK_update_caribbean_consent = yes
+			}
+			if = {
+				limit = { check_variable = { ENG_DUK_active_regions > 0 } }
+				ENG_DUK_update_regions = yes
+			}
+			if = {
+				limit = {
+					has_idea = ENG_DUK_occupation_burden
+					NOT = {
+						any_of_scopes = {
+							array = ENG_DUK_integration_targets
+							ENG_DUK_occupation_active = yes
+						}
+					}
+				}
+				remove_ideas = ENG_DUK_occupation_burden
+			}
+			if = {
+				limit = { has_completed_focus = ENG_DUK_the_union_question }
+				ENG_DUK_update_imperial_tension = yes
+			}
+
+			ENG_DUK_cmw_monthly = yes
+			update_eng_devolution_dirty_variable = yes
 		}
 	}
 
