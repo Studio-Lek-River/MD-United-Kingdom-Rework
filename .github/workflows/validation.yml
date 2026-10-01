@@ -40,6 +40,7 @@ env:
     /resources/documentation/
     /.claude/docs/typo-watchlist.md
     /pyproject.toml
+    /validation_config.json
     /descriptor.mod
     /*.mod
 
@@ -70,8 +71,8 @@ jobs:
             exit 1
           fi
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
-          # Editing the script rebuilds the baseline. Bump v1 when MD_SPARSE_PATHS changes.
-          echo "baseline-key=md-baseline-v1-$sha-${{ hashFiles('tools/validate_with_md.py') }}" >> "$GITHUB_OUTPUT"
+          # Editing the script rebuilds the baseline. Bump v2 when MD_SPARSE_PATHS changes.
+          echo "baseline-key=md-baseline-v2-$sha-${{ hashFiles('tools/validate_with_md.py') }}" >> "$GITHUB_OUTPUT"
 
   tools-tests:
     name: Tools tests

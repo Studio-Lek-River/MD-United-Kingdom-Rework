@@ -27,11 +27,11 @@ ENG_holds_wales = {
 	1192 = { is_owned_and_controlled_by = ROOT }
 }
 
-# The devolved assemblies are gone. The Act of Union keeps its own flag so the constituent autonomy stays allowed.
+# The devolved assemblies are gone. The Act of Union is checked apart from the purge so the constituent autonomy stays allowed.
 ENG_DUK_devolution_dissolved = {
 	OR = {
 		has_country_flag = ENG_devolution_purged
-		has_country_flag = ENG_DUK_act_of_union_passed
+		has_completed_focus = ENG_DUK_act_of_union
 	}
 }
 
@@ -194,24 +194,6 @@ ENG_arm_outcome_settled = {
 		has_idea = ENG_arm_foreign_platform_architecture
 		has_idea = ENG_arm_listed_at_home
 		has_idea = ENG_arm_licensing_island
-	}
-}
-
-ENG_DUK_home_nations_done = {
-	custom_trigger_tooltip = {
-		tooltip = ENG_DUK_home_nations_done_TT
-		OR = {
-			has_country_flag = ENG_scottish_integrated
-			NOT = { any_owned_state = { is_core_of = SCO } }
-		}
-		OR = {
-			has_country_flag = ENG_welsh_integrated
-			NOT = { any_owned_state = { is_core_of = WAS } }
-		}
-		OR = {
-			has_country_flag = ENG_north_irish_integrated
-			NOT = { any_owned_state = { is_core_of = NIR } }
-		}
 	}
 }
 

@@ -39,6 +39,7 @@ SPARSE_PROFILE = """\
 /resources/documentation/
 /.claude/docs/typo-watchlist.md
 /pyproject.toml
+/validation_config.json
 /descriptor.mod
 /*.mod
 """
@@ -132,6 +133,12 @@ def run_core_extras(ws, out_dir):
         ),
         "txt-encoding": ([sys.executable, str(linting / "validate_txt_encoding.py"), *txt], None),
         "localisation-encoding": ([sys.executable, str(linting / "validate_localization_encoding.py"), *yml], None),
+        # Reads git ls-files, which in the worktree misses the untracked submod-only files.
+        "file-paths": (
+            [sys.executable, str(validation / "validate_file_paths.py"), "--strict", "--no-color",
+             "--path", str(REPO), "--output", str(out_dir / "validation-file-paths-owned.log")],
+            None,
+        ),
     }
     failed = []
     for name, (cmd, step_env) in steps.items():
@@ -148,6 +155,27 @@ def is_owned(file):
     return False
 
 
+def owned_basenames(ws):
+    """Basenames that, in the workspace, only owned files carry."""
+    names = {Path(rel).name for rel in OWNED if not (REPO / rel).is_dir()}
+    for root, dirs, files in os.walk(ws):
+        dirs[:] = [d for d in dirs if d != ".git"]
+        for name in names.intersection(files):
+            if not is_owned((Path(root) / name).relative_to(ws).as_posix()):
+                names.discard(name)
+    return names
+
+
+def issue_is_owned(issue, names):
+    # Some validators report a bare basename, or none and name the file in the message.
+    file = issue.get("file", "").replace("\\", "/")
+    if not file:
+        return any(word in names for word in issue.get("message", "").split())
+    if "/" not in file:
+        return file in names
+    return is_owned(file)
+
+
 def load_baseline_keys(ws, baseline_dir):
     sys.path.insert(0, str(ws / "tools"))
     from report_lib import load_baseline
@@ -159,11 +187,11 @@ def load_baseline_keys(ws, baseline_dir):
     return baseline.keys
 
 
-def filter_sidecar(path, baseline_keys, ws):
+def filter_sidecar(path, baseline_keys, owned_names):
     issues = json.loads(path.read_text(encoding="utf-8"))
     kept = []
     for issue in issues:
-        if is_owned(issue.get("file", "")):
+        if issue_is_owned(issue, owned_names):
             kept.append(issue)
         elif baseline_keys is not None:
             from report_lib import Issue, issue_key
@@ -178,10 +206,11 @@ def filter_sidecar(path, baseline_keys, ws):
 def filter_results(out_root, ws, baseline_dir):
     """Rewrite every sidecar to the submod's scope. Returns (issues, gating)."""
     baseline_keys = load_baseline_keys(ws, baseline_dir) if baseline_dir else None
+    owned_names = owned_basenames(ws)
     all_issues = []
     gating = False
     for sidecar in sorted(out_root.rglob("validation-*.json")):
-        kept = filter_sidecar(sidecar, baseline_keys, ws)
+        kept = filter_sidecar(sidecar, baseline_keys, owned_names)
         all_issues.extend(kept)
         strict = True
         manifest_path = sidecar.parent / "batch-manifest.json"

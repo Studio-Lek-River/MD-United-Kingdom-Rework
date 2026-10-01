@@ -5199,6 +5199,7 @@ ENG_DUK_union_question_decisions = {
 
 	ENG_DUK_scottish_martial_law = {
 		icon = GFX_decision_generic_police_action
+		war_with_on_timeout = SCO
 		highlight_states = { highlight_state_targets = { state = 9 } }
 		activation = { always = no }
 
@@ -5244,6 +5245,7 @@ ENG_DUK_union_question_decisions = {
 
 	ENG_DUK_north_irish_martial_law = {
 		icon = GFX_decision_generic_police_action
+		war_with_on_timeout = NIR
 		highlight_states = { highlight_state_targets = { state = 17 } }
 		activation = { always = no }
 
@@ -5289,6 +5291,7 @@ ENG_DUK_union_question_decisions = {
 
 	ENG_DUK_welsh_martial_law = {
 		icon = GFX_decision_generic_police_action
+		war_with_on_timeout = WAS
 		highlight_states = { highlight_state_targets = { state = 16 } }
 		activation = { always = no }
 
@@ -5554,6 +5557,7 @@ ENG_DUK_union_question_decisions = {
 
 		cost = 150
 		days_remove = 120
+		war_with_target_on_remove = yes
 
 		available = {
 			NOT = { has_war_with = FROM }
@@ -6940,7 +6944,7 @@ ENG_DUK_union_question_decisions = {
 	ENG_DUK_integration_act = {
 		icon = GFX_decision_generic_form_nation
 
-		visible = { has_completed_focus = ENG_DUK_a_family_of_nations }
+		target_root_trigger = { has_completed_focus = ENG_DUK_a_family_of_nations }
 
 		target_array = ENG_DUK_integration_targets
 		target_trigger = {
@@ -6998,7 +7002,7 @@ ENG_DUK_union_question_decisions = {
 	ENG_DUK_crown_colony_status = {
 		icon = GFX_decision_generic_political_discourse
 
-		visible = { has_completed_focus = ENG_DUK_the_crown_imperial }
+		target_root_trigger = { has_completed_focus = ENG_DUK_the_crown_imperial }
 
 		target_array = ENG_DUK_integration_targets
 		target_trigger = {
@@ -7033,7 +7037,7 @@ ENG_DUK_union_question_decisions = {
 	ENG_DUK_colonial_annexation_act = {
 		icon = GFX_decision_generic_form_nation
 
-		visible = { has_completed_focus = ENG_DUK_the_crown_imperial }
+		target_root_trigger = { has_completed_focus = ENG_DUK_the_crown_imperial }
 
 		target_array = ENG_DUK_integration_targets
 		target_trigger = {

@@ -21,14 +21,34 @@ def test_is_owned_matches_owned_files_and_directories():
     assert not v.is_owned("")
 
 
+def test_issue_is_owned_matches_bare_basename_and_message():
+    names = {"05_ENG_decisions.txt"}
+    assert v.issue_is_owned({"file": "05_ENG_decisions.txt"}, names)
+    assert v.issue_is_owned({"file": "", "message": "ENG_DUK_x   05_ENG_decisions.txt - visible is ROOT-only"}, names)
+    assert v.issue_is_owned({"file": "common/decisions/05_ENG_decisions.txt"}, set())
+    assert not v.issue_is_owned({"file": "GER_decisions.txt"}, names)
+    assert not v.issue_is_owned({"file": "", "message": "GER_x   GER_decisions.txt - visible is ROOT-only"}, names)
+
+
+def test_owned_basenames_drops_names_shared_with_md_files(tmp_path):
+    (tmp_path / "common" / "units" / "names").mkdir(parents=True)
+    (tmp_path / "common" / "units" / "names" / "ENG.txt").write_text("", encoding="utf-8")
+    (tmp_path / "common" / "characters").mkdir(parents=True)
+    (tmp_path / "common" / "characters" / "ENG.txt").write_text("", encoding="utf-8")
+    names = v.owned_basenames(tmp_path)
+    assert "ENG.txt" not in names
+    assert "05_ENG_decisions.txt" in names
+
+
 def test_filter_sidecar_without_baseline_keeps_only_owned(tmp_path):
     sidecar = tmp_path / "validation-events.json"
     write_json(sidecar, [
         {"file": "events/05_united_kingdom.txt", "severity": "error"},
         {"file": "events/05_germany.txt", "severity": "error"},
+        {"file": "05_ENG_decisions.txt", "severity": "error"},
     ])
-    kept = v.filter_sidecar(sidecar, None, tmp_path)
-    assert [i["file"] for i in kept] == ["events/05_united_kingdom.txt"]
+    kept = v.filter_sidecar(sidecar, None, v.owned_basenames(tmp_path))
+    assert [i["file"] for i in kept] == ["events/05_united_kingdom.txt", "05_ENG_decisions.txt"]
     assert json.loads(sidecar.read_text(encoding="utf-8")) == kept
 
 

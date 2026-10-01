@@ -21642,7 +21642,6 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [THIS.GetName]: Focus ENG_DUK_act_of_union"
 			custom_effect_tooltip = ENG_DUK_act_of_union_TT
-			set_country_flag = ENG_DUK_act_of_union_passed
 			custom_effect_tooltip = {
 				localization_key = modifies_dynamic_modifier_tt
 				MODIFIER = ENG_DUK_union_question_dm
@@ -23564,6 +23563,8 @@ focus_tree = {
 					limit = { original_tag = JOR }
 					ROOT = { set_country_flag = ENG_DUK_pretext_locked@PREV }
 					country_event = { id = ENG_DUK.340 days = 1 }
+					custom_effect_tooltip = TT_IF_THIS_ACCEPTS
+					effect_tooltip = { custom_effect_tooltip = ENG_DUK_mandate_jordan_accepts_TT }
 				}
 			}
 			newline = yes
