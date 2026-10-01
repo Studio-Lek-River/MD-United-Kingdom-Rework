@@ -352,6 +352,15 @@ ENG_DUK_medium_influence = {
 	}
 }
 
+# Target scope. Consent can still rise: below 100, and under ENG_DUK_change_consent's 40 cap unless Britain holds 30% influence.
+ENG_DUK_consent_can_rise = {
+	check_variable = { ENG.ENG_DUK_consent@THIS < 100 }
+	OR = {
+		check_variable = { ENG.ENG_DUK_consent@THIS < 40 }
+		ENG_DUK_medium_influence = yes
+	}
+}
+
 # Target scope. Ireland and single-state possessions are taken outright; realms and the old empire are puppeted.
 ENG_DUK_annexation_target = {
 	OR = {

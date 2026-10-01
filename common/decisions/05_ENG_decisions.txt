@@ -4944,7 +4944,7 @@ ENG_DUK_union_question_decisions = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_deliver_ultimatum"
 			set_country_flag = { flag = ENG_DUK_offer_pending@FROM value = 1 days = 30 }
 			hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } }
-			FROM = { country_event = { id = ENG_DUK.40 days = 1 } }
+			FROM = { country_event = ENG_DUK.40 }
 			if = {
 				limit = {
 					FROM = { original_tag = CAN }
@@ -5108,7 +5108,7 @@ ENG_DUK_union_question_decisions = {
 					NOT = { has_war_with = ROOT }
 				}
 				set_country_flag = { flag = ENG_DUK_us_guarantee_candidate value = 1 days = 30 }
-				country_event = { id = ENG_DUK.40 days = 1 }
+				country_event = ENG_DUK.40
 			}
 			set_temp_variable = { ENG_DUK_imperial_tension_change = 5 }
 			ENG_DUK_change_imperial_tension = yes
@@ -5818,7 +5818,12 @@ ENG_DUK_union_question_decisions = {
 
 		target_array = ENG_DUK_integration_targets
 		target_root_trigger = { has_completed_focus = ENG_DUK_a_family_of_nations }
-		target_trigger = { NOT = { FROM = { ENG_DUK_is_caribbean_realm = yes } } }
+		target_trigger = {
+			FROM = {
+				NOT = { ENG_DUK_is_caribbean_realm = yes }
+				ENG_DUK_consent_can_rise = yes
+			}
+		}
 
 		custom_cost_trigger = { ENG_DUK_cost_small_pp75 = yes }
 		custom_cost_text = ENG_DUK_cost_small_expenditure_pp75
@@ -5860,7 +5865,12 @@ ENG_DUK_union_question_decisions = {
 
 		target_array = ENG_DUK_integration_targets
 		target_root_trigger = { has_completed_focus = ENG_DUK_a_family_of_nations }
-		target_trigger = { NOT = { FROM = { ENG_DUK_is_caribbean_realm = yes } } }
+		target_trigger = {
+			FROM = {
+				NOT = { ENG_DUK_is_caribbean_realm = yes }
+				ENG_DUK_consent_can_rise = yes
+			}
+		}
 
 		custom_cost_trigger = { ENG_DUK_cost_medium_pp75 = yes }
 		custom_cost_text = cost_medium_expenditure_pp75
@@ -5942,7 +5952,12 @@ ENG_DUK_union_question_decisions = {
 
 		target_array = ENG_DUK_integration_targets
 		target_root_trigger = { has_completed_focus = ENG_DUK_a_family_of_nations }
-		target_trigger = { NOT = { FROM = { ENG_DUK_is_caribbean_realm = yes } } }
+		target_trigger = {
+			FROM = {
+				NOT = { ENG_DUK_is_caribbean_realm = yes }
+				ENG_DUK_consent_can_rise = yes
+			}
+		}
 
 		cost = 25
 		days_re_enable = 365
@@ -5974,6 +5989,11 @@ ENG_DUK_union_question_decisions = {
 		visible = {
 			has_completed_focus = ENG_DUK_a_family_of_nations
 			has_completed_focus = ENG_DUK_the_realms_beyond_the_seas
+			any_of_scopes = {
+				array = ENG_DUK_integration_targets
+				ENG_DUK_is_caribbean_realm = yes
+				ENG_DUK_consent_can_rise = yes
+			}
 		}
 
 		custom_cost_trigger = { ENG_DUK_cost_medium_pp75 = yes }
@@ -6020,6 +6040,11 @@ ENG_DUK_union_question_decisions = {
 		visible = {
 			has_completed_focus = ENG_DUK_a_family_of_nations
 			has_completed_focus = ENG_DUK_the_realms_beyond_the_seas
+			any_of_scopes = {
+				array = ENG_DUK_integration_targets
+				ENG_DUK_is_caribbean_realm = yes
+				ENG_DUK_consent_can_rise = yes
+			}
 		}
 
 		custom_cost_trigger = { ENG_DUK_cost_small_pp75 = yes }
@@ -6070,6 +6095,7 @@ ENG_DUK_union_question_decisions = {
 			FROM = {
 				ENG_DUK_stage_1 = yes
 				ENG_DUK_is_ex_empire = yes
+				ENG_DUK_consent_can_rise = yes
 			}
 		}
 
@@ -6164,7 +6190,7 @@ ENG_DUK_union_question_decisions = {
 
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_renew_commonwealth_invitation"
-			IRE = { country_event = { id = ENG_DUK.90 days = 1 } }
+			IRE = { country_event = ENG_DUK.90 }
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = { custom_effect_tooltip = ENG_DUK_ireland_joins_commonwealth_TT }
 			custom_effect_tooltip = TT_IF_THEY_REJECT
@@ -6196,7 +6222,7 @@ ENG_DUK_union_question_decisions = {
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_retry_council_of_the_isles"
 			clr_country_flag = ENG_DUK_council_of_the_isles_refused
-			IRE = { country_event = { id = ENG_DUK.260 days = 1 } }
+			IRE = { country_event = ENG_DUK.260 }
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = { ENG_DUK_apply_council_of_the_isles = yes }
 			custom_effect_tooltip = TT_IF_THEY_REJECT
@@ -6228,7 +6254,7 @@ ENG_DUK_union_question_decisions = {
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_retry_anglo_irish_economic_union"
 			clr_country_flag = ENG_DUK_anglo_irish_economic_union_refused
-			IRE = { country_event = { id = ENG_DUK.263 days = 1 } }
+			IRE = { country_event = ENG_DUK.263 }
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = { ENG_DUK_apply_anglo_irish_economic_union = yes }
 			custom_effect_tooltip = TT_IF_THEY_REJECT
@@ -6260,7 +6286,7 @@ ENG_DUK_union_question_decisions = {
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_retry_common_travel_area_plus"
 			clr_country_flag = ENG_DUK_common_travel_area_plus_refused
-			IRE = { country_event = { id = ENG_DUK.266 days = 1 } }
+			IRE = { country_event = ENG_DUK.266 }
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = { ENG_DUK_apply_common_travel_area_plus = yes }
 			custom_effect_tooltip = TT_IF_THEY_REJECT
@@ -6298,7 +6324,7 @@ ENG_DUK_union_question_decisions = {
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_retry_realm_accord"
 			clr_country_flag = ENG_DUK_accord_refused@FROM
-			FROM = { country_event = { id = ENG_DUK.270 days = 1 } }
+			FROM = { country_event = ENG_DUK.270 }
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = { FROM = { ENG_DUK_apply_realm_accord = yes } }
 			custom_effect_tooltip = TT_IF_THEY_REJECT
@@ -6330,7 +6356,7 @@ ENG_DUK_union_question_decisions = {
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision ENG_DUK_renew_ultimatum_to_dublin"
 			clr_country_flag = ENG_DUK_ultimatum_rejected@IRE
-			IRE = { country_event = { id = ENG_DUK.40 days = 1 } }
+			IRE = { country_event = ENG_DUK.40 }
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = {
 				custom_effect_tooltip = ENG_DUK_irish_coercion_6_TT
@@ -6387,7 +6413,7 @@ ENG_DUK_union_question_decisions = {
 			set_variable = { ENG_DUK_irexit_campaign = 0 }
 			custom_effect_tooltip = ENG_DUK_irexit_campaign_TT
 			hidden_effect = {
-				IRE = { country_event = { id = ENG_DUK.94 days = 1 } }
+				IRE = { country_event = ENG_DUK.94 }
 			}
 		}
 
@@ -6844,7 +6870,7 @@ ENG_DUK_union_question_decisions = {
 				hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } }
 				if = {
 					limit = { FROM = { ENG_DUK_is_crown_realm = yes } }
-					FROM = { country_event = { id = ENG_DUK.120 days = 1 } }
+					FROM = { country_event = ENG_DUK.120 }
 					custom_effect_tooltip = TT_IF_THEY_ACCEPT
 					effect_tooltip = { custom_effect_tooltip = ENG_DUK_realm_vote_TT }
 					custom_effect_tooltip = TT_IF_THEY_REJECT
@@ -6852,7 +6878,7 @@ ENG_DUK_union_question_decisions = {
 					custom_effect_tooltip = ENG_DUK_acceptance_factors_TT
 				}
 				else = {
-					FROM = { country_event = { id = ENG_DUK.20 days = 1 } }
+					FROM = { country_event = ENG_DUK.20 }
 					custom_effect_tooltip = TT_IF_THEY_ACCEPT
 					effect_tooltip = { custom_effect_tooltip = ENG_DUK_stage_2_TT }
 					custom_effect_tooltip = TT_IF_THEY_REJECT
@@ -6921,7 +6947,7 @@ ENG_DUK_union_question_decisions = {
 				limit = { has_completed_focus = ENG_DUK_a_family_of_nations }
 				set_country_flag = { flag = ENG_DUK_offer_pending@FROM value = 1 days = 30 }
 				hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } }
-				FROM = { country_event = { id = ENG_DUK.23 days = 1 } }
+				FROM = { country_event = ENG_DUK.23 }
 				custom_effect_tooltip = TT_IF_THEY_ACCEPT
 				effect_tooltip = { custom_effect_tooltip = ENG_DUK_referendum_scheduled_TT }
 				custom_effect_tooltip = TT_IF_THEY_REJECT
@@ -6979,7 +7005,7 @@ ENG_DUK_union_question_decisions = {
 			large_expenditure = yes
 			set_country_flag = { flag = ENG_DUK_offer_pending@FROM value = 1 days = 30 }
 			hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } }
-			FROM = { country_event = { id = ENG_DUK.20 days = 1 } }
+			FROM = { country_event = ENG_DUK.20 }
 			custom_effect_tooltip = TT_IF_THEY_ACCEPT
 			effect_tooltip = { custom_effect_tooltip = ENG_DUK_stage_4_TT }
 			custom_effect_tooltip = TT_IF_THEY_REJECT
@@ -7149,7 +7175,7 @@ ENG_DUK_union_question_decisions = {
 				limit = { has_completed_focus = ENG_DUK_a_family_of_nations }
 				set_country_flag = { flag = ENG_DUK_offer_pending@FROM value = 1 days = 30 }
 				hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } }
-				FROM = { country_event = { id = ENG_DUK.20 days = 1 } }
+				FROM = { country_event = ENG_DUK.20 }
 				custom_effect_tooltip = TT_IF_THEY_ACCEPT
 				effect_tooltip = { custom_effect_tooltip = ENG_DUK_stage_2_TT }
 				custom_effect_tooltip = TT_IF_THEY_REJECT
@@ -7240,7 +7266,7 @@ ENG_DUK_union_question_decisions = {
 						NOT = { has_country_flag = ENG_DUK_republic }
 					}
 					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } } }
-					country_event = { id = ENG_DUK.120 days = 1 }
+					country_event = ENG_DUK.120
 				}
 			}
 			else = {
@@ -7258,7 +7284,7 @@ ENG_DUK_union_question_decisions = {
 					}
 					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } } }
 					set_country_flag = ENG_DUK_relay_129
-					country_event = { id = ENG_DUK.9 days = 1 }
+					country_event = ENG_DUK.9
 				}
 			}
 		}
@@ -7342,7 +7368,7 @@ ENG_DUK_union_question_decisions = {
 						NOT = { has_country_flag = ENG_DUK_republic }
 					}
 					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } } }
-					country_event = { id = ENG_DUK.23 days = 1 }
+					country_event = ENG_DUK.23
 				}
 			}
 			else = {
@@ -7360,7 +7386,7 @@ ENG_DUK_union_question_decisions = {
 					}
 					ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } } }
 					set_country_flag = ENG_DUK_relay_129
-					country_event = { id = ENG_DUK.9 days = 1 }
+					country_event = ENG_DUK.9
 				}
 			}
 		}
@@ -7429,7 +7455,7 @@ ENG_DUK_union_question_decisions = {
 					NOT = { has_country_flag = ENG_DUK_republic }
 				}
 				ROOT = { set_country_flag = { flag = ENG_DUK_offer_pending@PREV value = 1 days = 30 } hidden_effect = { country_event = { id = ENG_DUK.611 days = 31 } } }
-				country_event = { id = ENG_DUK.20 days = 1 }
+				country_event = ENG_DUK.20
 			}
 		}
 

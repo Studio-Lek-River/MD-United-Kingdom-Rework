@@ -7646,7 +7646,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.20.a executed"
 		custom_effect_tooltip = ENG_DUK_we_accept_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.21 days = 1 } }
+			ENG = { country_event = ENG_DUK.21 }
 		}
 		ai_chance = {
 			base = 0
@@ -7659,7 +7659,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.20.b executed"
 		custom_effect_tooltip = ENG_DUK_we_decline_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.22 days = 1 } }
+			ENG = { country_event = ENG_DUK.22 }
 		}
 		ai_chance = {
 			base = 0
@@ -7702,7 +7702,7 @@ country_event = {
 			}
 			FROM = {
 				set_country_flag = ENG_DUK_relay_124
-				country_event = { id = ENG_DUK.9 days = 1 }
+				country_event = ENG_DUK.9
 			}
 		}
 		else_if = {
@@ -7747,7 +7747,7 @@ country_event = {
 		name = ENG_DUK.23.a
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.23.a executed"
 		custom_effect_tooltip = ENG_DUK_referendum_scheduled_TT
-		country_event = { id = ENG_DUK.25 days = 7 }
+		country_event = ENG_DUK.25
 		ai_chance = {
 			base = 0
 			modifier = { add = ENG_DUK_accept_weight }
@@ -7759,7 +7759,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.23.b executed"
 		custom_effect_tooltip = ENG_DUK_we_decline_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.24 days = 1 } }
+			ENG = { country_event = ENG_DUK.24 }
 		}
 		ai_chance = {
 			base = 0
@@ -7872,7 +7872,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.40.a executed"
 		custom_effect_tooltip = ENG_DUK_ultimatum_we_accept_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.41 days = 1 } }
+			ENG = { country_event = ENG_DUK.41 }
 		}
 		ai_chance = {
 			base = 0
@@ -7917,7 +7917,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.40.b executed"
 		custom_effect_tooltip = ENG_DUK_ultimatum_we_reject_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.42 days = 1 } }
+			ENG = { country_event = ENG_DUK.42 }
 		}
 		ai_chance = {
 			base = 100
@@ -8551,7 +8551,7 @@ country_event = {
 		set_temp_variable = { ENG_DUK_consent_change = 5 }
 		ENG_DUK_change_consent = yes
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.91 days = 1 } }
+			ENG = { country_event = ENG_DUK.91 }
 		}
 		ai_chance = {
 			base = 20
@@ -8572,7 +8572,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.90.b executed"
 		custom_effect_tooltip = ENG_DUK_we_decline_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.92 days = 1 } }
+			ENG = { country_event = ENG_DUK.92 }
 		}
 		ai_chance = { base = 40 }
 	}
@@ -8895,7 +8895,7 @@ country_event = {
 		name = ENG_DUK.120.a
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.120.a executed"
 		custom_effect_tooltip = ENG_DUK_we_accept_TT
-		country_event = { id = ENG_DUK.121 days = 7 }
+		country_event = ENG_DUK.121
 		ai_chance = {
 			base = 20
 			modifier = { add = ENG_DUK_accept_weight }
@@ -8907,7 +8907,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.120.b executed"
 		custom_effect_tooltip = ENG_DUK_we_decline_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.22 days = 1 } }
+			ENG = { country_event = ENG_DUK.22 }
 		}
 		ai_chance = {
 			base = 0
@@ -10303,7 +10303,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.260.a executed"
 		custom_effect_tooltip = ENG_DUK_we_accept_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.261 days = 1 } }
+			ENG = { country_event = ENG_DUK.261 }
 		}
 		ai_chance = {
 			base = 0
@@ -10323,7 +10323,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.260.b executed"
 		custom_effect_tooltip = ENG_DUK_we_decline_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.262 days = 1 } }
+			ENG = { country_event = ENG_DUK.262 }
 		}
 		ai_chance = {
 			base = 40
@@ -10391,7 +10391,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.263.a executed"
 		custom_effect_tooltip = ENG_DUK_we_accept_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.264 days = 1 } }
+			ENG = { country_event = ENG_DUK.264 }
 		}
 		ai_chance = {
 			base = 0
@@ -10411,7 +10411,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.263.b executed"
 		custom_effect_tooltip = ENG_DUK_we_decline_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.265 days = 1 } }
+			ENG = { country_event = ENG_DUK.265 }
 		}
 		ai_chance = {
 			base = 40
@@ -10479,7 +10479,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.266.a executed"
 		custom_effect_tooltip = ENG_DUK_we_accept_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.267 days = 1 } }
+			ENG = { country_event = ENG_DUK.267 }
 		}
 		ai_chance = {
 			base = 0
@@ -10499,7 +10499,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.266.b executed"
 		custom_effect_tooltip = ENG_DUK_we_decline_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.268 days = 1 } }
+			ENG = { country_event = ENG_DUK.268 }
 		}
 		ai_chance = {
 			base = 40
@@ -10567,7 +10567,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.270.a executed"
 		custom_effect_tooltip = ENG_DUK_we_accept_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.271 days = 1 } }
+			ENG = { country_event = ENG_DUK.271 }
 		}
 		ai_chance = {
 			base = 0
@@ -10588,7 +10588,7 @@ country_event = {
 		log = "[GetDateText]: [This.GetName]: ENG_DUK.270.b executed"
 		custom_effect_tooltip = ENG_DUK_we_decline_TT
 		hidden_effect = {
-			ENG = { country_event = { id = ENG_DUK.272 days = 1 } }
+			ENG = { country_event = ENG_DUK.272 }
 		}
 		ai_chance = {
 			base = 40

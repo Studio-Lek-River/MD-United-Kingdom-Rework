@@ -708,7 +708,10 @@ ENG_DUK_change_consent = {
 	hidden_effect = {
 		set_temp_variable = { ENG_DUK_consent_cap = 100 }
 		if = {
-			limit = { ENG_DUK_medium_influence = no }
+			limit = {
+				check_variable = { ENG_DUK_consent_change > 0 }
+				ENG_DUK_medium_influence = no
+			}
 			set_temp_variable = { ENG_DUK_consent_cap = ENG.ENG_DUK_consent@THIS }
 			clamp_temp_variable = { var = ENG_DUK_consent_cap min = 40 max = 100 }
 		}
