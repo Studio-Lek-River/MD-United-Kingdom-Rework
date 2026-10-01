@@ -3,12 +3,6 @@
 Submod for [Millennium Dawn](https://github.com/MillenniumDawn/Millennium-Dawn) that expands the
 United Kingdom (ENG) focus tree.
 
-<<<<<<< Updated upstream
-- Current Changes:
-
-- Focus Tree Branch for regaining old territory
-- Reworked Devolution GUI and in a new place
-=======
 ## What you get
 
 - **The Union Question focus branch.** 56 new focuses split over two mutually exclusive paths. It replaces Millennium Dawn's "A More United Kingdom" and "Fractured Kingdom" branches.

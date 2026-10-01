@@ -1,10 +1,5 @@
 spriteTypes = {
 	spritetype = {
-		name = "GFX_ENG_devolution_map"
-		texturefile = "gfx/interface/scripted_gui/eng/ENG_devolution_graphic.dds"
-	}
-
-	spritetype = {
 		name = "GFX_ENG_england_map"
 		texturefile = "gfx/interface/scripted_gui/eng/ENG_england_gfx.dds"
 	}
@@ -22,6 +17,61 @@ spriteTypes = {
 	spritetype = {
 		name = "GFX_ENG_scotland_map"
 		texturefile = "gfx/interface/scripted_gui/eng/ENG_scotland_gfx.dds"
+	}
+
+	spritetype = {
+		name = "GFX_ENG_DUK_scotland_map_integrated"
+		texturefile = "gfx/interface/scripted_gui/eng/ENG_DUK_scotland_integrated_gfx.dds"
+	}
+
+	spritetype = {
+		name = "GFX_ENG_DUK_scotland_map_independent"
+		texturefile = "gfx/interface/scripted_gui/eng/ENG_DUK_scotland_independent_gfx.dds"
+	}
+
+	spritetype = {
+		name = "GFX_ENG_DUK_wales_map_integrated"
+		texturefile = "gfx/interface/scripted_gui/eng/ENG_DUK_wales_integrated_gfx.dds"
+	}
+
+	spritetype = {
+		name = "GFX_ENG_DUK_wales_map_independent"
+		texturefile = "gfx/interface/scripted_gui/eng/ENG_DUK_wales_independent_gfx.dds"
+	}
+
+	spritetype = {
+		name = "GFX_ENG_DUK_north_ireland_map_integrated"
+		texturefile = "gfx/interface/scripted_gui/eng/ENG_DUK_north_ireland_integrated_gfx.dds"
+	}
+
+	spritetype = {
+		name = "GFX_ENG_DUK_north_ireland_map_independent"
+		texturefile = "gfx/interface/scripted_gui/eng/ENG_DUK_north_ireland_independent_gfx.dds"
+	}
+
+	spritetype = {
+		name = "GFX_ENG_DUK_north_ireland_map_irish"
+		texturefile = "gfx/interface/scripted_gui/eng/ENG_DUK_north_ireland_irish_gfx.dds"
+	}
+
+	spritetype = {
+		name = "GFX_ENG_DUK_north_ireland_map_irish_constituent"
+		texturefile = "gfx/interface/scripted_gui/eng/ENG_DUK_north_ireland_irish_constituent_gfx.dds"
+	}
+
+	spritetype = {
+		name = "GFX_ENG_DUK_ireland_map"
+		texturefile = "gfx/interface/scripted_gui/eng/ENG_DUK_ireland_grey_gfx.dds"
+	}
+
+	spritetype = {
+		name = "GFX_ENG_DUK_ireland_map_constituent"
+		texturefile = "gfx/interface/scripted_gui/eng/ENG_DUK_ireland_gfx.dds"
+	}
+
+	spritetype = {
+		name = "GFX_ENG_DUK_ireland_map_integrated"
+		texturefile = "gfx/interface/scripted_gui/eng/ENG_DUK_ireland_integrated_gfx.dds"
 	}
 
 	spritetype = {
@@ -44,27 +94,17 @@ spriteTypes = {
 	}
 
 	spritetype = {
-		name = "GFX_ENG_back"
-		texturefile = "gfx/interface/scripted_gui/eng/ENG_back_gfx.dds"
+		name = "GFX_autonomy_ENG_DUK_crown_dominion_icon"
+		texturefile = "gfx/interface/autonomy/autonomy_constituent.dds"
 	}
 
 	spritetype = {
-		name = "ENG_devolution_button_gfx"
-		texturefile = "gfx/interface/scripted_gui/eng/ENG_devolution_button_gfx.dds"
+		name = "GFX_autonomy_ENG_DUK_crown_protectorate_icon"
+		texturefile = "gfx/interface/autonomy/autonomy_constituent.dds"
 	}
 
 	spritetype = {
-		name = "ENG_devolution_button_shine_gfx"
-		texturefile = "gfx/interface/scripted_gui/eng/ENG_devolution_button_shine_gfx.dds"
-	}
-
-	spritetype = {
-		name = "ENG_x"
-		texturefile = "gfx/interface/scripted_gui/eng/x_uk.dds"
-	}
-
-	spritetype = {
-		name = "ENG_check"
-		texturefile = "gfx/interface/scripted_gui/eng/check_uk.dds"
+		name = "GFX_autonomy_ENG_DUK_crown_colony_icon"
+		texturefile = "gfx/interface/autonomy/autonomy_colony_icon.dds"
 	}
 }

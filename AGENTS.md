@@ -6,8 +6,8 @@ Millennium Dawn is a Hearts of Iron IV mod (2000-present). Game data lives in
 ## Submod Scope
 
 This repo is a submod of Millennium Dawn that reworks the United Kingdom (ENG). It owns only
-the paths listed in `ENG_PATHS` in `tools/sync_md_base.py`; a file at the same relative path
-overrides MD's copy. Everything else lives in MD, checked out at `D:/secondary-md`.
+the paths listed in `ENG_PATHS` and `ENG_SUBMOD_ONLY_PATHS` in `tools/sync_md_base.py`; a file at the same relative path
+overrides MD's copy. Everything else lives in MD, checked out at `D:/Documenten/Paradox Interactive/Hearts of Iron IV/mod/Millennium-Dawn`.
 
 - Edit on `main` or a branch off it. `md-base` holds pristine MD files; only
   `tools/sync_md_base.py` writes to it.
@@ -15,6 +15,8 @@ overrides MD's copy. Everything else lives in MD, checked out at `D:/secondary-m
   the MD checkout against files here when needed.
 - Before renaming or removing an `ENG_*` focus, idea, flag, or effect, grep the MD checkout for
   references; other countries and shared systems depend on some of them.
+- Every ID the submod adds uses the `ENG_DUK_` prefix (sprites `GFX_ENG_DUK_`, events in the
+  `ENG_DUK` namespace, new files `99_ENG_DUK_*`). IDs that come from MD keep their MD names.
 
 ## Guardrails
 
@@ -41,7 +43,10 @@ overrides MD's copy. Everything else lives in MD, checked out at `D:/secondary-m
 
 ## Validation
 
-- Content validation runs in GitHub CI at PR time. Do not run it proactively.
+- Content validation runs in GitHub CI at PR time (`validation.yml`): MD's validator suite,
+  run against the owned files overlaid on MD at the commit in `tools/md_base_ref.txt`.
+  Locally: `python tools/validate_with_md.py [--batch core|targeted-a|targeted-b]`
+  (needs an MD checkout, default `D:/Documenten/Paradox Interactive/Hearts of Iron IV/mod/Millennium-Dawn`). Do not run it proactively.
 - Never run `pre-commit run --all-files`. Use normal staged-file hooks or
   `pre-commit run --files <changed paths>`; do not include unrelated formatter edits.
 - Before changing or debugging validation, read
