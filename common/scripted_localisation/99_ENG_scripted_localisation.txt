@@ -2524,7 +2524,11 @@ defined_text = {
 	text = {
 		trigger = {
 			OR = {
-				has_country_flag = ENG_DUK_integrated@IRE
+				AND = {
+					27 = { is_owned_by = ROOT }
+					28 = { is_owned_by = ROOT }
+					29 = { is_owned_by = ROOT }
+				}
 				check_variable = { ENG_DUK_devolution_debug_map = 1 }
 			}
 		}
