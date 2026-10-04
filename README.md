@@ -1,4 +1,4 @@
-# Millennium Dawn: United Kingdom Rework
+# Millennium Dawn: Director's UK
 
 Submod for [Millennium Dawn](https://github.com/MillenniumDawn/Millennium-Dawn) that expands the
 United Kingdom (ENG) focus tree.

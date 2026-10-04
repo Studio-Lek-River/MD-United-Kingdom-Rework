@@ -1,5 +1,5 @@
 version="0.1.0"
-name="Millennium Dawn: United Kingdom Rework"
+name="Millennium Dawn: Director's UK"
 tags={
 	"Alternative History"
 	"Gameplay"
