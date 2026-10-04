@@ -46,9 +46,8 @@ The countries you target are not sitting ducks either. They can run sovereignty 
 2. Enable both in the launcher, with this mod loaded after Millennium Dawn.
 3. Start a new game after installing or updating.
 
-Current version 0.1.0 is built for Millennium Dawn 2.0.1 and Hearts of Iron IV 1.19.
+Current version 0.1.0 is built for Millennium Dawn 2.0.2 and Hearts of Iron IV 1.19.
 
 ## Feedback
 
 Found a bug or have an idea? [Open an issue on GitHub](https://github.com/Studio-Lek-River/MD-United-Kingdom-Rework/issues). We'd love to hear how your Britain turned out.
->>>>>>> Stashed changes

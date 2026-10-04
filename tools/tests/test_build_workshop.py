@@ -1,3 +1,4 @@
+import subprocess
 import sys
 from pathlib import Path
 
@@ -58,3 +59,11 @@ def test_build_keeps_remote_file_id(tmp_path):
     b.build(out)
     assert 'remote_file_id="123456"' in (out / "descriptor.mod").read_text(encoding="utf-8")
     assert 'remote_file_id="123456"' in (tmp_path / "Workshop.mod").read_text(encoding="utf-8")
+
+
+def test_every_tracked_game_file_is_shipped():
+    game_dirs = ["common", "events", "history", "interface", "localisation", "gfx"]
+    tracked = subprocess.run(["git", "ls-files", *game_dirs], cwd=b.REPO, capture_output=True, text=True, check=True).stdout.splitlines()
+    owned = b.ENG_PATHS + b.ENG_SUBMOD_ONLY_PATHS
+    unshipped = [f for f in tracked if not any(f == p or f.startswith(p + "/") for p in owned)]
+    assert not unshipped, f"add these to ENG_SUBMOD_ONLY_PATHS: {unshipped}"
