@@ -2373,7 +2373,7 @@ country_event = {
 	option = {
 		name = devolution.2.b
 		log = "[GetDateText]: [This.GetName]: devolution.2.b executed"
-		set_temp_variable = { ENG_agitation_change = 1 }
+		set_temp_variable = { ENG_agitation_change = 2 }
 		ENG_change_scottish_agitation = yes
 		ai_chance = { base = 1 }
 	}
@@ -2401,7 +2401,7 @@ country_event = {
 	option = {
 		name = devolution.3.b
 		log = "[GetDateText]: [This.GetName]: devolution.3.b executed"
-		set_temp_variable = { ENG_agitation_change = 1 }
+		set_temp_variable = { ENG_agitation_change = 2 }
 		ENG_change_north_irish_agitation = yes
 		ai_chance = { base = 1 }
 	}
@@ -2429,7 +2429,7 @@ country_event = {
 	option = {
 		name = devolution.4.b
 		log = "[GetDateText]: [This.GetName]: devolution.4.b executed"
-		set_temp_variable = { ENG_agitation_change = 1 }
+		set_temp_variable = { ENG_agitation_change = 2 }
 		ENG_change_wales_agitation = yes
 		ai_chance = { base = 1 }
 	}
