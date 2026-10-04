@@ -1630,7 +1630,7 @@
  ENG_DUK_association: "Association: [FROM.GetName]"
  ENG_DUK_association_desc: "Westminster offers [FROM.GetName] a place in the Union as a Crown subject: a Crown Dominion on the Western path, if the [FROM.GetAdjective] public consents and its government agrees, or a Crown protectorate on the Nationalist path once it is occupied and pacified."
  ENG_DUK_target_decisions: "The Union Question"
- ENG_DUK_target_decisions_desc: "London has placed [ROOT.GetName] on the Union ladder. The government in [ROOT.GetCapital] can push back against British influence, campaign against the Union, demand home rule once inside it, and look abroad for protection. On the Western path consent below §Y60§! blocks association, below §Y75§! constituent status and below §Y85§! integration; British influence must also stand at §Y30%§! and later be the strongest here."
+ ENG_DUK_target_decisions_desc: "London has placed [ROOT.GetName] on the Union ladder. The government in [ROOT.GetCapitalVictoryPointName] can push back against British influence, campaign against the Union, demand home rule once inside it, and look abroad for protection. On the Western path consent below §Y60§! blocks association, below §Y75§! constituent status and below §Y85§! integration; British influence must also stand at §Y30%§! and later be the strongest here."
  ENG_DUK_reassert_sovereignty: "Reassert National Sovereignty"
  ENG_DUK_reassert_sovereignty_desc: "The government campaigns openly against closer union with the Crown, cutting British influence and the public consent London counts on. Available once a year at £political_power_texticon §H75§!."
  ENG_DUK_launch_sovereignty_campaign: "Launch a Sovereignty Campaign"
@@ -2476,6 +2476,7 @@
  ENG_lower_agitation_4_TT: "Will lower the §HAgitation§! of all §HConstituents§! by §H4§!"
  ENG_lower_agitation_5_TT: "Will lower the §HAgitation§! of all §HConstituents§! by §H5§!"
 
+ ENG_increase_agitation_1_TT: "Will increase the §HAgitation§! of all §HConstituents§! by §H1§!"
  ENG_increase_agitation_2_TT: "Will increase the §HAgitation§! of all §HConstituents§! by §H2§!"
 
  ENG_grand_promise_TT: "- We will make a promise to one of the §Hthree§! primary §Hinternal factions§!, and if we deliver, we will be rewarded\n - A timed mission will activate upon selection of a promise"
@@ -3973,7 +3974,7 @@
  ENG_DUK.292.d: "[FROM.GetName] has declined the invitation to take up the Crown and remains a republic within the Commonwealth."
  ENG_DUK.292.a: "Noted."
  ENG_DUK.300.t: "[FROM.GetName] Asks for Protection"
- ENG_DUK.300.d: "The government of [FROM.GetName] is under British pressure to accept closer union with the Crown and has asked us, as the leading foreign presence in the country, for a security guarantee. A guarantee would put our name between London and [FROM.GetCapital] for the next two years."
+ ENG_DUK.300.d: "The government of [FROM.GetName] is under British pressure to accept closer union with the Crown and has asked us, as the leading foreign presence in the country, for a security guarantee. A guarantee would put our name between London and [FROM.GetCapitalVictoryPointName] for the next two years."
  ENG_DUK.300.a: "Extend a guarantee"
  ENG_DUK.300.b: "Stay out of it"
  ENG_DUK.301.t: "[FROM.GetName] Guarantees [?FROM.ENG_DUK_guaranteed_client.GetName]"
