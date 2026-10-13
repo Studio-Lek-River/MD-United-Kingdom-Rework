@@ -163,7 +163,7 @@ jobs:
           key: ${{ needs.md-ref.outputs.baseline-key }}
 
       - name: Upload baseline
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: md-baseline
           path: .validation_baseline
@@ -222,7 +222,7 @@ jobs:
 
       - name: Upload changed files
         if: matrix.batch == 'core'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: changed-files
           path: changed-files.txt
@@ -237,7 +237,7 @@ jobs:
 
       - name: Upload results
         if: always() && !cancelled()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: validation-batch-${{ matrix.batch }}-results
           path: batch-results
@@ -326,7 +326,7 @@ jobs:
 
       - name: Upload report
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: validation-report
           path: report.md
